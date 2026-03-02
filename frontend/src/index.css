@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 3px;
+}
+
+/* Smooth transitions for dark mode */
+* {
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+/* contenteditable reset */
+[contenteditable]:focus {
+  outline: none;
+}
+[contenteditable]:empty:before {
+  content: attr(data-placeholder);
+  color: #9ca3af;
+}
+
+/* Mic recording pulse */
+@keyframes mic-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.7;
+  }
+}
+.animate-mic-pulse {
+  animation: mic-pulse 1s ease-in-out infinite;
+}
+
+/* Onboarding spotlight */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Diff highlight */
+.diff-added {
+  background-color: #bbf7d0;
+  color: #14532d;
+  border-radius: 2px;
+  padding: 0 2px;
+}
+.diff-removed {
+  background-color: #fecaca;
+  color: #7f1d1d;
+  border-radius: 2px;
+  padding: 0 2px;
+  text-decoration: line-through;
+}
+.dark .diff-added {
+  background-color: #166534;
+  color: #bbf7d0;
+}
+.dark .diff-removed {
+  background-color: #7f1d1d;
+  color: #fecaca;
+}
