@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { LS_KEY, LS_MODEL, LS_DARK } from '../constants'
 import { encryptKey, decryptKey } from '../services/crypto'
-import { getModels, validateKey } from '../services/api'
+import { getModels } from '../services/api'
 
 export function useSettings() {
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem(LS_DARK) === '1')
@@ -10,9 +10,9 @@ export function useSettings() {
   const [models, setModels] = useState([])
   const [keyStatus, setKeyStatus] = useState('idle') // idle | saving | valid | invalid
 
-  // Dark mode effect
+  // Theme effect: :root is dark by default; add .light class when in light mode
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', darkMode)
+    document.documentElement.classList.toggle('light', !darkMode)
     localStorage.setItem(LS_DARK, darkMode ? '1' : '0')
   }, [darkMode])
 
@@ -67,6 +67,6 @@ export function useSettings() {
     darkMode, toggleDark,
     openRouterKey, saveKey, clearKey, keyStatus,
     selectedModel, saveModel, models,
-    inferenceMode: openRouterKey ? 'cloud' : 'local',
+    inferenceMode: openRouterKey && selectedModel ? 'cloud' : 'local',
   }
 }

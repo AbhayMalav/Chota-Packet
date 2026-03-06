@@ -33,8 +33,8 @@ HALLUCINATION_MAX_REPEATS: int = 3  # Max times an n-gram may appear (FR-16)
 
 # ──────────────────────────── Timeouts ───────────────────────────────────────
 
-ENHANCE_TIMEOUT_S: int = 15         # /enhance Axios timeout (FR-14)
-STT_TIMEOUT_S: int = 12             # /stt Axios timeout (FR-14)
+ENHANCE_TIMEOUT_S: int = 15         # /enhance Axios timeout (FR-14) — frontend reference only, not used by backend
+STT_TIMEOUT_S: int = 12             # /stt Axios timeout (FR-14) — frontend reference only, not used by backend
 HEALTH_TIMEOUT_S: int = 5           # /health check timeout (FR-13)
 OPENROUTER_TIMEOUT_S: int = 15      # Cloud inference timeout (NF-P8)
 VALIDATE_KEY_TIMEOUT_S: int = 5     # Key validation timeout (NF-P9)
@@ -61,6 +61,8 @@ STYLE_MAP: dict[str, str] = {
     "creative":   "creative",
     "data":       "data analysis",
     "detailed":   "detailed",
+    "academic":   "academic",
+    "marketing":  "marketing",
 }
 
 TONE_MAP: dict[str, str] = {

@@ -1,55 +1,115 @@
 @import "tailwindcss";
 
-/* Custom scrollbar */
+/* ── Design System Tokens ────────────────────────────────────────────────── */
+@theme {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --color-brand: #7f13ec;
+  --color-brand-light: #a855f7;
+  --color-brand-dark: #6010b8;
+  --color-accent: #6366f1;
+  --color-bg-deep: #0a0a12;
+  --color-bg-card: #111120;
+  --color-bg-elevated: #16162a;
+}
+
+/* ── Theme CSS Variables — Dark (default) ────────────────────────────────── */
+:root {
+  --theme-bg: #0a0a12;
+  --theme-bg-card: rgba(17, 17, 32, 0.8);
+  --theme-bg-navbar: rgba(10, 10, 18, 0.75);
+  --theme-bg-sidebar: rgba(13, 13, 30, 0.92);
+  --theme-bg-overlay: rgba(0, 0, 0, 0.65);
+  --theme-text: #e2e2f0;
+  --theme-text-muted: #a0a0b8;
+  --theme-border: rgba(127, 19, 236, 0.15);
+  --theme-border-navbar: rgba(127, 19, 236, 0.12);
+  --theme-border-sidebar: rgba(127, 19, 236, 0.15);
+  --theme-placeholder: #4a4a6a;
+  --theme-nebula-1: rgba(127, 19, 236, 0.12);
+  --theme-nebula-2: rgba(99, 102, 241, 0.1);
+  --theme-nebula-3: rgba(127, 19, 236, 0.04);
+  --theme-scrollbar: rgba(127, 19, 236, 0.35);
+  --theme-scrollbar-hover: rgba(127, 19, 236, 0.6);
+}
+
+/* ── Theme CSS Variables — Light override ────────────────────────────────── */
+.light {
+  --theme-bg: #f4f4f8;
+  --theme-bg-card: rgba(255, 255, 255, 0.88);
+  --theme-bg-navbar: rgba(248, 248, 255, 0.85);
+  --theme-bg-sidebar: rgba(245, 245, 252, 0.96);
+  --theme-bg-overlay: rgba(100, 100, 140, 0.35);
+  --theme-text: #1a1a2e;
+  --theme-text-muted: #4a4a6a;
+  --theme-border: rgba(127, 19, 236, 0.2);
+  --theme-border-navbar: rgba(127, 19, 236, 0.18);
+  --theme-border-sidebar: rgba(127, 19, 236, 0.2);
+  --theme-placeholder: #9090a8;
+  --theme-nebula-1: rgba(127, 19, 236, 0.07);
+  --theme-nebula-2: rgba(99, 102, 241, 0.06);
+  --theme-nebula-3: rgba(127, 19, 236, 0.03);
+  --theme-scrollbar: rgba(127, 19, 236, 0.25);
+  --theme-scrollbar-hover: rgba(127, 19, 236, 0.45);
+  --diff-added-bg: #dcfce7;
+  --diff-added-text: #166534;
+  --diff-removed-bg: #fee2e2;
+  --diff-removed-text: #991b1b;
+}
+
+/* ── Base: Theme-aware ───────────────────────────────────────────────────── */
+html,
+body {
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+  font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  transition:
+    background-color 0.3s ease,
+    color 0.2s ease;
+}
+
+/* ── Custom Scrollbar ────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #4b5563;
-  border-radius: 3px;
+  background: var(--theme-scrollbar);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-scrollbar-hover);
 }
 
-/* Smooth transitions for dark mode */
-* {
+/* ── Base Transitions ────────────────────────────────────────────────────── */
+/* Scoped to theme-bearing elements to avoid jank on third-party components */
+.glass-card,
+.glass-overlay,
+.glass-navbar,
+.glass-sidebar,
+.gradient-border,
+body {
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease,
-    color 0.2s ease;
+    color 0.15s ease;
 }
 
-/* contenteditable reset */
+/* ── Contenteditable ─────────────────────────────────────────────────────── */
 [contenteditable]:focus {
   outline: none;
 }
 [contenteditable]:empty:before {
   content: attr(data-placeholder);
-  color: #9ca3af;
+  color: var(--theme-placeholder);
 }
 
-/* Mic recording pulse */
-@keyframes mic-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.15);
-    opacity: 0.7;
-  }
-}
-.animate-mic-pulse {
-  animation: mic-pulse 1s ease-in-out infinite;
-}
-
-/* Onboarding spotlight */
+/* ── Animations ──────────────────────────────────────────────────────────── */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -57,28 +117,279 @@
   }
 }
 .animate-fade-in {
-  animation: fadeIn 0.3s ease-out forwards;
+  animation: fadeIn 0.35s ease-out forwards;
 }
 
-/* Diff highlight */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.animate-slide-in-right {
+  animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+
+@keyframes mic-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    transform: scale(1.06);
+    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+  }
+}
+.animate-mic-pulse {
+  animation: mic-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer-border {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px rgba(127, 19, 236, 0.15),
+      0 0 40px rgba(99, 102, 241, 0.08);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(127, 19, 236, 0.3),
+      0 0 60px rgba(99, 102, 241, 0.15);
+  }
+}
+.animate-glow {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+@keyframes nebula-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(20px, -15px) scale(1.05);
+  }
+  66% {
+    transform: translate(-15px, 10px) scale(0.98);
+  }
+}
+.animate-nebula {
+  animation: nebula-drift 20s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+.animate-float {
+  animation: float 3.5s ease-in-out infinite;
+}
+
+@keyframes dot-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+}
+.animate-dot-pulse {
+  animation: dot-pulse 1.8s ease-in-out infinite;
+}
+
+/* ── Glassmorphic Cards (theme-aware) ───────────────────────────────────── */
+.glass-card {
+  background: var(--theme-bg-card);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--theme-border);
+}
+
+.glass-overlay {
+  background: var(--theme-bg-overlay);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-navbar {
+  background: var(--theme-bg-navbar);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--theme-border-navbar);
+}
+
+.glass-sidebar {
+  background: var(--theme-bg-sidebar);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-left: 1px solid var(--theme-border-sidebar);
+}
+
+/* ── Gradient Helpers ────────────────────────────────────────────────────── */
+.gradient-brand {
+  background: linear-gradient(135deg, #7f13ec 0%, #6366f1 100%);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animated shimmer gradient border for output card */
+.shimmer-border-top {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-border-top::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    #7f13ec,
+    #a855f7,
+    #6366f1,
+    #818cf8,
+    #7f13ec
+  );
+  background-size: 300% 100%;
+  animation: shimmer-border 3s ease infinite;
+}
+
+/* Subtle gradient border for main card */
+.gradient-border {
+  position: relative;
+}
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(127, 19, 236, 0.4),
+    rgba(99, 102, 241, 0.15),
+    rgba(127, 19, 236, 0.05)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ── Diff Highlights ─────────────────────────────────────────────────────── */
 .diff-added {
-  background-color: #bbf7d0;
-  color: #14532d;
-  border-radius: 2px;
-  padding: 0 2px;
+  background-color: var(--diff-added-bg, #166534);
+  color: var(--diff-added-text, #bbf7d0);
+  border-radius: 3px;
+  padding: 1px 4px;
 }
 .diff-removed {
-  background-color: #fecaca;
-  color: #7f1d1d;
-  border-radius: 2px;
-  padding: 0 2px;
+  background-color: var(--diff-removed-bg, #7f1d1d);
+  color: var(--diff-removed-text, #fecaca);
+  border-radius: 3px;
+  padding: 1px 4px;
   text-decoration: line-through;
 }
-.dark .diff-added {
-  background-color: #166534;
-  color: #bbf7d0;
+
+/* ── Focus Ring ──────────────────────────────────────────────────────────── */
+.focus-ring:focus,
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.5);
 }
-.dark .diff-removed {
-  background-color: #7f1d1d;
-  color: #fecaca;
+
+/* ── Nebula Background (theme-aware) ────────────────────────────────────── */
+.nebula-orb-1 {
+  position: fixed;
+  top: -120px;
+  right: -80px;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(
+    circle,
+    var(--theme-nebula-1) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.nebula-orb-2 {
+  position: fixed;
+  bottom: -120px;
+  left: -80px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(
+    circle,
+    var(--theme-nebula-2) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.nebula-orb-3 {
+  position: fixed;
+  top: 40%;
+  left: 30%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(
+    circle,
+    var(--theme-nebula-3) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Select / Input color-scheme (theme-aware) ───────────────────────────── */
+:root {
+  color-scheme: dark;
+}
+
+.light {
+  color-scheme: light;
+}
+
+select,
+input,
+textarea {
+  color-scheme: inherit;
 }

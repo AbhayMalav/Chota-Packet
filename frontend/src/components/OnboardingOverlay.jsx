@@ -1,67 +1,117 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { LS_ONBOARDED } from '../constants'
 
-const STEPS = [
+const FEATURES = [
   {
-    icon: '👋',
-    title: 'Welcome to Chota Packet',
-    body: 'Turn rough ideas into polished AI prompts — instantly. Works offline using a local AI model.',
-  },
-  {
-    icon: '⌨️',
-    title: 'Type or Paste',
-    body: 'Enter your rough idea in the text box. Switch between English (EN) and Hindi (HI) input using the buttons.',
+    icon: '🏠',
+    title: 'Local Inference',
+    desc: 'No data leaves your device. Works fully offline with Ollama.',
+    color: 'emerald',
   },
   {
     icon: '✨',
-    title: 'Enhance It',
-    body: 'Pick a Style, Tone, and Enhancement Level, then click Enhance (or press Ctrl+Enter). Your improved prompt appears instantly.',
+    title: 'AI Enhancement',
+    desc: 'Transform rough ideas into polished, powerful prompts instantly.',
+    color: 'purple',
   },
   {
-    icon: '🎤',
-    title: 'Mic, Settings & History',
-    body: 'Use 🎤 to record speech instead of typing. Open ⚙ Settings to add a cloud API key. History panel stores your last 5 results.',
+    icon: '🌐',
+    title: 'Multi-language',
+    desc: 'Input and output in 10+ languages including Hindi, Spanish, French.',
+    color: 'blue',
   },
 ]
 
-export default function OnboardingOverlay({ onDone }) {
-  const [step, setStep] = useState(0)
-  const isLast = step === STEPS.length - 1
-  const current = STEPS[step]
+const COLOR_MAP = {
+  emerald: { border: 'border-emerald-500/20', bg: 'bg-emerald-500/8', text: 'text-emerald-400', iconBg: 'bg-emerald-500/15' },
+  purple:  { border: 'border-purple-500/20',  bg: 'bg-purple-500/8',  text: 'text-purple-400',  iconBg: 'bg-purple-500/15' },
+  blue:    { border: 'border-blue-500/20',    bg: 'bg-blue-500/8',    text: 'text-blue-400',    iconBg: 'bg-blue-500/15' },
+}
 
+export default function OnboardingOverlay({ onDone }) {
   const finish = () => {
     localStorage.setItem(LS_ONBOARDED, '1')
     onDone()
   }
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm"
-         role="dialog" aria-modal="true" aria-label="Onboarding tour">
-      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-sm w-full mx-4 p-7 text-center animate-fade-in">
-        {/* Step indicator */}
-        <div className="flex justify-center gap-1.5 mb-5">
-          {STEPS.map((_, i) => (
-            <span key={i} className={`h-1.5 rounded-full transition-all duration-300 ${i === step ? 'bg-violet-600 w-5' : 'bg-gray-200 dark:bg-gray-700 w-1.5'}`} />
-          ))}
+    <div
+      className="fixed inset-0 z-[60] flex items-center justify-center glass-overlay animate-fade-in"
+      role="dialog" aria-modal="true" aria-label="Welcome to Chota Packet"
+    >
+      {/* Background nebula orbs inside overlay */}
+      <div className="pointer-events-none">
+        <div style={{
+          position: 'fixed', top: '-100px', right: '-60px',
+          width: '350px', height: '350px',
+          background: 'radial-gradient(circle, rgba(127,19,236,0.18) 0%, transparent 70%)',
+          borderRadius: '50%',
+        }} aria-hidden="true" />
+        <div style={{
+          position: 'fixed', bottom: '-80px', left: '-60px',
+          width: '280px', height: '280px',
+          background: 'radial-gradient(circle, rgba(99,102,241,0.14) 0%, transparent 70%)',
+          borderRadius: '50%',
+        }} aria-hidden="true" />
+      </div>
+
+      {/* Card */}
+      <div
+        className="relative rounded-2xl max-w-sm w-full mx-4 p-8 text-center animate-fade-in gradient-border"
+        style={{ background: 'rgba(17,17,32,0.96)', backdropFilter: 'blur(24px)', border: '1px solid rgba(127,19,236,0.22)' }}
+      >
+        {/* Inner glow */}
+        <div className="absolute inset-0 rounded-2xl pointer-events-none"
+             style={{ boxShadow: 'inset 0 0 80px rgba(127,19,236,0.06)' }} aria-hidden="true" />
+
+        {/* Icon */}
+        <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-5 animate-float"
+             style={{ background: 'radial-gradient(circle at center, rgba(127,19,236,0.25) 0%, rgba(127,19,236,0.05) 70%)', border: '1px solid rgba(127,19,236,0.2)' }}>
+          <span className="text-5xl" role="img" aria-label="Sparkles">✨</span>
         </div>
 
-        <div className="text-5xl mb-4">{current.icon}</div>
-        <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">{current.title}</h2>
-        <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{current.body}</p>
+        {/* Title */}
+        <h2 className="text-2xl font-extrabold gradient-text mb-1 tracking-tight">
+          Welcome to Chota Packet
+        </h2>
+        <p className="text-sm text-gray-500 mb-6 leading-relaxed">
+          Edge AI Prompt Enhancer — running locally on your device
+        </p>
 
-        <div className="flex items-center gap-3 mt-6">
-          <button onClick={finish}
-                  className="flex-1 py-2 rounded-xl border border-gray-200 dark:border-gray-700
-                             text-sm text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition">
-            Skip
-          </button>
-          <button
-            onClick={() => isLast ? finish() : setStep((s) => s + 1)}
-            className="flex-1 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-sm font-semibold transition"
-          >
-            {isLast ? 'Get Started 🚀' : 'Next →'}
-          </button>
+        {/* Feature highlights */}
+        <div className="flex flex-col gap-2.5 text-left mb-7">
+          {FEATURES.map(({ icon, title, desc, color }) => {
+            const c = COLOR_MAP[color]
+            return (
+              <div key={title}
+                   className={`flex items-start gap-3 p-3 rounded-xl border ${c.border} ${c.bg}`}>
+                <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center ${c.iconBg}`} aria-hidden="true">
+                  <span className="text-base" aria-hidden="true">{icon}</span>
+                </div>
+                <div>
+                  <p className={`text-xs font-bold ${c.text}`}>{title}</p>
+                  <p className="text-[11px] text-gray-500 mt-0.5 leading-relaxed">{desc}</p>
+                </div>
+              </div>
+            )
+          })}
         </div>
+
+        {/* CTA */}
+        <button
+          onClick={finish}
+          className="w-full py-3 rounded-full gradient-brand text-white font-bold text-sm tracking-wide
+                     shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/45
+                     hover:brightness-110 active:scale-[0.98] transition-all duration-200"
+        >
+          Get Started →
+        </button>
+        <button
+          onClick={finish}
+          className="mt-3 text-xs text-gray-600 hover:text-gray-400 transition-colors"
+        >
+          Skip for now
+        </button>
       </div>
     </div>
   )

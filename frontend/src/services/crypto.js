@@ -1,14 +1,21 @@
 // AES-256-GCM encryption via browser-native Web Crypto API (NF-S6)
-// The key is derived from a static app salt — the goal is obfuscation
-// in localStorage, not secure multi-user storage.
+// The key is derived from a static app salt XOR'd with the site origin.
+// Goal: obfuscation in localStorage per device/origin, not secure multi-user storage.
 
-const SALT = new TextEncoder().encode('chota-packet-salt-v1')
+const SALT_TEXT = 'chota-packet-salt-v1'
 const ALG = { name: 'AES-GCM', length: 256 }
 
+// Build a salt that incorporates the current origin for marginal per-origin variation
+function buildSalt() {
+  const combined = SALT_TEXT + '/' + location.origin
+  return new TextEncoder().encode(combined)
+}
+
 async function deriveKey() {
-  const base = await crypto.subtle.importKey('raw', SALT, 'PBKDF2', false, ['deriveKey'])
+  const salt = buildSalt()
+  const base = await crypto.subtle.importKey('raw', salt, 'PBKDF2', false, ['deriveKey'])
   return crypto.subtle.deriveKey(
-    { name: 'PBKDF2', salt: SALT, iterations: 100_000, hash: 'SHA-256' },
+    { name: 'PBKDF2', salt, iterations: 100_000, hash: 'SHA-256' },
     base,
     ALG,
     false,

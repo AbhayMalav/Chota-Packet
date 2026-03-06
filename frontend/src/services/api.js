@@ -16,7 +16,6 @@ export const stt = (audioBlob, lang = 'en') => {
   form.append('lang', lang)
   return client.post('/stt', form, {
     timeout: STT_TIMEOUT_MS,
-    headers: { 'Content-Type': 'multipart/form-data' },
   })
 }
 

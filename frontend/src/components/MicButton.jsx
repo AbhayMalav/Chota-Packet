@@ -1,7 +1,6 @@
 import React from 'react'
 import { useRecorder } from '../hooks/useRecorder'
 
-
 export default function MicButton({ onTranscript, lang }) {
   const { recording, error, start, stop } = useRecorder({ onTranscript, lang })
 
@@ -11,15 +10,16 @@ export default function MicButton({ onTranscript, lang }) {
         id="mic-btn"
         onClick={recording ? stop : start}
         aria-label={recording ? 'Stop recording' : 'Start recording'}
-        title={recording ? 'Stop recording' : 'Record audio (FR-03)'}
-        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition
+        title={recording ? 'Stop recording' : 'Record audio'}
+        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold
+                    transition-all duration-200
                     ${recording
-                      ? 'bg-red-500 text-white animate-mic-pulse shadow-red-500/30 shadow-md'
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'}`}
+                      ? 'bg-red-500/90 text-white animate-mic-pulse shadow-lg shadow-red-500/30'
+                      : 'border border-purple-500/20 bg-purple-500/5 text-gray-500 hover:text-purple-400 hover:bg-purple-500/10 hover:border-purple-500/35'}`}
       >
         {recording ? '⏹ Stop' : '🎤 Mic'}
       </button>
-      {error && <span className="text-xs text-red-500 max-w-[180px] text-right">{error}</span>}
+      {error && <span className="text-[11px] text-red-400 max-w-[180px] text-right">{error}</span>}
     </div>
   )
 }

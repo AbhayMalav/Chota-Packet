@@ -22,6 +22,9 @@ Dataset format (training/dataset.json):
         ...
     ]
 
+
+
+
 Minimum 400 pairs (300 EN + 300 HI). Aim for 600+.
 For cross-lingual support (FR-30): include 50+ cross-lingual pairs.
 """

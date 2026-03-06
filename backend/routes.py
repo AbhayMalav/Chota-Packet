@@ -12,6 +12,7 @@ Endpoints:
 from __future__ import annotations
 
 import logging
+import re
 from typing import Literal, Optional, Annotated
 
 import httpx
@@ -186,11 +187,10 @@ async def enhance_prompt(
 
     system_prompt = ENHANCEMENT_SYSTEM_PROMPTS.get(req.enhancement_level, ENHANCEMENT_SYSTEM_PROMPTS["basic"])
     prefix = build_prefix(
-        lang=req.input_lang,
+        input_lang=req.input_lang,
         style=req.style,
         tone=req.tone,
         enhancement_level=req.enhancement_level,
-        input_lang=req.input_lang,
         output_lang=req.output_lang,
     )
 
@@ -316,7 +316,7 @@ async def _cloud_enhance(
     # Cost estimate from usage field if present
     usage = data.get("usage", {})
     total_tokens = usage.get("total_tokens", 0)
-    # Rough cost: most models ~$0.005 per 1k tokens blended
+    # Cost estimate: $0.000005 per token ($5 per 1M tokens) blended average
     cost = round(total_tokens * 0.000005, 6) if total_tokens else None
 
     return JSONResponse({
@@ -335,10 +335,8 @@ async def validate_openrouter_key(req: ValidateKeyRequest) -> JSONResponse:
     Validate an OpenRouter API key (FR-41).
     Checks format first, then calls OpenRouter /auth/key to verify it's active.
     """
-    import re as _re
-
     # Format check (client-side redundancy)
-    if not _re.match(r"^sk-or-v1-[a-zA-Z0-9]{32,}$", req.key):
+    if not re.match(r"^sk-or-v1-[a-zA-Z0-9]{32,}$", req.key):
         raise HTTPException(
             status_code=400,
             detail={"error": "Invalid key format. Expected: sk-or-v1-..."},
@@ -424,8 +422,8 @@ async def get_openrouter_models(
             local_model = get_static_models()[0]
             return JSONResponse({"models": [local_model] + models_list, "source": "openrouter_live"})
 
-    except Exception:
-        pass  # Fall through to static list
+    except (httpx.TimeoutException, httpx.RequestError) as exc:
+        logger.warning("Live model fetch failed (%s) — using static fallback", exc)
 
     logger.warning("Could not fetch live model list — using static fallback")
     return JSONResponse({

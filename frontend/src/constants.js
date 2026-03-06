@@ -7,11 +7,14 @@ export const HISTORY_LIMIT = 5
 export const FEEDBACK_CAP = 100
 
 export const STYLES = [
-  { value: 'general',   label: 'General' },
-  { value: 'creative',  label: 'Creative' },
-  { value: 'code',      label: 'Code' },
-  { value: 'academic',  label: 'Academic' },
-  { value: 'marketing', label: 'Marketing' },
+  { value: 'general',    label: 'General' },
+  { value: 'creative',   label: 'Creative' },
+  { value: 'code',       label: 'Code' },
+  { value: 'stepbystep', label: 'Step-by-Step' },
+  { value: 'data',       label: 'Data Analysis' },
+  { value: 'detailed',   label: 'Detailed' },
+  { value: 'academic',   label: 'Academic' },
+  { value: 'marketing',  label: 'Marketing' },
 ]
 
 export const TONES = [

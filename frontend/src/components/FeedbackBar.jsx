@@ -16,16 +16,19 @@ export default function FeedbackBar() {
   }, [])
 
   return (
-    <div className="flex items-center gap-1" role="group" aria-label="Feedback">
-      <span className="text-xs text-gray-400 dark:text-gray-500 mr-1">Helpful?</span>
+    <div className="flex items-center gap-1.5" role="group" aria-label="Feedback">
+      <span className="text-[11px] text-gray-400 dark:text-gray-500 mr-1 font-medium">Helpful?</span>
       {[['up', '👍'], ['down', '👎']].map(([v, emoji]) => (
         <button
           key={v}
           onClick={() => vote(v)}
           aria-label={v === 'up' ? 'Thumbs up' : 'Thumbs down'}
           aria-pressed={voted === v}
-          className={`text-sm transition-transform hover:scale-110 active:scale-95
-                      ${voted === v ? 'grayscale-0 opacity-100' : 'grayscale opacity-40 hover:opacity-70'}`}
+          className={`text-sm transition-all duration-200 hover:scale-125 active:scale-95
+                      rounded-md p-0.5
+                      ${voted === v
+                        ? 'grayscale-0 opacity-100 ring-2 ring-violet-500/30'
+                        : 'grayscale opacity-30 hover:opacity-70 hover:grayscale-0'}`}
         >
           {emoji}
         </button>

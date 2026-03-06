@@ -13,11 +13,12 @@ import HistoryPanel from './components/HistoryPanel'
 import SettingsModal from './components/SettingsModal'
 import MicButton from './components/MicButton'
 import OnboardingOverlay from './components/OnboardingOverlay'
+import { NavBtn, KbdHint } from './components/NavBar'
 
 // ── App state machine ────────────────────────────────────────────────────────
 function appReducer(state, action) {
   switch (action.type) {
-    case 'INPUT_CHANGED': return { ...state, input: action.value, uiState: action.value.trim() ? 'INPUT_READY' : 'IDLE' }
+    case 'INPUT_CHANGED': return { ...state, input: action.value, uiState: action.value.trim() ? 'INPUT_READY' : 'IDLE', error: null }
     case 'LOADING':       return { ...state, uiState: 'LOADING' }
     case 'SUCCESS':       return { ...state, uiState: 'OUTPUT', outputText: action.text, originalText: state.input }
     case 'ERROR':         return { ...state, uiState: 'ERROR' }
@@ -38,10 +39,10 @@ export default function App() {
   const { uiState, input, outputText, originalText } = appState
 
   // Controls
-  const [style, setStyle]         = useState('general')
-  const [tone, setTone]           = useState('')
-  const [level, setLevel]         = useState('basic')
-  const [inputLang, setInputLang] = useState('en')
+  const [style, setStyle]           = useState('general')
+  const [tone, setTone]             = useState('')
+  const [level, setLevel]           = useState('basic')
+  const [inputLang, setInputLang]   = useState('en')
   const [outputLang, setOutputLang] = useState('auto')
 
   // UI panels
@@ -90,7 +91,7 @@ export default function App() {
     }
   }, [input, inputLang, outputLang, style, tone, level, inferenceMode, selectedModel, openRouterKey, runEnhance])
 
-  // ─── Keyboard shortcuts (T-38) ───────────────────────────────────────────
+  // ─── Keyboard shortcuts ──────────────────────────────────────────────────
   useEffect(() => {
     const handler = (e) => {
       if (e.ctrlKey && e.key === 'Enter') { e.preventDefault(); handleEnhance() }
@@ -108,10 +109,14 @@ export default function App() {
   const hasOutput = uiState === 'OUTPUT' && outputText
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-950 dark:to-gray-900
-                    text-gray-900 dark:text-gray-100 transition-colors duration-300 font-sans">
+    <div className="min-h-screen relative" style={{ background: 'var(--theme-bg)', color: 'var(--theme-text)' }}>
 
-      {/* Overlays */}
+      {/* ── Nebula orbs ── */}
+      <div className="nebula-orb-1 animate-nebula" aria-hidden="true" />
+      <div className="nebula-orb-2" aria-hidden="true" style={{ animationDelay: '7s' }} />
+      <div className="nebula-orb-3" aria-hidden="true" />
+
+      {/* ── Overlays ── */}
       {showOnboard && <OnboardingOverlay onDone={() => setShowOnboard(false)} />}
       {settingsOpen && <SettingsModal onClose={() => setSettingsOpen(false)} settings={settings} />}
       {diffOpen && originalText && outputText && (
@@ -124,48 +129,54 @@ export default function App() {
         onSelect={(item) => dispatch({ type: 'INPUT_CHANGED', value: item.input })}
       />
 
-      {/* Main layout */}
-      <div className="max-w-2xl mx-auto px-4 py-8 flex flex-col gap-6 min-h-screen">
+      {/* ── Main layout ── */}
+      <div className="relative z-10 max-w-2xl mx-auto px-4 py-6 flex flex-col gap-5 min-h-screen">
 
-        {/* Header */}
-        <header className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-black tracking-tight bg-gradient-to-r from-violet-600 to-indigo-500 bg-clip-text text-transparent">
-              Chota Packet
-            </h1>
-            <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Edge AI Prompt Enhancer</p>
+        {/* ── Navbar ── */}
+        <header className="glass-navbar rounded-2xl px-5 py-3.5 flex items-center justify-between sticky top-4 z-20 animate-fade-in">
+          <div className="flex items-center gap-3">
+            <div>
+              <h1 className="text-xl font-extrabold tracking-tight gradient-text leading-none">
+                Chota Packet
+              </h1>
+              <p className="text-[10px] text-purple-400/60 mt-0.5 font-medium tracking-widest uppercase">
+                Edge AI
+              </p>
+            </div>
           </div>
+
           <div className="flex items-center gap-2">
-            {/* Inference mode badge */}
-            <span className={`text-[10px] px-2 py-1 rounded-full font-semibold uppercase tracking-wide
-                              ${inferenceMode === 'cloud'
-                                ? 'bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300'
-                                : 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-300'}`}>
-              {inferenceMode}
+            {/* Inference badge */}
+            <span className={`text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider border
+              ${inferenceMode === 'cloud'
+                ? 'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'}`}>
+              {inferenceMode === 'cloud' ? '☁ Cloud' : '🏠 Local'}
             </span>
-            <button onClick={() => setHistoryOpen(!historyOpen)}
-                    aria-label="Toggle history" title="Session history"
-                    className="p-2 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200
-                               hover:bg-gray-100 dark:hover:bg-gray-800 transition text-lg">📋</button>
-            <button onClick={() => setSettingsOpen(true)}
-                    aria-label="Open settings"
-                    className="p-2 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200
-                               hover:bg-gray-100 dark:hover:bg-gray-800 transition text-lg">⚙</button>
-            <button onClick={toggleDark}
-                    aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-                    className="p-2 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200
-                               hover:bg-gray-100 dark:hover:bg-gray-800 transition text-lg">
-              {darkMode ? '☀️' : '🌙'}
-            </button>
+
+            <NavBtn onClick={() => setHistoryOpen(!historyOpen)} label="Session history" icon={
+              <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clipRule="evenodd"/>
+              </svg>
+            }/>
+            <NavBtn onClick={() => setSettingsOpen(true)} label="Settings" icon={
+              <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+                <path fillRule="evenodd" d="M7.84 1.804A1 1 0 018.82 1h2.36a1 1 0 01.98.804l.331 1.652a6.993 6.993 0 011.929 1.115l1.598-.54a1 1 0 011.186.447l1.18 2.044a1 1 0 01-.205 1.251l-1.267 1.113a7.047 7.047 0 010 2.228l1.267 1.113a1 1 0 01.206 1.25l-1.18 2.045a1 1 0 01-1.187.447l-1.598-.54a6.993 6.993 0 01-1.929 1.115l-.33 1.652a1 1 0 01-.98.804H8.82a1 1 0 01-.98-.804l-.331-1.652a6.993 6.993 0 01-1.929-1.115l-1.598.54a1 1 0 01-1.186-.447l-1.18-2.044a1 1 0 01.205-1.251l1.267-1.114a7.05 7.05 0 010-2.227L1.821 7.773a1 1 0 01-.206-1.25l1.18-2.045a1 1 0 011.187-.447l1.598.54A6.992 6.992 0 017.51 3.456l.33-1.652zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd"/>
+              </svg>
+            }/>
+            <NavBtn onClick={toggleDark} label={darkMode ? 'Light mode' : 'Dark mode'} icon={
+              darkMode
+                ? <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/></svg>
+                : <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+            }/>
           </div>
         </header>
 
-        {/* Status banner */}
+        {/* ── Status banner ── */}
         <StatusBanner status={backendStatus} />
 
-        {/* Main card */}
-        <main className="bg-white dark:bg-gray-800/50 rounded-2xl border border-gray-100 dark:border-gray-700/50
-                          shadow-sm p-5 flex flex-col gap-5 backdrop-blur-sm">
+        {/* ── Main card ── */}
+        <main className="glass-card rounded-2xl gradient-border p-6 flex flex-col gap-5 animate-fade-in animate-glow">
           <InputArea
             value={input}
             onChange={(v) => dispatch({ type: 'INPUT_CHANGED', value: v })}
@@ -189,9 +200,10 @@ export default function App() {
 
           {/* Error state */}
           {uiState === 'ERROR' && enhanceError && (
-            <div className="rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/30
-                            text-red-700 dark:text-red-300 px-4 py-3 text-sm" role="alert">
-              ⚠ {enhanceError}
+            <div className="rounded-xl border border-red-500/20 bg-red-500/8
+                            text-red-400 px-4 py-3 text-sm flex items-center gap-2 animate-fade-in" role="alert">
+              <span>⚠️</span>
+              <span>{enhanceError}</span>
             </div>
           )}
 
@@ -205,13 +217,16 @@ export default function App() {
           )}
         </main>
 
-        {/* Footer */}
-        <footer className="text-center text-[11px] text-gray-300 dark:text-gray-600">
-          <kbd className="border border-gray-200 dark:border-gray-700 rounded px-1">Ctrl+Enter</kbd> = Enhance ·{' '}
-          <kbd className="border border-gray-200 dark:border-gray-700 rounded px-1">Esc</kbd> = Close ·{' '}
-          <kbd className="border border-gray-200 dark:border-gray-700 rounded px-1">Ctrl+Shift+C</kbd> = Copy
+        {/* ── Footer shortcuts ── */}
+        <footer className="text-center flex items-center justify-center gap-3 flex-wrap pb-4">
+          <KbdHint keys="Ctrl+Enter" action="Enhance" />
+          <span className="text-gray-700">·</span>
+          <KbdHint keys="Esc" action="Close" />
+          <span className="text-gray-700">·</span>
+          <KbdHint keys="Ctrl+Shift+C" action="Copy" />
         </footer>
       </div>
     </div>
   )
 }
+

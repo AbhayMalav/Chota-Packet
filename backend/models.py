@@ -162,11 +162,10 @@ def check_ffmpeg() -> bool:
 # ─────────────────────────── Prefix builder ───────────────────────────────────
 
 def build_prefix(
-    lang: str,
+    input_lang: str,
     style: str,
     tone: str,
     enhancement_level: str,
-    input_lang: str = "en",
     output_lang: str = "auto",
 ) -> str:
     """
@@ -182,7 +181,7 @@ def build_prefix(
         build_prefix("hi", "general", "", "basic", input_lang="hi", output_lang="en")
         → "prompt sudharo (output: English): "
     """
-    base = TASK_PREFIXES.get(lang, TASK_PREFIXES["en"])
+    base = TASK_PREFIXES.get(input_lang, TASK_PREFIXES["en"])
 
     tags: list[str] = []
 
