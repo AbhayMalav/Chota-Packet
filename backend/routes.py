@@ -30,6 +30,7 @@ from config import (
     OPENROUTER_TIMEOUT_S,
     VALIDATE_KEY_TIMEOUT_S,
     CLOUD_MAX_OUTPUT_TOKENS,
+    OPENROUTER_COST_PER_TOKEN,
     STYLE_MAP,
     TONE_MAP,
 )
@@ -132,7 +133,26 @@ async def transcribe_audio(
             },
         )
 
-    # Guard: MIME type (FR-15)
+    # Guard: Magic bytes check for audio files
+    header = audio_bytes[:12]
+    is_valid_audio = (
+        header.startswith(b"\x1A\x45\xDF\xA3") or  # WebM
+        header.startswith(b"OggS") or              # Ogg
+        (header.startswith(b"RIFF") and header[8:12] == b"WAVE") or # Wav
+        header.startswith(b"ID3") or header.startswith(b"\xFF\xFB") or 
+        header.startswith(b"\xFF\xF3") or header.startswith(b"\xFF\xFA") # MP3 variants
+    )
+    if not is_valid_audio:
+        logger.warning("Rejected file upload: Invalid magic bytes %r", header)
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "error": "Invalid audio file",
+                "detail": "The uploaded file does not appear to be a valid audio format.",
+            },
+        )
+
+    # Guard: MIME type header (FR-15)
     content_type = audio.content_type or ""
     if content_type and content_type not in ALLOWED_AUDIO_MIMES:
         raise HTTPException(
@@ -156,10 +176,11 @@ async def transcribe_audio(
             mock_mode=models.mock_mode,
         )
     except ValueError as exc:
-        raise HTTPException(status_code=500, detail={"error": "Transcription failed", "detail": str(exc)})
+        logger.warning("STT transcription value error: %s", exc)
+        raise HTTPException(status_code=400, detail={"error": "Transcription failed", "detail": "Audio processing failed. Please ensure the file is a valid audio format."})
     except Exception as exc:
-        logger.exception("STT unexpected error")
-        raise HTTPException(status_code=500, detail={"error": "Transcription failed", "detail": str(exc)})
+        logger.exception("STT unexpected error: %s", exc)
+        raise HTTPException(status_code=500, detail={"error": "Transcription failed", "detail": "An internal server error occurred during transcription."})
 
     payload: dict = {"text": transcript}
     if warning:
@@ -316,8 +337,8 @@ async def _cloud_enhance(
     # Cost estimate from usage field if present
     usage = data.get("usage", {})
     total_tokens = usage.get("total_tokens", 0)
-    # Cost estimate: $0.000005 per token ($5 per 1M tokens) blended average
-    cost = round(total_tokens * 0.000005, 6) if total_tokens else None
+    # Cost estimate using configured blended average
+    cost = round(total_tokens * OPENROUTER_COST_PER_TOKEN, 6) if total_tokens else None
 
     return JSONResponse({
         "enhanced_prompt": content,

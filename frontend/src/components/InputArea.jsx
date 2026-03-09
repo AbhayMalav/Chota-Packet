@@ -29,7 +29,7 @@ export default function InputArea({ value, onChange, inputLang, onLangChange, ch
               key={lang.value}
               onClick={() => onLangChange(lang.value)}
               aria-pressed={inputLang === lang.value}
-              className={`px-2 py-0.5 text-[10px] font-bold tracking-wider transition-all duration-200
+              className={`px-2 py-0.5 text-[10px] min-h-[44px] md:min-h-[auto] font-bold tracking-wider transition-all duration-200
                 ${inputLang === lang.value
                   ? 'gradient-brand text-white'
                   : 'text-gray-500 hover:text-purple-400 hover:bg-purple-500/10'}`}
@@ -50,11 +50,11 @@ export default function InputArea({ value, onChange, inputLang, onLangChange, ch
           placeholder="Type or paste your prompt here…"
           rows={4}
           className="w-full resize-none rounded-xl border border-purple-500/15
-                     bg-black/30 text-gray-200 placeholder-gray-600
-                     px-4 py-3.5 text-sm leading-relaxed
+                     bg-[var(--theme-input-bg)] text-[var(--theme-input-text)]
+                     px-4 py-3.5 text-sm leading-relaxed min-h-[44px]
                      focus:outline-none focus:border-purple-500/40
                      focus:ring-1 focus:ring-purple-500/30
-                     focus:bg-black/40 transition-all duration-200 focus-ring"
+                     focus:bg-[var(--theme-input-bg-focus)] transition-all duration-200 focus-ring"
           aria-label="Prompt input"
           aria-describedby="char-count"
         />

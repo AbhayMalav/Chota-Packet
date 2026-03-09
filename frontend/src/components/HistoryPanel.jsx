@@ -88,7 +88,7 @@ export default function HistoryPanel({ history, onSelect, open, onClose }) {
                 aria-expanded={exportOpen}
                 className="text-[10px] px-2.5 py-1 rounded-full border border-purple-500/15 text-gray-500
                            hover:text-purple-400 hover:bg-purple-500/10 transition-all duration-200
-                           flex items-center gap-1"
+                           flex items-center justify-center gap-1 min-h-[44px] md:min-h-[auto]"
               >
                 Export
                 <svg viewBox="0 0 20 20" fill="currentColor" className={`w-2.5 h-2.5 transition-transform duration-200 ${exportOpen ? 'rotate-180' : ''}`}>
@@ -99,23 +99,23 @@ export default function HistoryPanel({ history, onSelect, open, onClose }) {
               {exportOpen && (
                 <div
                   role="listbox"
-                  className="absolute right-0 top-full mt-1.5 w-36 rounded-xl
-                             border border-purple-500/20 bg-[#111120] shadow-xl shadow-black/40
-                             py-1 z-10 animate-fade-in"
+                  className="absolute right-0 top-full mt-1.5 w-36 rounded-2xl
+                             glass-card shadow-xl shadow-black/20
+                             py-1.5 z-10 animate-fade-in overflow-hidden"
                 >
                   <button
                     role="option"
                     onClick={() => { exportItems(allItems, 'json'); setExportOpen(false) }}
-                    className="w-full text-left px-3 py-2 text-[11px] text-gray-400
-                               hover:text-purple-300 hover:bg-purple-500/10 transition-all duration-150"
+                    className="w-full text-left px-3 py-2.5 text-[11px] text-[var(--theme-text)]
+                               hover:text-purple-400 hover:bg-purple-500/10 transition-all duration-150"
                   >
                     📄 Export as JSON
                   </button>
                   <button
                     role="option"
                     onClick={() => { exportItems(allItems, 'txt'); setExportOpen(false) }}
-                    className="w-full text-left px-3 py-2 text-[11px] text-gray-400
-                               hover:text-purple-300 hover:bg-purple-500/10 transition-all duration-150"
+                    className="w-full text-left px-3 py-2.5 text-[11px] text-[var(--theme-text)]
+                               hover:text-purple-400 hover:bg-purple-500/10 transition-all duration-150"
                   >
                     📝 Export as TXT
                   </button>
@@ -124,7 +124,7 @@ export default function HistoryPanel({ history, onSelect, open, onClose }) {
             </div>
 
             <button onClick={onClose} aria-label="Close history panel"
-                    className="p-1.5 rounded-lg text-gray-500 hover:text-gray-200 hover:bg-white/5 transition-all text-lg">
+                    className="p-1.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-gray-500 hover:text-gray-200 hover:bg-white/5 transition-all text-lg">
               ✕
             </button>
           </div>
@@ -139,10 +139,10 @@ export default function HistoryPanel({ history, onSelect, open, onClose }) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search history…"
-              className="w-full pl-8 pr-3 py-2 rounded-full text-xs
-                         bg-black/30 border border-purple-500/15 text-gray-300
+              className="w-full pl-8 pr-3 py-2 rounded-full text-xs min-h-[44px]
+                         bg-[var(--theme-input-bg)] border border-purple-500/15 text-[var(--theme-input-text)]
                          placeholder-gray-600 focus:outline-none focus:border-purple-500/35
-                         focus:ring-1 focus:ring-purple-500/20 transition-all duration-200"
+                         focus:ring-1 focus:ring-purple-500/20 transition-all duration-200 focus:bg-[var(--theme-input-bg-focus)]"
             />
           </div>
         </div>

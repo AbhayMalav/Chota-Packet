@@ -27,7 +27,7 @@ VARIANT_TEMPERATURE: float = 0.8   # Sampling temp for variant_mode (FR-29)
 
 # ──────────────────────────── Post-processing ────────────────────────────────
 
-HALLUCINATION_MIN_TOKENS: int = 15  # Minimum output token count (FR-16)
+HALLUCINATION_MIN_TOKENS: int = 5   # Minimum output token count (FR-16)
 HALLUCINATION_NGRAM: int = 4        # N-gram size for repetition check (FR-16)
 HALLUCINATION_MAX_REPEATS: int = 3  # Max times an n-gram may appear (FR-16)
 
@@ -81,6 +81,7 @@ OPENROUTER_MODELS_ENDPOINT: str = f"{OPENROUTER_BASE_URL}/models"
 
 # Cloud output guard-rail (NF-R8)
 CLOUD_MAX_OUTPUT_TOKENS: int = 2_000
+OPENROUTER_COST_PER_TOKEN: float = 0.000005  # $5 per 1M tokens blended avg
 
 # ──────────────────────────── MIME types ──────────────────────────────────────
 

@@ -25,6 +25,12 @@
   --theme-border-navbar: rgba(127, 19, 236, 0.12);
   --theme-border-sidebar: rgba(127, 19, 236, 0.15);
   --theme-placeholder: #4a4a6a;
+  --theme-input-bg: rgba(0, 0, 0, 0.3);
+  --theme-input-bg-focus: rgba(0, 0, 0, 0.4);
+  --theme-input-bg-hover: rgba(127, 19, 236, 0.05);
+  --theme-option-bg: #111120;
+  --theme-kbd-bg: rgba(31, 41, 55, 0.5);
+  --theme-kbd-border: rgba(55, 65, 81, 0.8);
   --theme-nebula-1: rgba(127, 19, 236, 0.12);
   --theme-nebula-2: rgba(99, 102, 241, 0.1);
   --theme-nebula-3: rgba(127, 19, 236, 0.04);
@@ -45,6 +51,12 @@
   --theme-border-navbar: rgba(127, 19, 236, 0.18);
   --theme-border-sidebar: rgba(127, 19, 236, 0.2);
   --theme-placeholder: #9090a8;
+  --theme-input-bg: #ffffff;
+  --theme-input-bg-focus: #ffffff;
+  --theme-input-bg-hover: rgba(127, 19, 236, 0.08);
+  --theme-option-bg: #ffffff;
+  --theme-kbd-bg: rgba(243, 244, 246, 0.8);
+  --theme-kbd-border: rgba(209, 213, 219, 0.8);
   --theme-nebula-1: rgba(127, 19, 236, 0.07);
   --theme-nebula-2: rgba(99, 102, 241, 0.06);
   --theme-nebula-3: rgba(127, 19, 236, 0.03);
@@ -103,6 +115,7 @@ body {
 [contenteditable]:empty:before {
   content: attr(data-placeholder);
   color: var(--theme-placeholder);
+  pointer-events: none;
 }
 
 /* ── Animations ──────────────────────────────────────────────────────────── */
@@ -133,7 +146,6 @@ body {
 .animate-slide-in-right {
   animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-
 
 @keyframes mic-pulse {
   0%,
@@ -303,6 +315,9 @@ body {
     rgba(127, 19, 236, 0.05)
   );
   -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;

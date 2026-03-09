@@ -94,10 +94,11 @@ export default function SettingsModal({ onClose, settings }) {
                 value={keyInput}
                 onChange={(e) => setKeyInput(e.target.value)}
                 placeholder={openRouterKey ? '••••••••••••••••' : 'sk-or-v1-…'}
-                className="w-full rounded-full border border-purple-500/15 bg-black/30
-                           text-sm px-4 py-2.5 pr-10 text-gray-200
+                className="w-full rounded-full border border-purple-500/15 bg-[var(--theme-input-bg)]
+                           text-sm px-4 py-2.5 pr-10 text-[var(--theme-input-text)] min-h-[44px]
                            focus:outline-none focus:border-purple-500/40 focus:ring-1 focus:ring-purple-500/25
-                           transition-all duration-200 placeholder-gray-600"
+                           focus:bg-[var(--theme-input-bg-focus)]
+                           transition-all duration-200"
                 onKeyDown={(e) => e.key === 'Enter' && handleSave()}
               />
               <button
@@ -112,7 +113,7 @@ export default function SettingsModal({ onClose, settings }) {
               onClick={handleSave}
               disabled={!keyInput}
               className="px-4 py-2 rounded-full gradient-brand text-white text-sm font-semibold
-                         shadow-md shadow-purple-500/20 hover:shadow-purple-500/35
+                         shadow-md shadow-purple-500/20 hover:shadow-purple-500/35 min-h-[44px]
                          disabled:opacity-25 disabled:shadow-none transition-all duration-200"
             >
               Save
@@ -138,13 +139,13 @@ export default function SettingsModal({ onClose, settings }) {
               id="model-select"
               value={selectedModel}
               onChange={(e) => saveModel(e.target.value)}
-              className="w-full rounded-full border border-purple-500/15 bg-black/30 text-sm px-4 py-2.5
-                         text-gray-300 focus:outline-none focus:border-purple-500/40
-                         cursor-pointer transition-all duration-200 hover:border-purple-500/30"
+              className="w-full rounded-full border border-purple-500/15 bg-[var(--theme-input-bg)] text-sm px-4 py-2.5 min-h-[44px]
+                         text-[var(--theme-input-text)] focus:outline-none focus:border-purple-500/40 focus:bg-[var(--theme-input-bg-focus)]
+                         cursor-pointer transition-all duration-200 hover:border-purple-500/30 hover:bg-[var(--theme-input-bg-hover)]"
             >
-              <option value="" className="bg-gray-900">— Auto-select —</option>
+              <option value="" className="bg-[var(--theme-option-bg)]">— Auto-select —</option>
               {models?.map((m) => (
-                <option key={m.id} value={m.id} className="bg-gray-900">
+                <option key={m.id} value={m.id} className="bg-[var(--theme-option-bg)]">
                   {m.name}{m.context_length ? ` (${m.context_length.toLocaleString()} ctx)` : ''}
                 </option>
               ))}
@@ -161,7 +162,8 @@ export default function SettingsModal({ onClose, settings }) {
           <div className="flex flex-col gap-1.5">
             {[['Ctrl+Enter','Enhance'], ['Esc','Close panels'], ['Ctrl+Shift+C','Copy output']].map(([key, action]) => (
               <div key={key} className="flex items-center justify-between text-[11px]">
-                <kbd className="px-2 py-0.5 rounded-md border border-gray-700/80 bg-gray-800/50 text-gray-400 font-mono">
+                <kbd className="px-2 py-0.5 rounded-md border text-[var(--theme-input-text)] font-mono"
+                     style={{ backgroundColor: 'var(--theme-kbd-bg)', borderColor: 'var(--theme-kbd-border)' }}>
                   {key}
                 </kbd>
                 <span className="text-gray-600">{action}</span>

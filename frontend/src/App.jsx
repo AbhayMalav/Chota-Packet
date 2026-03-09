@@ -14,6 +14,7 @@ import SettingsModal from './components/SettingsModal'
 import MicButton from './components/MicButton'
 import OnboardingOverlay from './components/OnboardingOverlay'
 import { NavBtn, KbdHint } from './components/NavBar'
+import ErrorBoundary from './components/ErrorBoundary'
 
 // ── App state machine ────────────────────────────────────────────────────────
 function appReducer(state, action) {
@@ -176,8 +177,9 @@ export default function App() {
         <StatusBanner status={backendStatus} />
 
         {/* ── Main card ── */}
-        <main className="glass-card rounded-2xl gradient-border p-6 flex flex-col gap-5 animate-fade-in animate-glow">
-          <InputArea
+        <ErrorBoundary>
+          <main className="glass-card rounded-2xl gradient-border p-6 flex flex-col gap-5 animate-fade-in animate-glow">
+            <InputArea
             value={input}
             onChange={(v) => dispatch({ type: 'INPUT_CHANGED', value: v })}
             inputLang={inputLang}
@@ -216,6 +218,7 @@ export default function App() {
             />
           )}
         </main>
+        </ErrorBoundary>
 
         {/* ── Footer shortcuts ── */}
         <footer className="text-center flex items-center justify-center gap-3 flex-wrap pb-4">

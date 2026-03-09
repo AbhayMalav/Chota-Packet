@@ -11,7 +11,7 @@ export default function MicButton({ onTranscript, lang }) {
         onClick={recording ? stop : start}
         aria-label={recording ? 'Stop recording' : 'Start recording'}
         title={recording ? 'Stop recording' : 'Record audio'}
-        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold
+        className={`flex items-center justify-center min-h-[44px] gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold
                     transition-all duration-200
                     ${recording
                       ? 'bg-red-500/90 text-white animate-mic-pulse shadow-lg shadow-red-500/30'

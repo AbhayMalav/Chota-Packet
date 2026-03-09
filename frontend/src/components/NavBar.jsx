@@ -6,7 +6,7 @@ export function NavBtn({ onClick, label, icon }) {
       onClick={onClick}
       aria-label={label}
       title={label}
-      className="p-2 rounded-xl text-gray-500 hover:text-purple-400
+      className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl text-gray-500 hover:text-purple-400
                  hover:bg-purple-500/10 transition-all duration-200"
     >
       {icon}
