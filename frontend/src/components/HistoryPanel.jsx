@@ -63,7 +63,7 @@ export default function HistoryPanel({ history, onSelect, open, onClose }) {
 
       {/* Sidebar */}
       <div
-        className="fixed right-0 top-0 h-full w-80 z-50 flex flex-col animate-slide-in-right glass-sidebar"
+        className="fixed left-0 top-0 h-full w-80 z-50 flex flex-col animate-slide-in-left glass-sidebar"
         role="complementary"
         aria-label="Session history"
       >

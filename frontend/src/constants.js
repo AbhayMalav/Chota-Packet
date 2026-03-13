@@ -7,6 +7,7 @@ export const HISTORY_LIMIT = 5
 export const FEEDBACK_CAP = 100
 
 export const STYLES = [
+  { value: 'auto',       label: 'Auto' },
   { value: 'general',    label: 'General' },
   { value: 'creative',   label: 'Creative' },
   { value: 'code',       label: 'Code' },
@@ -18,6 +19,7 @@ export const STYLES = [
 ]
 
 export const TONES = [
+  { value: 'auto',      label: 'Auto' },
   { value: '',          label: 'No Tone' },
   { value: 'formal',    label: 'Formal' },
   { value: 'casual',    label: 'Casual' },
@@ -25,6 +27,7 @@ export const TONES = [
 ]
 
 export const LEVELS = [
+  { value: 'auto',     label: 'Auto' },
   { value: 'basic',    label: 'Basic' },
   { value: 'detailed', label: 'Detailed' },
   { value: 'advanced', label: 'Advanced' },

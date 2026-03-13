@@ -21,7 +21,7 @@ function PillSelect({ id, label, value, onChange, options, disabled }) {
   return (
     <div className="flex flex-col gap-1 flex-1 min-w-[100px] relative" ref={dropdownRef}>
       <label htmlFor={id}
-             className="text-[10px] font-bold uppercase tracking-widest text-gray-600">
+             className="text-[10px] font-bold uppercase tracking-widest text-[var(--theme-text-muted)]">
         {label}
       </label>
       <button
@@ -49,7 +49,9 @@ function PillSelect({ id, label, value, onChange, options, disabled }) {
           role="listbox"
           className="absolute left-0 top-full mt-1.5 w-full min-w-[130px] rounded-2xl
                      glass-card shadow-xl shadow-black/20
-                     py-1.5 z-50 animate-fade-in max-h-60 overflow-y-auto overflow-x-hidden"
+                     py-1.5 z-50 animate-fade-in max-h-60 overflow-y-auto overflow-x-hidden
+                     [&::-webkit-scrollbar]:w-[3px] [&::-webkit-scrollbar-thumb]:rounded-full
+                     [&::-webkit-scrollbar-thumb]:bg-purple-500/30 [&::-webkit-scrollbar-track]:bg-transparent"
         >
           {options.map((o) => (
             <button

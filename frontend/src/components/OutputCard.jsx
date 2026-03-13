@@ -94,7 +94,7 @@ export default function OutputCard({ text, onTextChange, onCompare }) {
           aria-label="Enhanced prompt output (editable)"
           aria-multiline="true"
           role="textbox"
-          className="min-h-[120px] px-4 py-4 text-sm leading-relaxed text-gray-200
+          className="min-h-[120px] px-4 py-4 text-sm leading-relaxed text-[var(--theme-text)]
                      whitespace-pre-wrap break-words focus:outline-none
                      transition-all duration-200"
         />
