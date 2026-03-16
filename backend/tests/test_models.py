@@ -48,17 +48,17 @@ class TestBuildPrefix:
 
     def test_cross_lingual_hi_to_en(self):
         from models import build_prefix
-        result = build_prefix("hi", "general", "", "basic", input_lang="hi", output_lang="en")
+        result = build_prefix("hi", "general", "", "basic", output_lang="en")
         assert "output: English" in result
 
     def test_cross_lingual_en_to_hi(self):
         from models import build_prefix
-        result = build_prefix("en", "general", "", "basic", input_lang="en", output_lang="hi")
+        result = build_prefix("en", "general", "", "basic", output_lang="hi")
         assert "output: Hindi" in result
 
     def test_same_lang_no_cross_lingual_tag(self):
         from models import build_prefix
-        result = build_prefix("en", "general", "", "basic", input_lang="en", output_lang="auto")
+        result = build_prefix("en", "general", "", "basic", output_lang="auto")
         assert "output:" not in result
 
     def test_basic_level_no_level_tag(self):

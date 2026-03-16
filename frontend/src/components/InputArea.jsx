@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import { MAX_INPUT_CHARS, LANGS } from '../constants'
 
-export default function InputArea({ value, onChange, inputLang, onLangChange, children }) {
+export default function InputArea({ value, onChange, inputLang, onLangChange, onClear, children }) {
   const textareaRef = useRef(null)
   const wordCount = value.trim() ? value.trim().split(/\s+/).length : 0
 
@@ -66,7 +66,18 @@ export default function InputArea({ value, onChange, inputLang, onLangChange, ch
               className="text-[11px] text-gray-600 font-medium tabular-nums">
           {value.length}/{MAX_INPUT_CHARS} chars · {wordCount} words
         </span>
-        <div className="flex items-center gap-2">{children}</div>
+        <div className="flex items-center gap-2">
+          {onClear && value.length > 0 && (
+            <button
+              onClick={onClear}
+              className="text-[11px] font-bold text-gray-400 hover:text-red-400 px-2 py-1 transition-colors"
+              aria-label="Clear input"
+            >
+              CLEAR
+            </button>
+          )}
+          {children}
+        </div>
       </div>
     </div>
   )

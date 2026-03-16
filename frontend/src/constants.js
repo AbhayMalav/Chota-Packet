@@ -31,6 +31,11 @@ export const LEVELS = [
   { value: 'basic',    label: 'Basic' },
   { value: 'detailed', label: 'Detailed' },
   { value: 'advanced', label: 'Advanced' },
+  { value: 'chain_of_thought', label: 'Chain of Thought' },
+  { value: 'meta', label: 'Meta' },
+  { value: 'prompt_chaining', label: 'Prompt Chaining' },
+  { value: 'multi_prompt_fusion', label: 'Multi-Prompt Fusion' },
+  { value: 'soft_prompting', label: 'Soft Prompting' },
 ]
 
 export const LANGS = [

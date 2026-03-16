@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react'
 
-export default function SettingsModal({ onClose, settings }) {
+export default function SettingsModal({ onClose, settings, onShowShortcuts }) {
   const { openRouterKey, saveKey, clearKey, keyStatus, selectedModel, saveModel, models, inferenceMode } = settings
   const [keyInput, setKeyInput] = useState('')
   const [showKey, setShowKey] = useState(false)
@@ -34,8 +34,7 @@ export default function SettingsModal({ onClose, settings }) {
       role="dialog" aria-modal="true" aria-label="Settings"
     >
       <div
-        className="relative rounded-2xl max-w-md w-full mx-4 p-7 flex flex-col gap-5 animate-fade-in gradient-border"
-        style={{ background: 'rgba(17,17,32,0.95)', backdropFilter: 'blur(24px)', border: '1px solid rgba(127,19,236,0.2)' }}
+        className="relative rounded-2xl max-w-md w-full mx-4 p-7 flex flex-col gap-5 animate-fade-in glass-card gradient-border"
       >
         {/* Subtle inner glow */}
         <div className="absolute inset-0 rounded-2xl pointer-events-none"
@@ -156,19 +155,17 @@ export default function SettingsModal({ onClose, settings }) {
         {/* ── Keyboard shortcuts ── */}
         <section className="flex flex-col gap-2">
           <div className="h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(127,19,236,0.2), transparent)' }} />
-          <label className="text-xs font-bold uppercase tracking-widest text-gray-500">
-            Shortcuts
-          </label>
-          <div className="flex flex-col gap-1.5">
-            {[['Ctrl+Enter','Enhance'], ['Esc','Close panels'], ['Ctrl+Shift+C','Copy output']].map(([key, action]) => (
-              <div key={key} className="flex items-center justify-between text-[11px]">
-                <kbd className="px-2 py-0.5 rounded-md border text-[var(--theme-input-text)] font-mono"
-                     style={{ backgroundColor: 'var(--theme-kbd-bg)', borderColor: 'var(--theme-kbd-border)' }}>
-                  {key}
-                </kbd>
-                <span className="text-gray-600">{action}</span>
-              </div>
-            ))}
+          <div className="flex items-center justify-between">
+            <label className="text-xs font-bold uppercase tracking-widest text-gray-500">
+              Shortcuts
+            </label>
+            <button
+              onClick={onShowShortcuts}
+              className="text-[11px] px-3 py-1.5 rounded-full border border-purple-500/20 text-purple-400 font-medium
+                         hover:bg-purple-500/10 hover:border-purple-500/40 transition-all duration-200"
+            >
+              Show Shortcuts
+            </button>
           </div>
         </section>
 

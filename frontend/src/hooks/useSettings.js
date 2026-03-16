@@ -24,10 +24,30 @@ export function useSettings() {
     }
   }, [])
 
-  // Fetch models list
+  // Fetch models list and handle model auto-fallback/update
   useEffect(() => {
     getModels(openRouterKey)
-      .then(({ data }) => setModels(data.models || []))
+      .then(({ data }) => {
+        const fetchedModels = data.models || [];
+        setModels(fetchedModels);
+        
+        // Auto-fix if selected model vanishes or we have no model while having a key
+        if (fetchedModels.length > 0) {
+          const currentModelId = localStorage.getItem(LS_MODEL);
+          // If no model selected yet, or model went missing from API
+          if (!currentModelId || !fetchedModels.some(m => m.id === currentModelId)) {
+            // Pick the first free model (after local), or the first cloud model
+            const fallbackModel = fetchedModels.find(m => m.id !== 'local' && m.cost_per_1k_tokens === 0) 
+              || fetchedModels.find(m => m.id !== 'local') 
+              || fetchedModels[0];
+              
+            if (fallbackModel) {
+              setSelectedModel(fallbackModel.id);
+              localStorage.setItem(LS_MODEL, fallbackModel.id);
+            }
+          }
+        }
+      })
       .catch(() => {})
   }, [openRouterKey])
 

@@ -52,7 +52,16 @@ class EnhanceRequest(BaseModel):
     output_lang: Literal["hi", "en", "auto"] = "auto"
     style: str = "general"
     tone: Literal["formal", "casual", "technical", ""] = ""
-    enhancement_level: Literal["basic", "detailed", "advanced"] = "basic"
+    enhancement_level: Literal[
+        "basic", 
+        "detailed", 
+        "chain_of_thought", 
+        "meta", 
+        "prompt_chaining", 
+        "multi_prompt_fusion", 
+        "soft_prompting", 
+        "advanced"
+    ] = "basic"
     variant_mode: bool = False
     inference_mode: Literal["local", "cloud"] = "local"
     model: Optional[str] = None
@@ -439,6 +448,10 @@ async def get_openrouter_models(
                 for m in raw_models
                 if m.get("id")
             ]
+            
+            # Sort models: lowest cost first, then by name
+            models_list.sort(key=lambda x: (x["cost_per_1k_tokens"], x["name"]))
+            
             # Prepend local model
             local_model = get_static_models()[0]
             return JSONResponse({"models": [local_model] + models_list, "source": "openrouter_live"})

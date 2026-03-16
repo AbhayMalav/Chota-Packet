@@ -7,6 +7,7 @@ Tests cover: /health, /stt, /enhance (local + validation), /validate-key, /model
 
 import io
 import pytest
+import httpx
 from unittest.mock import patch, AsyncMock
 
 
@@ -49,7 +50,7 @@ class TestSTTEndpoint:
     def test_stt_valid_english(self, client):
         resp = client.post(
             "/stt",
-            files={"audio": ("test.webm", b"\x00" * 100, "audio/webm")},
+            files={"audio": ("test.webm", b"\x1A\x45\xDF\xA3" + b"\x00" * 96, "audio/webm")},
             data={"lang": "en"},
         )
         assert resp.status_code == 200
@@ -61,7 +62,7 @@ class TestSTTEndpoint:
     def test_stt_valid_hindi(self, client):
         resp = client.post(
             "/stt",
-            files={"audio": ("test.webm", b"\x00" * 100, "audio/webm")},
+            files={"audio": ("test.webm", b"\x1A\x45\xDF\xA3" + b"\x00" * 96, "audio/webm")},
             data={"lang": "hi"},
         )
         assert resp.status_code == 200
@@ -90,7 +91,7 @@ class TestSTTEndpoint:
 
         resp = client.post(
             "/stt",
-            files={"audio": ("test.webm", b"\x00" * 100, "audio/webm")},
+            files={"audio": ("test.webm", b"\x1A\x45\xDF\xA3" + b"\x00" * 96, "audio/webm")},
             data={"lang": "en"},
         )
         assert resp.status_code == 503
@@ -222,7 +223,7 @@ class TestModelsEndpoint:
 
         with patch("routes.httpx.AsyncClient") as mock_client_cls:
             mock_client_cls.return_value.__aenter__.return_value.get = AsyncMock(
-                side_effect=Exception("network error")
+                side_effect=httpx.RequestError("network error")
             )
             resp = client.get("/models", headers={"X-OpenRouter-Key": fake_key})
             assert resp.status_code == 200

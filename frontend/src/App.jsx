@@ -13,8 +13,9 @@ import HistoryPanel from './components/HistoryPanel'
 import SettingsModal from './components/SettingsModal'
 import MicButton from './components/MicButton'
 import OnboardingOverlay from './components/OnboardingOverlay'
-import { NavBtn, KbdHint } from './components/NavBar'
+import { NavBtn } from './components/NavBar'
 import ErrorBoundary from './components/ErrorBoundary'
+import ShortcutsModal from './components/ShortcutsModal'
 
 // ── App state machine ────────────────────────────────────────────────────────
 function appReducer(state, action) {
@@ -50,6 +51,7 @@ export default function App() {
   const [historyOpen, setHistoryOpen]   = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [diffOpen, setDiffOpen]         = useState(false)
+  const [shortcutsOpen, setShortcutsOpen] = useState(false)
   const [showOnboard, setShowOnboard]   = useState(() => !localStorage.getItem(LS_ONBOARDED))
 
   // Backend health
@@ -96,10 +98,18 @@ export default function App() {
   useEffect(() => {
     const handler = (e) => {
       if (e.ctrlKey && e.key === 'Enter') { e.preventDefault(); handleEnhance() }
-      if (e.key === 'Escape') { setSettingsOpen(false); setHistoryOpen(false); setDiffOpen(false) }
+      if (e.key === 'Escape') { setSettingsOpen(false); setHistoryOpen(false); setDiffOpen(false); setShortcutsOpen(false); }
       if (e.ctrlKey && e.shiftKey && e.key === 'C') {
         e.preventDefault()
         navigator.clipboard.writeText(outputText).catch(() => {})
+      }
+      if (e.ctrlKey && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        dispatch({ type: 'RESET' });
+      }
+      if (e.ctrlKey && e.key.toLowerCase() === 'i') {
+        e.preventDefault();
+        setShortcutsOpen((s) => !s);
       }
     }
     window.addEventListener('keydown', handler)
@@ -119,7 +129,8 @@ export default function App() {
 
       {/* ── Overlays ── */}
       {showOnboard && <OnboardingOverlay onDone={() => setShowOnboard(false)} />}
-      {settingsOpen && <SettingsModal onClose={() => setSettingsOpen(false)} settings={settings} />}
+      {settingsOpen && <SettingsModal onClose={() => setSettingsOpen(false)} settings={settings} onShowShortcuts={() => { setSettingsOpen(false); setShortcutsOpen(true); }} />}
+      <ShortcutsModal isOpen={shortcutsOpen} onClose={() => setShortcutsOpen(false)} />
       {diffOpen && originalText && outputText && (
         <DiffView original={originalText} enhanced={outputText} onClose={() => setDiffOpen(false)} />
       )}
@@ -180,13 +191,14 @@ export default function App() {
         <ErrorBoundary>
           <main className="glass-card rounded-2xl gradient-border p-6 flex flex-col gap-5 animate-fade-in animate-glow">
             <InputArea
-            value={input}
-            onChange={(v) => dispatch({ type: 'INPUT_CHANGED', value: v })}
-            inputLang={inputLang}
-            onLangChange={setInputLang}
-          >
-            <MicButton onTranscript={(t) => dispatch({ type: 'INPUT_CHANGED', value: t })} lang={inputLang} />
-          </InputArea>
+              value={input}
+              onChange={(v) => dispatch({ type: 'INPUT_CHANGED', value: v })}
+              inputLang={inputLang}
+              onLangChange={setInputLang}
+              onClear={() => dispatch({ type: 'RESET' })}
+            >
+              <MicButton onTranscript={(t) => dispatch({ type: 'INPUT_CHANGED', value: t })} lang={inputLang} />
+            </InputArea>
 
           <ControlBar
             style={style} onStyleChange={setStyle}
@@ -215,19 +227,14 @@ export default function App() {
               text={outputText}
               onTextChange={(t) => dispatch({ type: 'OUTPUT_EDIT', text: t })}
               onCompare={() => setDiffOpen(true)}
+              onClear={() => dispatch({ type: 'RESET' })}
             />
           )}
         </main>
         </ErrorBoundary>
 
-        {/* ── Footer shortcuts ── */}
-        <footer className="text-center flex items-center justify-center gap-3 flex-wrap pb-4">
-          <KbdHint keys="Ctrl+Enter" action="Enhance" />
-          <span className="text-gray-700">·</span>
-          <KbdHint keys="Esc" action="Close" />
-          <span className="text-gray-700">·</span>
-          <KbdHint keys="Ctrl+Shift+C" action="Copy" />
-        </footer>
+        {/* ── Footer ── */}
+        <footer className="h-4"></footer>
       </div>
     </div>
   )

@@ -1,12 +1,13 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react'
-import TokenCounter from './TokenCounter'
+import { MAX_INPUT_CHARS } from '../constants'
 import FeedbackBar from './FeedbackBar'
 
-export default function OutputCard({ text, onTextChange, onCompare }) {
+export default function OutputCard({ text, onTextChange, onCompare, onClear }) {
   const cardRef = useRef(null)
   const [copied, setCopied] = useState(false)
   const copyBtnId = React.useId()
   const outputCardId = React.useId()
+  const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0
 
   // Sync external text → contenteditable
   useEffect(() => {
@@ -102,8 +103,22 @@ export default function OutputCard({ text, onTextChange, onCompare }) {
 
       {/* Counter + feedback */}
       <div className="flex items-center justify-between px-1">
-        <TokenCounter text={text} />
-        <FeedbackBar />
+        <span className="text-[11px] text-gray-600 font-medium tabular-nums">
+          {text.length}/{MAX_INPUT_CHARS} chars · {wordCount} words
+        </span>
+        
+        <div className="flex items-center gap-2">
+          {onClear && text.length > 0 && (
+            <button
+              onClick={onClear}
+              className="text-[11px] font-bold text-gray-400 hover:text-red-400 px-2 py-1 transition-colors"
+              aria-label="Clear output"
+            >
+              CLEAR
+            </button>
+          )}
+          <FeedbackBar />
+        </div>
       </div>
     </div>
   )
