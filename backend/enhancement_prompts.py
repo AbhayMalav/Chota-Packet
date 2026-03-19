@@ -45,7 +45,7 @@ ENHANCEMENT_SYSTEM_PROMPTS: dict[str, str] = {
 
 "prompt_chaining": (
     "Rewrite this rough idea as a structured chain of sequential prompts. "
-    "Break the task into 2–4 discrete stages where each output feeds the next. "
+    "Break the task into 2- 4 discrete stages where each output feeds the next. "
     "Label each stage clearly (e.g., Step 1, Step 2). "
     "Each step must be self-contained, minimal, and purposeful — no overlap. "
     "Output: the full prompt chain only, no explanations."
