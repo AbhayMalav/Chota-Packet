@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from 'react'
-import { MAX_INPUT_CHARS, LANGS } from '../constants'
 
-export default function InputArea({ value, onChange, inputLang, onLangChange, onClear, children }) {
+export default function InputArea({ value, onChange, onClear, inputLimit, children }) {
   const textareaRef = useRef(null)
-  const wordCount = value.trim() ? value.trim().split(/\s+/).length : 0
+  const charCount = value.length
+  const isOverLimit = inputLimit != null && charCount > inputLimit
 
   // Auto-resize textarea
   useEffect(() => {
@@ -21,23 +21,6 @@ export default function InputArea({ value, onChange, inputLang, onLangChange, on
                className="text-[11px] font-bold uppercase tracking-widest text-purple-400/70">
           Input Prompt
         </label>
-        {/* Language selector — SRS: EN and HI only */}
-        <div className="flex items-center gap-0.5 rounded-lg overflow-hidden border border-purple-500/20 bg-purple-500/5">
-          {LANGS.map((lang) => (
-            <button
-              type="button"
-              key={lang.value}
-              onClick={() => onLangChange(lang.value)}
-              aria-pressed={inputLang === lang.value}
-              className={`px-2 py-0.5 text-[10px] min-h-[44px] md:min-h-[auto] font-bold tracking-wider transition-all duration-200
-                ${inputLang === lang.value
-                  ? 'gradient-brand text-white'
-                  : 'text-gray-500 hover:text-purple-400 hover:bg-purple-500/10'}`}
-            >
-              {lang.label}
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* Textarea */}
@@ -46,7 +29,12 @@ export default function InputArea({ value, onChange, inputLang, onLangChange, on
           ref={textareaRef}
           id="prompt-input"
           value={value}
-          onChange={(e) => onChange(e.target.value.slice(0, MAX_INPUT_CHARS))}
+          onChange={(e) => {
+            const sliced = inputLimit != null
+              ? e.target.value.slice(0, inputLimit)
+              : e.target.value
+            onChange(sliced)
+          }}
           placeholder="Type or paste your prompt here…"
           rows={4}
           className="w-full resize-none rounded-xl border border-purple-500/15
@@ -60,20 +48,41 @@ export default function InputArea({ value, onChange, inputLang, onLangChange, on
         />
       </div>
 
-      {/* Footer: counter + mic */}
+      {/* Inline limit warning */}
+      {isOverLimit && (
+        <p
+          role="alert"
+          className="text-[11px] text-red-400 font-medium px-1 animate-fade-in flex items-center gap-1"
+        >
+          <span aria-hidden="true">⚠</span>
+          Limit exceeded ({charCount}/{inputLimit} chars)
+        </p>
+      )}
+
+      {/* Footer: counter + mic + clear */}
       <div className="flex items-center justify-between px-1">
-        <span id="char-count"
-              className="text-[11px] text-gray-600 font-medium tabular-nums">
-          {value.length}/{MAX_INPUT_CHARS} chars · {wordCount} words
+        <span
+          id="char-count"
+          className="text-[11px] text-gray-600 font-medium tabular-nums"
+        >
+          {charCount} chars
         </span>
         <div className="flex items-center gap-2">
-          {onClear && value.length > 0 && (
+          {onClear && (
             <button
+              type="button"
               onClick={onClear}
-              className="text-[11px] font-bold text-gray-400 hover:text-red-400 px-2 py-1 transition-colors"
+              disabled={charCount === 0}
+              className="text-xs font-medium px-3 py-1.5 rounded-full
+                         border border-purple-500/25 text-gray-400
+                         hover:text-red-400 hover:border-red-500/30 hover:bg-red-500/5
+                         active:scale-[0.97] active:brightness-90
+                         focus:outline-none focus-ring
+                         disabled:opacity-30 disabled:cursor-not-allowed
+                         transition-all duration-200"
               aria-label="Clear input"
             >
-              CLEAR
+              Clear
             </button>
           )}
           {children}

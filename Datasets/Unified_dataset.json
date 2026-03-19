@@ -6,7 +6,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: mujhe khana banana sikhao",
+"input": " mujhe khana banana sikhao",
 "target": "मुझे एक पूर्ण शुरुआती के लिए भारतीय घरेलू खाना पकाने की कला सिखाएं। इसमें शामिल करें: (1) रसोई के बुनियादी उपकरण और उनके उपयोग, (2) मसालों की पहचान और उनके स्वास्थ्य लाभ, (3) पांच आसान रेसिपी जो 30 मिनट में बन जाएं - दाल, सब्जी, रोटी, चावल और एक सलाद, (4) सही मात्रा मापने के तरीके और स्वाद संतुलन, (5) खाना बचत करने और सही तरीके से स्टोर करने के टिप्स। भाषा सरल और सीधी हो, प्रत्येक चरण को क्रमांकित करें, और सामान्य गलतियों से बचने की सलाह दें।",
 "lang": "hi",
 "domain": "general"
@@ -18,7 +18,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: phone slow ho gaya hai kya karu",
+"input": " phone slow ho gaya hai kya karu",
 "target": "मेरे Android स्मार्टफोन की स्लो प्रदर्शन की समस्या का विस्तृत समाधान बताएं। कृपया निम्नलिखित कवर करें: (1) सबसे पहले समस्या का निदान करें - स्टोरेज पूर्ण होना, बैकग्राउंड ऐप्स, या वायरस, (2) चरणबद्ध तरीके से फोन को तेज करने के उपाय - कैशे साफ करना, अनावश्यक ऐप्स हटाना, एनिमेशन बंद करना, (3) बैटरी बचाने और गर्मी कम करने के तरीके, (4) कौन से ऐप्स को डिसेबल करना चाहिए और कौन से जरूरी हैं, (5) फैक्टरी रीसेट करने का सही तरीका और पहले बैकअप लेने की प्रक्रिया। सभी निर्देश सरल भाषा में हों और स्क्रीनशॉट के लिए संदर्भ शामिल हों।",
 "lang": "hi",
 "domain": "general"
@@ -30,7 +30,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: interview ke liye taiyari kaise karu",
+"input": " interview ke liye taiyari kaise karu",
 "target": "मुझे एक फ्रेशर के रूप में कैंपस प्लेसमेंट इंटरव्यू की व्यापक तैयारी गाइड चाहिए। कृपया इस प्रकार संरचित करें: (1) इंटरव्यू के प्रकार - टेक्निकल, एचआर, और ग्रुप डिस्कशन में क्या अंतर है, (2) आत्मपरिचय (सेल्फ-इंट्रोडक्शन) कैसे तैयार करें - 30 सेकंड, 1 मिनट, और 2 मिनट के संस्करण, (3) सामान्य प्रश्न और उनके सर्वोत्तम उत्तर - 'अपने बारे में बताएं', 'आपकी कमजोरी क्या है', 'हमारी कंपनी क्यों', (4) पेशेवर पोशाक और बॉडी लैंग्वेज के नियम, (5) वर्चुअल इंटरव्यू के लिए तकनीकी तैयारी - कैमरा एंगल, लाइटिंग, और बैकग्राउंड। प्रत्येक अनुभाग में डूज़ और डॉन्ट्स स्पष्ट रूप से उल्लिखित हों और अंत में एक चेकलिस्ट शामिल करें।",
 "lang": "hi",
 "domain": "general"
@@ -42,7 +42,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: ghar mein paudhe kaise lagayein",
+"input": " ghar mein paudhe kaise lagayein",
 "target": "मुझे शहरी अपार्टमेंट में इनडोर गार्डनिंग शुरू करने की पूरी गाइड चाहिए जहां सीमित धूप और जगह हो। कृपया निम्नलिखित शामिल करें: (1) शुरुआती लोगों के लिए पांच अविनाशी पौधे जो कम देखभाल में भी रह सकते हैं - पैसे का पौधा, स्नेक प्लांट, एलोवेरा, पीस लिली, और मनी प्लांट, (2) मिट्टी, गमले, और खाद का चयन कैसे करें - ऑनलाइन और ऑफलाइन खरीदारी के स्थान, (3) पानी देने का सही तरीका - कितनी बार, कितना, और ओवरवाटरिंग से बचाव, (4) बालकनी गार्डन के लिए सब्जियां उगाना - टमाटर, मिर्च, धनिया, और पालक की शुरुआत, (5) सामान्य समस्याएं - पत्तियों का पीला पड़ना, कीड़े, और उनके समाधान। प्रत्येक पौधे की देखभाल की चेकलिस्ट और मौसम अनुसार देखभाल का कैलेंडर बनाएं।",
 "lang": "hi",
 "domain": "general"
@@ -54,7 +54,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: youtube channel shuru karna hai paise kamane ke liye",
+"input": " youtube channel shuru karna hai paise kamane ke liye",
 "target": "मुझे YouTube चैनल शुरू करने की व्यावसायिक योजना चाहिए जो भारतीय दर्शकों को ध्यान में रखकर बनाई गई हो और मोनेटाइजेशन पर केंद्रित हो। कृपया इस प्रकार विस्तृत करें: (1) निश्चयात्मक चरण - पैशन, कौशल, और बाजार मांग का विश्लेषण करके सही niche चुनना, (2) चैनल सेटअप - नाम, लोगो, बैनर, और About सेक्शन SEO अनुकूलित करना, (3) सामग्री रणनीति - पहले 10 वीडियो की योजना, thumbnail डिजाइन के नियम, और optimal अपलोड समय, (4) न्यूनतम उपकरण - ₹10000 के बजट में स्मार्टफोन, माइक्रोफोन, और रिंग लाइट का चयन, (5) मोनेटाइजेशन मानदंड - 1000 सब्सक्राइबर और 4000 घंटे वॉचटाइम की रणनीति, AdSense, स्पॉन्सरशिप, और सहबद्ध विपणन। प्रत्येक चरण में वास्तविक उदाहरण सफल भारतीय YouTubers के साथ दें और सामान्य गलतियों की चेतावनी दें।",
 "lang": "hi",
 "domain": "general"
@@ -66,7 +66,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: bachche ko padhane ka tarika batayein",
+"input": " bachche ko padhane ka tarika batayein",
 "target": "मुझे कक्षा 1-5 के बच्चों को घर पर प्रभावी ढंग से पढ़ाने की शिक्षण पद्धति चाहिए जो अभिभावकों के लिए सरल हो। इसमें शामिल करें: (1) बच्चे की सीखने की शैली की पहचान - दृश्य, श्रवण, या कinesthetic शिक्षार्थी, (2) प्रतिदिन का अध्ययन कार्यक्रम - 45 मिनट के सत्र में विभाजन: पुनरावृत्ति, नया पाठ, अभ्यास, और खेल, (3) विषय-वार रणनीतियां - गणित के लिए वास्तविक वस्तुओं का उपयोग, अंग्रेजी के लिए कहानियां और फ्लैशकार्ड, विज्ञान के लिए घरेलू प्रयोग, (4) ध्यान केंद्रित करने में कठिनाई और समस्या समाधान कौशल - पुरस्कार प्रणाली, ब्रेक्स, और सकारात्मक सुदृढीकरण, (5) स्क्रीन समय का संतुलन और डिजिटल सीखने के उपकरणों का सही उपयोग। प्रत्येक कक्षा के लिए साप्ताहिक योजना का उदाहरण दें और बच्चे की प्रगति का मूल्यांकन करने की विधि बताएं।",
 "lang": "hi",
 "domain": "general"
@@ -78,7 +78,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: thakaan aur kamjori ka ilaj",
+"input": " thakaan aur kamjori ka ilaj",
 "target": "मुझे लगातार थकान और कमजोरी की समस्या के लिए आयुर्वेदिक और आधुनिक चिकित्सा दृष्टिकोण से व्यापक मार्गदर्शन चाहिए। कृपया निम्नलिखित शामिल करें: (1) संभावित कारणों का विश्लेषण - आयरन की कमी (एनीमिया), विटामिन D और B12 की कमी, थायराइड समस्या, या अनिद्रा, (2) आवश्यक जांच और परीक्षण जो डॉक्टर से करवाने चाहिए - CBC, थायराइड प्रोफाइल, और विटामिन स्तर, (3) आहार संबंधी सुधार - भारतीय भोजन में आयरन युक्त खाद्य पदार्थ (पालक, गुड़, अनार), प्रोटीन स्रोत, और हाइड्रेशन, (4) जीवनशैली में बदलाव - योग और प्राणायाम (भस्त्रिका और कपालभाति), नींद का समय, और स्क्रीन समय में कमी, (5) आयुर्वेदिक उपचार - अश्वगंधा, शतावरी, और छ्यावनप्राश का सेवन और उनकी सही मात्रा। कब डॉक्टर से मिलना जरूरी है इसकी स्पष्ट चेतावनी दें और किसी भी पूरक आहार से पहले चिकित्सकीय सलाह की सलाह दें।",
 "lang": "hi",
 "domain": "general"
@@ -90,7 +90,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: shaadi ke jode ke baare mein salah chahiye",
+"input": " shaadi ke jode ke baare mein salah chahiye",
 "target": "मुझे भारतीय शादी के लिए पोशाक चयन की व्यापक गाइड चाहिए जो विभिन्न कार्यक्रमों और बजट सीमाओं को ध्यान में रखे। कृपया निम्नलिखित शामिल करें: (1) कार्यक्रम-वार पोशाक सुझाव - हल्दी के लिए पीले रंग के कपड़े, संगीत के लिए हल्के लहंगे या गाउन, शादी के लिए भारी लहंगा या शेरवानी, और रिसेप्शन के लिए आधुनिक पोशाक, (2) बजट-वार विकल्प - ₹10,000 से ₹50,000 और ₹50,000+ की रेंज में किराए बनाम खरीदारी का विश्लेषण, (3) रंग और कपड़े का चयन - त्वचा के रंग के अनुसार रंग, मौसम के अनुसार कपड़े (गर्मियों के लिए हल्का जॉर्जेट, सर्दियों के लिए मखमल), (4) एक्सेसरीज़ और जूते - गहने का चयन, आरामदायक जूते क्योंकि लंबे समय तक खड़े रहना पड़ता है, (5) पैकिंग और यात्रा युक्तियां - विभिन्न शहरों में शादी के लिए पोशाक कैसे पैक करें और क्रीज़ से बचाव। ऑनलाइन स्टोर और डिजाइनरों के सुझाव दें जो अच्छी गुणवत्ता प्रदान करते हैं।",
 "lang": "hi",
 "domain": "general"
@@ -102,7 +102,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: naukri ke liye resume kaise banayein",
+"input": " naukri ke liye resume kaise banayein",
 "target": "मुझे फ्रेशर और प्रारंभिक स्तर के पेशेवरों के लिए ATS-अनुकूलित रिज्यूमे बनाने की विस्तृत गाइड चाहिए जो भारतीय नौकरी बाजार के लिए प्रभावी हो। कृपया निम्नलिखित शामिल करें: (1) रिज्यूमे का संरचना और प्रारूप - क्रोनोलॉजिकल बनाम कार्यात्मक, एक पृष्ठ बनाम दो पृष्ठ, और फ़ॉन्ट/मार्जिन सेटिंग्स, (2) प्रत्येक अनुभाग का विस्तृत विश्लेषण - संपर्क जानकारी, उद्देश्य/सारांश, शिक्षा, कौशल, इंटर्नशिप/परियोजनाएं, और उपलब्धियां, (3) कीवर्ड अनुकूलन - नौकरी विवरण से ATS कीवर्ड कैसे निकालें और स्वाभाविक रूप से शामिल करें, (4) सामान्य गलतियां जिनसे बचें - व्यक्तिगत विवरण, तस्वीरें, झूठे दावे, और व्याकरण त्रुटियां, (5) ऑनलाइन उपस्थिति - LinkedIn प्रोफाइल को रिज्यूमे के साथ कैसे सिंक्रनाइज़ करें। तीन अलग-अलग क्षेत्रों (आईटी, विपणन, वित्त) के लिए नमूना रिज्यूमे टेम्पलेट शामिल करें और निःशुल्क ऑनलाइन टूल्स जैसे Canva और [Resume.io](http://resume.io/) का उपयोग करने के निर्देश दें।",
 "lang": "hi",
 "domain": "general"
@@ -114,7 +114,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: mujhe python sikhna hai",
+"input": " mujhe python sikhna hai",
 "target": "Python programming का एक व्यापक शिक्षण मार्गदर्शिका तैयार करें जो पूर्ण शुरुआती के लिए उपयुक्त हो। इसमें शामिल करें: (1) Python क्या है और इसका उपयोग क्यों किया जाता है, (2) Python स्थापित करने की विधि (Windows/Mac दोनों के लिए), (3) चर, डेटा प्रकार, और ऑपरेटर्स की मूल बातें, (4) if-else स्टेटमेंट्स और लूप्स (for, while), (5) फ़ंक्शंस और मॉड्यूल का परिचय, (6) सूचियाँ, शब्दकोश, और टपल्स का उपयोग, (7) फ़ाइल हैंडलिंग की मूल बातें। प्रत्येक अवधारणा के लिए सरल उदाहरण कोड दें। हिंदी में व्याख्या करें लेकिन कोड अंग्रेजी में रखें।",
 "lang": "hi",
 "domain": "general"
@@ -126,7 +126,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: meri tabiyat kharab hai kya karu",
+"input": " meri tabiyat kharab hai kya karu",
 "target": "सामान्य स्वास्थ्य समस्याओं के लिए घरेलू उपचार और जब डॉक्टर को दिखाना चाहिए, इस पर एक विस्तृत मार्गदर्शिका प्रदान करें। इसमें शामिल करें: (1) सामान्य लक्षण जैसे बुखार, सर्दी-खांसी, पेट दर्द, सिरदर्द के लिए प्रारंभिक आकलन तकनीकें, (2) OTC (ओवर-द-काउंटर) दवाइयाँ और उनकी सही खुराक, (3) घरेलू नुस्खे जैसे गर्म पानी, आराम, हल्दी वाला दूध, (4) तुरंत चिकित्सा सहायता लेने के लिए लाल झंडे लक्षण (सीने में दर्द, सांस फूलना, उच्च बुखार 3 दिन से अधिक, रक्तस्राव), (5) प्रतिरक्षा बढ़ाने के लिए दैनिक आदतें। स्पष्ट रूप से यह बताएं कि यह चिकित्सा सलाह नहीं है और गंभीर लक्षणों के लिए पेशेवर सहायता अनिवार्य है। सावधानीपूर्वक और सहानुभूतिपूर्ण लहजे में लिखें।",
 "lang": "hi",
 "domain": "general"
@@ -138,7 +138,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: bachche ko padhana hai",
+"input": " bachche ko padhana hai",
 "target": "6-10 वर्ष की आयु के बच्चों को प्रभावी ढंग से पढ़ाने की एक व्यापक रणनीति तैयार करें। इसमें शामिल करें: (1) बच्चे की सीखने की शैली की पहचान करने की विधियाँ (दृश्य, श्रवण, कinesthetic), (2) ध्यान केंद्रित करने की अवधि: इस आयु समूह के लिए 20-30 मिनट के अध्ययन सत्र, (3) पढ़ाई को रोचक बनाने की तकनीकें: गेमिफिकेशन, कहानियाँ, वास्तविक जीवन के उदाहरण, (4) विषय-वार दृष्टिकोण: गणित के लिए हाथ से जुड़ी गतिविधियाँ, भाषा के लिए पढ़ने की आदत, विज्ञान के लिए प्रयोग, (5) सकारात्मक सुदृढीकरण तकनीक और पुरस्कार प्रणाली, (6) माता-पिता की भूमिका: होमवर्क में सहायता करना लेकिन अति-नियंत्रण से बचना, (7) स्क्रीन समय प्रबंधन और डिजिटल सीखने के उपकरण। प्रत्येक बिंदु के लिए उम्र-उपयुक्त उदाहरण दें। प्रोत्साहन और धैर्यपूर्ण टोन में लिखें।",
 "lang": "hi",
 "domain": "general"
@@ -150,7 +150,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: paisa bachana hai",
+"input": " paisa bachana hai",
 "target": "मासिक आय 30,000-50,000 रुपये वाले भारतीय युवा पेशेवरों के लिए एक व्यावहारिक बचत योजना तैयार करें। इसमें शामिल करें: (1) 50/30/20 बजट नियम का भारतीय संदर्भ में अनुकूलन: 50% आवश्यकताएँ (किराया, भोजन, परिवहन), 30% व्यक्तिगत खर्च, 20% बचत और निवेश; (2) आपातकालीन कोष निर्माण: 6 महीने के खर्च के बराबर राशि, कहाँ रखें (उच्च ब्याज बचत खाता या लिक्विड फंड); (3) छोटी बचत रणनीतियाँ: ऑटो-डेबिट सेटअप, 100 रुपये की निवेश योजनाएँ (SIP), खर्च ट्रैकिंग ऐप्स; (4) आम भारतीय बचत killers की पहचान: EMI जाल, अनावश्यक ब्रांडेड खर्च, FOMO आधारित निवेश; (5) पहला निवेश कदम: PPF vs FD vs म्यूचुअल फंड SIPs की तुलना; (6) मनोविज्ञान-आधारित बचत हैक्स: 24-घंटे नियम, नकद बनाम डिजिटल खर्च। वास्तविक उदाहरणों और रुपये में संख्याओं के साथ व्यावहारिक और प्रेरक टोन में लिखें।",
 "lang": "hi",
 "domain": "general"
@@ -162,7 +162,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: ghar saaf karne ke tips",
+"input": " ghar saaf karne ke tips",
 "target": "कामकाजी पेशेवरों के लिए जो सप्ताह में केवल 2-3 घंटे सफाई के लिए निकाल सकते हैं, उनके लिए एक कुशल घर सफाई प्रणाली तैयार करें। इसमें शामिल करें: (1) ज़ोन-आधारित सफाई विधि: रसोई (रोज़ाना 15 मिनट), बाथरूम (हफ्ते में दो बार 20 मिनट), रहने का कमरा (हफ्ते में एक बार 30 मिनट), बेडरूम (रोज़ाना 10 मिनट); (2) आवश्यक सफाई उत्पाद: बहुउद्देश्य क्लीनर, डिसइन्फेक्टेंट, माइक्रोफाइबर कपड़े (3-4), स्क्रबर, वैक्यूम या झाड़ू; (3) 15-मिनट रोज़ाना रूटीन: बिस्तर बनाना, डिशवॉशर लोड/खाली करना, सतहों को पोंछना, कूड़ा बाहर; (4) गहरी सफाई शेड्यूल: महीने में एक बार खिड़कियाँ, फ्रिज, अलमारियाँ; (5) सफाई हैक्स: नींबू और बेकिंग सोडा प्राकृतिक क्लीनर, सफाई के दौरान संगीत या पॉडकास्ट, टाइमर विधि (25 मिनट काम, 5 मिनट आराम); (6) रूममेट या परिवार के साथ ज़िम्मेदारियाँ बाँटने की रणनीति। व्यावहारिक और प्रेरक टोन में लिखें।",
 "lang": "hi",
 "domain": "general"
@@ -174,7 +174,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: interview ke liye taiyari kaise karu",
+"input": " interview ke liye taiyari kaise karu",
 "target": "भारतीय नौकरी बाजार में सफल साक्षात्कार प्रदर्शन के लिए एक व्यापक तैयारी योजना तैयार करें, जो फ्रेशर्स और 1-2 वर्ष के अनुभव वाले उम्मीदवारों के लिए उपयुक्त हो। इसमें शामिल करें: (1) साक्षात्कार से पहले की तैयारी: कंपनी के बारे में शोध (हालिया समाचार, मिशन, प्रतिस्पर्धी), JD का विश्लेषण और अपने अनुभव से मिलान, सामान्य प्रश्नों की सूची और STAR विधि से उत्तर तैयार करना; (2) व्यवहारिक प्रश्न: 'अपने बारे में बताएं' (30 सेकंड का पिच), 'ताकत और कमजोरियां', '5 वर्षों में कहाँ देखते हैं', 'कंपनी क्यों छोड़ना चाहते हैं'; (3) तकनीकी/क्षेत्र-विशिष्ट तैयारी: हाल की परियोजनाओं की समीक्षा, मूल अवधारणाओं का पुनरावृत्ति; (4) दिन की रणनीति: पहनावा (फॉर्मल भारतीय या वेस्टर्न), समय पर पहुंचना (15 मिनट पहले), आवश्यक दस्तावेज (CV, प्रमाण पत्र, पहचान पत्र); (5) देह भाषा और संचार: दृष्टि संपर्क, मजबूत हाथ मिलाना, सक्रिय सुनना, स्पष्ट उच्चारण; (6) पूछने के लिए प्रश्न: टीम संरचना, विकास की संभावनाएं, अगले चरण; (7) अनुसरण ईमेल टेम्पलेट। आत्मविश्वास और विनम्रता के संतुलन पर जोर दें।",
 "lang": "hi",
 "domain": "general"
@@ -186,7 +186,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: relationship mein problem hai",
+"input": " relationship mein problem hai",
 "target": "रोमांटिक रिश्तों में सामान्य चुनौतियों को पहचानने और उनका समाधान करने के लिए एक संवेदनशील मार्गदर्शिका तैयार करें। इसमें शामिल करें: (1) स्व-मूल्यांकन: क्या यह संचार की समस्या है, विश्वास की कमी है, अपेक्षाओं का मेल नहीं है, या बाहरी तनाव (काम, परिवार)?; (2) स्वस्थ संवाद तकनीकें: 'मैं' बयानों का उपयोग ('मुझे लगता है' बनाम 'तुम हमेशा'), सक्रिय सुनना, गैर-आलोचनात्मक प्रतिक्रिया; (3) सीमाएँ और स्वायत्तता: व्यक्तिगत समय का महत्व, दोस्ती बनाए रखना, स्वतंत्र रुचियाँ; (4) सामान्य गलतफहमियाँ: मन पढ़ने की उम्मीद, 'सही' जोड़े का मिथक, सोशल मीडिया तुलना; (5) लाल झंडे जो पेशेवर सहायता का संकेत हैं: भावनात्मक या शारीरिक दुर्व्यवहार, नियंत्रण व्यवहार, लगातार अपमान; (6) पुनर्संयोजन रणनीतियाँ: नियमित 'रिश्ता चेक-इन', साझा गतिविधियाँ, कृतज्ञता अभ्यास; (7) कब और कैसे कपल्स थेरेपी पर विचार करें। ध्यान रखें कि यह व्यक्तिगत परिस्थिति के लिए प्रतिस्थापन नहीं है। सहानुभूति और व्यावहारिकता के संतुलन में लिखें।",
 "lang": "hi",
 "domain": "general"
@@ -198,7 +198,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: time manage nahi ho raha",
+"input": " time manage nahi ho raha",
 "target": "अत्यधिक कार्यभार और व्यक्तिगत जिम्मेदारियों के बीच संघर्ष कर रहे भारतीय युवा पेशेवरों के लिए एक व्यावहारिक समय प्रबंधन प्रणाली तैयार करें। इसमें शामिल करें: (1) समय ऑडिट: एक सप्ताह तक हर 30 मिनट की गतिविधि लिखें और समय चोरों की पहचान करें (सोशल मीडिया, अनावश्यक बैठकें, फैसले लेने में देरी); (2) आइजেনहावर मैट्रिक्स: तत्काल और महत्वपूर्ण (तुरंत करें), महत्वपूर्ण लेकिन तत्काल नहीं (नियोजित करें), तत्काल लेकिन महत्वपूर्ण नहीं (प्रत्यायोजित करें), न तत्काल न महत्वपूर्ण (हटा दें); (3) दैनिक योजना तकनीक: रात को 3 प्राथमिकताएँ तय करें, 'ईट द फ्रॉग' (सबसे कठिन काम पहले), 2-मिनट नियम (अगर 2 मिनट में हो सकता है तो तुरंत करें); (4) डिजिटल उपकरण: Google Calendar समय ब्लॉकिंग, Todoist या [Any.do](http://any.do/) जैसे कार्य प्रबंधन ऐप्स, Pomodoro तकनीक (25 मिनट काम, 5 मिनट ब्रेक); (5) भारतीय संदर्भ में विशिष्ट चुनौतियाँ: परिवारिक हस्तक्षेप, लंबी यात्रा का समय, अनियमित कार्य घंटे; (6) सीमा निर्धारण: 'नहीं' कहना सीखना, प्रतिबद्धताओं की सीमा; (7) साप्ताहिक समीक्षा और समायोजन। व्यावहारिक उदाहरणों के साथ समझाने योग्य और प्रेरक टोन में लिखें।",
 "lang": "hi",
 "domain": "general"
@@ -210,7 +210,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: mobile addiction kaise kam karein",
+"input": " mobile addiction kaise kam karein",
 "target": "डिजिटल कल्याण और स्क्रीन समय नियंत्रण के लिए एक व्यावहारिक, चरणबद्ध कार्यक्रम तैयार करें जो स्मार्टफोन की लत से जूझ रहे भारतीय युवाओं के लिए उपयुक्त हो। इसमें शामिल करें: (1) वर्तमान उपयोग का आकलन: स्क्रीन टाइम ट्रैकिंग (Android डिजिटल वेलबीइंग या iOS स्क्रीन टाइम), सबसे अधिक उपयोग किए जाने वाले ऐप्स की पहचान, ट्रिगर समय (सुबह, सोने से पहले, ऊब); (2) पर्यावरण डिजाइन: ग्रेस्केल मोड सक्षम करना, अनावश्यक सूचनाएँ बंद करना, होम स्क्रीन से सोशल मीडिया ऐप्स हटाना, फोन को चार्जिंग के लिए बेडरूम से बाहर रखना; (3) विकल्प स्थापित करना: 'फोन अठारह' चुनौती (सुबह 1 घंटा और रात को 1 घंटा बिना फोन), डिजिटल सनसेट (रात के 9 बजे के बाद कोई स्क्रीन), फिजिकल अलार्म घड़ी का उपयोग; (4) मनोवैज्ञानिक तकनीकें: यूज़र इंटेंशन पूछना ('मैं क्यों उठा रहा हूँ?'), 20-सेकंड नियम (अच्छी आदतों को आसान, बुरी को कठिन बनाना), विलंब तकनीक (ऐप खोलने से पहले 6 गहरी सांसें); (5) वास्तविक जीवन के विकल्प: किताब पढ़ना, लेखन, चित्रकला, व्यायाम, सामुदायिक खेल, स्वयंसेवा; (6) सोशल मीडिया विशिष्ट: अनफॉलोअिंग, म्यूटिंग, न्यूज़ फीड हटाना (ब्राउज़र में उपयोग करें); (7) पुनर्पड़ताओं से निपटना और दीर्घकालिक रखरखाव। निर्णयशीलता और आत्म-करुणा के साथ लिखें।",
 "lang": "hi",
 "domain": "general"
@@ -222,7 +222,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: ghar par business shuru karna hai",
+"input": " ghar par business shuru karna hai",
 "target": "भारत में घर से शुरू होने वाले लघु व्यवसायों के लिए एक व्यावहारिक मार्गदर्शिका तैयार करें, जो कम पूंजी (10,000-50,000 रुपये) और अंशकालिक प्रतिबद्धता वाले उद्यमियों के लिए उपयुक्त हो। इसमें शामिल करें: (1) व्यवसाय विचार मूल्यांकन: कौशल-आधारित (फ्रीलांस लेखन, ग्राफिक डिजाइन, ट्यूशन), उत्पाद-आधारित (होममेड खाद्य पदार्थ, हस्तशिल्प, ड्रॉपशिपिंग), सेवा-आधारित (घरेलू खाना पकाना, बच्चों की देखभाल, फिटनेस प्रशिक्षण); (2) कानूनी आवश्यकताएँ: GST पंजीकरण की आवश्यकता और सीमा, FSSAI लाइसेंस (खाद्य व्यवसाय के लिए), स्थानीय नगर पालिका अनुमति, बैंक खाता (वर्तमाता बनाम चालू); (3) डिजिटल उपस्थिति: Instagram/Facebook व्यवसाय पेज, WhatsApp Business कैटलॉग, सरल वेबसाइट (Google My Business), भुगतान प्रणाली (UPI, Paytm, Razorpay); (4) विपणन रणनीतियाँ: मुफ्त विधियाँ (सोशल मीडिया, वर्ड-ऑफ-माउथ, स्थानीय समूह), कम लागत विज्ञापन (Facebook/Instagram विज्ञापन ₹100/दिन), सहयोग और क्रॉस-प्रमोशन; (5) वित्त प्रबंधन: अलग बैंक खाता, लागत मूल्य निर्धारण सूत्र, मुनाफे का पुनर्निवेश, कर दायित्व; (6) समय प्रबंधन: दिन की नौकरी के साथ संतुलन, परिवार की भूमिका, स्केलिंग योजना; (7) सफलता की कहानियाँ और सामान्य विफलता के कारण। प्रेरक लेकिन यथार्थवादी टोन में लिखें।",
 "lang": "hi",
 "domain": "general"
@@ -234,7 +234,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: kal chutti chahiye email likh do",
+"input": " kal chutti chahiye email likh do",
 "target": "Ek professional leave application email likho apne manager ke liye, jisme kal ki chhutti (leave) maangi gayi ho. Email mein batayein ki mujhe kuch zaroori personal kaam (ya family emergency) aa gaya hai. Confidence dilayein ki mera saara pending kaam complete hai aur meri anupasthiti (absence) mein [Colleague's Name] urgent matters dekh lenge. Tone respectful aur polite honi chahiye, aur subject line clear honi chahiye (e.g., Leave Application - [My Name] - [Date]).",
 "lang": "hi",
 "domain": "general"
@@ -246,7 +246,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: vajan kam karne ka diet plan do",
+"input": " vajan kam karne ka diet plan do",
 "target": "Ek 7-din ka healthy weight loss diet plan banayein ek Indian adult ke liye jo roj office jaata hai. Diet mein ghar ka bana hua khana (Indian cuisine) shamil karein, jaise roti, dal, sabzi, aur paneer/chicken. Har din ke liye Breakfast, Lunch, Evening Snack aur Dinner ke options dein. Saath mein portion control, paani peene (hydration) aur meetha kam khane ki salah (tips) bhi include karein. Tone motivational aur practical rakhein, jisse follow karna aasan ho.",
 "lang": "hi",
 "domain": "general"
@@ -258,7 +258,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: dosto ke sath goa trip ka plan banao 3 din ka",
+"input": " dosto ke sath goa trip ka plan banao 3 din ka",
 "target": "4 doston ke liye Goa ki 3 din aur 2 raaton ki ek budget-friendly itinerary banayein. Day 1: North Goa ke beaches (Baga, Calangute) aur water sports. Day 2: South Goa ki shanti, churches aur forts (Chapora/Aguada). Day 3: Local markets (Anjuna) aur wapsi ka safar. Saste transport options (scooty rental) aur affordable khane ki jagahon (shacks) ka zikr karein. Ek rough budget estimate bhi dein per person (Rs. 5000-7000 ke beech). Tone casual aur exciting rakhein.",
 "lang": "hi",
 "domain": "general"
@@ -270,7 +270,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: naya phone kharidna hai konsa lu 20000 ke andar",
+"input": " naya phone kharidna hai konsa lu 20000 ke andar",
 "target": "20,000 rupees ke budget mein ek naya smartphone kharidne ke liye ek detailed buying guide banayein. Top 3 smartphones (jaise Realme, Redmi, ya Motorola) recommend karein jo is waqt market mein best hain. Har phone ke key specs (Processor, Camera, Battery, Display) aur ek 'Pros and Cons' list batayein. Ye bhi batayein ki gaming ke liye kaunsa better hai aur camera ke liye kaunsa. Language simple aur informative honi chahiye taaki decision lena aasan ho.",
 "lang": "hi",
 "domain": "general"
@@ -282,7 +282,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: english bolna kaise sikhe jaldi",
+"input": " english bolna kaise sikhe jaldi",
 "target": "Ek beginner ke liye fluent English bolna seekhne ka 30 din ka practical action plan banayein. Plan mein reading, listening, aur speaking practice ki daily exercises shamil karein (jaise English movies dekhna subtitles ke sath, mirror ke samne bolna, aur basic grammar seekhna). 3 muft aur badhiya mobile apps (jaise Duolingo ya HelloTalk) ke naam suggest karein. Confidence badhane aur galati karne ke darr ko dur karne ke liye motivational tips bhi dein.",
 "lang": "hi",
 "domain": "general"
@@ -294,7 +294,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: ghar par paneer butter masala kaise banaye",
+"input": " ghar par paneer butter masala kaise banaye",
 "target": "Ek restaurant-style Paneer Butter Masala banane ki aasan aur step-by-step recipe likhein jo ghar par aasaani se banayi ja sake. List mein saare ingredients (paneer, tamatar, kaju, khade masale, butter, cream) aur unki quantity batayein. Gravy ko smooth aur creamy banane ke secret tips share karein. Cooking time aur preparation time bhi include karein. Tone aisi ho jaise koi expert chef ek beginner ko sikha raha ho.",
 "lang": "hi",
 "domain": "general"
@@ -306,7 +306,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: interview me introduce yourself ka answer kya de",
+"input": " interview me introduce yourself ka answer kya de",
 "target": "Ek fresher IT job candidate ke liye job interview mein 'Tell me about yourself' (Apne baare mein batayein) ka ek strong aur professional answer draft karein. Answer ko 3 hisson mein baantein: Present (meri education aur current skills), Past (mere college ke projects ya internships), aur Future (main is company ko kyu join karna chahta hu aur kya value add karunga). Ek sample answer provide karein jise padh kar candidate naturally bol sake, bina rate hue (memorized) lage.",
 "lang": "hi",
 "domain": "general"
@@ -318,7 +318,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: mujhe ek business shuru karna hai idea do bina paise ke",
+"input": " mujhe ek business shuru karna hai idea do bina paise ke",
 "target": "Zero ya bahut kam investment (under ₹5000) ke sath shuru kiye ja sakne wale 5 best online ya offline business ideas ki list dein. Har idea ke liye batayein: (1) Business ka naam aur concept, (2) Ise start karne ke pehle kadam kya honge, (3) Isme paise kaise kamaye jayenge (monetization strategy), aur (4) Iske liye kya skills chahiye (jaise video editing, content writing, ya tutoring). Tone encouraging rakhein aur students ya house-wives ko dhyan mein rakh kar samjhayein.",
 "lang": "hi",
 "domain": "general"
@@ -330,7 +330,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: pet me dard hai kya karu gharelu nuskha batao",
+"input": " pet me dard hai kya karu gharelu nuskha batao",
 "target": "Aam pait dard (stomach ache) ya gas ki samasya ke liye 3 asardaar aur safe gharelu nuskhe (home remedies) batayein jo Indian kitchen mein aasaani se milne wali cheezon se banaye ja sakein (jaise ajwain, jeera, heeng, ya adrak). Har nuskhe ko banane aur lene ka sahi tarika step-by-step samjhayein. Saath mein ek medical disclaimer bhi zaroor include karein ki agar dard bahut zyada ho ya lamba chale, toh turant doctor ko dikhana chahiye.",
 "lang": "hi",
 "domain": "general"
@@ -342,7 +342,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: mutual fund me invest karna hai kaha se start karu",
+"input": " mutual fund me invest karna hai kaha se start karu",
 "target": "Ek complete beginner ke liye Indian stock market mein Mutual Funds aur SIP (Systematic Investment Plan) ke zariye invest karne ka step-by-step guide banayein. Samjhayein ki Mutual Fund kya hota hai, Equity aur Debt funds mein kya farq hai, aur SIP ke fayde kya hain (compounding ka concept). KYC process aur top 3 reliable apps (jaise Groww, Zerodha Coin) ka zikr karein jahan se shuruwat ki ja sakti hai. Risk ke baare mein bhi saral shabdon mein aagah karein.",
 "lang": "hi",
 "domain": "general"
@@ -354,7 +354,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: subah jaldi uthne ki aadat kaise dale",
+"input": " subah jaldi uthne ki aadat kaise dale",
 "target": "Subah jaldi (5 AM) uthne ki aadat daalne ke liye ek practical aur effective guide likhein. Un 5 mukhya kaarno (reasons) par focus karein jinki wajah se log jaldi nahi uth paate, aur unke solutions dein (jaise raat ko jaldi sona, phone ka use band karna, alarm clock ko door rakhna). 'Snooze' button ki aadat chhodne ke tips dein. Ek chota sa morning routine bhi suggest karein (paani peena, stretching) jo din ko energetic banane mein madad kare.",
 "lang": "hi",
 "domain": "general"
@@ -366,7 +366,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: time management ke tips do padhai ke liye",
+"input": " time management ke tips do padhai ke liye",
 "target": "Ek college student ke liye exam ki tayari ke dauran time manage karne ke liye 5 effective productivity techniques batayein. 'Pomodoro Technique' aur 'Time Blocking' ko detail mein samjhayein ki inhe practically kaise use karna hai. Distractions (jaise social media aur phone) ko avoid karne ke tips dein. Ek aadarsh (ideal) daily study schedule ka example banayein jisme breaks, revision aur neend ka poora dhyan rakha gaya ho. Tone motivating honi chahiye.",
 "lang": "hi",
 "domain": "general"
@@ -378,7 +378,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: gadi chalana sikhna hai tips batao",
+"input": " gadi chalana sikhna hai tips batao",
 "target": "Ek beginner ke liye car (manual transmission) chalana seekhne ki ek basic step-by-step guide taiyar karein. Guide mein 'ABC' (Accelerator, Brake, Clutch) ka concept saral shabdon mein samjhayein. Gadi start karne, first gear mein daalne aur bina engine band kiye aage badhane (biting point) ka tarika batayein. Driving seekhte samay dhyan rakhne wali 3 sabse zaroori safety tips aur traffic rules ka bhi zikr karein. Tone aisi ho jisse padhne wale ka confidence badhe aur darr kam ho.",
 "lang": "hi",
 "domain": "general"
@@ -390,7 +390,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: laptop hang ho raha hai kya karu",
+"input": " laptop hang ho raha hai kya karu",
 "target": "Ek purane Windows 10/11 laptop ki speed badhane aur 'hanging' ya lag ki samasya ko theek karne ke liye 5 practical aur aasan tech-support steps batayein. Har step ko detail mein samjhayein, jaise (1) Task Manager se background apps kaise band karein, (2) Temp files aur cache kaise clear karein, (3) Startup programs ko disable karna, aur (4) Antivirus scan chalana. Agar hardware upgrade (jaise SSD lagwana ya RAM badhana) zaroori ho, toh uska bhi suggestion dein.",
 "lang": "hi",
 "domain": "general"
@@ -402,7 +402,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: best romantic movie konsi dekhu aaj",
+"input": " best romantic movie konsi dekhu aaj",
 "target": "Bollywood aur Hollywood ki top 5 best romantic movies ki ek curated recommendation list banayein jo aaj raat dekhne ke liye perfect ho. Har movie ke liye batayein: (1) Movie ka naam aur release year, (2) Plot ka ek chota sa spoiler-free summary (1-2 lines), aur (3) Ye movie kyu khaas hai (jaise uske gaane, chemistry, ya ending). List mein ek classic 90s ki movie, ek modern rom-com, aur ek emotional drama zaroor shamil karein.",
 "lang": "hi",
 "domain": "general"
@@ -414,7 +414,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: weight loss ke liye exercise batao",
+"input": " weight loss ke liye exercise batao",
 "target": "Ek 30-din ka home workout plan taiyar karein jo khaas taur par beginners ke liye ho jo vajan ghatana (weight loss) chahte hain. Ismein har din ke liye 5 alag-alag exercises (jaise jumping jacks, squats, aur planks) shamil karein, har exercise ke sets aur reps batayein. Tone motivational rakhein aur har exercise ke sath ek choti safety tip bhi dein taaki injury na ho. Kisi bhi mehenga equipment ki zaroorat na ho, aisa plan banayein.",
 "lang": "hi",
 "domain": "general"
@@ -426,7 +426,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: shimla ghumne ka plan",
+"input": " shimla ghumne ka plan",
 "target": "Shimla ke liye ek detailed 3-raat aur 4-din ki travel itinerary banayein jo ek family trip ke liye behtar ho. Ismein Mall Road, Jakhu Temple, aur Kufri jaise mukhya paryatan sthalon (tourist spots) ko cover karein. Har din ke liye transport ke behtareen vikalp aur local street food try karne ki jagahon ke naam batayein. Tone friendly aur suggestive rakhein, aur packing ke liye 2-3 zaroori tips bhi dein (jaise garam kapde).",
 "lang": "hi",
 "domain": "general"
@@ -438,7 +438,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: diwali par nibandh likho",
+"input": " diwali par nibandh likho",
 "target": "Diwali ke tyohar par ek 300-shabdon ka nibandh (essay) likhein jo 5th grade ke bacche ke liye upyukt ho. Nibandh ko teen bhagon mein baantein: Prastavana (introduction), Tyohar manane ka tarika (traditions), aur Iska mahatva (significance). Bhasha saral aur prabhavshali honi chahiye. Ismein 'paryavaran-friendly' (eco-friendly) tarike se Diwali manane ka sandesh bhi shamil karein.",
 "lang": "hi",
 "domain": "general"
@@ -450,7 +450,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: naya business shuru karne ke tips",
+"input": " naya business shuru karne ke tips",
 "target": "Ek naya small business (jaise ki online clothing store) shuru karne ke liye 5 mahatvapurn kadam (steps) batayein. Ismein market research, budget planning, supplier dhoondhna, aur digital marketing ke baare mein vistar se samjhayein. Tone professional aur encouraging rakhein. Ek aisi list banayein jo ek naye entrepreneur ko darr door karne aur sahi disha mein kaam karne mein madad kare.",
 "lang": "hi",
 "domain": "general"
@@ -462,7 +462,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: bacho ke liye healthy nashta",
+"input": " bacho ke liye healthy nashta",
 "target": "School jaane wale bacho ke liye 5 swasth aur swadisht (healthy and tasty) Indian breakfast recipes ki ek list taiyar karein jo 15-20 minute mein ban sakein. Har recipe ke mukhya ingredients aur banane ki vidhi (method) batayein. Is baat ka dhyan rakhein ki ye nashta protein aur vitamins se bharpoor ho par bacho ko dekhne mein attractive lage. Tone helpful aur informative rakhein.",
 "lang": "hi",
 "domain": "general"
@@ -474,7 +474,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: interview tips for freshers",
+"input": " interview tips for freshers",
 "target": "Ek fresher ke liye pehle job interview ko crack karne ke liye 7 anmol tips dein. Ismein 'Tell me about yourself' jaise sawalon ka jawab kaise dein, body language kaisi honi chahiye, aur company ke baare mein research kaise karein, ye sab shamil ho. Tone kaafi sakaratmak (positive) aur prerak (inspiring) rakhein taaki candidate ka confidence badhe. Dress code ke baare mein bhi ek choti tip dein.",
 "lang": "hi",
 "domain": "general"
@@ -486,7 +486,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: phone kharidna hai 15000 me",
+"input": " phone kharidna hai 15000 me",
 "target": "15,000 rupaye ke budget mein aaj ke samay ke top 3 smartphones ki tulna (comparison) karein. Har phone ke key specifications jaise Camera, Battery Life, Processor aur Display quality ke baare mein batayein. Ye bhi suggest karein ki gaming ke liye kaunsa phone best hai aur photography ke liye kaunsa. Tone neutral aur unbiased rakhein taaki kharidne wale ko sahi jaankari mile.",
 "lang": "hi",
 "domain": "general"
@@ -498,7 +498,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: english bolna sikhao",
+"input": " english bolna sikhao",
 "target": "Ek beginner ke liye jo hindi se english seekhna chahta hai, ek 15-din ka daily practice routine banayein. Ismein batayein ki roj kitni der reading karni hai, kaunse YouTube channels dekhne hain, aur aine (mirror) ke samne bolne ki practice kaise karni hai. Basic grammar (Tenses) aur daily use hone wale 5 naye shabd seekhne par zor dein. Tone encourage karne wali aur simple rakhein.",
 "lang": "hi",
 "domain": "general"
@@ -510,7 +510,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: office me promotion kaise paye",
+"input": " office me promotion kaise paye",
 "target": "Corporate office mein promotion paane ke liye ek strategic guide taiyar karein. Ismein networking ki ahmiyat, apne kaam ko sahi dhang se showcase karne (visibility), aur naye skills seekhne par focus karein. Ye bhi batayein ki apne manager se feedback mangne aur 'appraisal' meeting mein salary hike ki baat kaise karni hai. Tone professional aur career-oriented rakhein.",
 "lang": "hi",
 "domain": "general"
@@ -522,7 +522,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: kitchen saaf karne ka tarika",
+"input": " kitchen saaf karne ka tarika",
 "target": "Kitchen ko gehre se saaf karne (Deep Cleaning) ke liye ek step-by-step checklist banayein. Ismein chimney ki chiknai hatane, fridge ko organize karne, aur tiles chamkane ke gharelu nuskhe (home remedies jaise vinegar aur baking soda) shamil karein. Safai ko kam samay mein kaise poora karein, iski ek 'pro-tip' bhi dein. Tone helpful aur practical rakhein, jaise koi expert housekeeper bol raha ho.",
 "lang": "hi",
 "domain": "general"
@@ -534,7 +534,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: stress kam karne ke upay",
+"input": " stress kam karne ke upay",
 "target": "Aaj ki bhag-daur bhari zindagi mein mansik tanav (stress) kam karne ke liye 5 effective aur asaan tarike batayein. Ismein 'Mindfulness meditation', 'Digital detox', aur 'Hobby' ke liye waqt nikalne jaise points shamil karein. Har point ke saath ye batayein ki wo dimag ko shant karne mein kaise madad karta hai. Tone empathetic aur calming rakhein, aur ant mein ek choti si positive quote likhein.",
 "lang": "hi",
 "domain": "general"
@@ -546,7 +546,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: laptop hang ho raha hai solution",
+"input": " laptop hang ho raha hai solution",
 "target": "Agar kisi ka Windows laptop baar-baar hang ho raha hai, toh use theek karne ke liye 5 quick fixes batayein. Ismein Task Manager ka use, temporary files ko delete karna, aur startup apps ko disable karne jaise technical steps ko saral bhasha mein samjhayein. Ye bhi batayein ki kab hardware upgrade (jaise RAM badhana) zaroori hota hai. Tone technical par aasan (user-friendly) rakhein.",
 "lang": "hi",
 "domain": "general"
@@ -558,7 +558,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: bacche ko mobile se kaise bachaye",
+"input": " bacche ko mobile se kaise bachaye",
 "target": "Chote bacho mein mobile ki lat (addiction) ko chhudane ke liye maa-baap ke liye ek practical guide likhein. Ismein 5 rachanatmak (creative) vikalp batayein jo bacho ko busy rakh sakein, jaise ki painting, story-telling, ya outdoor games. 'Screen time' limit karne ke liye ghar ke naye niyam kaise banayein, is par salah dein. Tone empathetic aur supportive rakhein, bina parents ko guilty feel karwaye.",
 "lang": "hi",
 "domain": "general"
@@ -570,7 +570,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: doston ke sath goa trip plan",
+"input": " doston ke sath goa trip plan",
 "target": "4 doston ke liye Goa ki ek budget-friendly 3-day trip ki planning karein. Ismein saste transport options (scooty rental), affordable shacks mein khana, aur North Goa ke mukhya beaches (Anjuna, Vagator) cover karein. Ek rough budget estimate bhi dein (per person). Tone energetic aur fun rakhein, jaise koi 'travel buddy' salah de raha ho. Raat ki party aur din ke relaxation ka balance banayein.",
 "lang": "hi",
 "domain": "general"
@@ -582,7 +582,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: independence day par bhashan",
+"input": " independence day par bhashan",
 "target": "15 August (Swatantrata Diwas) ke avsar par school ke baccho ke liye ek 2-minute ka preranadayak (inspiring) bhashan likhein. Bhashan ki shuruwat ek desh-bhakti wali shayari se karein, beech mein azadi ke veeron ka zikr karein, aur ant mein bhavishya ke prati hamari zimmedariyon par zor dein. Bhasha saral par josh se bhari honi chahiye. Format mein 'Aadarniya Pradhanacharya aur mere saathi' jaise sambodhan shamil karein.",
 "lang": "hi",
 "domain": "general"
@@ -594,7 +594,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: mujhe cv banana hai simple sa",
+"input": " mujhe cv banana hai simple sa",
 "target": "Ek fresher ke liye ek 1-page, ATS-friendly CV/Resume ka template aur content draft karein. Audience: entry-level jobs (IT/Support/Internship). Format: sections with headings—Summary, Skills, Projects, Education, Certifications, Achievements. Tone: professional aur seedha. Constraints: simple English (ya Hinglish), 1 page max, bullet points action verbs ke saath, aur har project mein 1 measurable outcome (agar exact number na ho to reasonable estimate placeholder) include karein. Saath hi, 10 common keywords ki list dein jo ATS ke liye useful ho sakte hain.",
 "lang": "hi",
 "domain": "general"
@@ -606,7 +606,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: budget kaise banate hai month ka",
+"input": " budget kaise banate hai month ka",
 "target": "Ek beginner ke liye monthly budget banane ka step-by-step guide likhein. Audience: salary ya pocket-money wala person in India. Format: (1) categories list, (2) sample table layout (income/expenses/savings), (3) weekly check-in routine. Tone: supportive aur practical. Constraints: examples INR mein dein, 50/30/20 rule explain karein, aur 5 common mistakes (jaise impulse shopping, subscriptions) aur unke fixes bhi add karein.",
 "lang": "hi",
 "domain": "general"
@@ -618,7 +618,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: youtube channel name sugget karo",
+"input": " youtube channel name sugget karo",
 "target": "Mere YouTube channel ke liye 30 unique name ideas generate karein. Audience: Indian viewers, content niche: tech tips, apps, productivity, aur short tutorials. Format: 3 categories mein list—Professional, Fun/Casual, Minimal/One-word style. Tone: catchy aur modern. Constraints: names easy to pronounce, 2–3 words max (except one-word category), aur kuch names mein Hindi-English mix (Hinglish) allowed. Har name ke saath 1 line ka meaning/branding angle bhi likhein.",
 "lang": "hi",
 "domain": "general"
@@ -630,7 +630,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: headache ho raha hai kya karu",
+"input": " headache ho raha hai kya karu",
 "target": "Aam sir dard (tension headache) ke liye safe home-care tips ki ek guide dein. Audience: adult at home/office. Format: 6 actionable steps (hydration, rest, stretching, screen break, light food, relaxation). Tone: empathetic aur calm. Constraints: koi dangerous medical claims na karein; clearly batayein ki kab doctor ko dikhana chahiye (red flags jaise severe sudden headache, fever, vision issues). Ek short disclaimer bhi add karein ki yeh medical advice ka replacement nahi hai.",
 "lang": "hi",
 "domain": "general"
@@ -642,7 +642,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: gym join karu ya home workout",
+"input": " gym join karu ya home workout",
 "target": "Ek detailed comparison guide banayein: gym vs home workout for a beginner. Audience: 18–30 age group, weight loss + strength goals. Format: pros/cons table-like bullets, cost estimate (India), time requirement, aur recommended choice based on 3 profiles (busy student, office worker, tight budget). Tone: neutral, practical. Constraints: end mein 2-week starter plan bhi dein—ek gym version aur ek home version (exercises + frequency).",
 "lang": "hi",
 "domain": "general"
@@ -654,7 +654,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: pani puri ka pani kaise banate",
+"input": " pani puri ka pani kaise banate",
 "target": "Pani Puri ke pani (teekha meetha pani) ki ek authentic recipe likhein. Audience: home cooks/beginners. Format: ingredients with exact quantities, step-by-step method, resting time, aur taste-adjustment guide (teekha, khatta, meetha). Tone: friendly aur instructive. Constraints: 2 variants dein—mint-heavy spicy water aur tamarind-sweet water. Hygiene aur storage tips bhi include karein (fridge mein kitne din).",
 "lang": "hi",
 "domain": "general"
@@ -666,7 +666,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: mujhe ek shadi ka card ka text chahiye",
+"input": " mujhe ek shadi ka card ka text chahiye",
 "target": "Ek Indian wedding invitation card ke liye 3 text options likhein. Audience: relatives aur friends. Format: (1) Traditional, (2) Modern-minimal, (3) Fun/casual—har option separate. Tone: respectful aur celebratory. Constraints: Bride/Groom names, date, time, venue ke placeholders rakhein; event list include karein (Haldi, Sangeet, Wedding, Reception) aur RSVP line bhi ho. Text short ho (card-friendly) aur spelling clean ho.",
 "lang": "hi",
 "domain": "general"
@@ -678,7 +678,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: ghar me wifi slow hai kya kare",
+"input": " ghar me wifi slow hai kya kare",
 "target": "Ghar ke slow Wi‑Fi ko troubleshoot karne ke liye ek step-by-step guide banayein. Audience: non-technical home user. Format: numbered steps (router placement, restart, channel change basics, device check, speed test, ISP call script). Tone: simple aur helpful. Constraints: har step ke saath expected result batayein, aur 3 cases cover karein—sirf ek room mein slow, sab devices par slow, sirf raat ko slow. End mein batayein kab router upgrade zaroori hota hai.",
 "lang": "hi",
 "domain": "general"
@@ -690,7 +690,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: bachon ko padhai me man kaise lagaye",
+"input": " bachon ko padhai me man kaise lagaye",
 "target": "Bacchon (class 4–8) ka padhai mein mann lagane ke liye parent-friendly guide likhein. Audience: parents/guardians. Format: 8 actionable strategies (routine, rewards, study corner, short breaks, interest-based learning). Tone: supportive, non-shaming. Constraints: punishment-based advice avoid karein; 1 week ka sample timetable dein; aur phone/tablet screen-time rules ko gentle tarike se implement karne ke steps add karein.",
 "lang": "hi",
 "domain": "general"
@@ -702,7 +702,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: bas 2 din me kaise travel plan banau",
+"input": " bas 2 din me kaise travel plan banau",
 "target": "2 din ke short trip ke liye ek quick travel planning system batayein. Audience: busy person jo last minute plan karta hai. Format: checklist + timeline (Day -2, Day -1, Day 0). Tone: crisp aur action-oriented. Constraints: transport booking, stay selection, essential packing list, budget cap set karna, aur emergency items cover karein. Ek chhota example bhi dein (jaise Jaipur weekend trip) jisme attractions + food stops included hon.",
 "lang": "hi",
 "domain": "general"
@@ -714,7 +714,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: pani kam peeta hu aadat kaise dale",
+"input": " pani kam peeta hu aadat kaise dale",
 "target": "Rozana paani zyada peene ki aadat banane ke liye ek habit-building plan banayein. Audience: adult with busy schedule. Format: 7-day starter plan + reminders system. Tone: friendly aur practical. Constraints: unrealistic goals na dein; bottle size suggestions, meal-based triggers (breakfast ke baad), aur 5 simple hacks (flavor infusion, tracking) include karein. Health note bhi add karein ki kisi medical condition mein doctor se poochna chahiye.",
 "lang": "hi",
 "domain": "general"
@@ -726,7 +726,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: ek motivation speech likh do choti si",
+"input": " ek motivation speech likh do choti si",
 "target": "School assembly ke liye 1.5 minute ka motivational speech likhein. Audience: class 6–10 students. Format: greeting, 3 key points (discipline, consistency, kindness), ek chhota real-life example, aur strong closing line. Tone: energetic aur inspiring. Constraints: language simple Hindi mein ho, heavy quotes avoid karein, aur 1 short slogan include karein jo bacche repeat kar sakein.",
 "lang": "hi",
 "domain": "general"
@@ -738,7 +738,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: mujhe simple meditation sikhni hai",
+"input": " mujhe simple meditation sikhni hai",
 "target": "Beginner ke liye 10-minute guided meditation routine likhein. Audience: stress aur overthinking wala person. Format: minute-by-minute script (0–2 settle, 2–7 breathing, 7–9 body scan, 9–10 closing). Tone: calm, gentle, reassuring. Constraints: bahut spiritual ya religious language avoid karein; saans ki counting ka simple method include karein; aur 3 common problems (mind wander, sleepiness, restlessness) ke quick tips add karein.",
 "lang": "hi",
 "domain": "general"
@@ -750,7 +750,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: ghar ke liye ration list bana do",
+"input": " ghar ke liye ration list bana do",
 "target": "Ek 1 mahine ki household ration/grocery list banayein. Audience: 3–4 members ka Indian family. Format: categories—Atta/Rice, Dal/Pulses, Spices, Oil/Ghee, Dairy, Vegetables/Fruits, Snacks, Cleaning supplies. Tone: practical aur organized. Constraints: quantity estimates add karein (kg/liters/packets), aur budget-friendly suggestions dein (local seasonal veggies). End mein 1 weekly restock mini-list bhi include karein.",
 "lang": "hi",
 "domain": "general"
@@ -762,7 +762,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: dost ko birthday wish bhejo",
+"input": " dost ko birthday wish bhejo",
 "target": "5 different birthday wishes likhein ek close dost ke liye jo funny, heartfelt, aur motivational mix ho. Audience: young adults (20s). Format: (1) short WhatsApp message, (2) Instagram caption, (3) voice note script, (4) card text, (5) long emotional para. Tone: personal aur warm. Constraints: har wish mein ek inside joke ya shared memory ka reference placeholder rakhein; emojis optional par over mat use karein; length vary karein (20 words se 100 words tak).",
 "lang": "hi",
 "domain": "general"
@@ -774,7 +774,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: laptop battery life badhao",
+"input": " laptop battery life badhao",
 "target": "Windows laptop ki battery life improve karne ke liye 8 practical tips ki list banayein. Audience: students aur office workers. Format: prioritized order (quick wins first), har tip ke saath explanation aur expected gain (e.g., 20-30% more hours). Tone: technical par beginner-friendly. Constraints: no hardware changes; software tweaks jaise brightness, background apps, power plan, aur battery calibration cover karein; ek calibration step-by-step guide bhi add karein.",
 "lang": "hi",
 "domain": "general"
@@ -786,7 +786,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: cold cough ka gharelu ilaj",
+"input": " cold cough ka gharelu ilaj",
 "target": "Sardi khansi (common cold and cough) ke liye 5 effective gharelu upay batayein jo safe aur asaan hon. Audience: family members (adults/kids). Format: recipe-style—ingredients, method, dosage/frequency, aur precautions. Tone: caring aur reliable. Constraints: kitchen items use karein (adrak, honey, tulsi, steam); doctor kab dikhana hai clear batayein (fever >3 days, breathing issues); kids ke liye adjusted versions dein.",
 "lang": "hi",
 "domain": "general"
@@ -798,7 +798,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: resume me skills kaise likhe",
+"input": " resume me skills kaise likhe",
 "target": "Ek effective resume skills section banane ke liye guide likhein. Audience: job seekers (fresher/experienced). Format: do's and don'ts list, 3 sample sections (IT, Marketing, Sales), aur keywords research ka tarika. Tone: expert aur actionable. Constraints: ATS-friendly tips shamil karein; hard skills + soft skills ka balance; industry-specific examples dein (e.g., Python for tech); length advice: 8-12 skills max.",
 "lang": "hi",
 "domain": "general"
@@ -810,7 +810,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: skin care routine simple",
+"input": " skin care routine simple",
 "target": "Daily skin care routine ka simple 4-step plan banayein oily/combination skin ke liye. Audience: teens aur young adults. Format: morning aur night routine alag, products suggestions (budget under ₹500 total). Tone: easy-going aur confident-boosting. Constraints: Indian climate ke hisab se (pollution, humidity); natural alternatives bhi dein; patch test aur sunscreen zarooriyat emphasize karein; weekly extras (face mask) add karein.",
 "lang": "hi",
 "domain": "general"
@@ -822,7 +822,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: email late hone ka boss ko",
+"input": " email late hone ka boss ko",
 "target": "Boss ko project late submit karne ke liye ek professional apology email draft karein. Audience: employee. Format: subject, greeting, reason brief, impact acknowledgment, recovery plan with new deadline, closing. Tone: accountable aur proactive. Constraints: excuses minimize karein; 2 positive points add karein (quality maintained, lessons learned); under 150 words; reschedule meeting suggest karein.",
 "lang": "hi",
 "domain": "general"
@@ -834,7 +834,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: falafal recipe ghar par",
+"input": " falafal recipe ghar par",
 "target": "Ghar par authentic Falafel banane ki recipe likhein. Audience: vegetarian home cooks. Format: ingredients (chickpeas soaked overnight), step-by-step (blender mix, shape, fry), serving ideas (pita wraps). Tone: delicious aur foolproof. Constraints: oven-baked option bhi dein; spices Indian twist (jeera, haldi); nutrition info add karein; common mistakes (soggy texture) avoid karne ke tips.",
 "lang": "hi",
 "domain": "general"
@@ -846,7 +846,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: purani photos organize karu",
+"input": " purani photos organize karu",
 "target": "Digital aur physical purani photos ko organize karne ka system banayein. Audience: family person with scattered pics. Format: 6-step process (sort, scan, folder structure, backup, albums). Tone: nostalgic aur efficient. Constraints: free tools suggest karein (Google Photos, phone gallery); naming convention dein (YYYY-MM-DD_event); sentimental value preserve karne ke tips; yearly review routine.",
 "lang": "hi",
 "domain": "general"
@@ -858,7 +858,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: chashme ka number kam kaise",
+"input": " chashme ka number kam kaise",
 "target": "Aankhon ki roshni sudharne aur chashme ka number kam karne ke natural ways batayein. Audience: students/teens. Format: daily habits list (20-20-20 rule, diet, exercises). Tone: hopeful par realistic. Constraints: medical disclaimer zaroor (doctor consult); eye yoga steps detail mein; screen time reduce karne ka plan; 3-month trackable improvements.",
 "lang": "hi",
 "domain": "general"
@@ -870,7 +870,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: office lunch ideas healthy",
+"input": " office lunch ideas healthy",
 "target": "Office tiffin ke liye 7 healthy lunch box ideas banayein jo 2 din tak fresh rahein. Audience: working women/men. Format: recipe card style—ingredients, prep night before, microwave instructions. Tone: tasty aur convenient. Constraints: Indian flavors (roti sabzi, rice dal); under 500 calories; variety (veg/non-veg); packing tips (leak-proof containers).",
 "lang": "hi",
 "domain": "general"
@@ -882,7 +882,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: podcast episode outline banao",
+"input": " podcast episode outline banao",
 "target": "Ek 30-minute podcast episode ka detailed outline likhein topic 'Daily Habits for Success'. Audience: self-improvement listeners. Format: intro (2 min), 4 main segments (8 min each), outro (2 min), transitions. Tone: conversational aur engaging. Constraints: guest interview slot include karein; 3 actionable takeaways; music cues aur ad breaks note karein.",
 "lang": "hi",
 "domain": "general"
@@ -894,7 +894,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: balcony garden kaise banaye",
+"input": " balcony garden kaise banaye",
 "target": "Chhote balcony mein mini garden lagane ka beginner guide banayein. Audience: urban apartment dwellers. Format: plant selection (5 easy: tulsi, mint, tomatoes), pots/soil tips, watering schedule. Tone: green-thumb inspiring. Constraints: low-maintenance, low-cost (under ₹500 start); pest control natural; seasonal care (summer/winter); harvest ideas.",
 "lang": "hi",
 "domain": "general"
@@ -906,7 +906,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: rainy day activities indoor",
+"input": " rainy day activities indoor",
 "target": "Barish ke din ghar mein family ke saath karne wali 10 fun indoor activities suggest karein. Audience: parents with kids 5-12 years. Format: activity name, materials needed, time estimate, age suitability. Tone: joyful aur creative. Constraints: no outdoor, low-cost/free; mix games, crafts, cooking; screen-free mostly.",
 "lang": "hi",
 "domain": "general"
@@ -918,7 +918,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: job rejection ke baad kya",
+"input": " job rejection ke baad kya",
 "target": "Job rejection email milne ke baad next steps ka emotional aur practical guide likhein. Audience: job hunters. Format: immediate actions (thank you reply), reflection (feedback ask), improve plan (networking, upskill). Tone: resilient aur forward-looking. Constraints: 3 sample follow-up emails; common mistakes avoid; positivity maintain.",
 "lang": "hi",
 "domain": "general"
@@ -930,7 +930,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: drawing sikhe beginner",
+"input": " drawing sikhe beginner",
 "target": "Pencil sketching seekhne ke liye 21-day challenge banayein beginners ke liye. Audience: hobbyists zero experience. Format: daily sketch prompt (basic shapes to portraits), tools list, techniques intro. Tone: patient aur progressive. Constraints: free printable worksheets suggest; common errors fix (proportions); share progress tips.",
 "lang": "hi",
 "domain": "general"
@@ -942,7 +942,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: computer kya hota hai",
+"input": " computer kya hota hai",
 "target": "Computer ka concept ek bilkul beginner ke liye samjhaiye. Audience: school students (class 6–8). Tone: friendly aur easy Hindi. Format: short paragraphs aur bullet points. Cover karein: (1) computer kya hota hai simple definition ke saath, (2) computer ke main parts – hardware aur software, (3) daily life examples jaise mobile, ATM, laptop, (4) computer kya-kya kaam kar sakta hai aur kya nahi. Constraint: technical terms kam se kam use karein aur examples zyada ho.",
 "lang": "hi",
 "domain": "general"
@@ -954,7 +954,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: time management sikhao",
+"input": " time management sikhao",
 "target": "Time management ko beginners ke liye detail me samjhaiye. Audience: college students aur working beginners. Tone: practical aur supportive. Format: numbered steps ke saath. Cover karein: (1) time waste identify karna, (2) priority set karna (important vs urgent), (3) daily aur weekly planning ka example, (4) simple tools jaise to-do list aur calendar, (5) procrastination se kaise bachein. Constraint: advice realistic ho, over-ideal na ho.",
 "lang": "hi",
 "domain": "general"
@@ -966,7 +966,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: interview ke liye tips do",
+"input": " interview ke liye tips do",
 "target": "Job interview preparation ke liye ek complete beginner-friendly guide banaiye. Audience: freshers aur first-time job seekers. Tone: confident aur encouraging. Format: bullet points aur checklists. Cover karein: (1) interview se pehle preparation, (2) common HR questions aur unke jawab ka structure, (3) body language aur communication tips, (4) interview ke din kya kare aur kya na kare, (5) follow-up etiquette. Constraint: Indian job market context use karein.",
 "lang": "hi",
 "domain": "general"
@@ -978,7 +978,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: motivation kaise banaye rakhe",
+"input": " motivation kaise banaye rakhe",
 "target": "Motivation ko long-term maintain karne par ek structured explanation dijiye. Audience: students aur self-improvement beginners. Tone: realistic aur non-preachy. Format: sections with examples. Cover karein: (1) motivation aur discipline ka difference, (2) short-term vs long-term goals, (3) burnout se kaise bachein, (4) low-energy days ke liye strategies, (5) habits ka role. Constraint: fake positivity avoid karein.",
 "lang": "hi",
 "domain": "general"
@@ -990,7 +990,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: resume kaise banaye",
+"input": " resume kaise banaye",
 "target": "Resume banane ka ek step-by-step guide likhiye. Audience: fresh graduates. Tone: professional aur simple. Format: sections with examples. Cover karein: (1) resume ka structure, (2) skills aur projects kaise likhein, (3) common mistakes, (4) ATS-friendly tips, (5) fresher ke liye sample content. Constraint: 1-page resume par focus ho.",
 "lang": "hi",
 "domain": "general"
@@ -1002,7 +1002,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: online paise kaise kamaye",
+"input": " online paise kaise kamaye",
 "target": "Online earning ke genuine tareeqon par ek informative guide banaiye. Audience: beginners aur students. Tone: honest aur cautionary. Format: categorized list. Cover karein: (1) freelancing, (2) content creation, (3) skill-based work, (4) scams se kaise bachein, (5) realistic income expectations. Constraint: get-rich-quick claims avoid karein.",
 "lang": "hi",
 "domain": "general"
@@ -1014,7 +1014,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: public speaking ka darr kaise hataye",
+"input": " public speaking ka darr kaise hataye",
 "target": "Public speaking ke darr ko kam karne ke liye ek practical guide likhiye. Audience: students aur professionals. Tone: empathetic aur supportive. Format: steps aur exercises. Cover karein: (1) darr ke reasons, (2) preparation techniques, (3) stage confidence build karna, (4) breathing aur body language tips, (5) gradual practice plan. Constraint: clinical therapy claims na karein.",
 "lang": "hi",
 "domain": "general"
@@ -1026,7 +1026,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: coding kaise start kare",
+"input": " coding kaise start kare",
 "target": "Coding start karne ke liye beginners ke liye roadmap banaiye. Audience: non-technical students. Tone: encouraging aur realistic. Format: phased roadmap. Cover karein: (1) coding kya hoti hai, (2) kaunsi language se shuru karein aur kyun, (3) daily practice routine, (4) free learning resources, (5) common beginner confusions. Constraint: language wars avoid karein.",
 "lang": "hi",
 "domain": "general"
@@ -1038,7 +1038,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: goal setting sikhao",
+"input": " goal setting sikhao",
 "target": "Goal setting ko beginners ke liye step-by-step samjhaiye. Audience: self-improvement beginners. Tone: clear aur motivating. Format: framework-based explanation. Cover karein: (1) SMART goals, (2) short vs long-term goals, (3) action plans banana, (4) progress tracking, (5) goals fail hone ke common reasons. Constraint: examples relatable ho.",
 "lang": "hi",
 "domain": "general"
@@ -1050,7 +1050,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: stress kam kaise kare",
+"input": " stress kam kaise kare",
 "target": "Stress management par ek beginner-friendly guide likhiye. Audience: students aur working professionals. Tone: calming aur supportive. Format: techniques with explanations. Cover karein: (1) stress ke common causes, (2) short-term relief methods, (3) long-term habits, (4) work-life balance tips, (5) kab help leni chahiye. Constraint: medical claims na karein.",
 "lang": "hi",
 "domain": "general"
@@ -1062,7 +1062,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: self confidence kaise badhaye",
+"input": " self confidence kaise badhaye",
 "target": "Self-confidence badhane ke liye ek realistic aur actionable guide likhiye. Audience: young adults. Tone: positive but practical. Format: habits aur mindset-based structure. Cover karein: (1) confidence ke myths, (2) small wins approach, (3) body language aur self-talk, (4) social confidence tips, (5) consistency ka role. Constraint: instant results promise na karein.",
 "lang": "hi",
 "domain": "general"
@@ -1074,7 +1074,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: career kaise choose kare",
+"input": " career kaise choose kare",
 "target": "Career choose karne ke liye ek structured decision-making guide likhiye. Audience: school aur college students. Tone: guidance-focused aur unbiased. Format: step-by-step framework. Cover karein: (1) interest aur skills ka assessment, (2) market demand samajhna, (3) short experiments ka role, (4) parents pressure handle karna, (5) wrong choice ka fear. Constraint: ek hi career ko promote na karein.",
 "lang": "hi",
 "domain": "general"
@@ -1086,7 +1086,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: aadat kaise banaye",
+"input": " aadat kaise banaye",
 "target": "Nayi aadat banane ke process ko scientific aur simple tareeke se samjhaiye. Audience: self-improvement beginners. Tone: practical aur grounded. Format: habit loop based explanation. Cover karein: (1) cue–routine–reward model, (2) small habits approach, (3) consistency ka role, (4) habit break hone par kya karein, (5) examples. Constraint: unrealistic motivation claims avoid karein.",
 "lang": "hi",
 "domain": "general"
@@ -1098,7 +1098,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: diabetes ke baare mein batao",
+"input": " diabetes ke baare mein batao",
 "target": "Ek experienced doctor ki tarah samjhao jo Hindi mein baat karta hai. Target audience: 40–60 saal ke aam Indian jo abhi recently Type 2 diabetes diagnose hua hai ya iska risk hai. Nimnlikhit topics cover karo: (1) diabetes kya hota hai — simple 'key aur lock' wali insulin analogy ke saath; (2) Type 1 aur Type 2 mein clear fark; (3) India mein diabetes itna common kyun hai — genetics, diet, aur sedentary lifestyle; (4) daily diet mein kya khayein aur kya avoid karein — specifically Indian foods jaise rice, roti, dal, mithai; (5) exercise ke chhote practical steps jo busy log bhi follow kar sakein; (6) warning signs jab turant doctor ke paas jaana chahiye. Tone: simple, reassuring, non-medical jargon. Format: numbered sections with short paragraphs. 500–600 words.",
 "lang": "hi",
 "domain": "general"
@@ -1110,7 +1110,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: paise kaise bachaye student hoon",
+"input": " paise kaise bachaye student hoon",
 "target": "Ek friendly financial advisor ki tarah samjhao jo college students ki money problems samajhta hai. Target audience: 18–22 saal ka Indian college student jisko limited pocket money ya stipend milti hai aur woh month ke end mein paise khatam kar leta hai. In topics ko cover karo: (1) '50-30-20 rule' ko student budget ke hisaab se kaise adapt karein; (2) ek simple monthly budget kaise banayein — notebook ya free apps jaise Walnut ya ET Money se; (3) canteen, online shopping, aur recharge jaise common kharcho mein kaise cut karein bina zindagi boring kiye; (4) hostel ya PG mein grocery smartly kaise khareedein; (5) choti-choti bachat ki aadat kaise daalni chahiye — Jar app, round-up savings; (6) part-time income ke 3 realistic options — freelancing, tutoring, campus ambassador. Tone: casual aur relatable, jaise koi dost bata raha ho. Format: numbered points. 400–500 words.",
 "lang": "hi",
 "domain": "general"
@@ -1122,7 +1122,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: ghumne ka plan banana hai rajasthan mein",
+"input": " ghumne ka plan banana hai rajasthan mein",
 "target": "Ek experienced Indian travel blogger ki tarah likhna jo Rajasthan ko bohot ache se jaanta ho. Target reader: 25–35 saal ka Indian couple ya friend group jo 7–10 din ke liye Rajasthan trip plan karna chahta hai, mid-range budget Rs. 3000–5000 per day per person. Cover karo: (1) best time to visit — October se March kyun sahi hai, summer aur monsoon ke risks; (2) ek sample 8-day itinerary — Jaipur (2 din), Jodhpur (2 din), Jaisalmer (2 din), Udaipur (2 din) with top attractions; (3) ek city se doosri city kaise jayein — train, bus, ya cab ka comparison aur approximate costs; (4) kahan khayein — authentic Rajasthani food spots aur must-try dishes jaise dal baati churma, laal maas, ghevar; (5) kahan rukein — budget hotels vs heritage havelis ka comparison; (6) common tourist traps aur scams se kaise bachein. Format: itinerary + tips. Tone: practical aur exciting dono. 700–800 words.",
 "lang": "hi",
 "domain": "general"
@@ -1134,7 +1134,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: exam mein concentration nahi hota padhai mein",
+"input": " exam mein concentration nahi hota padhai mein",
 "target": "Ek study coach aur educational psychologist ki tarah likhna jo Indian competitive exam students ke saath kaam karta/karti ho. Target audience: 17–22 saal ke woh students jo padhai ke dauran phone, social media, neend, ya anxiety ki wajah se distractions se pareshan rehte hain. In sab ko cover karo: (1) concentration kyun toot-ti hai — scientifically samjhao: dopamine, attention span, decision fatigue; (2) Pomodoro Technique kya hoti hai aur ise exam prep ke liye kaise use karein; (3) study environment kaise set karein — phone door rakhne ke practical tips, Forest ya Freedom jaise apps; (4) 'active recall' aur 'spaced repetition' se padhai zyada effective kaise ho; (5) anxiety aur overthinking ke liye 10-minute pre-study ritual; (6) ek sample 6-ghante wala daily study schedule jo sustainable ho. Tone: empathetic aur direct — student ko judged feel na ho. Format: numbered tips + sample schedule. 500–600 words.",
 "lang": "hi",
 "domain": "general"
@@ -1146,7 +1146,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: social media se nuksaan kya hai bacchon ko",
+"input": " social media se nuksaan kya hai bacchon ko",
 "target": "Ek child psychologist aur digital wellness expert ki perspective se likhna. Target audience: Indian parents (30–50 saal) jo apne 10–16 saal ke bacchon ke social media use ko lekar concerned hain. Ek comprehensive, balanced guide likho: (1) research-backed nuksaan — anxiety, depression, body image issues, aur FOMO ka social media se link; (2) Indian context — Bollywood filter culture aur exam pressure ke saath comparison ki problem; (3) woh signs jo batate hain ki bachcha social media ka addict ho raha hai; (4) parents ke practical steps — screen time limits, parental controls, ghar mein tech-free zones banana; (5) bacche se baat kaise karein bina confrontation ke — trust build karne wale conversation starters; (6) healthy social media use sikhane ka sahi tarika — digital literacy kya hoti hai. Tone: informative lekin alarmist nahi, parents ko judge kiye bina. Format: subheadings ke saath structured guide. 600–700 words.",
 "lang": "hi",
 "domain": "general"
@@ -1158,7 +1158,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: ghar pe healthy khana banana sikhao",
+"input": " ghar pe healthy khana banana sikhao",
 "target": "Ek registered dietitian aur Indian food expert ki tarah likhna. Target audience: 22–30 saal ka young working professional jo busy schedule ki wajah se bahar ka ya packaged khana zyada khata/khati hai aur healthy cooking sikhna chahta/chahti hai bina zyada time aur budget ke. In topics ko cover karo: (1) 'healthy khana' ka actual matlab — calories count karna zaroori nahi, balance zaroori hai; (2) kitchen mein hamesha kya hona chahiye — 10 staples jaise dal, oats, eggs, vegetables, olive oil; (3) 5 quick aur healthy Indian recipes jo 20–30 minute mein ban jayein — jaise vegetable poha, masoor dal, egg bhurji, oats khichdi; (4) Sunday ko meal prep kaise karein taaki week bhar aasaan ho; (5) packaged food ke labels kaise padhein — kya avoid karein; (6) ek week ka sample meal plan jo Indian taste ke hisaab se ho aur Rs. 200 per day mein ho. Tone: friendly, practical, non-judgmental. Format: recipe tips + meal plan table. 600–700 words.",
 "lang": "hi",
 "domain": "general"
@@ -1170,7 +1170,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: job interview ki tayyari kaise karein",
+"input": " job interview ki tayyari kaise karein",
 "target": "Ek experienced HR professional aur career coach ki tarah likhna jo India ke top companies mein interviews leta/leti raha/rahi ho. Target audience: 21–28 saal ke freshers ya 2–3 saal ke experience wale professionals jo upcoming interview mein nervous hain. Comprehensive preparation guide likho: (1) interview se pehle research — company background, role requirements, aur interviewer ka LinkedIn profile kaise dekho; (2) common interview questions ke smart jawab — 'Tell me about yourself', 'Your biggest weakness', 'Why this company' ke STAR method se structured answers; (3) body language aur first impression — kya pehnna chahiye, handshake, eye contact, nervousness hide kaise karein; (4) technical rounds ki preparation — domain-specific questions ke liye kahan practice karein; (5) woh 5 questions jo tum interviewer se zaroor poocho — initiative dikhane ke liye; (6) rejection ke baad kya karein — feedback maangna aur improve karna. Tone: confident aur motivating. Format: step-by-step with examples. 600–700 words.",
 "lang": "hi",
 "domain": "general"
@@ -1189,7 +1189,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: khana banana sikhao",
+"input": " khana banana sikhao",
 "target": "Ek beginner ke liye step-by-step Hindi cooking guide banao jo pehli baar akele rehne laga ho (student ya working professional). Niche diye gaye points cover karo: (1) rasoi mein zaroori 10 basic tools aur ingredients jo hamesha hone chahiye, (2) 5 aasaan aur quick recipes — dal, chawal, sabzi, anda bhurji, aur roti — jinhe 30 minute mein banaya ja sake, (3) gas chulhe ko safely use karne ke tips, (4) ingredients ko store karne ke tarike taaki waste na ho, (5) common galtiyan jo beginners karte hain aur unhe kaise bachein. Tone friendly aur encouraging rakho. Har recipe mein samagri aur vidhi dono include karo. Aam Hindi mein likho, koi difficult shabd mat use karo.",
 "lang": "hi",
 "domain": "general"
@@ -1201,7 +1201,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: depression ke baare mein batao",
+"input": " depression ke baare mein batao",
 "target": "Depression ke baare mein ek sensitive aur evidence-based guide Hindi mein likho jo common log samajh sakein. Niche diye gaye topics cover karo: (1) depression kya hota hai — yeh sirf 'udaasi' se alag kaise hai, (2) iske common symptoms — emotional, physical, aur behavioural, (3) India mein iske kaaran — academic pressure, family expectations, financial stress, (4) depression ko ignore karne ke khatre, (5) kab aur kahan professional help leni chahiye (therapist, psychiatrist ka fark), (6) iCall, Vandrevala Foundation jaise free helpline numbers, (7) ghar par karne wale simple self-care practices. Tone compassionate aur non-stigmatizing rakho. Mental health ke baare mein galat dharnao ko bhi address karo. Content factually accurate aur WHO guidelines ke anukool ho.",
 "lang": "hi",
 "domain": "general"
@@ -1213,7 +1213,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: time management kaise kare",
+"input": " time management kaise kare",
 "target": "Students aur working professionals ke liye ek practical time management guide Hindi mein likho. Niche diye topics shamil karo: (1) time management kyun zaroori hai — productivity aur mental health par iska asar, (2) Eisenhower Matrix ko simple bhasha mein samjhao (urgent/important ka fark), (3) Pomodoro technique — kya hai, kaise kaam karta hai, kab use karein, (4) din ki planning kaise karein — raat ko ya subah? To-do list vs time-blocking, (5) distractions se bachne ke tarike, khaas kar phone aur social media se, (6) 'procrastination' kyun hota hai aur usse kaise todein, (7) free tools jaise Google Calendar, Notion, ya simple notebook se kaise kaam chalayein. Tone motivating aur realistic rakho — perfection ki ummeed mat lagao. Ek sample daily schedule bhi dena.",
 "lang": "hi",
 "domain": "general"
@@ -1225,7 +1225,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: relationship mein fight hoti hai kya kare",
+"input": " relationship mein fight hoti hai kya kare",
 "target": "Romantic relationships mein arguments aur conflicts ko handle karne ke baare mein ek balanced aur empathetic guide Hindi mein likho. Yeh guide un logon ke liye hai jo apne partner ke saath baar baar ladte hain aur relationship ko better banana chahte hain. Cover karo: (1) conflict kyun hota hai — unmet expectations, communication gap, stress spillover, (2) fight ke dauran kya karna chahiye aur kya nahi — 'I statements' ka use, accusatory language se bachna, (3) 'stonewalling' aur 'gaslighting' jaise toxic patterns ko pehchanna, (4) fight ke baad reconcile kaise karein — apology ka sahi tarika, (5) baar baar ek hi issue pe larna — underlying causes kaise dhundhein, (6) kab couples therapy leni chahiye aur India mein yeh kaise milti hai, (7) healthy vs unhealthy relationship ke signs. Tone non-judgmental aur practical rakho. Kisi ek gender ko blame mat karo.",
 "lang": "hi",
 "domain": "general"
@@ -1237,7 +1237,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: ghar par gym banana chahta hun",
+"input": " ghar par gym banana chahta hun",
 "target": "Ek beginner ke liye ghar par low-budget home gym banane ki complete guide Hindi mein likho. Guide mein yeh sab include karo: (1) kitni jagah chahiye aur kaise organize karein — chote ghar ke liye space-saving tips, (2) ₹5,000 se ₹20,000 ke budget mein kaunsa equipment khareedein — resistance bands, dumbbell set, yoga mat, pull-up bar ki tulna aur recommendations, (3) bina kisi equipment ke bhi karne wali effective exercises — bodyweight workout routine, (4) equipment kahan se khareedein — Amazon, local sports shops, second-hand options, (5) ghar par workout karne ke liye sahi mindset aur routine kaise banayein, (6) common injuries se kaise bachein — warm-up aur cool-down ki importance, (7) realistic 30-day beginner workout plan jo ghar par follow kiya ja sake. Tone encouraging aur practical rakho. Expensive equipment ko zaroori mat batao.",
 "lang": "hi",
 "domain": "general"
@@ -1249,7 +1249,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: UPSC ki taiyari kaise karein",
+"input": " UPSC ki taiyari kaise karein",
 "target": "UPSC Civil Services Exam ki taiyari karne wale beginners ke liye ek comprehensive roadmap Hindi mein banao. Niche diye gaye sab topics cover karo: (1) UPSC exam structure samjhao — Prelims, Mains, aur Interview teen stages kya hain, (2) optional subject kaise chunein — apni background, interest aur scoring trends ke hisaab se, (3) Prelims ke liye CSAT aur GS Paper 1 ki teyari kaise karein, (4) standard books ki list — Laxmikanth, NCERTs, Spectrum, Bipin Chandra — aur unhe kaise sequence mein padhein, (5) notes banane ka sahi tarika — handwritten vs digital, (6) current affairs ke liye The Hindu, PIB, aur monthly magazines ka use kaise karein, (7) test series aur mock exams ka importance, (8) self-study vs coaching ka faisla kaise karein, (9) mental health aur burnout se kaise bachein is long journey mein. Tone realistic aur encouraging rakho. Ek sample 12-month study plan bhi do.",
 "lang": "hi",
 "domain": "general"
@@ -1261,7 +1261,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: bacchon ko mobile se kaise door rakhein",
+"input": " bacchon ko mobile se kaise door rakhein",
 "target": "Aaj ke digital zamane mein bacchon (5–15 saal) ke excessive screen time ko reduce karne ke baare mein parents ke liye ek practical aur balanced guide Hindi mein likho. Niche diye points include karo: (1) kitna screen time 'normal' hai — WHO aur pediatric guidelines ke hisaab se age-wise breakdown, (2) excessive screen time ke nuksaan — aankhon par, neend par, concentration par, social skills par, (3) seedha mobile chheenne ki jagah alternative strategies — podhna, khel, hobby classes, outdoor time, (4) parental controls kaise lagayein — Android, iOS, aur specific apps pe settings, (5) khud parents ka screen use kaise role model karta hai bacchon par, (6) 'no phone zones' aur 'tech-free time' ghar mein kaise implement karein bina tanav ke, (7) jab baccha tantrum kare tab kya karein. Tone non-judgmental aur supportive rakho — parents ko guilty feel mat karao.",
 "lang": "hi",
 "domain": "general"
@@ -1273,7 +1273,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: neend nahi aati kya kare",
+"input": " neend nahi aati kya kare",
 "target": "Neend na aane (insomnia) ki samasya se pareshan logon ke liye ek detailed aur evidence-based guide Hindi mein likho. Guide mein yeh sab include karo: (1) insomnia kya hai — types: sleep onset insomnia, sleep maintenance insomnia, aur early morning awakening, (2) common causes: stress, anxiety, caffeine, irregular schedule, blue light, (3) sleep hygiene ke baare mein detail mein batao — sone ka fixed time, room temperature, darkness, noise, (4) sone se pehle kya karein aur kya na karein — phone, TV, heavy food, exercise timing, (5) 4-7-8 breathing technique aur progressive muscle relaxation neend ke liye kaise use karein step by step, (6) kab neend ki goli lena theek hai aur kab nahi — doctor se kab milein, (7) chronic insomnia ke liye CBT-I (Cognitive Behavioral Therapy for Insomnia) kya hoti hai. Tone calming aur reassuring rakho. Quick tips ka ek box bhi add karo.",
 "lang": "hi",
 "domain": "general"
@@ -1285,7 +1285,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: freelancing kaise shuru karein India mein",
+"input": " freelancing kaise shuru karein India mein",
 "target": "India mein freelancing shuru karne ke baare mein ek detailed aur practical Hindi guide likho un logon ke liye jo pehli baar freelancing try karna chahte hain — chahe student ho, housewife ho, ya job ke saath side income chahte hon. Niche diye topics cover karo: (1) freelancing kya hai aur yeh traditional job se kaise alag hai, (2) popular freelancing skills jo India mein demand mein hain — graphic design, content writing, web development, video editing, digital marketing, data entry, (3) platforms kahan register karein — Fiverr, Upwork, Freelancer, Toptal, India-specific platforms jaise Truelancer aur WorknHire, (4) apna profile kaise banayein jo clients attract kare — bio, portfolio, pricing, (5) pehla kaam kaise milega — proposals kaise likhein, low se start karein ya nahi, (6) payments kaise receive karein — PayPal, Payoneer, direct bank transfer, tax implications (GST, ITR), (7) common mistakes jo new freelancers karte hain. Tone practical aur encouraging rakho. Ek realistic income expectation bhi batao pehle 3-6 mahine ke liye.",
 "lang": "hi",
 "domain": "general"
@@ -1297,7 +1297,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: yoga ke fayde batao",
+"input": " yoga ke fayde batao",
 "target": "Yoga ke physical aur mental fayde par ek informative aur evidence-based Hindi article likho jo beginners ke liye useful ho. Niche diye topics cover karo: (1) yoga kya hai — iska history aur different types: Hatha, Ashtanga, Vinyasa, Yin, Restorative, (2) physical fayde: flexibility, strength, posture, breathing capacity, heart health — scientific studies ka reference do, (3) mental fayde: stress reduction, anxiety management, better sleep, improved focus, (4) specific conditions mein yoga ka role — back pain, PCOD, diabetes, hypertension, (5) beginners ke liye 5 easy poses — Tadasana, Balasana, Bhujangasana, Vrikshasana, Shavasana — step-by-step instructions ke saath, (6) yoga kab karein, kitni der karein, aur kya saavedhaniyaan rakhein (pregnancy, injury ke dauran), (7) free YouTube channels aur apps jahan se seekh sakein. Tone positive aur motivating rakho. Yoga ko sirf weight loss se zyada relate karo.",
 "lang": "hi",
 "domain": "general"
@@ -1309,7 +1309,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: rishton mein trust kaise banayein",
+"input": " rishton mein trust kaise banayein",
 "target": "Personal relationships — dosti ho, family ho, ya romantic relationship — mein trust build karne aur maintain karne ke baare mein ek deep aur practical Hindi guide likho. Niche diye topics include karo: (1) trust kya hota hai aur yeh kyun kisi bhi relationship ki neenv hai, (2) trust banane mein kitna waqt lagta hai aur kitni jaldi toot sakta hai — research se examples, (3) practical behaviors jo trust badhate hain: consistency, honesty, vulnerability, reliability, (4) kaise pata karein ki koi aap par trust karta hai ya nahi, (5) tuta hua trust dobara kaise build karein — step by step process forgiveness aur rebuilding ke baad, (6) trust aur control mein fark karna — jealousy, possessiveness ko trust samajhna galat kyun hai, (7) jab baar baar trust toota ho to therapy ya counseling kab leni chahiye. Tone compassionate aur balanced rakho. Real-life scenarios use karo har point ko illustrate karne ke liye.",
 "lang": "hi",
 "domain": "general"
@@ -1321,7 +1321,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: paise ki bachat kaise karein ghar mein",
+"input": " paise ki bachat kaise karein ghar mein",
 "target": "Ek middle-class Indian family ke liye ghar ke kharcho ko kam karne aur savings badhane ki practical guide Hindi mein likho. Yeh un logon ke liye hai jinki monthly income ₹30,000–₹80,000 ke beech hai. Niche diye topics cover karo: (1) pehle apna monthly budget banao — income vs fixed expenses vs variable expenses ka breakdown, (2) ghar ka ration aur grocery smarter kaise khareedein — bulk buying, seasonal fruits/vegetables, brands ke alternatives, (3) bijli ka bill kaise kam karein — energy-efficient appliances, habits jo bill badhate hain, (4) EMI aur loan ko manage kaise karein — high-interest credit card debt pehle khatam karo, (5) unnecessary subscriptions aur spending patterns identify karna — 30-day rule, (6) bachon ki padhai ke liye aage se planning — Sukanya Samriddhi, PPF, (7) ghar mein doosri income kaise create karein — tuition, tiffin service, online selling. Tone practical aur respectful rakho. Family ke emotions ko bhi acknowledge karo.",
 "lang": "hi",
 "domain": "general"
@@ -1333,7 +1333,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: social anxiety se kaise nipten",
+"input": " social anxiety se kaise nipten",
 "target": "Social anxiety — logon ke saamne baat karne ya public situations mein ghabrahat — se deal karne ke baare mein ek empathetic aur practical Hindi guide likho. Yeh un logon ke liye hai jo social situations mein bahut nervous ya uncomfortable feel karte hain. Cover karo: (1) social anxiety kya hoti hai — shyness se kaise alag hai, clinical disorder kab banta hai, (2) common symptoms: dhadkan teez hona, paseena aana, thoughts race karna, khud ko embarrass hone ka dar, (3) roots — childhood experiences, perfectionism, negative self-talk kaise contribute karte hain, (4) Cognitive Behavioral Therapy (CBT) ke simple techniques jo ghar par apply ho sakein — thought challenging, behavioral experiments, (5) exposure therapy ka concept — dheere dheere uncomfortable situations face karna, (6) practical daily tips: conversation starters, eye contact, group situations mein kaise behave karein, (7) kab professional help zaroor leni chahiye — therapist ya psychiatrist. Tone safe, validating, aur practical rakho. Kisi ko bhi 'overreact' karne ka feel mat karao.",
 "lang": "hi",
 "domain": "general"
@@ -1345,7 +1345,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: makeup karna sikhana chahti hun",
+"input": " makeup karna sikhana chahti hun",
 "target": "Ek beginner ke liye basic everyday makeup guide Hindi mein likho jo pehli baar makeup try karna chahti ho. Guide mein yeh sab shamil karo: (1) pehle apni skin type aur undertone samjho — yeh kyun zaroori hai products choose karte waqt, (2) essential products jo shuruwaat mein lene chahiye — sunscreen, moisturizer, foundation ya BB cream, kajal, mascara, lip color — India mein available aur affordable brands ke saath (Lakme, Maybelline, Faces Canada), (3) skin preparation kaise karein — cleanse, tone, moisturize, SPF, (4) step-by-step daytime natural look tutorial: primer, foundation, concealer, blush, eyebrows, simple eye makeup, lips, (5) beginner mistakes: galat shade choose karna, blending na karna, kya avoid karein, (6) makeup remove karna kitna zaroori hai aur kaise karein, (7) kis tools ki zaroorat hai — brushes vs fingers vs sponge. Tone encouraging aur non-intimidating rakho. Yeh batao ki makeup sikhne mein waqt lagta hai aur practice se aata hai.",
 "lang": "hi",
 "domain": "general"
@@ -1357,7 +1357,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: interview ke liye kya pehno",
+"input": " interview ke liye kya pehno",
 "target": "Job interview ke liye kapde choose karne ke baare mein ek practical aur industry-specific Hindi guide likho. Yeh guide un Indian job seekers ke liye hai jo confuse hain ki kya pehna jaye. Niche diye topics cover karo: (1) 'dress for the job' concept kya hota hai — company culture aur industry ke hisaab se dressing kaise adjust karein, (2) IT/tech companies ke liye — smart casual kya hota hai, jeans aur chinos ka acceptable use, kya avoid karein, (3) banking, finance, consulting ke liye — formal dress code: suit, blazer, tie kab zaroori hai, (4) creative industries (advertising, media, design) ke liye — yahan overdressed hona bhi galat ho sakta hai, (5) government jobs aur PSU interviews ke liye — conservative, formal look, (6) women ke liye industry-wise suggestions — saree, salwar, western formal sab ke pros/cons, (7) grooming details jo log ignore karte hain: nails, hair, fragrance, clean shoes, ironed clothes. Tone practical aur respectful rakho. Budget-friendly options bhi dena.",
 "lang": "hi",
 "domain": "general"
@@ -1369,7 +1369,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: bache ko study mein kaise help karein",
+"input": " bache ko study mein kaise help karein",
 "target": "Parents ke liye ek comprehensive guide Hindi mein likho jo apne bacche (class 3–10) ki padhai mein ghar par effectively help karna chahte hain. Niche diye topics include karo: (1) bacche ka homework ya study session kaise set up karein — distraction-free space, time, routine, (2) bacche ki study style samjhna — visual, auditory, kinesthetic learners ke liye alag approaches, (3) padhne mein help karna bina unka kaam khud kiye — questions poochho, explain karwao, hints do, (4) maths mein weak bacchon ki help kaise karein — rote learning ki jagah concept-based understanding, (5) bacche ki school se baat karein — teacher ke saath effective communication kaise karein, (6) kab tuition lena chahiye aur kaise sahi tutor choose karein, (7) bacche ka motivation aur confidence kaise badhayein bina pressure diye — praise kaise dein, comparison se kaise bachein. Tone warm aur supportive rakho — parents ki mehnat ko acknowledge karo.",
 "lang": "hi",
 "domain": "general"
@@ -1381,7 +1381,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: hair fall kaise rokein",
+"input": " hair fall kaise rokein",
 "target": "Hair fall ki samasya se pareshan logon ke liye ek comprehensive aur evidence-based Hindi guide likho. Yeh guide un logon ke liye hai jo zyada baal jhadne se pareshan hain aur ghar par aur medically dono taraf se solutions dhundhna chahte hain. Niche diye topics cover karo: (1) normal vs abnormal hair fall kya hota hai — rozaana kitne baal jhadna theek hai, (2) common causes: nutrition deficiency (iron, vitamin D, biotin), thyroid, stress (telogen effluvium), hormonal changes, dandruff, wrong hair care habits, (3) diet mein kya badlav karein — baalon ke liye best foods, kya avoid karein, (4) sahi hair care routine — shampoo frequency, conditioner, oiling — sach kya hai aur myths kya hain, (5) home remedies jo actually kaam karti hain (onion juice, scalp massage) vs jo sirf viral hain bina proof ke, (6) kab dermatologist ke paas jaana chahiye aur kaunsi tests karwani chahiye (blood tests), (7) medical treatments — Minoxidil, PRP — kya hain aur kab consider karein. Tone informative aur realistic rakho. False promises mat do.",
 "lang": "hi",
 "domain": "general"
@@ -1393,7 +1393,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: desh se bahar job kaise milegi",
+"input": " desh se bahar job kaise milegi",
 "target": "India se bahar (USA, Canada, UK, Germany, Australia, Dubai) mein job dhundne ke baare mein ek step-by-step practical Hindi guide likho. Yeh guide un logon ke liye hai jo India mein kaam kar rahe hain aur abroad job opportunity dhundna chahte hain. Niche diye topics cover karo: (1) pehle decide karo — kaunsa desh, kyon, aur wahan settle karna hai ya sirf kaam karna? Har desh ke pros/cons, (2) aapki current skills aur qualifications internationally kitni valuable hain — gap analysis kaise karein, (3) resume/CV ko international format mein kaise convert karein — country-specific differences, (4) kahan dhundhen — LinkedIn, Indeed, Glassdoor, country-specific job portals, company websites direct apply, (5) work visa ke types har desh ke liye ek brief overview — H1-B, Skilled Worker Visa, PR pathways, (6) interview process internationally kaise alag hoti hai — phone screening, panel interviews, technical rounds, (7) relocation cost, cost of living, aur salary expectations realistic rakhna. Tone practical aur informed rakho. False hopes mat do — yeh process long aur uncertain hai.",
 "lang": "hi",
 "domain": "general"
@@ -1405,7 +1405,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: driving sikhne ke tips",
+"input": " driving sikhne ke tips",
 "target": "Car driving sikhne wale beginners ke liye ek comprehensive aur practical Hindi guide likho. Guide mein yeh sab include karo: (1) license lene se pehle kya karna chahiye — learner's license kaise apply karein, documents kya chahiye, RTO process, (2) car ke basic controls samjho — accelerator, brake, clutch (manual transmission), steering, gears, handbrake — ek ek ka kaam, (3) manual vs automatic car mein se beginners ke liye kaunsi zyada aasaan hai aur kyun, (4) pehli baar steering seat par baithne se pehle — seat, mirrors, seat belt — sahi position kaise set karein, (5) chalane ki shuruwaat kaise karein — clutch-accelerator coordination (manual) ya simple D/R (automatic) — slow area mein practice, (6) common beginner mistakes: gahabarana, wrong gear, sudden braking, lane sense na hona — kaise bachein, (7) India ki roads aur traffic conditions ke liye specific tips — aggressive drivers, auto/cycle/pedestrians, bad roads. Tone patient aur reassuring rakho. Yeh batao ki driving practice se hi aati hai.",
 "lang": "hi",
 "domain": "general"
@@ -1417,7 +1417,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: achha bhashan kaise dein",
+"input": " achha bhashan kaise dein",
 "target": "Public speaking aur achi speech dene ke baare mein ek step-by-step Hindi guide likho un logon ke liye jo stage par nervous ho jaate hain ya pehli baar kisi event mein speak karne wale hain. Niche diye topics include karo: (1) public speaking ka dar — glossophobia — kyon hota hai aur yeh normal kyun hai, (2) speech ki taiyari: topic research, main points decide karna, structure banana — introduction, body, conclusion, (3) opening line powerful kaise banayein — hook kya hota hai, interesting story/question/fact se shuruwaat, (4) body language: stage par khade hone ka sahi tarika, haath kaise use karein, eye contact maintain karna, (5) awaaz: clearly bolna, speed control, pause ka sahi use, volume, (6) nervousness ko manage karna during the speech — breathing techniques, audience ko friendly samajhna, (7) practice methods: mirror practice, recording, audience ke saamne rehearsal, Toastmasters jaise clubs. Tone encouraging aur step-by-step rakho. Batao ki har bade speaker bhi pehle nervous tha.",
 "lang": "hi",
 "domain": "general"
@@ -1429,7 +1429,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: online paise kamane ke tarike",
+"input": " online paise kamane ke tarike",
 "target": "Internet se legitimate tarikon se paisa kamane ke baare mein ek honest aur practical Hindi guide likho. Yeh guide students, housewives, aur anyone ke liye hai jo ghar se ya part-time additional income chahte hain. Niche diye topics cover karo: (1) clearly batao ki 'get rich quick' schemes aur genuine online income mein fark hai — scams se kaise bachein, (2) skill-based options: freelance writing, graphic design, web development, video editing — kahan seekhein, kahan kaam milega, realistic earnings, (3) content creation: YouTube, Instagram Reels, blogging — kitna waqt lagta hai monetize hone mein, realistic expectations, (4) online tutoring aur teaching — Vedantu, Unacademy jaise platforms par ya independently, (5) e-commerce: Amazon, Meesho, Etsy par selling — products kya bechein, logistics, startup cost, (6) micro-tasks aur surveys — Amazon MTurk, Swagbucks — low paying but easy for beginners, (7) passive income options — stock photos, digital products, print-on-demand. Tax implications bhi briefly mention karo. Tone honest rakho — yeh koi jaldi amir hone ka zariya nahi hai.",
 "lang": "hi",
 "domain": "general"
@@ -1441,7 +1441,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: India mein ghar khareedne ki guide",
+"input": " India mein ghar khareedne ki guide",
 "target": "Pehli baar ghar khareedne wale Indian middle-class buyers ke liye ek comprehensive step-by-step Hindi guide likho. Niche diye topics include karo: (1) ready-to-move vs under-construction property — dono ke fayde aur nuksaan, (2) location choose karne ke factors: connectivity, schools, hospitals, future development plans, resale value, (3) builder ya developer ka background check kaise karein — RERA registration verify karna, past projects dekho, reviews check karo, (4) home loan process: eligibility, documents, comparison between banks vs HFCs, interest types (fixed vs floating), (5) hidden costs jo log bhool jaate hain — registration charges, stamp duty, GST, society maintenance, interior, brokerage, (6) legal due diligence: title deed, encumbrance certificate, building plan approval, NOC kya hote hain, (7) property purchase ke baad kya karein — registration, mutation, society membership. Tone practical aur calm rakho — yeh ek bada financial decision hai, uski seriousness acknowledge karo bina daraye.",
 "lang": "hi",
 "domain": "general"
@@ -1453,7 +1453,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: photography sikhni hai beginners ke liye",
+"input": " photography sikhni hai beginners ke liye",
 "target": "Photography mein interest rakhne wale beginners ke liye ek complete starter guide Hindi mein likho. Yeh guide un logon ke liye hai jinhone camera ya phone se photos lena shuru karna hai. Cover karo: (1) kaunse camera se shuru karein — DSLR, mirrorless, ya smartphone? Budget ke hisaab se comparison, (2) teen sabse zaroori camera settings jo samajhne chahiye: aperture (f-number), shutter speed, aur ISO — 'exposure triangle' simple bhasha mein, (3) composition rules jo immediately better photos dilate hain — rule of thirds, leading lines, framing, negative space, (4) natural light ka use kaise karein — 'golden hour,' harsh midday light se bachna, window light indoors, (5) smartphone photography tips — portrait mode, grid lines, manual mode apps jaise ProCam ya Open Camera, (6) photos edit kaise karein — free tools: Snapseed, Lightroom Mobile — basic adjustments: exposure, contrast, color grading, (7) portfolio kaise banayein aur Instagram par apna photography account kaise grow karein. Tone enthusiastic aur encouraging rakho. Expensive gear ki zaroorat nahi hoti — yeh baat emphasize karo.",
 "lang": "hi",
 "domain": "general"
@@ -1465,7 +1465,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: weight loss ke liye kya karein",
+"input": " weight loss ke liye kya karein",
 "target": "Weight loss ke baare mein ek honest, evidence-based aur sustainable Hindi guide likho jo crash diets ya unrealistic results promote na kare. Yeh guide un logon ke liye hai jo healthy weight pe aana chahte hain, especially Indians jo Indian food chhod nahi sakte. Niche diye topics cover karo: (1) weight loss ka asli science: calorie deficit kya hota hai, aur yeh kyun zaroori hai — simple equation, (2) Indian diet mein changes: kya kam karein, kya badhayein — specific foods ke saath, (3) exercise ka role: sirf cardio enough nahi — strength training kyun zaroori hai fat loss ke liye, (4) crash diets, GM diet, juice fasts kyon kaam nahi karte long term mein — yo-yo effect samjhao, (5) sleep aur stress ka weight par seedha asar — cortisol aur ghrelin hormones briefly, (6) realistic expectations: healthy weight loss ki speed kya hoti hai — 0.5–1 kg per week, (7) kab doctor ya dietitian se milna chahiye — thyroid, PCOD jaise conditions mein medical supervision kyun zaroori hai. Tone non-judgmental aur body-positive rakho. Kisi ko fat-shame mat karo.",
 "lang": "hi",
 "domain": "general"
@@ -1477,7 +1477,7 @@
 "domain": "general"
 },
 {
-"input": "Is prompt ko sudharo: anxiety control kaise karein",
+"input": " anxiety control kaise karein",
 "target": "Anxiety — ghabrahat aur bechain rehna — ko manage karne ke baare mein ek thorough, compassionate aur practical Hindi guide likho jo common logon ke kaam aaye. Yeh clinical advice nahi hai, lekin evidence-based hai. Cover karo: (1) anxiety kya hai — iska biological reason: amygdala, fight-or-flight response — simple bhasha mein, (2) normal anxiety vs anxiety disorder mein fark kab hota hai, (3) physical symptoms: dhadkan, paseena, chakkar, tight chest — yeh sab brain-body connection hai samjhao, (4) turant rahat ke liye techniques: box breathing (4-4-4-4), cold water on face, grounding technique (5 cheezein dekho, 4 chhuye, etc.), (5) long-term anxiety kam karne ke liye lifestyle changes: regular exercise, caffeine kam karna, consistent sleep, journaling, (6) cognitive techniques: anxious thoughts ko challenge karna — 'Is yeh thought fact hai ya feeling?' framework, (7) kab psychiatrist ya therapist se milna zaroor hai — aur India mein yeh help kaise lein (online therapy options bhi). Tone validating aur calm rakho — anxiety feel karna unki galti nahi hai.",
 "lang": "hi",
 "domain": "general"
@@ -1490,7 +1490,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: HTML CSS sikhna hai",
+    "input": " HTML CSS sikhna hai",
     "target": "Web development mein naye logon ke liye HTML aur CSS seekhne ka ek complete beginner guide Hindi mein banao. Niche diye topics cover karo: (1) HTML kya hai — webpage ki structure kaise banti hai, tags, elements, aur attributes ka basic concept, (2) zaroori HTML tags: html, head, body, h1-h6, p, a, img, ul/ol, div, span — har ek ka use case example ke saath, (3) CSS kya karta hai — styling kaise apply hoti hai, selectors (class, id, element) ka fark, (4) CSS box model samjhao — margin, padding, border, content, (5) Flexbox basics — ek simple navigation bar aur card layout banao step by step, (6) responsive design kya hota hai aur media queries ka basic use, (7) pehla project: ek simple personal portfolio webpage banao jisme photo, bio, aur contact section ho. Free tools: VS Code, CodePen, MDN Web Docs. Tone beginner-friendly aur practical rakho.",
     "lang": "hi",
     "domain": "coding"
@@ -1502,7 +1502,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: JavaScript mein arrays samjhao",
+    "input": " JavaScript mein arrays samjhao",
     "target": "JavaScript arrays ko beginners ke liye ek comprehensive Hindi tutorial mein explain karo. Niche diye topics include karo: (1) array kya hota hai — ek hi variable mein multiple values store karna, real-life analogy ke saath (jaise shopping list), (2) array declare karne ke tarike — literal syntax vs Array constructor, (3) indexing — 0-based indexing kya hoti hai, elements access karna aur modify karna, (4) zaroori array methods detail mein: push(), pop(), shift(), unshift(), splice(), slice() — har ek ke liye code example aur output, (5) iteration methods: forEach(), map(), filter(), reduce() — kab kaunsa use karein, real use cases ke saath, (6) 2D arrays — nested arrays kya hote hain, kaise access karein, (7) common beginner mistakes: mutation vs copying (spread operator ka use), length property ka sahi use, undefined vs out-of-bounds. Har concept ke baad ek chhota practice exercise bhi do. Code snippets browser console mein run ho sakein.",
     "lang": "hi",
     "domain": "coding"
@@ -1514,7 +1514,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: Git aur GitHub kya hota hai",
+    "input": " Git aur GitHub kya hota hai",
     "target": "Git aur GitHub ko pehli baar seekhne wale beginners ke liye ek step-by-step Hindi guide banao. Niche diye topics cover karo: (1) version control kya hota hai — bina Git ke kaam karne ki problems: 'final_final_v3.docx' wali situation se analogy, (2) Git vs GitHub mein fark — Git ek local tool hai, GitHub ek cloud platform, (3) Git install karna aur initial setup: git config name aur email, (4) core Git workflow: git init, git add, git commit — ek simple project par demonstrate karo, (5) git status, git log, git diff — kya kaam aate hain, (6) branching concept: branch kyon banate hain, git branch, git checkout, git merge — ek feature branch workflow example ke saath, (7) GitHub par kaam: repository create karna, git remote add, git push, git pull, aur pull request kya hoti hai. Common mistakes: .gitignore ka importance, sensitive data accidentally push karna — kaise bachein. Tone friendly aur sequential rakho.",
     "lang": "hi",
     "domain": "coding"
@@ -1526,7 +1526,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: SQL basics sikhao database ke liye",
+    "input": " SQL basics sikhao database ke liye",
     "target": "Database aur SQL seekhne wale complete beginners ke liye ek comprehensive Hindi tutorial likho. Niche diye topics include karo: (1) database kya hota hai — spreadsheet se compare karke samjhao, relational database ka concept, (2) SQL kya hai aur kahan use hota hai — MySQL, PostgreSQL, SQLite mein fark briefly, (3) basic DDL commands: CREATE TABLE, ALTER TABLE, DROP TABLE — data types ke saath (INT, VARCHAR, DATE, BOOLEAN), (4) basic DML commands: INSERT INTO, SELECT, UPDATE, DELETE — WHERE clause ka zaroori role, (5) SELECT ke advanced use: ORDER BY, GROUP BY, HAVING, LIMIT — real examples ke saath, (6) JOINs explain karo — INNER JOIN, LEFT JOIN, RIGHT JOIN — ek students aur courses table ka example use karke visually samjhao, (7) ek chhota practical project: ek school ka database design karo jisme students, teachers, aur classes tables hon aur 5 useful queries likhein. Free tools: DB Browser for SQLite, MySQL Workbench. Tone structured aur example-heavy rakho.",
     "lang": "hi",
     "domain": "coding"
@@ -1538,7 +1538,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: React JS kya hai kaise seekhein",
+    "input": " React JS kya hai kaise seekhein",
     "target": "React JS ko beginners ke liye ek structured Hindi learning guide mein explain karo. Yeh guide un logon ke liye hai jinhein basic HTML, CSS, aur JavaScript aati hai. Niche diye topics cover karo: (1) React kya hai aur kyun popular hai — traditional DOM manipulation se kya problem thi, Virtual DOM ka concept simply, (2) React environment setup: Node.js install karna, create-react-app ya Vite se project banana, folder structure samjhana, (3) JSX kya hota hai — JavaScript mein HTML likhna, basic rules aur common syntax errors, (4) Components: functional components kya hote hain, props kaise pass karte hain, components ko reuse karne ka faida, (5) State aur useState hook — state kya hoti hai, useState ka syntax, ek counter app example step by step, (6) useEffect hook — side effects kya hote hain, API call kaise karte hain useEffect se, dependency array ka role, (7) ek complete beginner project: ek simple Todo App banao jisme add, delete, aur complete functionality ho. Common mistakes beginners karte hain. Free resources: official React docs (react.dev), Scrimba React course.",
     "lang": "hi",
     "domain": "coding"
@@ -1550,7 +1550,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: Python mein file handling sikhao",
+    "input": " Python mein file handling sikhao",
     "target": "Python mein files ke saath kaam karna seekhne wale beginners ke liye ek detailed Hindi tutorial likho. Niche diye topics cover karo: (1) file handling kyon zaroori hai — real programs ko data save aur load karna padta hai, database ka alternative simple cases mein, (2) files open karna: open() function ka syntax, file modes — 'r', 'w', 'a', 'rb', 'wb' — har ek ka kab use karein, (3) with statement kyon use karna chahiye — context manager kya hai, file automatically close karna, memory leaks se bachna, (4) text files: read(), readline(), readlines() ka fark — kab kaunsa use karein, ek log file padhne ka example, (5) files mein likhna: write() aur writelines() — ek simple student records file create karo, (6) CSV files handle karna: Python ka built-in csv module — reader aur writer objects, ek practical example: student marks CSV padhna aur nayi row add karna, (7) JSON files: json.load() aur json.dump() — API response save karna aur dobara load karna. Error handling: FileNotFoundError, PermissionError kaise handle karein. Practice exercises bhi do.",
     "lang": "hi",
     "domain": "coding"
@@ -1562,7 +1562,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: linked list kya hoti hai",
+    "input": " linked list kya hoti hai",
     "target": "Linked lists ko computer science beginners ke liye ek comprehensive aur visual Hindi tutorial mein explain karo. Niche diye topics include karo: (1) linked list kya hoti hai — arrays se comparison: memory allocation ka fark, contiguous vs non-contiguous storage, (2) node ka concept: data aur next pointer — ek train ke dabbon ki analogy se samjhao, (3) singly linked list ka structure: head node, null/None se end, Python mein Node class aur LinkedList class implement karo, (4) basic operations step by step code ke saath: insertion (beginning, end, middle), deletion (beginning, end, specific node), traversal aur search, (5) doubly linked list kya hoti hai — previous pointer add karna — kab ye zyada useful hoti hai, (6) circular linked list briefly — kab use hoti hai (OS scheduling, media players), (7) linked list vs array: kab kaunsa better hai — time complexity table ke saath (O(1) insertion vs O(n) search). Practice problems: reverse a linked list, detect a cycle, find the middle node — hints ke saath. Diagrams text mein describe karo.",
     "lang": "hi",
     "domain": "coding"
@@ -1574,7 +1574,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: backend development kya hota hai kaise seekhein",
+    "input": " backend development kya hota hai kaise seekhein",
     "target": "Backend web development ko Hindi mein ek structured guide mein explain karo un beginners ke liye jinhe frontend ki thodi jankari hai aur backend seekhna chahte hain. Niche diye topics cover karo: (1) frontend vs backend vs full-stack — kya fark hai, backend kya kaam karta hai (data store karna, authentication, business logic), (2) backend ke liye language choose karna — Node.js (JavaScript), Python (Django/Flask), Java (Spring), PHP — beginners ke liye Node.js ya Python kyun best hai, (3) server kya hota hai — localhost se shuruwaat, HTTP request kaise receive karta hai server, (4) Node.js + Express se ek simple REST API banana: npm setup, ek GET aur POST route banana step by step, (5) database connection: MongoDB (NoSQL) ya PostgreSQL (SQL) — dono ka brief comparison aur Node.js se connect karna, (6) authentication basics: password hashing (bcrypt), JWT tokens kya hote hain, login/logout flow, (7) deployment: Render, Railway, ya Vercel pe free mein backend deploy karna. Learning roadmap: 0 se job-ready backend developer banne mein kitna waqt aur kya karna hai. Resources: The Odin Project, freeCodeCamp.",
     "lang": "hi",
     "domain": "coding"
@@ -1586,7 +1586,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: C++ pointers samjhao",
+    "input": " C++ pointers samjhao",
     "target": "C++ pointers ko beginners ke liye — jo basic C++ syntax jaante hain — ek detailed aur visual Hindi tutorial mein samjhao. Yeh ek topic hai jahan maximum log confuse hote hain, isliye extra clear rakho. Niche cover karo: (1) memory ka concept — RAM mein variables kaise store hote hain, har variable ka ek address hota hai — ghar ke address ki analogy, (2) pointer kya hota hai — ek variable jo doosre variable ka address store karta hai, declaration syntax: int* ptr, (3) & (address-of) aur * (dereference) operators — kya farq hai, code examples ke saath step by step, (4) pointer arithmetic — ptr++, ptr-- kya karte hain, array traversal pointer se kaise karte hain, (5) pointers aur functions: pass by value vs pass by reference — swap function example ke saath fark dikhao, (6) dynamic memory allocation: new aur delete operators — heap vs stack briefly, memory leak kya hota hai aur kaise hota hai, (7) null pointer, dangling pointer, aur wild pointer — yeh kya hain aur inse kaise bachein. Common errors: segmentation fault kab aata hai. Practice exercises with solutions.",
     "lang": "hi",
     "domain": "coding"
@@ -1598,7 +1598,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: Django framework sikhna hai Python mein",
+    "input": " Django framework sikhna hai Python mein",
     "target": "Python Django web framework seekhne wale beginners ke liye — jinhe Python ki basic knowledge hai — ek structured Hindi guide banao. Niche diye topics cover karo: (1) Django kya hai — ek 'batteries included' framework kya matlab hota hai, Django vs Flask comparison briefly (kab kaunsa use karein), (2) Django setup: virtual environment banana, pip se Django install karna, pehla project aur app create karna (django-admin startproject, python manage.py startapp), (3) Django ka MVT pattern — Model, View, Template kya hote hain aur ye aapas mein kaise interact karte hain, (4) Models: ek simple Blog model banana, fields types — CharField, TextField, DateTimeField, ForeignKey — migrations kya hoti hain aur kaise chalate hain, (5) Views aur URLs: function-based view likhna, urls.py mein URL pattern define karna, template ko render karna, (6) Django Admin panel — ek click mein powerful admin interface, model register karna, superuser banana, (7) Forms: Django forms se user input lena, form validation, POST request handle karna. Ek complete mini project: ek simple Blog website jahan posts add aur dekh sakein. Deployment: Railway ya PythonAnywhere pe free hosting.",
     "lang": "hi",
     "domain": "coding"
@@ -1610,7 +1610,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: JavaScript promises aur async await samjhao",
+    "input": " JavaScript promises aur async await samjhao",
     "target": "JavaScript mein asynchronous programming — Promises aur async/await — ko beginners ke liye Hindi mein clearly explain karo. Yeh topic bahut logon ko confuse karta hai, isliye simple analogies use karo. Niche diye topics cover karo: (1) synchronous vs asynchronous programming kya hota hai — ek restaurant analogy: synchronous = ek hi kaam karo, async = order leke next customer pe jao, (2) callbacks kya the — pehle async kaise karte the, callback hell problem kya hoti hai aur kyun yeh problematic hai, (3) Promise kya hota hai — teen states: pending, fulfilled, rejected — ek delivery tracking analogy, (4) Promise syntax: .then(), .catch(), .finally() — chaining ke saath example, (5) Promise.all(), Promise.race(), Promise.allSettled() — kab kaunsa use karein use cases ke saath, (6) async/await syntax — Promises ko aur readable kaise banata hai, try/catch ke saath error handling, (7) real-world example: fetch API se data lana using async/await — JSONPlaceholder se users fetch karo, error handle karo, data display karo. Common mistakes: await without async, unhandled promise rejection. Practice exercises bhi do.",
     "lang": "hi",
     "domain": "coding"
@@ -1622,7 +1622,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: competitive programming kaise shuru karein",
+    "input": " competitive programming kaise shuru karein",
     "target": "Competitive programming mein naye aane wale students ke liye ek comprehensive Hindi starter guide banao. Yeh un ke liye hai jo programming basics jaante hain aur Codeforces, LeetCode, ya CodeChef par participate karna chahte hain. Niche diye topics include karo: (1) competitive programming kya hai — ye regular software development se kaise alag hai, kyon karna chahiye (placement, problem-solving skills, IQ boost), (2) konsi language use karein: C++ kyun CP ke liye best hai — STL ka power, fast I/O; Python ke limitations, (3) zaroori topics in order mein: basic I/O aur STL (vector, map, set, pair), sorting aur searching, recursion aur backtracking, greedy algorithms, dynamic programming basics, graph traversal (BFS/DFS), (4) platforms ka comparison: Codeforces (best for rating), LeetCode (best for placements), CodeChef (Indian community, beginner-friendly), AtCoder (quality problems), (5) daily practice routine: kitne problems solve karein, easy se medium kaise move karein, editorial padhne ka sahi waqt kab hai, (6) time limit exceed aur memory limit errors — kya hota hai aur kaise optimize karein, (7) 3-month beginner roadmap: week by week kya seekhein aur kitne problems solve karein. Recommended books: CP-Algorithms website, Competitive Programmer's Handbook (free PDF).",
     "lang": "hi",
     "domain": "coding"
@@ -1634,7 +1634,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: data structures kaunse zaroori hain interview ke liye",
+    "input": " data structures kaunse zaroori hain interview ke liye",
     "target": "Technical interviews ke liye zaroori data structures ko Hindi mein ek comprehensive guide mein explain karo. Yeh guide un logon ke liye hai jo placements ya FAANG companies ke interviews ki taiyari kar rahe hain. Niche diye topics include karo: (1) data structures itni important kyun hain interviews mein — problem solving speed aur code quality par asar, (2) Arrays aur Strings: sliding window, two pointer techniques — 3 popular interview problems ke saath, (3) Linked List: reversal, cycle detection (Floyd's algorithm), merge two sorted lists — code examples, (4) Stack aur Queue: monotonic stack, deque — balanced parentheses, next greater element problems, (5) Trees aur Binary Search Trees: inorder/preorder/postorder traversal, height, diameter, lowest common ancestor — recursive aur iterative approaches, (6) Hashing: HashMap aur HashSet ka strategic use — two sum, group anagrams jaise classic problems, (7) Heap/Priority Queue: min-heap max-heap, top K elements pattern, (8) Graphs: BFS aur DFS kab use karein, cycle detection, topological sort. Har data structure ke liye: concept, time complexity, 2–3 must-know interview problems. LeetCode problem numbers bhi do. Tone serious aur interview-focused rakho.",
     "lang": "hi",
     "domain": "coding"
@@ -1646,7 +1646,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: TypeScript kyun use karein JavaScript ki jagah",
+    "input": " TypeScript kyun use karein JavaScript ki jagah",
     "target": "TypeScript ko JavaScript developers ke liye Hindi mein explain karo jo abhi TypeScript ki taraf switch karna soch rahe hain ya interview mein poochha jaata hai. Niche diye topics cover karo: (1) TypeScript kya hai — JavaScript ka superset: yeh JavaScript hi hai plus static typing, browser directly run nahi kar sakta (compile hota hai), (2) TypeScript kyun use karein — large codebases mein type errors runtime mein nahi, development time par hi pakdo; better IDE autocomplete, easier refactoring, (3) basic types: string, number, boolean, any, unknown, never, void — code examples ke saath, (4) interfaces aur type aliases — object ka shape define karna, dono mein fark kab matter karta hai, (5) generics — reusable type-safe functions likhna, ek Array aur ek API response wrapper ka example, (6) TypeScript in React — props ka type define karna, useState ka generic type, event handlers ko type karna, (7) tsconfig.json — important settings: strict mode, target, module — ek recommended config beginners ke liye. Migration guide: existing JavaScript project mein TypeScript kaise add karein gradually. Common error messages aur unka matlab.",
     "lang": "hi",
     "domain": "coding"
@@ -1658,7 +1658,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: Node.js mein REST API banana",
+    "input": " Node.js mein REST API banana",
     "target": "Node.js aur Express ke saath ek production-ready REST API banane ka step-by-step Hindi tutorial likho un logon ke liye jinhe basic JavaScript aati hai. Niche diye topics cover karo: (1) Node.js kya hai — event loop, non-blocking I/O briefly; Express kyon use karte hain (minimal, fast, flexible), (2) project setup: npm init, Express install karna, basic server banana — app.listen() se Hello World, (3) REST API ke routes banana: GET (list aur single item), POST (create), PUT/PATCH (update), DELETE — ek simple 'Books' API example use karo poore tutorial mein, (4) request body parse karna: express.json() middleware, req.body, req.params, req.query ka fark, (5) MongoDB + Mongoose connect karna: Schema aur Model banana, CRUD operations async/await ke saath, (6) Error handling: global error handler middleware, proper HTTP status codes bhejo (400, 404, 500), try/catch se async errors, (7) Authentication: JWT-based login — register aur login routes, token generate karna, protect middleware se routes secure karna. Environment variables: dotenv use karna. Postman se test karna. Final project structure batao. Deployment: Railway ya Render.",
     "lang": "hi",
     "domain": "coding"
@@ -1670,7 +1670,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: web scraping Python se karna sikhao",
+    "input": " web scraping Python se karna sikhao",
     "target": "Python se web scraping seekhne wale beginners ke liye ek practical aur responsible Hindi guide likho. Yeh guide un logon ke liye hai jo websites se automatically data collect karna chahte hain. Niche diye topics cover karo: (1) web scraping kya hai aur kahan use hota hai — price comparison, research data, job listings collect karna; aur yeh legally aur ethically kab allowed hai aur kab nahi (robots.txt, Terms of Service), (2) HTML ka basic structure samajhna jo scraping ke liye zaroori hai — tags, classes, IDs, nested elements, (3) requests library: URL se HTML content fetch karna, headers set karna, response status check karna, (4) BeautifulSoup: HTML parse karna, find() aur find_all() se elements dhundna, text aur attributes extract karna — ek real example: ek news site se headlines scrape karo, (5) dynamic websites — JavaScript-rendered content scraping ke liye Selenium ya Playwright ka brief intro aur kab use karein, (6) scraped data ko save karna: CSV mein pandas se, JSON mein, ya SQLite database mein, (7) ethical aur safe scraping practices: time.sleep() se rate limiting, user-agent set karna, session reuse. Common errors aur unke solutions. Practice project: Quotes to Scrape website se quotes aur authors extract karo.",
     "lang": "hi",
     "domain": "coding"
@@ -1682,7 +1682,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: Java mein OOP concepts interview ke liye",
+    "input": " Java mein OOP concepts interview ke liye",
     "target": "Java mein Object-Oriented Programming concepts ko interview-ready explanation ke saath Hindi mein explain karo. Yeh guide un students ke liye hai jo campus placements ya junior developer interviews ki taiyari kar rahe hain. Niche diye topics cover karo: (1) Class aur Object ka fark — blueprint vs instance, real-life example aur Java code dono, (2) Encapsulation: private fields, public getters/setters — kyun zaroori hai data hiding, ek BankAccount example, (3) Inheritance: extends keyword, parent-child relationship, super keyword ka use, method overriding — interview mein commonly poochha jaata hai: kya Java multiple inheritance support karta hai? Kyon nahi (Diamond Problem), (4) Polymorphism: compile-time (method overloading) vs runtime (method overriding) — clear distinction with code, (5) Abstraction: abstract classes vs interfaces ka important fark — kab kaunsa use karein, Java 8 ke baad default methods in interfaces, (6) Common interview questions: 'Can we override static methods?' 'What is the difference between == and .equals()?' 'What is final keyword?' — precise answers, (7) Access modifiers: private, default, protected, public — table format mein kahan visible hain. Tone interview-focused aur precise rakho. STAR format mein kuch answers bhi do.",
     "lang": "hi",
     "domain": "coding"
@@ -1694,7 +1694,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: DSA kya hai aur kaise padhen placement ke liye",
+    "input": " DSA kya hai aur kaise padhen placement ke liye",
     "target": "Data Structures aur Algorithms (DSA) ko placement ke liye systematically prepare karne ka ek complete Hindi roadmap banao. Yeh guide un students ke liye hai jo 3–6 mahine mein DSA strong karna chahte hain. Niche diye topics cover karo: (1) DSA itni important kyun hai placements mein — FAANG, startups, aur service companies sab DSA rounds lete hain — real statistics aur importance, (2) DSA seekhne ke liye konsi language best hai: C++ ya Python? Dono ke pros/cons, (3) DSA ka order: pehle kya seekhein — Arrays → Strings → LinkedList → Stack/Queue → Recursion → Sorting → Binary Search → Trees → Graphs → DP — yeh sequence kyun hai, (4) LeetCode strategy: Easy se Medium se Hard kaise jaayen, topic-wise practice kab karein vs mixed practice kab karein, companies ke tagged questions kab dekhein, (5) time management: kitni problems roz solve karein, editorial kab dekhein (15–20 min rule), stuck hone par kya karein, (6) mock interviews: kab start karein, Pramp.com, InterviewBit, LeetCode contests, (7) revision strategy: apni mistakes track karo, important patterns note karo (sliding window, two pointer, backtracking template). 3-month aur 6-month ke alag roadmaps do. Tone realistic rakho — shortcuts nahi hain.",
     "lang": "hi",
     "domain": "coding"
@@ -1706,7 +1706,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: cybersecurity basics sikhne hain beginner ke liye",
+    "input": " cybersecurity basics sikhne hain beginner ke liye",
     "target": "Cybersecurity mein interest rakhne wale beginners ke liye ek comprehensive Hindi starter guide banao. Yeh guide students aur professionals dono ke liye suitable ho jo is field mein career banana chahte hain ya apni online security better karna chahte hain. Niche diye topics cover karo: (1) cybersecurity kya hai — confidentiality, integrity, availability (CIA triad) ka concept simply, (2) common threats explained: phishing, malware types (virus, worm, ransomware, trojan), SQL injection, man-in-the-middle attacks — har ek kaise kaam karta hai real examples se, (3) networking basics jo cybersecurity ke liye zaroori hain: IP addressing, TCP/IP, DNS, HTTP vs HTTPS, ports aur protocols, (4) practical security skills: Linux command line basics (Kali Linux introduction), Wireshark se network traffic dekhna, basic vulnerability scanning with Nmap, (5) ethical hacking vs malicious hacking ka fark — legal boundaries, bug bounty programs kya hote hain, responsible disclosure, (6) cybersecurity career paths: penetration tester, SOC analyst, security engineer, CISO — kaunsi certifications kahan jaati hain (CEH, CompTIA Security+, OSCP), (7) free learning resources: TryHackMe, Hack The Box, PortSwigger Web Academy, OWASP Top 10. Tone responsible aur ethical rakho. Illegal activities encourage mat karo.",
     "lang": "hi",
     "domain": "coding"
@@ -1718,7 +1718,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: AWS cloud basics samjhao",
+    "input": " AWS cloud basics samjhao",
     "target": "Amazon Web Services (AWS) ko beginners ke liye Hindi mein explain karo jo cloud computing mein naye hain lekin developer ya IT professional hain. Niche diye topics include karo: (1) cloud computing kya hai — on-premise servers vs cloud ka comparison, IaaS, PaaS, SaaS briefly, AWS kyun market leader hai, (2) AWS Global Infrastructure: regions aur availability zones kya hain aur yeh important kyun hain (latency, redundancy), (3) Most important services for beginners: EC2 (virtual server — instance types, security groups, key pairs), S3 (object storage — buckets, objects, static website hosting), RDS (managed relational database — kyon apna DB manage karna zyada mushkil hai), Lambda (serverless functions — kab use karein, pricing model), IAM (Identity and Access Management — users, roles, policies — sabse zaroori service), (4) AWS Free Tier — kya free milta hai, kaise avoid karein unexpected charges, billing alerts set karna, (5) ek simple project: EC2 pe ek Node.js app deploy karna — step by step, (6) AWS CLI setup aur basic commands — programmatically services use karna, (7) AWS certification path: Cloud Practitioner se Solutions Architect — kya expect karein. Tone practical aur beginner-paced rakho.",
     "lang": "hi",
     "domain": "coding"
@@ -1730,7 +1730,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: Flutter se mobile app banana shuru karna",
+    "input": " Flutter se mobile app banana shuru karna",
     "target": "Flutter se pehli mobile app banane wale beginners ke liye ek comprehensive Hindi guide banao. Yeh guide un logon ke liye hai jinhe koi bhi programming language ki basic knowledge ho. Niche diye topics cover karo: (1) Flutter kya hai — Google ka UI toolkit, Dart language, ek codebase se Android + iOS + Web + Desktop, kyun popular ho raha hai (performance, beautiful UI, hot reload), (2) environment setup: Flutter SDK install karna, Android Studio ya VS Code setup, Android emulator configure karna, flutter doctor command se sab theek hai check karna, (3) Dart language basics jo Flutter ke liye zaroori hain: variables, functions, classes, null safety, async/await — sirf wahi jo Flutter mein frequently use hota hai, (4) Flutter fundamentals: everything is a Widget, StatelessWidget vs StatefulWidget ka fark, basic widgets: Container, Text, Row, Column, Stack, Scaffold, AppBar, (5) State management: setState se shuruwaat, phir Provider package ka introduction — Counter app aur Todo app example, (6) Navigation: Navigator.push() aur pop(), named routes, bottom navigation bar implement karna, (7) ek complete project: ek Weather App — HTTP package se API call karna, data display karna, loading states handle karna, basic error handling. Testing emulator aur real device dono par. APK build karna.",
     "lang": "hi",
     "domain": "coding"
@@ -1742,7 +1742,7 @@
     "domain": "coding"
   },
   {
-    "input": "Is prompt ko sudharo: Python decorators kaise kaam karte hain",
+    "input": " Python decorators kaise kaam karte hain",
     "target": "Python decorators ko intermediate Python developers ke liye ek step-by-step Hindi tutorial mein deeply explain karo. Yeh ek topic hai jo bahut useful hai lekin beginners ko mysterious lagta hai. Niche diye topics cover karo: (1) decorators samajhne ke liye pehle yeh samjho: functions first-class citizens hain — functions ko variables mein store karna, functions ko arguments mein pass karna, functions se functions return karna — code examples, (2) closures kya hote hain — inner function outer function ke variables access kar sakti hai — decorator ka building block, (3) apna pehla decorator manually banana — bina @ syntax ke — step by step, phir @ syntax shortcut dikhao, (4) arguments wale functions pe decorator apply karna: *args aur **kwargs ka use, functools.wraps kyun zaroori hai (docstring aur name preserve karna), (5) real-world decorator examples: timing decorator (function execution time measure karna), logging decorator, authentication check decorator (Flask/Django mein jaise use hota hai), retry decorator, (6) decorators with arguments — ek decorator factory banana: @retry(times=3) jaisa — nested functions ka concept, (7) class-based decorators briefly, aur Python ke built-in decorators: @staticmethod, @classmethod, @property — kab kaunsa use karein. Practice exercises with solutions do.",
     "lang": "hi",
     "domain": "coding"
@@ -1760,7 +1760,7 @@
 "domain": "Creative and Entertainment"
 },
 {
-"input": "Is prompt ko sudharo: ek gana likho dosti pe",
+"input": " ek gana likho dosti pe",
 "target": "Ek emotional Hindi gana likho dosti (friendship) par, jisme purane dino ki yaad ho. Audience: college students jo apne dosto ko miss kar rahe hain. Tone: nostalgic, heartwarming, aur thoda emotional. Format: 2 antara (verses), 1 mukhda (chorus), aur ek bridge. Gane mein purani yadein, jaise hostel ki masti, chai ki tapri, aur raat bhar ki baatein shamil honi chahiye. Bhasha: simple Hindi jisme thode Urdu lafz bhi hon, taaki aur bhi asar ho.",
 "lang": "hi",
 "domain": "Creative and Entertainment"
@@ -1772,7 +1772,7 @@
 "domain": "Creative and Entertainment"
 },
 {
-"input": "Is prompt ko sudharo: ek comedy script likho",
+"input": " ek comedy script likho",
 "target": "Ek 5-minute ki stand-up comedy script taiyar karo, jiska vishay (topic) 'Indian Wedding mein hone wali funny baatein' ho. Audience: 20 se 40 saal ke log jo aam taur par shadiyo mein jaate hain. Tone: lighthearted, observational, aur relatable. Script mein shadi ka khana, rishtedaron ke sawal, aur DJ par hone wale dance ke baare mein jokes shamil hone chahiye. Formatting: punchlines ko bold mein likho aur crowd interaction ke liye pause marks (---) ka istemal karo.",
 "lang": "hi",
 "domain": "Creative and Entertainment"
@@ -1784,7 +1784,7 @@
 "domain": "Creative and Entertainment"
 },
 {
-"input": "Is prompt ko sudharo: ek kahani likho bhoot wali",
+"input": " ek kahani likho bhoot wali",
 "target": "Ek bhayanak (horror) kahani likho jo ek purani, sunsaan haveli mein ghati ho. Audience: teenagers jo darna pasand karte hain. Tone: suspenseful, eerie, aur spine-chilling. Plot: ek group of friends ek raat haveli mein rukne ka faisla karte hain aur waha kuch ajeeb ghatnayein hoti hain. Kahani mein jump scares aur psychological horror ka mixture hona chahiye. Ending: ek twist (surprise ending) jo unhe shock kar de.",
 "lang": "hi",
 "domain": "Creative and Entertainment"
@@ -1796,7 +1796,7 @@
 "domain": "Creative and Entertainment"
 },
 {
-"input": "Is prompt ko sudharo: youtube video idea chahiye",
+"input": " youtube video idea chahiye",
 "target": "Ek engaging YouTube video ka poora concept aur script outline taiyar karo. Topic: '10 Life Hacks for Lazy People'. Audience: college students aur young adults jo productivity badhana chahte hain bina zyada mehnat kiye. Tone: humorous, energetic, aur relatable. Format: introduction hook, 10 clear hacks (har ek ke liye chhota sa demonstration idea), aur ek call-to-action (CTA) ending mein. Video ki lambai: lagbhag 8-10 minute.",
 "lang": "hi",
 "domain": "Creative and Entertainment"
@@ -1808,7 +1808,7 @@
 "domain": "Creative and Entertainment"
 },
 {
-"input": "Is prompt ko sudharo: instagram ke liye caption batao travel ka",
+"input": " instagram ke liye caption batao travel ka",
 "target": "Ek Instagram post ke liye 3 alag-alag captivating captions likho, jisme kisi pahadi jagah (jaise Manali ya Leh) ki solo trip ki photo ho. Audience: travel enthusiasts aur followers jo wanderlust feel karte hain. Tone: pehla caption poetic aur deep, doosra caption funny aur relatable, aur teesra caption short aur punchy hona chahiye. Har caption ke saath relevant aur trending emojis aur hashtags ka istemal karo.",
 "lang": "hi",
 "domain": "Creative and Entertainment"
@@ -1821,7 +1821,7 @@
 "domain": "Software & Tech"
 },
 {
-"input": "Is prompt ko sudharo: python sikhna hai shuru se",
+"input": " python sikhna hai shuru se",
 "target": "Python programming language sikhne ke liye ek mahine ka detailed, step-by-step study plan banao. Yeh plan bilkul beginners ke liye hona chahiye jinko pehle koi coding experience nahi hai. Plan ko hafto (weeks) mein banto: Week 1 mein variables aur loops, Week 2 mein functions aur lists, Week 3 mein dictionaries aur file handling, aur Week 4 mein ek mini-project (jaise to-do list app). Har topic ke saath best free resources (YouTube channels, websites) aur daily practice exercises bhi do. Tone: encouraging aur easy-to-understand.",
 "lang": "hi",
 "domain": "Software & Tech"
@@ -1833,7 +1833,7 @@
 "domain": "Software & Tech"
 },
 {
-"input": "Is prompt ko sudharo: laptop konsa lu coding ke liye",
+"input": " laptop konsa lu coding ke liye",
 "target": "Ek comprehensive buying guide do coding aur software development ke liye best laptops ki (2026 ke hisaab se). Audience: college students jinka budget 60,000 INR se 80,000 INR ke beech hai. Alag-alag needs ke hisaab se recommendations do: (1) Web Development, (2) Machine Learning / AI (GPU ki zarurat), aur (3) App Development (Android Studio/Xcode). Processor (Intel vs AMD), RAM (minimum 16GB), Storage (SSD), aur battery life ke bare mein clear reasons do ki kya zaruri hai. Tone: practical aur informative.",
 "lang": "hi",
 "domain": "Software & Tech"
@@ -1845,7 +1845,7 @@
 "domain": "Software & Tech"
 },
 {
-"input": "Is prompt ko sudharo: website banani hai dukan ki",
+"input": " website banani hai dukan ki",
 "target": "Ek local grocery store (dukan) ke liye e-commerce website banane ka pura process samjhao. Audience: ek small business owner jise technical knowledge nahi hai. Options do ki website kaise banayein: (1) No-code platforms jaise Shopify ya WooCommerce ka use karna, aur (2) Custom development kisi freelancer se karwana. Payment gateway (UPI integration), inventory management, aur delivery tracking ke features ko simple bhasha mein samjhao. Har step ka estimated cost aur time bhi batao.",
 "lang": "hi",
 "domain": "Software & Tech"
@@ -1857,7 +1857,7 @@
 "domain": "Software & Tech"
 },
 {
-"input": "Is prompt ko sudharo: app kaise banate hain",
+"input": " app kaise banate hain",
 "target": "Ek naya mobile app banane ki poori lifecycle samjhao, idea se lekar Google Play Store par launch karne tak. Yeh guide un logo ke liye hai jo non-tech founders hain aur apni pehli app banwana chahte hain. In steps ko detail mein cover karo: (1) Market research aur wireframing, (2) UI/UX design, (3) Tech stack chunna (Flutter/React Native vs Native), (4) Backend development aur APIs, aur (5) Testing aur App Store optimization (ASO). Ek non-technical person ko developers se kaise baat karni chahiye, is par bhi tips do.",
 "lang": "hi",
 "domain": "Software & Tech"
@@ -1869,7 +1869,7 @@
 "domain": "Software & Tech"
 },
 {
-"input": "Is prompt ko sudharo: cloud computing kya hai",
+"input": " cloud computing kya hai",
 "target": "Cloud computing ka concept simple Hindi mein samjhao ek aam internet user ke liye. Ise aise samjhao jaise bijli (electricity) ka connection lete hain—jitna use karo, utna pay karo. AWS, Google Cloud, aur Microsoft Azure ka zikr karo aur samjhao ki inka use kaise hota hai. IaaS, PaaS, aur SaaS ke beech ka difference ek real-life example (jaise pizza banane ka process ya car rent par lena) ke through clear karo. Tone: engaging, informative, aur bilkul jargon-free.",
 "lang": "hi",
 "domain": "Software & Tech"
@@ -1882,7 +1882,7 @@
 "domain": "Finance"
 },
 {
-"input": "Is prompt ko sudharo: mutual fund sahi hai kya",
+"input": " mutual fund sahi hai kya",
 "target": "Ek naye investor ke liye Mutual Funds ka concept detail mein samjhao. Audience: ek salaried employee (age 25-30) jo pehli baar invest karna chahta hai aur risk se thoda darta hai. Samjhao: (1) Mutual Fund actually kya hota hai (ek common pool of money), (2) SIP (Systematic Investment Plan) aur Lumpsum mein kya farq hai, (3) Equity, Debt, aur Hybrid funds kab aur kyu chunein, (4) Expense ratio aur Exit load ka matlab, aur (5) Power of Compounding ka asar 15-20 saal mein kaisa dikhta hai. Tone: educational, trustworthy, aur simple.",
 "lang": "hi",
 "domain": "Finance"
@@ -1894,7 +1894,7 @@
 "domain": "Finance"
 },
 {
-"input": "Is prompt ko sudharo: tax kaise bachaye",
+"input": " tax kaise bachaye",
 "target": "Ek detailed guide banao salaried employees ke liye Income Tax bachane ke tareeqo par (India ke old vs new tax regime ke sandarbh mein). Audience: jinki salary 10-15 lakh ke beech hai. Section 80C (PPF, ELSS, LIC), Section 80D (Health Insurance), aur HRA/LTA jaise allowances ko simple language mein samjhao. Ek comparison table/bullet points do ki Old Regime aur New Regime mein se konsa behtar hai. Advice do ki tax saving sirf tax bachane ke liye nahi, balki wealth creation ke hisaab se kaise plan karein. Tone: professional, clear, aur legally sound.",
 "lang": "hi",
 "domain": "Finance"
@@ -1906,7 +1906,7 @@
 "domain": "Finance"
 },
 {
-"input": "Is prompt ko sudharo: credit card ke fayde nuksan",
+"input": " credit card ke fayde nuksan",
 "target": "Credit Card ka istemal karne ke pros aur cons (fayde aur nuksan) par ek balanced aur informative article likho. Audience: college students ya freshers jo apna pehla credit card lene ka soch rahe hain. Faydo mein reward points, cashback, aur credit score (CIBIL) build karne ki baat karo. Nuksan mein high interest rates (APR), late payment fees, aur debt trap mein phasne ka khatra samjhao. Aakhir mein 3 golden rules do credit card ko smartly use karne ke liye (jaise har mahine full bill pay karna aur limit ka 30% hi use karna).",
 "lang": "hi",
 "domain": "Finance"
@@ -1918,7 +1918,7 @@
 "domain": "Finance"
 },
 {
-"input": "Is prompt ko sudharo: inflation kya hai",
+"input": " inflation kya hai",
 "target": "Mahangai (Inflation) kya hai aur yeh hamari savings ko kaise khatam karti hai, is par ek simple explainer taiyar karo. Ek aam aadmi ke liye samjhao jo savings account ya FD mein paise rakhta hai. Ek example lo jaise aaj se 10 saal pehle 100 rupaye mein kitna samaan aata tha aur aaj kitna aata hai. Samjhao ki 'real rate of return' kya hota hai (yani return minus inflation). Aakhir mein batao ki mahangai ko beat karne ke liye (jaise Equity, Real Estate, ya Gold) mein invest karna kyu zaroori hai. Tone: eye-opening aur educational.",
 "lang": "hi",
 "domain": "Finance"
@@ -1930,7 +1930,7 @@
 "domain": "Finance"
 },
 {
-"input": "Is prompt ko sudharo: retirement planning kaise kare",
+"input": " retirement planning kaise kare",
 "target": "Ek 35 saal ke vyakti ke liye Retirement Planning ka step-by-step guide banao. Samjhao ki jaldi shuru karna kyu zaroori hai. In steps ko detail mein cover karo: (1) Retirement corpus ka estimate lagana (inflation aur life expectancy ko dhayan mein rakh kar), (2) EPF aur PPF jaise safe instruments ka role, (3) NPS (National Pension System) ke fayde aur tax benefits, aur (4) retirement tak apne portfolio ko equity se debt ki taraf kaise shift karein. Aakhir mein 'Rule of 4%' ka concept simple Hindi mein samjhao. Tone: forward-looking aur structured.",
 "lang": "hi",
 "domain": "Finance"
@@ -1943,7 +1943,7 @@
 "domain": "Legal"
 },
 {
-"input": "Is prompt ko sudharo: rent agreement kaise banaye",
+"input": " rent agreement kaise banaye",
 "target": "Ek legal advisor ki tarah tenant aur landlord ke beech ek standard Rent Agreement (Lease Deed) banvane ka step-by-step process samjhao. Audience: first-time landlords aur tenants India mein. Tone: formal, informative, aur cautious. Format: bullet points aur easy-to-read paragraphs. Specific details: (1) 11-month agreement ka concept aur notary vs registration ka farq, (2) security deposit aur rent escalation clause, (3) maintenance charges aur damage responsibility, aur (4) lock-in period aur notice period ki shartein. Aakhir mein stamp paper ki value aur police verification ki ahmiyat par ek note likho.",
 "lang": "hi",
 "domain": "Legal"
@@ -1955,7 +1955,7 @@
 "domain": "Legal"
 },
 {
-"input": "Is prompt ko sudharo: police complaint kaise kare",
+"input": " police complaint kaise kare",
 "target": "Ek aam nagrik ke liye First Information Report (FIR) aur Police Complaint darj karne ka poora legal procedure aasan Hindi mein samjhao. Audience: aam janta jise kanooni prakriya ki jaankari nahi hai. Tone: empowering, clear, aur empathetic. Format: step-by-step numbering aur important tips. Details to cover: (1) normal complaint aur FIR ke beech ka farq (cognizable vs non-cognizable offenses), (2) Zero FIR ka concept kya hai aur kab use hota hai, (3) online FIR (e-FIR) darj karne ka tarika, aur (4) agar police FIR likhne se mana kare toh Section 156(3) CrPC ke tehat magistrate ke paas jane ka vikalp.",
 "lang": "hi",
 "domain": "Legal"
@@ -1967,7 +1967,7 @@
 "domain": "Legal"
 },
 {
-"input": "Is prompt ko sudharo: consumer court me case karna hai",
+"input": " consumer court me case karna hai",
 "target": "Consumer Protection Act ke tehat Consumer Court (Upbhokta Foram) mein e-daakhil (online complaint) karne ka ek comprehensive guide taiyar karo. Audience: aise grahak (consumers) jinke sath online shopping ya services mein dhokhadhadi hui hai. Tone: encouraging, step-by-step, aur authoritative. Format: clear headings aur checklist. Specific details: (1) complaint file karne ke grounds (defective goods, deficiency in service), (2) legal notice bhejne ka format aur jarurat, (3) District, State, aur National commission ki aarthik seema (pecuniary jurisdiction), aur (4) case file karne ke liye jaruri documents (invoices, emails, warranty cards).",
 "lang": "hi",
 "domain": "Legal"
@@ -1979,7 +1979,7 @@
 "domain": "Legal"
 },
 {
-"input": "Is prompt ko sudharo: zameen ka kanoon batao",
+"input": " zameen ka kanoon batao",
 "target": "Property kharidte waqt dhyaan rakhne yogya kanooni baaton (Property Law aur Real Estate guidelines) par ek detailed checklist banao. Audience: first-time home buyers ya plot kharidne wale log. Tone: cautious, informative, aur highly structured. Format: sequential checklist jisme red flags highlight kiye gaye hon. Specific details cover karo: (1) Title Search aur Encumbrance Certificate (EC) ka mahatva, (2) RERA (Real Estate Regulation and Development Act) ke fayde aur RERA approved project check karne ka tarika, (3) Sale Deed vs Agreement to Sell ka legal farq, aur (4) agricultural land ko non-agricultural (NA) mein convert karne ka basic niyam.",
 "lang": "hi",
 "domain": "Legal"
@@ -1991,7 +1991,7 @@
 "domain": "Legal"
 },
 {
-"input": "Is prompt ko sudharo: vasiyat kaise banti hai",
+"input": " vasiyat kaise banti hai",
 "target": "Bharat mein Vasiyat (Will) banane ke kanooni niyam aur tarike par ek clear aur detailed article likho. Audience: senior citizens aur unke parivaar wale jo estate planning karna chahte hain. Tone: respectful, serious, aur legally accurate. Format: step-by-step guide aur FAQs. Specific details: (1) ek valid Will ke essential elements (sound mind, clear intention), (2) do witnesses (gawah) ki mojoodgi aur unke signature ki ahmiyat, (3) registered Will vs unregistered Will ka kanooni wazan, (4) Will ko modify ya cancel (revoke) karne ka tarika, aur (5) executor (nushpadak) chunne ke niyam. Aakhir mein probate of Will ka chhota sa explanation do.",
 "lang": "hi",
 "domain": "Legal"
@@ -2004,7 +2004,7 @@
 "domain": "Healthcare"
 },
 {
-"input": "Is prompt ko sudharo: bukhar ka ilaj batao",
+"input": " bukhar ka ilaj batao",
 "target": "Ek aam viral fever (bukhar) ke lakshan (symptoms), gharelu nuskhe (home remedies), aur kab doctor ko dikhana chahiye (red flags), is par ek detailed health guide banao. Audience: parents aur aam log jo ghar par basic care karna chahte hain. Tone: informative, soothing, aur medically responsible. Format: bullet points aur clear headings. Details to cover: (1) temperature check karne ka sahi tarika aur paracetamol ka safe dosage, (2) hydration ki ahmiyat (ORS, nariyal pani, aur soups), (3) thande pani ki patti (cold compress) rakhne ka sahi tarika, aur (4) warning signs jaise lagatar tej bukhar (103°F+), saans lene mein takleef, ya chakkkar aana, jisme turant doctor ke paas jana zaroori hai.",
 "lang": "hi",
 "domain": "Healthcare"
@@ -2016,7 +2016,7 @@
 "domain": "Healthcare"
 },
 {
-"input": "Is prompt ko sudharo: weight loss tips",
+"input": " weight loss tips",
 "target": "Ek sustainable aur healthy vajan kam karne (weight loss) ka plan taiyar karo, jisme fad diets ya crash diets ka istemal na ho. Audience: wo log jinka routine busy hai aur jo safely apna weight manage karna chahte hain. Tone: motivational, realistic, aur scientifically accurate. Format: 5 main principles aur actionable tips. Specific details: (1) Caloric deficit ka matlab simple bhasha mein samjhao bina starvation ke, (2) protein aur fiber ki ahmiyat (jaise paneer, dal, sabziyan), (3) NEAT (Non-Exercise Activity Thermogenesis) yani din bhar thoda active rehne ka fayda (jaise seedhi chadhna), (4) 7-8 ghante ki achi neend aur stress management ka weight loss se connection. Aakhir mein patience rakhne aur consistent rehne ki advice do.",
 "lang": "hi",
 "domain": "Healthcare"
@@ -2028,7 +2028,7 @@
 "domain": "Healthcare"
 },
 {
-"input": "Is prompt ko sudharo: mental health kya hai",
+"input": " mental health kya hai",
 "target": "Mental Health (mansik swasthya) ki ahmiyat par ek jagrukta (awareness) article likho, jisme anxiety aur depression ke aam lakshan samjhaye gaye hon. Audience: Indian society jahan mental health par baat karna abhi bhi ek taboo (kalank) mana jata hai. Tone: empathetic, destigmatizing, aur professional. Format: myth vs fact format ka istemal karo aur aasan bhasha mein samjhao. Details to cover: (1) sad feel hone aur clinical depression ke beech ka farq, (2) anxiety attacks kya hote hain aur unme kaisa feel hota hai, (3) therapy aur counseling ke baare mein faili galatfehmiyon ko dur karna (jaise 'therapy sirf pagal logo ke liye hai'), aur (4) agar koi dost ya parivar ka sadasya pareshan hai toh uski madad kaise karein (active listening bina judge kiye).",
 "lang": "hi",
 "domain": "Healthcare"
@@ -2040,7 +2040,7 @@
 "domain": "Healthcare"
 },
 {
-"input": "Is prompt ko sudharo: cholesterol kam kaise kare",
+"input": " cholesterol kam kaise kare",
 "target": "High Cholesterol (khas taur par LDL ya 'bad' cholesterol) ko naturally aur dawaiyon ke bina kam karne ke liye ek lifestyle aur diet modification guide banao. Audience: 40+ saal ke vyakti jinki recent lipid profile report aayi hai. Tone: informative, practical, aur health-focused. Format: 'Kya Khayein' aur 'Kya Chodein' ki clear lists aur lifestyle changes. Specific details: (1) LDL (bad) aur HDL (good) cholesterol ka difference samjhao, (2) trans fats aur saturated fats (jaise processed food, deep-fried snacks) se bachne ke reasons, (3) soluble fiber (jaise oats, isabgol, beans) aur omega-3 (jaise akhrot, flaxseeds) ke fayde, aur (4) rozana 30 minute brisk walk ya aerobic exercise ka cholesterol par asar. Doctor se lagatar checkup ki ahmiyat par zor do.",
 "lang": "hi",
 "domain": "Healthcare"
@@ -2052,7 +2052,7 @@
 "domain": "Healthcare"
 },
 {
-"input": "Is prompt ko sudharo: pregnancy me kya khaye",
+"input": " pregnancy me kya khaye",
 "target": "Pregnancy (Garbhavastha) ke pehle trimester (shuruaati 3 mahine) ke liye ek detailed nutrition aur diet guide taiyar karo. Audience: pehli baar maa banne wali mahilayein (first-time pregnant women). Tone: caring, informative, aur medically safe. Format: jaruri nutrients ki list aur daily routine ke hisaab se meal ideas. Specific details: (1) Folic acid, iron, aur calcium ki ahmiyat aur wo kin foods se milte hain (jaise hari sabziyan, dairy products, aur daalein), (2) morning sickness (ulti ya matli) ko manage karne ke liye chhote aur frequent meals khane ki advice (jaise adrak ki chai ya dry toast), (3) kin cheezon se bilkul bachna chahiye (kacha papita, kacha doodh, alcohol, aur zyada caffeine), aur (4) doctor dwara di gayi prenatal vitamins ko regular lene ka reminder.",
 "lang": "hi",
 "domain": "Healthcare"

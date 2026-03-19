@@ -1,4 +1,5 @@
 /.agent
+/.venv
 /backend/__pycache__
 /backend/tests
 backend/test_failures.txt
@@ -7,3 +8,5 @@ backend/__pycache__/enhancement_prompts.cpython-312.pyc
 /backend/__pycache__
 backend/out.txt
 backend/test_output.txt
+/Datasets
+/training
