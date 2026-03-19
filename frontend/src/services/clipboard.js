@@ -18,8 +18,8 @@ export async function copyToClipboard(text) {
     document.body.appendChild(textarea)
     textarea.select()
     try {
-      document.execCommand('copy')
-      return true
+      const succeeded = document.execCommand('copy') // ✅ capture return value
+      return succeeded                               // ✅ false propagates correctly
     } catch {
       return false
     } finally {

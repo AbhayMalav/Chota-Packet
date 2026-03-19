@@ -178,7 +178,7 @@ def build_prefix(
         build_prefix("hi", "general", "", "basic")
         → "prompt sudharo: "
 
-        build_prefix("hi", "general", "", "basic", input_lang="hi", output_lang="en")
+        build_prefix("hi", "general", "", "basic", output_lang="en")
         → "prompt sudharo (output: English): "
     """
     base = TASK_PREFIXES.get(input_lang, TASK_PREFIXES["en"])

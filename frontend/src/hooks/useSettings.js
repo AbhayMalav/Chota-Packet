@@ -87,6 +87,6 @@ export function useSettings() {
     darkMode, toggleDark,
     openRouterKey, saveKey, clearKey, keyStatus,
     selectedModel, saveModel, models,
-    inferenceMode: openRouterKey && selectedModel ? 'cloud' : 'local',
+    inferenceMode: selectedModel === 'local' ? 'local' : (openRouterKey && selectedModel ? 'cloud' : 'local'),
   }
 }

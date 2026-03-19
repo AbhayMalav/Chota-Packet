@@ -30,33 +30,10 @@ export default function ShortcutsModal({ isOpen, onClose }) {
     window.addEventListener('keydown', handler);
     return () => {
         window.removeEventListener('keydown', handler);
-        console.debug('[ShortcutsTab] Popup closed');
     }
   }, [isOpen, onClose]);
 
-  useEffect(() => {
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      const handleThemeChange = () => {
-          const isDark = !document.documentElement.classList.contains('light');
-          console.debug(`[ShortcutsTab] Theme switched to: ${isDark ? 'dark' : 'light'}`);
-      };
-      
-      mediaQuery.addEventListener('change', handleThemeChange);
-      
-      const observer = new MutationObserver((mutations) => {
-          mutations.forEach((m) => {
-              if (m.attributeName === 'class') {
-                  handleThemeChange();
-              }
-          });
-      });
-      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
-      return () => {
-          mediaQuery.removeEventListener('change', handleThemeChange);
-          observer.disconnect();
-      };
-  }, []);
 
   if (!isOpen) return null;
 
@@ -103,7 +80,7 @@ export default function ShortcutsModal({ isOpen, onClose }) {
       <div className="shortcuts-modal glass-card">
         <div className="shortcuts-header">
           <h2 id="shortcuts-modal-title" className="shortcuts-title" tabIndex="-1" ref={titleRef}>Keyboard Shortcuts</h2>
-          <button className="shortcuts-close" aria-label="Close shortcuts" onClick={onClose}>✕</button>
+          <button className="shortcuts-close" aria-label="Close shortcuts" onClick={() => { console.debug('[ShortcutsTab] Popup closed via close button'); onClose(); }}>✕</button>
         </div>
 
         <ul className="shortcuts-list">

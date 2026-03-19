@@ -2,12 +2,14 @@ import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { MAX_INPUT_CHARS } from '../constants'
 import FeedbackBar from './FeedbackBar'
 
-export default function OutputCard({ text, onTextChange, onCompare, onClear }) {
+export default function OutputCard({ text = '', onTextChange, onCompare, onClear }) {
   const cardRef = useRef(null)
   const [copied, setCopied] = useState(false)
   const copyBtnId = React.useId()
   const outputCardId = React.useId()
-  const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0
+  
+  const trimmedText = text.trim()
+  const wordCount = trimmedText ? trimmedText.split(/\s+/).length : 0
 
   // Sync external text → contenteditable
   useEffect(() => {

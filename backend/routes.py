@@ -231,7 +231,8 @@ async def enhance_prompt(
                 status_code=400,
                 detail={"error": "X-OpenRouter-Key header required for cloud inference."},
             )
-        return await _cloud_enhance(req, text, prefix, system_prompt, x_openrouter_key)
+        referer = request.headers.get("referer") or str(request.base_url)
+        return await _cloud_enhance(req, text, prefix, system_prompt, x_openrouter_key, referer)
 
     # ── Local mT5 path ────────────────────────────────────────────────────────
     try:
@@ -271,6 +272,7 @@ async def _cloud_enhance(
     prefix: str,
     system_prompt: str,
     api_key: str,
+    referer: str,
 ) -> JSONResponse:
     """
     Forward enhancement request to OpenRouter (FR-42, NF-S7).
@@ -291,7 +293,7 @@ async def _cloud_enhance(
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
-        "HTTP-Referer": "http://localhost:3000",  # Required by OpenRouter
+        "HTTP-Referer": referer,  # Required by OpenRouter
         "X-Title": "Chota Packet",
     }
 

@@ -45,12 +45,11 @@ ENHANCEMENT_SYSTEM_PROMPTS: dict[str, str] = {
 
 "prompt_chaining": (
     "Rewrite this rough idea as a structured chain of sequential prompts. "
-    "Break the task into 2- 4 discrete stages where each output feeds the next. "
+    "Break the task into 2-4 discrete stages where each output feeds the next. "
     "Label each stage clearly (e.g., Step 1, Step 2). "
     "Each step must be self-contained, minimal, and purposeful — no overlap. "
     "Output: the full prompt chain only, no explanations."
 ),
-
 "multi_prompt_fusion": (
     "Rewrite this rough idea by identifying all distinct sub-goals within it. "
     "Fuse them into a single, unified prompt that addresses each sub-goal efficiently. "
@@ -89,13 +88,13 @@ ENHANCEMENT_SYSTEM_PROMPTS: dict[str, str] = {
 
 def validate_enhancement_prompts() -> list[str]:
     """
-    Check that all three system prompts are present and non-empty.
+    Check that all configured system prompts in ENHANCEMENT_SYSTEM_PROMPTS are present and non-empty.
 
     Returns:
         List of missing/empty level names (empty list means all OK).
     """
     missing: list[str] = []
-    for level in ("basic", "detailed", "advanced"):
+    for level in ENHANCEMENT_SYSTEM_PROMPTS.keys():
         prompt = ENHANCEMENT_SYSTEM_PROMPTS.get(level, "").strip()
         if not prompt:
             missing.append(level)

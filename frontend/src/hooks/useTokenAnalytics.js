@@ -1,13 +1,13 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 
 /**
  * useTokenAnalytics — Tracks cumulative enhancement statistics (Item 14).
  *
  * Persists to localStorage. Computes hero stats:
- *   - Total Tokens Saved
- *   - Estimated Cost Saved ($0.003 / 1K tokens)
- *   - Total Prompts Improved
- *   - Efficiency Score (0–100) + letter grade (A+ – F)
+ * - Total Tokens Saved
+ * - Estimated Cost Saved ($0.003 / 1K tokens)
+ * - Total Prompts Improved
+ * - Efficiency Score (0–100) + letter grade (A+ – F)
  */
 
 const STORAGE_KEY = 'cp-token-analytics';
@@ -39,20 +39,22 @@ function letterGrade(score) {
 export default function useTokenAnalytics() {
   const [data, setData] = useState(loadData);
 
+  // Persist to localStorage whenever data changes, outside the setData callback
+  // to keep the state updater pure (no side effects inside the updater).
+  useEffect(() => {
+    saveData(data);
+  }, [data]);
+
   const recordEnhancement = useCallback((inputText, outputText) => {
-    const inTokens  = inputText.trim().split(/\s+/).filter(Boolean).length;
+    const inTokens = inputText.trim().split(/\s+/).filter(Boolean).length;
     const outTokens = outputText.trim().split(/\s+/).filter(Boolean).length;
 
-    setData(prev => {
-      const updated = {
-        entries: [
-          ...prev.entries,
-          { inTokens, outTokens, ts: Date.now() },
-        ],
-      };
-      saveData(updated);
-      return updated;
-    });
+    setData(prev => ({
+      entries: [
+        ...prev.entries,
+        { inTokens, outTokens, ts: Date.now() },
+      ],
+    }));
   }, []);
 
   const stats = useMemo(() => {
@@ -72,16 +74,16 @@ export default function useTokenAnalytics() {
     let ratioSum = 0;
 
     for (const e of entries) {
-      totalIn  += e.inTokens;
+      totalIn += e.inTokens;
       totalOut += e.outTokens;
       const saved = e.outTokens - e.inTokens;
       ratioSum += saved / Math.max(e.outTokens, 1);
     }
 
     const tokensSaved = Math.max(0, totalOut - totalIn);
-    const costSaved   = (tokensSaved / 1000) * COST_PER_1K;
-    const avgRatio    = (ratioSum / entries.length) * 100;
-    const score       = Math.round(Math.max(0, Math.min(100, avgRatio)));
+    const costSaved = (tokensSaved / 1000) * COST_PER_1K;
+    const avgRatio = (ratioSum / entries.length) * 100;
+    const score = Math.round(Math.max(0, Math.min(100, avgRatio)));
 
     return {
       totalTokensSaved: tokensSaved,

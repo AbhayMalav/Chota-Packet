@@ -1,5 +1,5 @@
 // AES-256-GCM encryption via browser-native Web Crypto API (NF-S6)
-// The key is derived from a static app salt XOR'd with the site origin.
+// The key is derived from a static app salt concatenated with the site origin.
 // Goal: obfuscation in localStorage per device/origin, not secure multi-user storage.
 
 const SALT_TEXT = 'chota-packet-salt-v1'
@@ -23,7 +23,15 @@ async function deriveKey() {
   )
 }
 
-function toB64(buf) { return btoa(String.fromCharCode(...new Uint8Array(buf))) }
+function toB64(buf) {
+  const bytes = new Uint8Array(buf);
+  const CHUNK_SIZE = 8192;
+  let binaryString = '';
+  for (let i = 0; i < bytes.length; i += CHUNK_SIZE) {
+    binaryString += String.fromCharCode.apply(null, bytes.subarray(i, i + CHUNK_SIZE));
+  }
+  return btoa(binaryString);
+}
 function fromB64(b64) {
   const bin = atob(b64)
   return Uint8Array.from(bin, (c) => c.charCodeAt(0))

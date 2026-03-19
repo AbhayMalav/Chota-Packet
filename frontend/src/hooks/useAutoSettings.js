@@ -18,7 +18,7 @@ const STEP_RE    = /\b(steps?|how\s?to|guide|tutorial|instructions?|procedure|pr
 
 const FORMAL_RE    = /\b(please|kindly|professional|formal|respectfully|officially|proposal|report|presentation|executive|memo)\b/i;
 const CASUAL_RE    = /\b(hey|yo|cool|awesome|gonna|wanna|kinda|lol|tbh|btw|quick|simple|easy|just|like)\b/i;
-const TECHNICAL_RE = /\b(implementation|architecture|specification|protocol|framework|infrastructure|optimiz|scalab|performan|latency|throughput|microservice)\b/i;
+const TECHNICAL_RE = /\b(implementation|architecture|specification|protocol|framework|infrastructure|optimize|optimization|scalable|scalability|performance|latency|throughput|microservice)\b/i;
 
 const HINDI_RE = /[\u0900-\u097F]/;
 
@@ -90,7 +90,7 @@ function resolveOutputLang(a) {
 export default function useAutoSettings(inputText, { style, tone, level, outputLang }) {
   const resolved = useMemo(() => {
     if (!inputText || !inputText.trim()) {
-      return { style: 'general', tone: '', level: 'basic', outputLang: 'auto' };
+      return { style: 'general', tone: '', level: 'basic', outputLang: 'en' };
     }
     const a = analyzeText(inputText);
     return {

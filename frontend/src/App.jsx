@@ -20,7 +20,7 @@ import ShortcutsModal from './components/ShortcutsModal'
 // ── App state machine ────────────────────────────────────────────────────────
 function appReducer(state, action) {
   switch (action.type) {
-    case 'INPUT_CHANGED': return { ...state, input: action.value, uiState: action.value.trim() ? 'INPUT_READY' : 'IDLE', error: null }
+    case 'INPUT_CHANGED': return { ...state, input: action.value, uiState: action.value.trim() ? 'INPUT_READY' : 'IDLE' }
     case 'LOADING':       return { ...state, uiState: 'LOADING' }
     case 'SUCCESS':       return { ...state, uiState: 'OUTPUT', outputText: action.text, originalText: state.input }
     case 'ERROR':         return { ...state, uiState: 'ERROR' }
@@ -97,8 +97,24 @@ export default function App() {
   // ─── Keyboard shortcuts ──────────────────────────────────────────────────
   useEffect(() => {
     const handler = (e) => {
-      if (e.ctrlKey && e.key === 'Enter') { e.preventDefault(); handleEnhance() }
-      if (e.key === 'Escape') { setSettingsOpen(false); setHistoryOpen(false); setDiffOpen(false); setShortcutsOpen(false); }
+      if (e.ctrlKey && e.key === 'Enter') {
+        e.preventDefault();
+        handleEnhance();
+        return;
+      }
+      if (e.key === 'Escape') {
+        setSettingsOpen(false);
+        setHistoryOpen(false);
+        setDiffOpen(false);
+        setShortcutsOpen(false);
+        return;
+      }
+      
+      const active = document.activeElement;
+      if (active && (['INPUT', 'TEXTAREA', 'SELECT'].includes(active.tagName) || active.isContentEditable)) {
+        return;
+      }
+
       if (e.ctrlKey && e.shiftKey && e.key === 'C') {
         e.preventDefault()
         navigator.clipboard.writeText(outputText).catch(() => {})
