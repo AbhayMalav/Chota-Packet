@@ -60,7 +60,6 @@ export default function HistoryPanel({ history, onSelect, open, onClose }) {
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-4 border-b border-purple-500/15">
         <div className="flex items-center gap-2">
-          <span className="text-purple-400">📋</span>
           <h2 className="font-bold text-gray-200">Session History</h2>
           {allItems.length > 0 && (
             <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-400 font-bold">
@@ -74,7 +73,7 @@ export default function HistoryPanel({ history, onSelect, open, onClose }) {
             <button
               onClick={() => setExportOpen((o) => !o)}
               title="Export history"
-              aria-haspopup="listbox"
+              aria-haspopup="menu"
               aria-expanded={exportOpen}
               className="text-[10px] px-2.5 py-1 rounded-full border border-purple-500/15 text-gray-500
                          hover:text-purple-400 hover:bg-purple-500/10 transition-all duration-200
@@ -88,13 +87,13 @@ export default function HistoryPanel({ history, onSelect, open, onClose }) {
 
             {exportOpen && (
               <div
-                role="listbox"
+                role="menu"
                 className="absolute right-0 top-full mt-1.5 w-36 rounded-2xl
                            glass-card shadow-xl shadow-black/20
                            py-1.5 z-10 animate-fade-in overflow-hidden"
               >
                 <button
-                  role="option"
+                  role="menuitem"
                   onClick={() => { exportItems(allItems, 'json'); setExportOpen(false) }}
                   className="w-full text-left px-3 py-2.5 text-[11px] text-[var(--theme-text)]
                              hover:text-purple-400 hover:bg-purple-500/10 transition-all duration-150"
@@ -102,7 +101,7 @@ export default function HistoryPanel({ history, onSelect, open, onClose }) {
                   📄 Export as JSON
                 </button>
                 <button
-                  role="option"
+                  role="menuitem"
                   onClick={() => { exportItems(allItems, 'txt'); setExportOpen(false) }}
                   className="w-full text-left px-3 py-2.5 text-[11px] text-[var(--theme-text)]
                              hover:text-purple-400 hover:bg-purple-500/10 transition-all duration-150"

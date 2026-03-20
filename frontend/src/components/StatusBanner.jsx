@@ -7,7 +7,7 @@ export default function StatusBanner({ status }) {
       text: 'text-emerald-400',
       border: 'border-emerald-500/20',
       bg: 'bg-emerald-500/6',
-      msg: 'Backend connected — ready to enhance',
+      msg: 'Backend connected - ready to enhance',
       pulse: true,
     },
     loading: {
@@ -23,7 +23,7 @@ export default function StatusBanner({ status }) {
       text: 'text-red-400',
       border: 'border-red-500/20',
       bg: 'bg-red-500/6',
-      msg: 'Backend offline — run: uvicorn main:app --reload',
+      msg: 'Backend offline - run: uvicorn main:app --reload',
       pulse: false,
     },
   }

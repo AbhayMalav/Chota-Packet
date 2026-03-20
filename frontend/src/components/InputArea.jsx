@@ -60,32 +60,35 @@ export default function InputArea({ value, onChange, onClear, inputLimit, childr
       )}
 
       {/* Footer: counter + mic + clear */}
-      <div className="flex items-center justify-between px-1">
+            {/* Footer: counter + mic + clear */}
+      <div className="flex items-center justify-between px-3 pb-3 pt-1 gap-2">
         <span
-          id="char-count"
-          className="text-[11px] text-gray-600 font-medium tabular-nums"
+          className={`text-xs transition-colors ${
+            isOverLimit
+              ? 'text-red-400 font-medium'
+              : 'text-[var(--theme-text-secondary)]'
+          }`}
         >
-          {charCount} chars
+          {isOverLimit
+            ? `Limit exceeded (${charCount}/${inputLimit} chars)`
+            : inputLimit
+            ? `${charCount} / ${inputLimit}`
+            : `${charCount}`}
         </span>
-        <div className="flex items-center gap-2">
-          {onClear && (
+
+        {/* Mic + Clear — fixed height container prevents pulse layout shift */}
+        <div className="flex items-center gap-1.5 min-h-[40px]">
+          {children}
+          {value.trim() && (
             <button
-              type="button"
               onClick={onClear}
-              disabled={charCount === 0}
-              className="text-xs font-medium px-3 py-1.5 rounded-full
-                         border border-purple-500/25 text-gray-400
-                         hover:text-red-400 hover:border-red-500/30 hover:bg-red-500/5
-                         active:scale-[0.97] active:brightness-90
-                         focus:outline-none focus-ring
-                         disabled:opacity-30 disabled:cursor-not-allowed
-                         transition-all duration-200"
+              className="btn-ghost"
               aria-label="Clear input"
+              title="Clear input (Ctrl+K)"
             >
               Clear
             </button>
           )}
-          {children}
         </div>
       </div>
     </div>

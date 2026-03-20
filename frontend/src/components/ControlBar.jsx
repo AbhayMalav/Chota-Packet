@@ -144,7 +144,7 @@ function ModelPill({ models, selectedModel, onModelChange, loading }) {
                      [&::-webkit-scrollbar]:w-[3px] [&::-webkit-scrollbar-thumb]:rounded-full
                      [&::-webkit-scrollbar-thumb]:bg-purple-500/30 [&::-webkit-scrollbar-track]:bg-transparent"
         >
-          {models.map((m) => (
+          {Array.isArray(models) && models.map((m) => (
             <button
               key={m.id}
               role="option"

@@ -91,11 +91,15 @@ export default function App() {
       inference_mode: inferenceMode,
       model: selectedModel || undefined,
     }
-    const data = await runEnhance(payload, openRouterKey)
-    if (data?.enhanced_prompt) {
-      dispatch({ type: 'SUCCESS', text: data.enhanced_prompt })
-      setHistory((prev) => [{ input, enhanced: data.enhanced_prompt, ts: Date.now() }, ...prev].slice(0, HISTORY_LIMIT))
-    } else {
+    try {
+      const data = await runEnhance(payload, openRouterKey)
+      if (data?.enhanced_prompt) {
+        dispatch({ type: 'SUCCESS', text: data.enhanced_prompt })
+        setHistory((prev) => [{ input, enhanced: data.enhanced_prompt, ts: Date.now() }, ...prev].slice(0, HISTORY_LIMIT))
+      } else {
+        dispatch({ type: 'ERROR' })
+      }
+    } catch {
       dispatch({ type: 'ERROR' })
     }
   }, [input, outputLang, style, tone, level, inferenceMode, selectedModel, openRouterKey, runEnhance])
@@ -192,7 +196,7 @@ export default function App() {
                   ${inferenceMode === 'cloud'
                     ? 'bg-blue-500/10 text-blue-400 border-blue-500/20'
                     : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'}`}>
-                  {inferenceMode === 'cloud' ? '☁ Cloud' : '🏠 Local'}
+                  {inferenceMode === 'cloud' ? '☁ Cloud' : 'Local'}
                 </span>
 
                 {/* History toggle — hidden on desktop (panel is pinned) */}
@@ -247,11 +251,11 @@ export default function App() {
                 />
 
                 {/* Error state */}
-                {uiState === 'ERROR' && enhanceError && (
+                {uiState === 'ERROR' && (
                   <div className="rounded-xl border border-red-500/20 bg-red-500/8
                                   text-red-400 px-4 py-3 text-sm flex items-center gap-2 animate-fade-in" role="alert">
-                    <span>⚠️</span>
-                    <span>{enhanceError}</span>
+                    <span>Error</span>
+                    <span>{enhanceError ?? 'An error occurred. Please try again.'}</span>
                   </div>
                 )}
 
