@@ -22,14 +22,14 @@ const FEATURES = [
   },
 ]
 
-// /10 is the lowest standard Tailwind opacity step — avoids missing utility classes
+// /10 is the lowest standard Tailwind opacity step - avoids missing utility classes
 const COLOR_MAP = {
   emerald: { border: 'border-emerald-500/20', bg: 'bg-emerald-500/10', text: 'text-emerald-400', iconBg: 'bg-emerald-500/15' },
-  purple:  { border: 'border-purple-500/20',  bg: 'bg-purple-500/10',  text: 'text-purple-400',  iconBg: 'bg-purple-500/15' },
-  blue:    { border: 'border-blue-500/20',    bg: 'bg-blue-500/10',    text: 'text-blue-400',    iconBg: 'bg-blue-500/15'  },
+  purple: { border: 'border-purple-500/20', bg: 'bg-purple-500/10', text: 'text-purple-400', iconBg: 'bg-purple-500/15' },
+  blue: { border: 'border-blue-500/20', bg: 'bg-blue-500/10', text: 'text-blue-400', iconBg: 'bg-blue-500/15' },
 }
 
-export default function OnboardingOverlay({ onDone = () => {} }) {
+export default function OnboardingOverlay({ onDone = () => { } }) {
   const dialogRef = useRef(null)
   const primaryBtnRef = useRef(null)
 
@@ -37,7 +37,7 @@ export default function OnboardingOverlay({ onDone = () => {} }) {
     try {
       localStorage.setItem(LS_ONBOARDED, '1')
     } catch (err) {
-      // Storage failure (private browsing, quota) — overlay still closes
+      // Storage failure (private browsing, quota) - overlay still closes
       if (import.meta.env.DEV) {
         console.warn('[OnboardingOverlay] Could not persist onboarded state:', err)
       }
@@ -73,7 +73,7 @@ export default function OnboardingOverlay({ onDone = () => {} }) {
       if (focusable.length === 0) return
 
       const first = focusable[0]
-      const last  = focusable[focusable.length - 1]
+      const last = focusable[focusable.length - 1]
 
       if (e.shiftKey) {
         // Shift+Tab: wrap from first → last
@@ -102,7 +102,7 @@ export default function OnboardingOverlay({ onDone = () => {} }) {
       aria-label="Welcome to Chota Packet"
       ref={dialogRef}
     >
-      {/* Decorative nebula orbs — reuse global classes to stay in sync with design system */}
+      {/* Decorative nebula orbs - reuse global classes to stay in sync with design system */}
       <div aria-hidden="true" className="pointer-events-none">
         <div className="nebula-orb-1" />
         <div className="nebula-orb-2" />
@@ -141,7 +141,7 @@ export default function OnboardingOverlay({ onDone = () => {} }) {
           Welcome to Chota Packet
         </h2>
         <p className="text-sm text-gray-500 mb-6 leading-relaxed">
-          Edge AI Prompt Enhancer — running locally on your device
+          Edge AI Prompt Enhancer - running locally on your device
         </p>
 
         {/* Feature highlights */}
@@ -168,7 +168,7 @@ export default function OnboardingOverlay({ onDone = () => {} }) {
           })}
         </div>
 
-        {/* CTA — separated from Skip so they can be distinguished analytically */}
+        {/* CTA - separated from Skip so they can be distinguished analytically */}
         <button
           ref={primaryBtnRef}
           onClick={() => finish(false)}

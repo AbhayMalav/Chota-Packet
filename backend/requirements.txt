@@ -1,4 +1,4 @@
-# Chota Packet Backend — Python Dependencies
+# Chota Packet Backend - Python Dependencies
 # Pin minor versions to prevent breaking changes (R-08 for peft safetensors)
 # Install: pip install -r requirements.txt
 
@@ -10,7 +10,7 @@ python-multipart==0.0.9     # Required for UploadFile / Form in FastAPI
 # ── ML & inference ────────────────────────────────────────────────────────────
 torch==2.2.2                # CPU-only build: pip install torch==2.2.2 --index-url https://download.pytorch.org/whl/cpu
 transformers==4.40.2
-peft==0.10.0                # LoRA adapter loading — pinned for safetensors compat
+peft==0.10.0                # LoRA adapter loading - pinned for safetensors compat
 sentencepiece==0.2.0        # Required by T5Tokenizer / mT5
 
 # ── Audio processing ──────────────────────────────────────────────────────────

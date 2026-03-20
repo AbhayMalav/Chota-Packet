@@ -1,16 +1,36 @@
 import React, { useState } from 'react'
-import { useRecorder } from '../hooks/useRecorder'
+import useRecorder from '../hooks/useRecorder'
+import { MicIcon, StopIcon, XIcon } from './icons'
 
-export default function MicButton({ onTranscript = () => {}, lang }) {
+// Inline spinner - matches ControlBar's LoadSpinner pattern
+function Spinner() {
+  return (
+    <svg
+      className="animate-spin w-4 h-4"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3V4a10 10 0 100 20v-2a8 8 0 01-8-8z" />
+    </svg>
+  )
+}
+
+export default function MicButton({ onTranscript = () => { }, lang }) {
   const { recording, error, start, stop } = useRecorder({ onTranscript, lang })
   const [starting, setStarting] = useState(false)
+  const [dismissed, setDismissed] = useState(false)
+
+  // Reset dismissed state whenever a new error arrives
+  const prevError = React.useRef(null)
+  if (error !== prevError.current) {
+    prevError.current = error
+    if (error) setDismissed(false)
+  }
 
   const handleClick = async () => {
-    if (recording) {
-      stop()
-      return
-    }
-    // Disable button during the permission prompt / start-up window
+    if (recording) { stop(); return }
     setStarting(true)
     try {
       await start()
@@ -19,42 +39,68 @@ export default function MicButton({ onTranscript = () => {}, lang }) {
     }
   }
 
-  // Safely coerce error to a displayable string regardless of type
   const errorMessage = error
     ? (error instanceof Error ? error.message : String(error))
     : null
 
   const isDisabled = starting && !recording
-  const label = starting
-    ? 'Starting…'
+
+  const ariaLabel = starting
+    ? 'Starting microphone…'
     : recording
-    ? 'Stop recording'
-    : 'Start voice input'
+      ? 'Stop recording'
+      : 'Start voice input'
 
   return (
-    <div className="flex flex-col items-end gap-1">
+    <div className="flex flex-col items-end gap-1.5">
+
       <button
         onClick={handleClick}
         disabled={isDisabled}
-        aria-label={label}
-        title={label}
-        style={{
-          // willChange scoped to animation only — avoids permanent GPU layer waste
-          willChange: recording ? 'transform' : 'auto',
-        }}
-        className={`btn-icon${recording ? ' mic-active animate-mic-pulse' : ''}${isDisabled ? ' opacity-50 cursor-not-allowed' : ''}`}
+        aria-label={ariaLabel}
+        title={ariaLabel}
+        style={{ willChange: recording ? 'transform, box-shadow' : 'auto' }}
+        className={[
+          'btn-icon',
+          // Active recording state
+          recording
+            ? 'mic-active animate-mic-pulse'
+            : '',
+          // Reduced-motion fallback: static red ring instead of pulse
+          recording
+            ? 'motion-reduce:animate-none motion-reduce:ring-2 motion-reduce:ring-red-500/60'
+            : '',
+          isDisabled
+            ? 'opacity-50 cursor-not-allowed'
+            : '',
+        ].filter(Boolean).join(' ')}
       >
-        {starting ? '⏳' : recording ? '⏹ Stop' : '🎤 Mic'}
+        {starting
+          ? <Spinner />
+          : recording
+            ? <StopIcon className="w-4 h-4" />
+            : <MicIcon className="w-4 h-4" />
+        }
       </button>
 
-      {/* role="alert" ensures screen readers announce errors as they appear */}
-      {errorMessage && (
-        <span
+      {/* Error message - dismissable, announced to screen readers */}
+      {errorMessage && !dismissed && (
+        <div
           role="alert"
-          className="text-[11px] text-red-400 max-w-[180px] text-right"
+          className="flex items-start gap-1 max-w-[180px] animate-fade-in"
         >
-          {errorMessage}
-        </span>
+          <span className="text-[11px] text-red-400 text-right leading-tight flex-1">
+            {errorMessage}
+          </span>
+          <button
+            onClick={() => setDismissed(true)}
+            aria-label="Dismiss microphone error"
+            className="flex-shrink-0 mt-0.5 transition-colors"
+            style={{ color: 'rgba(248,113,113,0.6)' }}
+          >
+            <XIcon className="w-3 h-3" />
+          </button>
+        </div>
       )}
     </div>
   )

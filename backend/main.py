@@ -1,12 +1,12 @@
 """
-main.py — Chota Packet FastAPI application entry point.
+main.py - Chota Packet FastAPI application entry point.
 
 Responsibilities:
   - Define the FastAPI app with CORS configured for localhost:3000 only (NF-S1, A6)
   - Lifespan context manager that:
       1. Checks ffmpeg availability (FR-38)
       2. Validates enhancement prompts (FR-27)
-      3. Loads ML models (FR-09) — dual-mode (real / mock stub)
+      3. Loads ML models (FR-09) - dual-mode (real / mock stub)
       4. Sets app.state flags for health endpoint
   - Include all routers from routes.py
   - Structured logging
@@ -52,10 +52,10 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
       2. Enhancement prompt validation
       3. Model loading (real or mock)
     On shutdown:
-      (No cleanup needed — models are GC'd automatically)
+      (No cleanup needed - models are GC'd automatically)
     """
     logger.info("=" * 60)
-    logger.info("  Chota Packet Backend — Starting Up")
+    logger.info("  Chota Packet Backend - Starting Up")
     logger.info("=" * 60)
 
     # 1. ffmpeg check (FR-38)
@@ -82,11 +82,11 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
             app.state.models = state
             if state.mock_mode:
                 logger.info(
-                    "🟡 Running in MOCK MODE — real model weights not found.\n"
+                    "🟡 Running in MOCK MODE - real model weights not found.\n"
                     "   Drop LoRA adapter in backend/models/mt5_lora_merged/ and restart."
                 )
             else:
-                logger.info("🟢 Real inference mode — both models loaded.")
+                logger.info("🟢 Real inference mode - both models loaded.")
         except RuntimeError as exc:
             logger.error("❌ Model loading failed: %s", exc)
             state = ModelState()
@@ -103,7 +103,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 
     yield  # ← application runs here
 
-    logger.info("Chota Packet Backend — Shutting down.")
+    logger.info("Chota Packet Backend - Shutting down.")
 
 
 # ─────────────────────────── FastAPI app ─────────────────────────────────────
@@ -120,7 +120,7 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-# CORS — only allow localhost:3000 (NF-S1, A6)
+# CORS - only allow localhost:3000 (NF-S1, A6)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,

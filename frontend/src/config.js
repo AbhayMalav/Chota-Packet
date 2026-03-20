@@ -1,4 +1,4 @@
-// config.js — Frontend feature flags for Chota Packet.
+// config.js - Frontend feature flags for Chota Packet.
 // Toggle UI features here without touching component code.
 // Add new flags as the project grows rather than using inline conditionals.
 

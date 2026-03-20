@@ -1,12 +1,12 @@
 """
-routes.py — All FastAPI route handlers for Chota Packet (FR-03, FR-04, FR-06, FR-13, FR-38, FR-41, FR-42).
+routes.py - All FastAPI route handlers for Chota Packet (FR-03, FR-04, FR-06, FR-13, FR-38, FR-41, FR-42).
 
 Endpoints:
-  GET  /health          — FR-13, FR-38, FR-19
-  POST /stt             — FR-04, FR-15
-  POST /enhance         — FR-06, FR-21, FR-24, FR-27, FR-29, FR-30, FR-42
-  POST /validate-key    — FR-41
-  GET  /models          — FR-42
+  GET  /health          - FR-13, FR-38, FR-19
+  POST /stt             - FR-04, FR-15
+  POST /enhance         - FR-06, FR-21, FR-24, FR-27, FR-29, FR-30, FR-42
+  POST /validate-key    - FR-41
+  GET  /models          - FR-42
 """
 
 from __future__ import annotations
@@ -70,7 +70,7 @@ class EnhanceRequest(BaseModel):
     @classmethod
     def validate_style(cls, v: str) -> str:
         if v not in STYLE_MAP:
-            logger.warning("Unknown style '%s' — falling back to 'general'", v)
+            logger.warning("Unknown style '%s' - falling back to 'general'", v)
             return "general"
         return v
 
@@ -78,7 +78,7 @@ class EnhanceRequest(BaseModel):
     @classmethod
     def validate_level(cls, v: str) -> str:
         if v not in ENHANCEMENT_SYSTEM_PROMPTS:
-            logger.warning("Unknown enhancement_level '%s' — falling back to 'basic'", v)
+            logger.warning("Unknown enhancement_level '%s' - falling back to 'basic'", v)
             return "basic"
         return v
 
@@ -206,7 +206,7 @@ async def enhance_prompt(
     x_openrouter_key: Annotated[Optional[str], Header()] = None,
 ) -> JSONResponse:
     """
-    Prompt enhancement — local mT5 or cloud OpenRouter path (FR-06, FR-27–FR-30, FR-42).
+    Prompt enhancement - local mT5 or cloud OpenRouter path (FR-06, FR-27–FR-30, FR-42).
     """
     models = request.app.state.models
     if not models.loaded:
@@ -276,7 +276,7 @@ async def _cloud_enhance(
 ) -> JSONResponse:
     """
     Forward enhancement request to OpenRouter (FR-42, NF-S7).
-    The backend proxies the call — the key is never exposed to the browser.
+    The backend proxies the call - the key is never exposed to the browser.
     """
     messages = [
         {"role": "system", "content": system_prompt},
@@ -398,7 +398,7 @@ async def validate_openrouter_key(req: ValidateKeyRequest) -> JSONResponse:
     if resp.status_code != 200:
         raise HTTPException(
             status_code=502,
-            detail={"error": "Could not validate key — unknown OpenRouter response."},
+            detail={"error": "Could not validate key - unknown OpenRouter response."},
         )
 
     data = resp.json().get("data", resp.json())
@@ -459,9 +459,9 @@ async def get_openrouter_models(
             return JSONResponse({"models": [local_model] + models_list, "source": "openrouter_live"})
 
     except (httpx.TimeoutException, httpx.RequestError) as exc:
-        logger.warning("Live model fetch failed (%s) — using static fallback", exc)
+        logger.warning("Live model fetch failed (%s) - using static fallback", exc)
 
-    logger.warning("Could not fetch live model list — using static fallback")
+    logger.warning("Could not fetch live model list - using static fallback")
     return JSONResponse({
         "models": get_static_models(),
         "source": "static_fallback",

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback, useReducer } from 'react'
 import { health } from './services/api'
-import { useEnhance } from './hooks/useEnhance'
-import { useSettings } from './hooks/useSettings'
-import { useMediaQuery } from './hooks/useMediaQuery'
+import useEnhance from './hooks/useEnhance'
+import useSettings from './hooks/useSettings'
+import useMediaQuery from './hooks/useMediaQuery'
 import { LS_ONBOARDED, HISTORY_LIMIT, MAX_INPUT_CHARS } from './constants'
 import CONFIG from './config'
 import StatusBanner from './components/StatusBanner'
@@ -51,21 +51,21 @@ export default function App() {
   const { uiState, input, outputText, originalText } = appState
 
   // Controls
-  const [style, setStyle]           = useState('general')
-  const [tone, setTone]             = useState('')
-  const [level, setLevel]           = useState('basic')
+  const [style, setStyle] = useState('general')
+  const [tone, setTone] = useState('')
+  const [level, setLevel] = useState('basic')
   const [outputLang, setOutputLang] = useState('auto')
-  // inputLang drives both MicButton and the API payload — was previously hardcoded to 'en'
-  // No input language picker in the UI yet — plain const until one is wired up.
-const inputLang = 'en'
+  // inputLang drives both MicButton and the API payload - was previously hardcoded to 'en'
+  // No input language picker in the UI yet - plain const until one is wired up.
+  const inputLang = 'en'
 
 
   // UI panels
-  const [historyOpen, setHistoryOpen]     = useState(false)
-  const [settingsOpen, setSettingsOpen]   = useState(false)
-  const [diffOpen, setDiffOpen]           = useState(false)
+  const [historyOpen, setHistoryOpen] = useState(false)
+  const [settingsOpen, setSettingsOpen] = useState(false)
+  const [diffOpen, setDiffOpen] = useState(false)
   const [shortcutsOpen, setShortcutsOpen] = useState(false)
-  const [showOnboard, setShowOnboard]     = useState(() => !localStorage.getItem(LS_ONBOARDED))
+  const [showOnboard, setShowOnboard] = useState(() => !localStorage.getItem(LS_ONBOARDED))
 
   // Backend health
   const [backendStatus, setBackendStatus] = useState('loading')
@@ -73,7 +73,7 @@ const inputLang = 'en'
   // Session history (in-memory, capped)
   const [history, setHistory] = useState([])
 
-  // Enhance hook — error surface is handled via dispatch('ERROR') + console.warn
+  // Enhance hook - error surface is handled via dispatch('ERROR') + console.warn
   const { run: runEnhance } = useEnhance()
 
   // Responsive layout
@@ -157,7 +157,7 @@ const inputLang = 'en'
       }
       if (e.ctrlKey && e.shiftKey && e.key === 'C') {
         e.preventDefault()
-        navigator.clipboard.writeText(outputText).catch(() => {})
+        navigator.clipboard.writeText(outputText).catch(() => { })
         return
       }
       if (e.ctrlKey && e.key.toLowerCase() === 'k') {
@@ -255,9 +255,9 @@ const inputLang = 'en'
             {/* Controls */}
             <div className="w-full">
               <ControlBar
-                style={style}           onStyleChange={setStyle}
-                tone={tone}             onToneChange={setTone}
-                level={level}           onLevelChange={setLevel}
+                style={style} onStyleChange={setStyle}
+                tone={tone} onToneChange={setTone}
+                level={level} onLevelChange={setLevel}
                 outputLang={outputLang} onOutputLangChange={setOutputLang}
                 onEnhance={() => handleEnhance(false)}
                 onRegenerate={() => handleEnhance(true)}

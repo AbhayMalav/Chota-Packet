@@ -1,5 +1,5 @@
 """
-config.py — All named constants for Chota Packet backend.
+config.py - All named constants for Chota Packet backend.
 Centralised here per NF-M3 (no magic numbers scattered through code).
 """
 
@@ -33,8 +33,8 @@ HALLUCINATION_MAX_REPEATS: int = 3  # Max times an n-gram may appear (FR-16)
 
 # ──────────────────────────── Timeouts ───────────────────────────────────────
 
-ENHANCE_TIMEOUT_S: int = 15         # /enhance Axios timeout (FR-14) — frontend reference only, not used by backend
-STT_TIMEOUT_S: int = 12             # /stt Axios timeout (FR-14) — frontend reference only, not used by backend
+ENHANCE_TIMEOUT_S: int = 15         # /enhance Axios timeout (FR-14) - frontend reference only, not used by backend
+STT_TIMEOUT_S: int = 12             # /stt Axios timeout (FR-14) - frontend reference only, not used by backend
 HEALTH_TIMEOUT_S: int = 5           # /health check timeout (FR-13)
 OPENROUTER_TIMEOUT_S: int = 15      # Cloud inference timeout (NF-P8)
 VALIDATE_KEY_TIMEOUT_S: int = 5     # Key validation timeout (NF-P9)
@@ -55,7 +55,7 @@ TASK_PREFIXES: dict[str, str] = {
 
 # Style tag inserted between prefix and colon:  "enhance prompt [code]: "
 STYLE_MAP: dict[str, str] = {
-    "general":    "",           # No tag — uses plain prefix
+    "general":    "",           # No tag - uses plain prefix
     "stepbystep": "step-by-step",
     "code":       "code",
     "creative":   "creative",
@@ -90,7 +90,7 @@ ALLOWED_AUDIO_MIMES: set[str] = {
     "audio/ogg",
     "audio/wav",
     "audio/x-wav",
-    "audio/mpeg",   # mp3 — converted server-side
+    "audio/mpeg",   # mp3 - converted server-side
 }
 
 # ──────────────────────────── Devanagari Unicode range ───────────────────────

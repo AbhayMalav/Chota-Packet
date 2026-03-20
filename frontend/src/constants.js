@@ -1,84 +1,103 @@
-// constants.js — App-wide constants and lookup tables for Chota Packet.
+// constants.js - App-wide constants and lookup tables for Chota Packet.
 // Environment variable required in .env: VITE_API_BASE (see .env.example)
 
+
 // ── API ───────────────────────────────────────────────────────────────────────
+
 
 // Reads from VITE_API_BASE env var; falls back to localhost for local dev.
 // In production, set VITE_API_BASE in your deployment environment.
 export const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8000'
 
+
 export const ENHANCE_TIMEOUT_MS = 20_000
-export const STT_TIMEOUT_MS     = 15_000
+export const STT_TIMEOUT_MS = 15_000
+
 
 // ── Input limits ──────────────────────────────────────────────────────────────
 
-export const MAX_INPUT_CHARS = 512   // local model context ceiling
-export const MAX_PINNED      = 10    // max items user can pin across sessions
 
-// Capped low intentionally — in-memory only, cleared on refresh.
+export const MAX_INPUT_CHARS = 512   // local model context ceiling
+export const MAX_PINNED = 10    // max items user can pin across sessions
+
+
+// Capped low intentionally - in-memory only, cleared on refresh.
 // Increase if session persistence (e.g. IndexedDB) is added later.
 export const HISTORY_LIMIT = 5
+
 
 // Max feedback votes stored in localStorage before new ones are dropped.
 export const FEEDBACK_CAP = 100
 
+
 // ── Prompt options ────────────────────────────────────────────────────────────
 
+
 export const STYLES = [
-  { value: 'auto',        label: 'Auto'            },
-  { value: 'general',     label: 'General'         },
-  { value: 'creative',    label: 'Creative'        },
-  { value: 'code',        label: 'Code'            },
-  { value: 'stepbystep',  label: 'Step-by-Step'    },
-  { value: 'data',        label: 'Data Analysis'   },
-  { value: 'detailed',    label: 'Detailed'        },
-  { value: 'academic',    label: 'Academic'        },
-  { value: 'marketing',   label: 'Marketing'       },
+  { value: 'auto', label: 'Auto' },
+  { value: 'general', label: 'General' },
+  { value: 'creative', label: 'Creative' },
+  { value: 'code', label: 'Code' },
+  { value: 'stepbystep', label: 'Step-by-Step' },
+  { value: 'data', label: 'Data Analysis' },
+  { value: 'detailed', label: 'Detailed' },
+  { value: 'academic', label: 'Academic' },
+  { value: 'marketing', label: 'Marketing' },
 ]
 
+
 export const TONES = [
-  { value: 'auto',      label: 'Auto'      },
-  { value: '',          label: 'No Tone'   },
-  { value: 'formal',    label: 'Formal'    },
-  { value: 'casual',    label: 'Casual'    },
+  { value: 'auto', label: 'Auto' },
+  { value: '', label: 'No Tone' },
+  { value: 'formal', label: 'Formal' },
+  { value: 'casual', label: 'Casual' },
   { value: 'technical', label: 'Technical' },
 ]
 
+
 export const LEVELS = [
-  { value: 'auto',                label: 'Auto'               },
-  { value: 'basic',               label: 'Basic'              },
-  { value: 'detailed',            label: 'Detailed'           },
-  { value: 'advanced',            label: 'Advanced'           },
-  { value: 'chain_of_thought',    label: 'Chain of Thought'   },
-  { value: 'meta',                label: 'Meta'               },
-  { value: 'prompt_chaining',     label: 'Prompt Chaining'    },
-  { value: 'multi_prompt_fusion', label: 'Multi-Prompt Fusion'},
-  { value: 'soft_prompting',      label: 'Soft Prompting'     },
+  { value: 'auto', label: 'Auto' },
+  { value: 'basic', label: 'Basic' },
+  { value: 'detailed', label: 'Detailed' },
+  { value: 'advanced', label: 'Advanced' },
+  { value: 'chain_of_thought', label: 'Chain of Thought' },
+  { value: 'meta', label: 'Meta' },
+  { value: 'prompt_chaining', label: 'Prompt Chaining' },
+  { value: 'multi_prompt_fusion', label: 'Multi-Prompt Fusion' },
+  { value: 'soft_prompting', label: 'Soft Prompting' },
 ]
 
+
 // ── Language options ──────────────────────────────────────────────────────────
+
 
 export const LANGS = [
   { value: 'en', label: 'EN' },
   { value: 'hi', label: 'HI' },
 ]
 
+
 export const OUT_LANGS = [
   { value: 'auto', label: 'Auto' },
-  { value: 'en',   label: 'EN'   },
-  { value: 'hi',   label: 'HI'   },
+  { value: 'en', label: 'EN' },
+  { value: 'hi', label: 'HI' },
 ]
+
 
 // ── localStorage keys ─────────────────────────────────────────────────────────
 
-export const LS_DARK      = 'chota_dark'
-export const LS_KEY       = 'chota_key'
-export const LS_MODEL     = 'chota_model'
-export const LS_PINNED    = 'chota_pinned'
+
+export const LS_DARK = 'chota_dark'
+export const LS_KEY = 'chota_key'
+export const LS_MODEL = 'chota_model'
+export const LS_PINNED = 'chota_pinned'
 export const LS_ONBOARDED = 'chota_onboarded'
-export const LS_FEEDBACK  = 'chota_feedback'
+export const LS_FEEDBACK = 'chota_feedback'
+export const LS_ANALYTICS = 'cp-token-analytics'  // ← ADDED
+
 
 // ── Utilities ─────────────────────────────────────────────────────────────────
+
 
 // Rough token estimate: 1 token ≈ 4 chars (GPT-style tokenisation heuristic).
 // Coerces input to string so numbers/objects don't silently produce wrong counts.

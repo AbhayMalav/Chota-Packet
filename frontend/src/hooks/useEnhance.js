@@ -1,35 +1,40 @@
-import { useState, useCallback } from 'react'
-import { enhance as apiEnhance } from '../services/api'
+import { useCallback, useRef } from 'react'
+import { enhance } from '../services/api'
 
-export function useEnhance() {
-  const [status, setStatus] = useState('idle') // idle | loading | success | error
-  const [result, setResult] = useState(null)
-  const [error, setError] = useState(null)
+/**
+ * useEnhance - Wraps the enhance API call with abort support.
+ * Cancels any in-flight request if a new one is fired before the previous completes.
+ *
+ * @returns {{ run: (payload: object, openRouterKey: string|null) => Promise<object> }}
+ */
+export default function useEnhance() {
+  const abortControllerRef = useRef(null)
 
   const run = useCallback(async (payload, openRouterKey) => {
-    setStatus('loading')
-    setError(null)
+    // Abort any previous in-flight request before starting a new one
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort()
+    }
+
+    const controller = new AbortController()
+    abortControllerRef.current = controller
+
     try {
-      const { data } = await apiEnhance(payload, openRouterKey)
-      setResult(data)
-      setStatus('success')
+      const { data } = await enhance(payload, openRouterKey, controller.signal)
       return data
     } catch (err) {
-      const msg =
-        err.response?.data?.detail ||
-        err.response?.data?.message ||
-        (err.code === 'ECONNABORTED' ? 'Request timed out. Backend may be busy.' : 'Enhancement failed.')
-      setError(msg)
-      setStatus('error')
-      return null
+      // Don't surface abort errors - these are intentional cancellations
+      if (err?.name === 'CanceledError' || err?.name === 'AbortError') {
+        return null
+      }
+      throw err
+    } finally {
+      // Clear ref so we don't hold a stale controller
+      if (abortControllerRef.current === controller) {
+        abortControllerRef.current = null
+      }
     }
   }, [])
 
-  const reset = useCallback(() => {
-    setStatus('idle')
-    setResult(null)
-    setError(null)
-  }, [])
-
-  return { status, result, error, run, reset }
+  return { run }
 }

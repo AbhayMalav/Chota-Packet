@@ -18,14 +18,14 @@ function formatCost(val) {
 }
 
 export default function TokensAnalytics({ stats }) {
-  // Guard on stats object only — don't hide component just because totalPrompts is 0
+  // Guard on stats object only - don't hide component just because totalPrompts is 0
   if (!stats) return null
 
-  const totalTokensSaved  = safeNum(stats.totalTokensSaved,  'totalTokensSaved')
+  const totalTokensSaved = safeNum(stats.totalTokensSaved, 'totalTokensSaved')
   const estimatedCostSaved = safeNum(stats.estimatedCostSaved, 'estimatedCostSaved')
-  const totalPrompts      = safeNum(stats.totalPrompts,      'totalPrompts')
-  const efficiencyScore   = safeNum(stats.efficiencyScore,   'efficiencyScore')
-  const grade             = stats.grade || 'N/A'
+  const totalPrompts = safeNum(stats.totalPrompts, 'totalPrompts')
+  const efficiencyScore = safeNum(stats.efficiencyScore, 'efficiencyScore')
+  const grade = stats.grade || 'N/A'
 
   return (
     <section className="tokens-analytics" aria-label="Token savings analytics">

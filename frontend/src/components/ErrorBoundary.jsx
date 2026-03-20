@@ -45,7 +45,7 @@ export default class ErrorBoundary extends React.Component {
             You can try to recover, or refresh the page if the problem persists.
           </p>
 
-          {/* Dev-only error detail — hidden in production */}
+          {/* Dev-only error detail - hidden in production */}
           {import.meta.env.DEV && this.state.error && (
             <details className="text-left mt-2">
               <summary

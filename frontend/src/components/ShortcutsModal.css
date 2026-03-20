@@ -1,14 +1,26 @@
 /* ── Overlay ─────────────────────────────────────────────────────────────── */
 
-/* fadeIn defined locally — no implicit dependency on index.css */
+/* fadeIn defined locally - no implicit dependency on index.css */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes scaleUp {
-  from { opacity: 0; transform: scale(0.95) translateY(10px); }
-  to   { opacity: 1; transform: scale(1)    translateY(0);    }
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .shortcuts-overlay {
@@ -48,7 +60,7 @@
   font-weight: 700;
   color: var(--theme-text);
   margin: 0;
-  /* Transparent outline replaced outline:none — visible on focus for keyboard users */
+  /* Transparent outline replaced outline:none - visible on focus for keyboard users */
   outline: 2px solid transparent;
   outline-offset: 2px;
   border-radius: 4px;

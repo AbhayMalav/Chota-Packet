@@ -3,8 +3,8 @@ import { diff_match_patch } from 'diff-match-patch'
 
 // diff operation constants
 const DIFF_DELETE = -1
-const DIFF_INSERT =  1
-const DIFF_EQUAL  =  0
+const DIFF_INSERT = 1
+const DIFF_EQUAL = 0
 
 export default function DiffView({ original, enhanced, onClose }) {
   const diffs = useMemo(() => {
@@ -12,7 +12,7 @@ export default function DiffView({ original, enhanced, onClose }) {
 
     try {
       const dmp = new diff_match_patch()
-      // Coerce to string defensively — prevents library throw on non-string props
+      // Coerce to string defensively - prevents library throw on non-string props
       const result = dmp.diff_main(String(original), String(enhanced))
       // Semantic cleanup: converts noisy char-level diffs to readable word-level diffs
       dmp.diff_cleanupSemantic(result)
@@ -61,14 +61,14 @@ export default function DiffView({ original, enhanced, onClose }) {
 
         {noDifferences && (
           <p style={{ color: 'var(--theme-text-muted)' }}>
-            No differences — the texts are identical.
+            No differences - the texts are identical.
           </p>
         )}
 
         {diffs.length > 0 && !noDifferences && diffs.map(([op, text], i) => {
-          if (op === DIFF_EQUAL)   return <span key={i}>{text}</span>
-          if (op === DIFF_INSERT)  return <span key={i} className="diff-added">{text}</span>
-          if (op === DIFF_DELETE)  return <span key={i} className="diff-removed">{text}</span>
+          if (op === DIFF_EQUAL) return <span key={i}>{text}</span>
+          if (op === DIFF_INSERT) return <span key={i} className="diff-added">{text}</span>
+          if (op === DIFF_DELETE) return <span key={i} className="diff-removed">{text}</span>
           return null
         })}
       </div>

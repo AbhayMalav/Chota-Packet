@@ -269,7 +269,7 @@ function ModelPill({ models, selectedModel, onModelChange, loading }) {
         onClick={() => (open ? closeDropdown() : openDropdown())}
         onKeyDown={handleTriggerKeyDown}
         disabled={loading || isEmpty}
-        title={isEmpty ? 'No models available — add an API key in Settings' : selectedLabel}
+        title={isEmpty ? 'No models available - add an API key in Settings' : selectedLabel}
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls="model-pill-listbox"
@@ -359,10 +359,10 @@ export default function ControlBar({
     <div className="flex flex-col gap-4">
       {/* Pill dropdowns row */}
       <div className="flex flex-wrap gap-2.5">
-        <PillSelect id="style-select"   label="Style"  value={style}      onChange={onStyleChange}       options={STYLES}    disabled={loading} />
-        <PillSelect id="tone-select"    label="Tone"   value={tone}       onChange={onToneChange}        options={TONES}     disabled={loading} />
-        <PillSelect id="level-select"   label="Level"  value={level}      onChange={onLevelChange}       options={LEVELS}    disabled={loading} />
-        <PillSelect id="outlang-select" label="Output" value={outputLang} onChange={onOutputLangChange}  options={OUT_LANGS}  disabled={loading} />
+        <PillSelect id="style-select" label="Style" value={style} onChange={onStyleChange} options={STYLES} disabled={loading} />
+        <PillSelect id="tone-select" label="Tone" value={tone} onChange={onToneChange} options={TONES} disabled={loading} />
+        <PillSelect id="level-select" label="Level" value={level} onChange={onLevelChange} options={LEVELS} disabled={loading} />
+        <PillSelect id="outlang-select" label="Output" value={outputLang} onChange={onOutputLangChange} options={OUT_LANGS} disabled={loading} />
       </div>
 
       {/* Action row */}

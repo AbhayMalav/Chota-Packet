@@ -1,5 +1,5 @@
 """
-openrouter_models.py — Static fallback curated model list for FR-42.
+openrouter_models.py - Static fallback curated model list for FR-42.
 
 This list is used when the live /api/v1/models fetch from OpenRouter fails
 or the server starts without network access.

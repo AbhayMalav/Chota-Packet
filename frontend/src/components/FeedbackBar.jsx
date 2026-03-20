@@ -18,7 +18,7 @@ export default function FeedbackBar() {
         const parsed = JSON.parse(raw || '[]')
         stored = Array.isArray(parsed) ? parsed : []
       } catch {
-        console.warn('[FeedbackBar] Corrupted feedback data in localStorage — resetting.')
+        console.warn('[FeedbackBar] Corrupted feedback data in localStorage - resetting.')
         stored = []
       }
 
@@ -63,7 +63,7 @@ export default function FeedbackBar() {
         </button>
       </div>
 
-      {/* Confirmation — only shown after a vote is cast */}
+      {/* Confirmation - only shown after a vote is cast */}
       {voted !== null && (
         <span
           className="text-xs animate-fade-in"

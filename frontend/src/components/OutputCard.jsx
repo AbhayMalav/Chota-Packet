@@ -2,16 +2,16 @@ import React, { useRef, useState, useEffect, useCallback } from 'react'
 import FeedbackBar from './FeedbackBar'
 
 export default function OutputCard({ text = '', onTextChange, onCompare, onClear }) {
-  const cardRef        = useRef(null)
-  const copyTimerRef   = useRef(null)
-  const isFocusedRef   = useRef(false)
+  const cardRef = useRef(null)
+  const copyTimerRef = useRef(null)
+  const isFocusedRef = useRef(false)
   const [copied, setCopied] = useState(false)
 
   const trimmedText = text.trim()
-  const wordCount   = trimmedText ? trimmedText.split(/\s+/).length : 0
+  const wordCount = trimmedText ? trimmedText.split(/\s+/).length : 0
 
   // ── Sync external text → contenteditable ───────────────────────────────────
-  // Only update innerText when the card is NOT focused — prevents resetting
+  // Only update innerText when the card is NOT focused - prevents resetting
   // the cursor while the user is actively editing.
   useEffect(() => {
     const el = cardRef.current
@@ -30,8 +30,8 @@ export default function OutputCard({ text = '', onTextChange, onCompare, onClear
     onTextChange?.(cardRef.current?.innerText ?? '')
   }, [onTextChange])
 
-  const handleFocus = useCallback(() => { isFocusedRef.current = true  }, [])
-  const handleBlur  = useCallback(() => { isFocusedRef.current = false }, [])
+  const handleFocus = useCallback(() => { isFocusedRef.current = true }, [])
+  const handleBlur = useCallback(() => { isFocusedRef.current = false }, [])
 
   // ── Copy handler ───────────────────────────────────────────────────────────
   const handleCopy = useCallback(async () => {
@@ -47,12 +47,12 @@ export default function OutputCard({ text = '', onTextChange, onCompare, onClear
       await navigator.clipboard.writeText(textToCopy)
       confirmCopied()
     } catch {
-      // Fallback: deprecated execCommand — retained for environments without
+      // Fallback: deprecated execCommand - retained for environments without
       // Clipboard API (e.g. non-HTTPS, older WebViews). Remove when no longer needed.
       const textarea = document.createElement('textarea')
-      textarea.value          = textToCopy
+      textarea.value = textToCopy
       textarea.style.position = 'fixed'
-      textarea.style.opacity  = '0'
+      textarea.style.opacity = '0'
       document.body.appendChild(textarea)
       try {
         textarea.select()
@@ -61,7 +61,7 @@ export default function OutputCard({ text = '', onTextChange, onCompare, onClear
       } catch (fallbackErr) {
         console.error('[OutputCard] Copy failed:', fallbackErr)
       } finally {
-        // Guaranteed cleanup — runs even if component unmounts mid-copy
+        // Guaranteed cleanup - runs even if component unmounts mid-copy
         document.body.removeChild(textarea)
       }
     }
@@ -71,7 +71,7 @@ export default function OutputCard({ text = '', onTextChange, onCompare, onClear
     <div className="flex flex-col gap-3 animate-fade-in">
       {/* Card with shimmering neon top border */}
       <div className="rounded-xl border border-purple-500/20 shimmer-border-top overflow-hidden"
-           style={{ background: 'rgba(0,0,0,0.25)' }}>
+        style={{ background: 'rgba(0,0,0,0.25)' }}>
 
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-2.5 border-b border-purple-500/10">
@@ -99,11 +99,10 @@ export default function OutputCard({ text = '', onTextChange, onCompare, onClear
               aria-label={copied ? 'Copied!' : 'Copy enhanced prompt'}
               aria-live="polite"
               className={`flex items-center gap-1 text-[11px] px-3 py-1 rounded-full font-semibold
-                          transition-all duration-200 ${
-                            copied
-                              ? 'gradient-brand text-white shadow-sm shadow-purple-500/25'
-                              : 'border border-purple-500/20 text-gray-400 hover:text-purple-400 hover:border-purple-500/40 hover:bg-purple-500/10'
-                          }`}
+                          transition-all duration-200 ${copied
+                  ? 'gradient-brand text-white shadow-sm shadow-purple-500/25'
+                  : 'border border-purple-500/20 text-gray-400 hover:text-purple-400 hover:border-purple-500/40 hover:bg-purple-500/10'
+                }`}
             >
               {copied ? '✓ Copied!' : '📋 Copy'}
             </button>
@@ -131,7 +130,7 @@ export default function OutputCard({ text = '', onTextChange, onCompare, onClear
 
       {/* Counter + feedback row */}
       <div className="flex items-center justify-between px-1">
-        {/* Output-appropriate counter — no input limit denominator */}
+        {/* Output-appropriate counter - no input limit denominator */}
         <span
           className="text-[11px] font-medium tabular-nums"
           style={{ color: 'var(--theme-text-secondary)' }}

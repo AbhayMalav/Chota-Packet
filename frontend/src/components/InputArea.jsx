@@ -2,8 +2,8 @@ import React, { useRef, useEffect } from 'react'
 
 export default function InputArea({
   value = '',
-  onChange = () => {},
-  onClear = () => {},
+  onChange = () => { },
+  onClear = () => { },
   inputLimit,
   children,
 }) {
@@ -65,26 +65,25 @@ export default function InputArea({
       <div className="flex items-center justify-between px-3 pb-3 pt-1 gap-2">
         {/*
           id="char-count" wires the aria-describedby on the textarea.
-          aria-live="polite" replaces the removed role="alert" duplicate —
+          aria-live="polite" replaces the removed role="alert" duplicate -
           screen readers will announce the counter change without a visual duplicate.
         */}
         <span
           id="char-count"
           aria-live="polite"
-          className={`text-xs transition-colors ${
-            isOverLimit
+          className={`text-xs transition-colors ${isOverLimit
               ? 'text-red-400 font-medium'
               : 'text-[var(--theme-text-secondary)]'
-          }`}
+            }`}
         >
           {isOverLimit
             ? `⚠ Limit exceeded (${charCount}/${inputLimit} chars)`
             : inputLimit != null
-            ? `${charCount} / ${inputLimit}`
-            : `${charCount}`}
+              ? `${charCount} / ${inputLimit}`
+              : `${charCount}`}
         </span>
 
-        {/* Mic + Clear — fixed height container prevents mic-pulse layout shift */}
+        {/* Mic + Clear - fixed height container prevents mic-pulse layout shift */}
         <div className="flex items-center gap-1.5 min-h-[40px]">
           {children}
           {value.trim() && (

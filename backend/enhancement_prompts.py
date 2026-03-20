@@ -1,5 +1,5 @@
 """
-enhancement_prompts.py — Static system prompts for each enhancement level (FR-27).
+enhancement_prompts.py - Static system prompts for each enhancement level (FR-27).
 
 These are loaded once at server startup and validated by the lifespan handler.
 If any prompt is empty or missing, the server sets models_loaded=False.
@@ -21,7 +21,7 @@ ENHANCEMENT_SYSTEM_PROMPTS: dict[str, str] = {
     "Assign a precise AI role relevant to the task. "
     "Add context (goal, background, constraints) and logical structure. "
     "Specify output format (e.g., bullets, code block, paragraph). "
-    "Eliminate redundancy — every sentence must add value. "
+    "Eliminate redundancy - every sentence must add value. "
     "Be token-efficient: no preamble, no filler, no repeated ideas. "
     "Output: improved prompt only."
 ),
@@ -31,12 +31,12 @@ ENHANCEMENT_SYSTEM_PROMPTS: dict[str, str] = {
     "Instruct the AI to: (1) break the problem into logical steps, "
     "(2) reason through each step explicitly, "
     "(3) arrive at a final answer only after full reasoning. "
-    "Use lean language — no redundant transitions, no filler. "
+    "Use lean language - no redundant transitions, no filler. "
     "Output: improved prompt only."
 ),
 
 "meta": (
-    "Rewrite this rough idea as a meta-prompt — a prompt that instructs the AI on "
+    "Rewrite this rough idea as a meta-prompt - a prompt that instructs the AI on "
     "how to think, behave, or structure its responses, not just what to answer. "
     "Define: the AI's reasoning approach, response style, and self-evaluation criteria. "
     "Be precise and directive. Cut all explanatory padding. "
@@ -47,7 +47,7 @@ ENHANCEMENT_SYSTEM_PROMPTS: dict[str, str] = {
     "Rewrite this rough idea as a structured chain of sequential prompts. "
     "Break the task into 2-4 discrete stages where each output feeds the next. "
     "Label each stage clearly (e.g., Step 1, Step 2). "
-    "Each step must be self-contained, minimal, and purposeful — no overlap. "
+    "Each step must be self-contained, minimal, and purposeful - no overlap. "
     "Output: the full prompt chain only, no explanations."
 ),
 "multi_prompt_fusion": (
@@ -63,7 +63,7 @@ ENHANCEMENT_SYSTEM_PROMPTS: dict[str, str] = {
     "Rewrite this rough idea using soft, open-ended framing that primes the AI "
     "toward a desired tone, style, or perspective without hard constraints. "
     "Use suggestive, context-rich language to guide behavior implicitly. "
-    "Avoid rigid instructions — rely on contextual cues and framing. "
+    "Avoid rigid instructions - rely on contextual cues and framing. "
     "Keep it concise; let subtext do the work. "
     "Output: improved prompt only."
 ),
@@ -76,7 +76,7 @@ ENHANCEMENT_SYSTEM_PROMPTS: dict[str, str] = {
     "(3) Hard constraints: what to avoid, edge cases, boundaries. "
     "(4) Exact output specs: format, length, tone, style. "
     "(5) One concrete example or analogy to anchor expectations. "
-    "Be unambiguous. Cut all redundancy. Use dense, precise language — "
+    "Be unambiguous. Cut all redundancy. Use dense, precise language - "
     "no filler words, no restating of instructions, no meta-commentary. "
     "Every token in the output must carry meaning. "
     "Output: improved prompt only."

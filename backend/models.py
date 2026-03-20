@@ -1,10 +1,10 @@
 """
-models.py — Model loading, inference, and post-processing for Chota Packet.
+models.py - Model loading, inference, and post-processing for Chota Packet.
 
 Architecture:
   - Dual-mode: if backend/models/mt5_lora_merged/ exists  →  real mT5 + Whisper inference
                otherwise                                   →  mock stub mode (dev/CI friendly)
-  - When real weights are ready, drop them in and restart — no code change needed.
+  - When real weights are ready, drop them in and restart - no code change needed.
   - float32 is used unconditionally on CPU (R-02: float16 crashes on CPU).
 """
 
@@ -99,7 +99,7 @@ def load_models() -> ModelState:
             WhisperForConditionalGeneration,
         )
 
-        # Whisper Tiny — HuggingFace Hub (cached after first download)
+        # Whisper Tiny - HuggingFace Hub (cached after first download)
         logger.info("  Loading Whisper Tiny ...")
         state.whisper_processor = WhisperProcessor.from_pretrained(WHISPER_MODEL_ID)
         state.whisper_model = WhisperForConditionalGeneration.from_pretrained(
