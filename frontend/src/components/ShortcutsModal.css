@@ -1,3 +1,16 @@
+/* ── Overlay ─────────────────────────────────────────────────────────────── */
+
+/* fadeIn defined locally — no implicit dependency on index.css */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);    }
+}
+
 .shortcuts-overlay {
   position: fixed;
   inset: 0;
@@ -8,9 +21,10 @@
   background: var(--theme-bg-overlay);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  animation: fadeIn .2s ease-out;
+  animation: fadeIn 0.2s ease-out;
 }
 
+/* ── Modal card ──────────────────────────────────────────────────────────── */
 .shortcuts-modal {
   width: min(420px, 90vw);
   padding: 28px 24px 22px;
@@ -18,20 +32,10 @@
   background: var(--theme-bg-card);
   border: 1px solid var(--theme-border);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
-  animation: scaleUp .2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes scaleUp {
-  from {
-    opacity: 0;
-    transform: scale(0.95) translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
+/* ── Header ──────────────────────────────────────────────────────────────── */
 .shortcuts-header {
   display: flex;
   align-items: center;
@@ -44,7 +48,14 @@
   font-weight: 700;
   color: var(--theme-text);
   margin: 0;
-  outline: none; /* Focus outline handled globally, or none for clean title */
+  /* Transparent outline replaced outline:none — visible on focus for keyboard users */
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.shortcuts-title:focus-visible {
+  outline-color: rgba(127, 19, 236, 0.5);
 }
 
 .shortcuts-close {
@@ -55,7 +66,7 @@
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 8px;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .shortcuts-close:hover,
@@ -66,13 +77,14 @@
   outline: none;
 }
 
+/* ── Shortcuts list ──────────────────────────────────────────────────────── */
 .shortcuts-list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .shortcut-row {
@@ -90,8 +102,15 @@
   border-color: var(--theme-border);
 }
 
+/* ── Key chips ───────────────────────────────────────────────────────────── */
 .shortcut-keys {
   display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.shortcut-key-chip {
+  display: inline-flex;
   align-items: center;
   gap: 4px;
 }
@@ -115,7 +134,6 @@
 .shortcut-plus {
   color: var(--theme-text-muted);
   font-size: 0.8rem;
-  margin: 0 4px;
   font-weight: 500;
 }
 
@@ -125,6 +143,7 @@
   font-weight: 500;
 }
 
+/* ── Error state ─────────────────────────────────────────────────────────── */
 .shortcuts-error {
   padding: 16px;
   border-radius: 8px;

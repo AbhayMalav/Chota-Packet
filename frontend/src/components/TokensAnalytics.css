@@ -1,19 +1,25 @@
+/* TokensAnalytics.css */
+
+/* ── Container ───────────────────────────────────────────────────────────── */
 .tokens-analytics {
   margin-top: 20px;
   padding: 20px;
   border-radius: 16px;
-  background: var(--glass-bg);
+  background: var(--theme-bg-card);       /* fixed: was --glass-bg */
   backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--theme-border);  /* fixed: was --glass-border */
 }
 
+/* ── Title ───────────────────────────────────────────────────────────────── */
 .analytics-title {
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--theme-text);               /* fixed: was --text-primary */
   margin: 0 0 16px 0;
 }
 
+/* ── Grid ────────────────────────────────────────────────────────────────── */
 .analytics-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -26,6 +32,7 @@
   }
 }
 
+/* ── Stat card ───────────────────────────────────────────────────────────── */
 .stat-card {
   display: flex;
   flex-direction: column;
@@ -34,38 +41,44 @@
   gap: 6px;
   padding: 16px 10px;
   border-radius: 12px;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  transition: transform .15s, box-shadow .15s;
+  background: var(--theme-bg-elevated, var(--theme-bg-card)); /* fixed: was --glass-bg */
+  border: 1px solid var(--theme-border);                      /* fixed: was --glass-border */
+  transition: transform 0.15s ease, box-shadow 0.15s ease;    /* fixed: added ease */
 }
+
 .stat-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(0,0,0,.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .stat-card.accent {
-  border-color: var(--accent-primary);
-  background: color-mix(in srgb, var(--accent-primary) 8%, transparent);
+  border-color: var(--color-brand);                            /* fixed: was --accent-primary */
+  /* Fallback for Safari < 16.2 and older Chromium */
+  background: rgba(127, 19, 236, 0.08);
+  background: color-mix(in srgb, var(--color-brand) 8%, transparent);
 }
 
+/* ── Values ──────────────────────────────────────────────────────────────── */
 .stat-value {
   font-size: 1.4rem;
   font-weight: 800;
-  color: var(--text-primary);
+  color: var(--theme-text);               /* fixed: was --text-primary */
   line-height: 1.2;
 }
 
 .stat-value.grade {
   font-size: 1.8rem;
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  /* fixed: was --accent-primary / --accent-secondary */
+  background: linear-gradient(135deg, var(--color-brand) 0%, var(--color-brand-light) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
+/* ── Labels ──────────────────────────────────────────────────────────────── */
 .stat-label {
   font-size: 0.75rem;
-  color: var(--text-secondary);
+  color: var(--theme-text-secondary);     /* fixed: was --text-secondary */
   text-align: center;
   font-weight: 500;
   text-transform: uppercase;

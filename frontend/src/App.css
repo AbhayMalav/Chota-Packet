@@ -1,5 +1,8 @@
-/* App.css — intentionally minimal; all theming lives in index.css */
+/* App.css — intentionally minimal; all theming and design tokens live in index.css.
+   Only document-level layout rules for #root belong here. */
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
+  padding: 0;
 }

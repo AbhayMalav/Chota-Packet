@@ -13,7 +13,10 @@
 }
 
 /* ── Theme CSS Variables — Dark (default) ────────────────────────────────── */
+/* color-scheme merged here — removed duplicate :root block that was below  */
 :root {
+  color-scheme: dark;
+
   --theme-bg: #0a0a12;
   --theme-bg-card: rgba(17, 17, 32, 0.8);
   --theme-bg-navbar: rgba(10, 10, 18, 0.75);
@@ -37,10 +40,19 @@
   --theme-nebula-3: rgba(127, 19, 236, 0.04);
   --theme-scrollbar: rgba(127, 19, 236, 0.35);
   --theme-scrollbar-hover: rgba(127, 19, 236, 0.6);
+
+  /* Diff tokens for dark mode — fixed: were missing, causing near-invisible highlights */
+  --diff-added-bg: #14532d;
+  --diff-added-text: #bbf7d0;
+  --diff-removed-bg: #7f1d1d;
+  --diff-removed-text: #fecaca;
 }
 
 /* ── Theme CSS Variables — Light override ────────────────────────────────── */
+/* Moved out of :root nesting — invalid standard CSS without a PostCSS nesting plugin */
 .light {
+  color-scheme: light;
+
   --theme-bg: #f4f4f8;
   --theme-bg-card: rgba(255, 255, 255, 0.88);
   --theme-bg-navbar: rgba(248, 248, 255, 0.85);
@@ -64,6 +76,8 @@
   --theme-nebula-3: rgba(127, 19, 236, 0.03);
   --theme-scrollbar: rgba(127, 19, 236, 0.25);
   --theme-scrollbar-hover: rgba(127, 19, 236, 0.45);
+
+  /* Diff tokens for light mode */
   --diff-added-bg: #dcfce7;
   --diff-added-text: #166534;
   --diff-removed-bg: #fee2e2;
@@ -122,77 +136,45 @@ body {
 
 /* ── Animations ──────────────────────────────────────────────────────────── */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .animate-fade-in {
   animation: fadeIn 0.35s ease-out forwards;
 }
 
 @keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(100%); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 .animate-slide-in-right {
   animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(-100%); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 .animate-slide-in-left {
   animation: slideInLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes mic-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
-  }
-  50% {
-    transform: scale(1.06);
-    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
-  }
+  0%, 100% { transform: scale(1);    box-shadow: 0 0 0 0  rgba(239, 68, 68, 0.4); }
+  50%       { transform: scale(1.06); box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);   }
 }
 .animate-mic-pulse {
   animation: mic-pulse 1.5s ease-in-out infinite;
 }
 
 @keyframes shimmer-border {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
 }
 
 @keyframes glow-pulse {
-  0%,
-  100% {
+  0%, 100% {
     box-shadow:
       0 0 20px rgba(127, 19, 236, 0.15),
       0 0 40px rgba(99, 102, 241, 0.08);
@@ -208,58 +190,41 @@ body {
 }
 
 @keyframes nebula-drift {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(20px, -15px) scale(1.05);
-  }
-  66% {
-    transform: translate(-15px, 10px) scale(0.98);
-  }
+  0%, 100% { transform: translate(0, 0)     scale(1);    }
+  33%       { transform: translate(20px, -15px) scale(1.05); }
+  66%       { transform: translate(-15px, 10px) scale(0.98); }
 }
 .animate-nebula {
   animation: nebula-drift 20s ease-in-out infinite;
 }
 
 @keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-6px); }
 }
 .animate-float {
   animation: float 3.5s ease-in-out infinite;
 }
 
 @keyframes dot-pulse {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(0.8);
-  }
+  0%, 100% { opacity: 1;   transform: scale(1);   }
+  50%       { opacity: 0.5; transform: scale(0.8); }
 }
 .animate-dot-pulse {
   animation: dot-pulse 1.8s ease-in-out infinite;
 }
 
 @keyframes skeleton-shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
 }
 .skeleton {
-  background: linear-gradient(90deg,
+  background: linear-gradient(
+    90deg,
     var(--theme-bg-card) 25%,
     rgba(127, 19, 236, 0.08) 50%,
-    var(--theme-bg-card) 75%);
+    var(--theme-bg-card) 75%
+  );
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s ease-in-out infinite;
   border-radius: 8px;
@@ -272,20 +237,17 @@ body {
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--theme-border);
 }
-
 .glass-overlay {
   background: var(--theme-bg-overlay);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
-
 .glass-navbar {
   background: var(--theme-bg-navbar);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--theme-border-navbar);
 }
-
 .glass-sidebar {
   background: var(--theme-bg-sidebar);
   backdrop-filter: blur(24px);
@@ -297,7 +259,6 @@ body {
 .gradient-brand {
   background: linear-gradient(135deg, #7f13ec 0%, #6366f1 100%);
 }
-
 .gradient-text {
   background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #818cf8 100%);
   -webkit-background-clip: text;
@@ -305,7 +266,7 @@ body {
   background-clip: text;
 }
 
-/* Animated shimmer gradient border for output card */
+/* ── Shimmer border (output card) ────────────────────────────────────────── */
 .shimmer-border-top {
   position: relative;
   overflow: hidden;
@@ -313,23 +274,14 @@ body {
 .shimmer-border-top::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   height: 2px;
-  background: linear-gradient(
-    90deg,
-    #7f13ec,
-    #a855f7,
-    #6366f1,
-    #818cf8,
-    #7f13ec
-  );
+  background: linear-gradient(90deg, #7f13ec, #a855f7, #6366f1, #818cf8, #7f13ec);
   background-size: 300% 100%;
   animation: shimmer-border 3s ease infinite;
 }
 
-/* Subtle gradient border for main card */
+/* ── Gradient border (main card) ─────────────────────────────────────────── */
 .gradient-border {
   position: relative;
 }
@@ -357,14 +309,14 @@ body {
 
 /* ── Diff Highlights ─────────────────────────────────────────────────────── */
 .diff-added {
-  background-color: var(--diff-added-bg, #166534);
-  color: var(--diff-added-text, #bbf7d0);
+  background-color: var(--diff-added-bg);
+  color: var(--diff-added-text);
   border-radius: 3px;
   padding: 1px 4px;
 }
 .diff-removed {
-  background-color: var(--diff-removed-bg, #7f1d1d);
-  color: var(--diff-removed-text, #fecaca);
+  background-color: var(--diff-removed-bg);
+  color: var(--diff-removed-text);
   border-radius: 3px;
   padding: 1px 4px;
   text-decoration: line-through;
@@ -379,248 +331,120 @@ body {
 
 /* ── Nebula Background (theme-aware) ────────────────────────────────────── */
 .nebula-orb-1 {
-  position: fixed;
-  top: -120px;
-  right: -80px;
-  width: 480px;
-  height: 480px;
-  background: radial-gradient(
-    circle,
-    var(--theme-nebula-1) 0%,
-    transparent 70%
-  );
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 0;
+  position: fixed; top: -120px; right: -80px;
+  width: 480px; height: 480px;
+  background: radial-gradient(circle, var(--theme-nebula-1) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none; z-index: 0;
 }
 .nebula-orb-2 {
-  position: fixed;
-  bottom: -120px;
-  left: -80px;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(
-    circle,
-    var(--theme-nebula-2) 0%,
-    transparent 70%
-  );
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 0;
+  position: fixed; bottom: -120px; left: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, var(--theme-nebula-2) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none; z-index: 0;
 }
 .nebula-orb-3 {
-  position: fixed;
-  top: 40%;
-  left: 30%;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(
-    circle,
-    var(--theme-nebula-3) 0%,
-    transparent 70%
-  );
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 0;
+  position: fixed; top: 40%; left: 30%;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, var(--theme-nebula-3) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none; z-index: 0;
 }
 
-/* ── Select / Input color-scheme (theme-aware) ───────────────────────────── */
-:root {
-  color-scheme: dark;
-}
-
-.light {
-  color-scheme: light;
-}
-
+/* ── Select / Input color-scheme ─────────────────────────────────────────── */
 select,
 input,
 textarea {
   color-scheme: inherit;
 }
+
 /* ── Button Design System ────────────────────────────────────────────────────
    Hierarchy: .btn-primary > .btn-secondary > .btn-ghost > .btn-icon > .btn-danger
    All variants include focus-ring and disabled states built-in.
    ─────────────────────────────────────────────────────────────────────────── */
 
-/* Primary — main CTA (Enhance) */
 .btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  height: 36px;
-  padding: 0 18px;
-  border-radius: 10px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px; height: 36px; padding: 0 18px; border-radius: 10px;
+  font-size: 0.875rem; font-weight: 600; color: #fff;
   background: linear-gradient(135deg, #7f13ec 0%, #6366f1 100%);
-  border: none;
-  cursor: pointer;
+  border: none; cursor: pointer; outline: none; white-space: nowrap; flex-shrink: 0;
   transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
-  outline: none;
-  white-space: nowrap;
-  flex-shrink: 0;
 }
 .btn-primary:hover:not(:disabled) {
   background: linear-gradient(135deg, #6010b8 0%, #4f52d8 100%);
   box-shadow: 0 4px 14px rgba(127, 19, 236, 0.4);
 }
-.btn-primary:focus-visible {
-  box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.55);
-}
-.btn-primary:active:not(:disabled) {
-  transform: scale(0.97);
-}
-.btn-primary:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  box-shadow: none;
-}
+.btn-primary:focus-visible { box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.55); }
+.btn-primary:active:not(:disabled) { transform: scale(0.97); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
 
-/* Secondary — supporting action (Variant Mode) */
 .btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  height: 36px;
-  padding: 0 14px;
-  border-radius: 10px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--theme-text-muted);
-  background: transparent;
-  border: 1px solid var(--theme-border);
-  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px; height: 36px; padding: 0 14px; border-radius: 10px;
+  font-size: 0.875rem; font-weight: 500; color: var(--theme-text-muted);
+  background: transparent; border: 1px solid var(--theme-border);
+  cursor: pointer; outline: none; white-space: nowrap; flex-shrink: 0;
   transition: all 0.15s ease;
-  outline: none;
-  white-space: nowrap;
-  flex-shrink: 0;
 }
 .btn-secondary:hover:not(:disabled) {
   background: rgba(127, 19, 236, 0.08);
   border-color: rgba(168, 85, 247, 0.5);
   color: var(--theme-text);
 }
-.btn-secondary:focus-visible {
-  box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.45);
-}
-.btn-secondary:active:not(:disabled) {
-  transform: scale(0.97);
-}
-.btn-secondary:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
+.btn-secondary:focus-visible { box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.45); }
+.btn-secondary:active:not(:disabled) { transform: scale(0.97); }
+.btn-secondary:disabled { opacity: 0.4; cursor: not-allowed; }
 
-/* Ghost — tertiary/utility (Clear, Restore, text actions) */
 .btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  height: 32px;
-  padding: 0 10px;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--theme-text-secondary);
-  background: transparent;
-  border: none;
-  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 5px; height: 32px; padding: 0 10px; border-radius: 8px;
+  font-size: 0.8rem; font-weight: 500; color: var(--theme-text-secondary);
+  background: transparent; border: none; cursor: pointer; outline: none; white-space: nowrap;
   transition: all 0.15s ease;
-  outline: none;
-  white-space: nowrap;
 }
 .btn-ghost:hover:not(:disabled) {
   background: rgba(127, 19, 236, 0.07);
   color: var(--theme-text-muted);
 }
-.btn-ghost:focus-visible {
-  box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.45);
-}
-.btn-ghost:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
+.btn-ghost:focus-visible { box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.45); }
+.btn-ghost:disabled { opacity: 0.4; cursor: not-allowed; }
 
-/* Icon — all icon-only buttons (nav, copy, pin, mic, close, feedback) */
 .btn-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 40px;
-  min-height: 40px;
-  padding: 0;
-  border-radius: 8px;
-  color: var(--theme-text-muted);
-  background: transparent;
-  border: none;
-  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 40px; min-height: 40px; padding: 0; border-radius: 8px;
+  color: var(--theme-text-muted); background: transparent; border: none;
+  cursor: pointer; outline: none; flex-shrink: 0;
   transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
-  outline: none;
-  flex-shrink: 0;
 }
-.btn-icon:hover {
-  background: rgba(127, 19, 236, 0.08);
-  color: var(--theme-text);
-}
-.btn-icon:focus-visible {
-  box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.5);
-}
-.btn-icon:active {
-  transform: scale(0.9);
-}
+.btn-icon:hover { background: rgba(127, 19, 236, 0.08); color: var(--theme-text); }
+.btn-icon:focus-visible { box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.5); }
+.btn-icon:active { transform: scale(0.9); }
 .btn-icon.active,
 .btn-icon[aria-pressed="true"] {
   background: rgba(127, 19, 236, 0.15);
   color: var(--color-brand-light);
 }
 
-/* Danger — destructive actions (Clear Key, Delete) */
 .btn-danger {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  height: 36px;
-  padding: 0 14px;
-  border-radius: 10px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #f87171;
-  background: transparent;
-  border: 1px solid rgba(239, 68, 68, 0.28);
-  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px; height: 36px; padding: 0 14px; border-radius: 10px;
+  font-size: 0.875rem; font-weight: 500; color: #f87171;
+  background: transparent; border: 1px solid rgba(239, 68, 68, 0.28);
+  cursor: pointer; outline: none; white-space: nowrap; flex-shrink: 0;
   transition: all 0.15s ease;
-  outline: none;
-  white-space: nowrap;
-  flex-shrink: 0;
 }
 .btn-danger:hover:not(:disabled) {
   background: rgba(239, 68, 68, 0.1);
   border-color: rgba(239, 68, 68, 0.5);
   color: #fca5a5;
 }
-.btn-danger:focus-visible {
-  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.4);
-}
-.btn-danger:active:not(:disabled) {
-  transform: scale(0.97);
-}
-.btn-danger:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
+.btn-danger:focus-visible { box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.4); }
+.btn-danger:active:not(:disabled) { transform: scale(0.97); }
+.btn-danger:disabled { opacity: 0.4; cursor: not-allowed; }
 
-/* Mic active state — scoped so animation layer is isolated */
+/* Mic active state */
 .btn-icon.mic-active {
   color: #f87171;
   background: rgba(239, 68, 68, 0.1);
   will-change: transform, box-shadow;
 }
-.btn-icon.mic-active:hover {
-  background: rgba(239, 68, 68, 0.18);
-}
+.btn-icon.mic-active:hover { background: rgba(239, 68, 68, 0.18); }

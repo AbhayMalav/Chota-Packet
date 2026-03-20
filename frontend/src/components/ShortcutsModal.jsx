@@ -1,92 +1,124 @@
-import { useEffect, useRef } from 'react';
-import './ShortcutsModal.css';
+import React, { useEffect, useRef } from 'react'
+import './ShortcutsModal.css'
 
+// Shortcuts must exactly match bindings in App.jsx
 const SHORTCUTS = [
-  { keys: ['Shift', 'Enter'],  desc: 'Enhance prompt' },
-  { keys: ['Ctrl', 'K'],       desc: 'Clear input & output' },
-  { keys: ['Ctrl', 'I'],       desc: 'Toggle shortcuts panel' },
-];
+  { keys: ['Ctrl', 'Enter'],        desc: 'Enhance prompt'          },
+  { keys: ['Ctrl', 'Shift', 'C'],   desc: 'Copy output'             },
+  { keys: ['Ctrl', 'K'],            desc: 'Clear input & output'    },
+  { keys: ['Ctrl', 'I'],            desc: 'Toggle shortcuts panel'  },
+  { keys: ['Escape'],               desc: 'Close any open panel'    },
+]
 
-export default function ShortcutsModal({ isOpen, onClose }) {
-  const overlayRef = useRef(null);
-  const titleRef = useRef(null);
+export default function ShortcutsModal({ onClose = () => {} }) {
+  const dialogRef  = useRef(null)
+  const titleRef   = useRef(null)
 
+  // Focus trap + Escape handler
   useEffect(() => {
-    if (!isOpen) return;
-
-    console.debug('[ShortcutsTab] Popup opened');
-    
-    // Auto-focus title for accessibility
-    if (titleRef.current) {
-        titleRef.current.focus();
+    if (import.meta.env.DEV) {
+      console.debug('[ShortcutsModal] Opened')
     }
 
-    const handler = (e) => {
+    titleRef.current?.focus()
+
+    const dialog = dialogRef.current
+    if (!dialog) return
+
+    const focusableSelectors = [
+      'button:not([disabled])',
+      'a[href]',
+      '[tabindex]:not([tabindex="-1"])',
+    ].join(', ')
+
+    const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
-          console.debug('[ShortcutsTab] Popup closed via Escape');
-          onClose();
+        e.preventDefault()
+        if (import.meta.env.DEV) console.debug('[ShortcutsModal] Closed via Escape')
+        onClose()
+        return
       }
-    };
-    window.addEventListener('keydown', handler);
-    return () => {
-        window.removeEventListener('keydown', handler);
+
+      if (e.key !== 'Tab') return
+
+      const focusable = Array.from(dialog.querySelectorAll(focusableSelectors))
+      if (!focusable.length) return
+      const first = focusable[0]
+      const last  = focusable[focusable.length - 1]
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus() }
+      } else {
+        if (document.activeElement === last)  { e.preventDefault(); first.focus() }
+      }
     }
-  }, [isOpen, onClose]);
 
+    dialog.addEventListener('keydown', handleKeyDown)
+    return () => {
+      dialog.removeEventListener('keydown', handleKeyDown)
+      if (import.meta.env.DEV) console.debug('[ShortcutsModal] Closed')
+    }
+  }, [onClose])
 
-
-  if (!isOpen) return null;
-
-  const handleOverlayClick = (e) => {
-      if (e.target === overlayRef.current) {
-          console.debug('[ShortcutsTab] Popup closed via backdrop click');
-          onClose();
-      }
-  };
-
-  let shortcutsContent;
-  try {
-    shortcutsContent = SHORTCUTS.map((s, i) => (
-      <li key={i} className="shortcut-row">
-        <div className="shortcut-keys">
-          {s.keys.map((k, j) => (
-            <span key={j}>
-              <kbd className="shortcut-kbd">{k}</kbd>
-              {j < s.keys.length - 1 && <span className="shortcut-plus">+</span>}
-            </span>
-          ))}
-        </div>
-        <span className="shortcut-desc">{s.desc}</span>
-      </li>
-    ));
-  } catch (err) {
-    console.error(`[ShortcutsTab] Error loading shortcuts:`, err.message || err);
-    shortcutsContent = (
-       <div className="shortcuts-error">
-           Failed to load shortcuts. Please try again.
-       </div>
-    );
+  const handleBackdropClick = (e) => {
+    if (e.target === dialogRef.current) {
+      if (import.meta.env.DEV) console.debug('[ShortcutsModal] Closed via backdrop')
+      onClose()
+    }
   }
 
   return (
     <div
+      ref={dialogRef}
       className="shortcuts-overlay"
-      ref={overlayRef}
-      onClick={handleOverlayClick}
+      onClick={handleBackdropClick}
       role="dialog"
       aria-modal="true"
       aria-labelledby="shortcuts-modal-title"
     >
       <div className="shortcuts-modal glass-card">
         <div className="shortcuts-header">
-          <h2 id="shortcuts-modal-title" className="shortcuts-title" tabIndex="-1" ref={titleRef}>Keyboard Shortcuts</h2>
-          <button className="shortcuts-close" aria-label="Close shortcuts" onClick={() => { console.debug('[ShortcutsTab] Popup closed via close button'); onClose(); }}>✕</button>
+          <h2
+            id="shortcuts-modal-title"
+            className="shortcuts-title"
+            tabIndex="-1"
+            ref={titleRef}
+          >
+            Keyboard Shortcuts
+          </h2>
+          <button
+            className="shortcuts-close"
+            aria-label="Close shortcuts"
+            onClick={() => {
+              if (import.meta.env.DEV) console.debug('[ShortcutsModal] Closed via button')
+              onClose()
+            }}
+          >
+            ✕
+          </button>
         </div>
 
         <ul className="shortcuts-list">
-          {shortcutsContent}
+          {SHORTCUTS.map((s) => (
+            <li
+              key={s.keys.join('+')}
+              className="shortcut-row"
+            >
+              <div className="shortcut-keys">
+                {s.keys.map((k, j) => (
+                  <span key={k} className="shortcut-key-chip">
+                    <kbd className="shortcut-kbd">{k}</kbd>
+                    {j < s.keys.length - 1 && (
+                      <span className="shortcut-plus" aria-hidden="true">+</span>
+                    )}
+                  </span>
+                ))}
+              </div>
+              <span className="shortcut-desc">{s.desc}</span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
-  );
+  )
 }

@@ -1,27 +1,57 @@
 import React from 'react'
 
-export function NavBtn({ onClick, label, icon, active = false }) {
+// ── NavBtn ────────────────────────────────────────────────────────────────────
+export function NavBtn({ onClick = () => {}, label, icon, active }) {
+  if (import.meta.env.DEV && !icon) {
+    console.warn(`[NavBtn] No icon provided for button: "${label}"`)
+  }
+
+  // aria-pressed only applies to toggle buttons.
+  // When active is not passed at all, omit aria-pressed so modal-openers
+  // (e.g. Settings) are not misread as toggles by screen readers.
+  const ariaPressed = active !== undefined ? active : undefined
+
   return (
     <button
       onClick={onClick}
       aria-label={label}
-      aria-pressed={active}
+      aria-pressed={ariaPressed}
       title={label}
       className={`btn-icon${active ? ' active' : ''}`}
     >
-      <span className="w-5 h-5 flex items-center justify-center pointer-events-none">
+      <span className="w-5 h-5 flex items-center justify-center">
         {icon}
       </span>
     </button>
   )
 }
 
+// ── KbdHint ───────────────────────────────────────────────────────────────────
 export function KbdHint({ keys, action }) {
+  // Render nothing if either prop is missing
+  if (!keys || !action) return null
+
+  // Support both a single string ("Ctrl+K") and an array (["Ctrl", "K"])
+  const keyList = Array.isArray(keys) ? keys : [keys]
+
   return (
-    <div className="flex items-center gap-1.5 text-xs text-[var(--theme-text-secondary)]">
-      <kbd className="px-1.5 py-0.5 rounded text-[0.7rem] font-mono font-semibold bg-[var(--theme-kbd-bg)] border border-[var(--theme-kbd-border)]">
-        {keys}
-      </kbd>
+    <div className="flex items-center gap-1.5 text-xs" style={{ color: 'var(--theme-text-secondary)' }}>
+      <span className="flex items-center gap-1">
+        {keyList.map((key, i) => (
+          <React.Fragment key={key}>
+            {i > 0 && <span className="opacity-50">+</span>}
+            <kbd
+              className="px-1.5 py-0.5 rounded text-[0.7rem] font-mono font-semibold"
+              style={{
+                background: 'var(--theme-kbd-bg)',
+                border: '1px solid var(--theme-kbd-border)',
+              }}
+            >
+              {key}
+            </kbd>
+          </React.Fragment>
+        ))}
+      </span>
       <span>{action}</span>
     </div>
   )
