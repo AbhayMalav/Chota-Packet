@@ -1,20 +1,42 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
+import axios from 'axios'
 import { enhance } from '../services/api'
 
 /**
- * useEnhance - Wraps the enhance API call with abort support.
- * Cancels any in-flight request if a new one is fired before the previous completes.
+ * useEnhance — Wraps the enhance API call with abort support.
  *
- * @returns {{ run: (payload: object, openRouterKey: string|null) => Promise<object> }}
+ * Cancels any in-flight request when:
+ *   - A new `run` is called before the previous one completes
+ *   - The consuming component unmounts
+ *
+ * @returns {{
+ *   run: (payload: object, openRouterKey: string|null) => Promise<object|null>,
+ *   abort: () => void
+ * }}
  */
 export default function useEnhance() {
   const abortControllerRef = useRef(null)
 
-  const run = useCallback(async (payload, openRouterKey) => {
-    // Abort any previous in-flight request before starting a new one
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort()
+  // Abort any in-flight request when the consuming component unmounts
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort()
     }
+  }, [])
+
+  const abort = useCallback(() => {
+    abortControllerRef.current?.abort()
+    abortControllerRef.current = null
+  }, [])
+
+  const run = useCallback(async (payload, openRouterKey) => {
+    if (!payload) {
+      console.warn('useEnhance: run() called with a null or undefined payload — request aborted.')
+      return Promise.reject(new Error('payload is required.'))
+    }
+
+    // Cancel the previous in-flight request before starting a new one
+    abortControllerRef.current?.abort()
 
     const controller = new AbortController()
     abortControllerRef.current = controller
@@ -23,18 +45,16 @@ export default function useEnhance() {
       const { data } = await enhance(payload, openRouterKey, controller.signal)
       return data
     } catch (err) {
-      // Don't surface abort errors - these are intentional cancellations
-      if (err?.name === 'CanceledError' || err?.name === 'AbortError') {
-        return null
-      }
+      // Intentional cancellations — not an error, return null so callers no-op cleanly
+      if (axios.isCancel(err)) return null
       throw err
     } finally {
-      // Clear ref so we don't hold a stale controller
+      // Avoid holding a stale controller after the request settles
       if (abortControllerRef.current === controller) {
         abortControllerRef.current = null
       }
     }
   }, [])
 
-  return { run }
+  return { run, abort }
 }

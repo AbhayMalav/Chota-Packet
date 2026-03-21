@@ -1,24 +1,64 @@
 import React, { useEffect, useRef } from 'react'
 import './ShortcutsModal.css'
 
-// Shortcuts must exactly match bindings in App.jsx
-const SHORTCUTS = [
-  { keys: ['Ctrl', 'Enter'],        desc: 'Enhance prompt'          },
-  { keys: ['Ctrl', 'Shift', 'C'],   desc: 'Copy output'             },
-  { keys: ['Ctrl', 'K'],            desc: 'Clear input & output'    },
-  { keys: ['Ctrl', 'I'],            desc: 'Toggle shortcuts panel'  },
-  { keys: ['Escape'],               desc: 'Close any open panel'    },
+// ─── Icon ─────────────────────────────────────────────────────────────────────
+
+const IconX = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M18 6 6 18M6 6l12 12" />
+  </svg>
+)
+
+// ─── Shortcut definitions — must exactly match bindings in App.jsx ────────────
+
+const SHORTCUT_GROUPS = [
+  {
+    group: 'Enhance',
+    items: [
+      { keys: ['Ctrl', 'Enter'],         desc: 'Enhance prompt'             },
+      { keys: ['Ctrl', 'Shift', 'R'],    desc: 'Regenerate (variant)'       },
+    ],
+  },
+  {
+    group: 'Output',
+    items: [
+      { keys: ['Ctrl', 'Shift', 'C'],    desc: 'Copy output to clipboard'   },
+      { keys: ['Ctrl', 'Shift', 'X'],    desc: 'Clear output only'          },
+      { keys: ['Ctrl', 'K'],             desc: 'Clear everything'           },
+    ],
+  },
+  {
+    group: 'Panels',
+    items: [
+      { keys: ['Ctrl', 'H'],             desc: 'Toggle history panel'       },
+      { keys: ['Ctrl', ','],             desc: 'Open settings'              },
+      { keys: ['Ctrl', 'I'],             desc: 'Toggle shortcuts panel'     },
+      { keys: ['Ctrl', 'Shift', 'D'],    desc: 'Toggle dark / light mode'   },
+      { keys: ['Escape'],                desc: 'Close any open panel'       },
+    ],
+  },
+  {
+    group: 'Level presets',
+    items: [
+      { keys: ['Alt', '1'],              desc: 'Level → Basic'              },
+      { keys: ['Alt', '2'],              desc: 'Level → Detailed'           },
+      { keys: ['Alt', '3'],              desc: 'Level → Advanced'           },
+      { keys: ['Alt', '4'],              desc: 'Level → Chain of Thought'   },
+      { keys: ['Alt', '5'],              desc: 'Level → Meta'               },
+    ],
+  },
 ]
 
+// ─── Component ────────────────────────────────────────────────────────────────
+
 export default function ShortcutsModal({ onClose = () => {} }) {
-  const dialogRef  = useRef(null)
-  const titleRef   = useRef(null)
+  const dialogRef = useRef(null)
+  const titleRef  = useRef(null)
 
   // Focus trap + Escape handler
   useEffect(() => {
-    if (import.meta.env.DEV) {
-      console.debug('[ShortcutsModal] Opened')
-    }
+    if (import.meta.env.DEV) console.debug('[ShortcutsModal] Opened')
 
     titleRef.current?.focus()
 
@@ -56,7 +96,7 @@ export default function ShortcutsModal({ onClose = () => {} }) {
     dialog.addEventListener('keydown', handleKeyDown)
     return () => {
       dialog.removeEventListener('keydown', handleKeyDown)
-      if (import.meta.env.DEV) console.debug('[ShortcutsModal] Closed')
+      if (import.meta.env.DEV) console.debug('[ShortcutsModal] Unmounted')
     }
   }, [onClose])
 
@@ -77,6 +117,8 @@ export default function ShortcutsModal({ onClose = () => {} }) {
       aria-labelledby="shortcuts-modal-title"
     >
       <div className="shortcuts-modal glass-card">
+
+        {/* Header */}
         <div className="shortcuts-header">
           <h2
             id="shortcuts-modal-title"
@@ -87,37 +129,47 @@ export default function ShortcutsModal({ onClose = () => {} }) {
             Keyboard Shortcuts
           </h2>
           <button
-            className="shortcuts-close"
+            className="shortcuts-close btn-icon"
             aria-label="Close shortcuts"
             onClick={() => {
               if (import.meta.env.DEV) console.debug('[ShortcutsModal] Closed via button')
               onClose()
             }}
           >
-            ✕
+            <IconX />
           </button>
         </div>
 
-        <ul className="shortcuts-list">
-          {SHORTCUTS.map((s) => (
-            <li
-              key={s.keys.join('+')}
-              className="shortcut-row"
-            >
-              <div className="shortcut-keys">
-                {s.keys.map((k, j) => (
-                  <span key={k} className="shortcut-key-chip">
-                    <kbd className="shortcut-kbd">{k}</kbd>
-                    {j < s.keys.length - 1 && (
-                      <span className="shortcut-plus" aria-hidden="true">+</span>
-                    )}
-                  </span>
+        {/* Grouped shortcut list */}
+        <div className="shortcuts-body">
+          {SHORTCUT_GROUPS.map((group) => (
+            <div key={group.group} className="shortcut-group">
+
+              {/* Group label */}
+              <p className="shortcut-group-label">{group.group}</p>
+
+              <ul className="shortcuts-list">
+                {group.items.map((s) => (
+                  <li key={s.keys.join('+')} className="shortcut-row">
+                    <div className="shortcut-keys">
+                      {s.keys.map((k, j) => (
+                        <span key={k} className="shortcut-key-chip">
+                          <kbd className="shortcut-kbd">{k}</kbd>
+                          {j < s.keys.length - 1 && (
+                            <span className="shortcut-plus" aria-hidden="true">+</span>
+                          )}
+                        </span>
+                      ))}
+                    </div>
+                    <span className="shortcut-desc">{s.desc}</span>
+                  </li>
                 ))}
-              </div>
-              <span className="shortcut-desc">{s.desc}</span>
-            </li>
+              </ul>
+
+            </div>
           ))}
-        </ul>
+        </div>
+
       </div>
     </div>
   )

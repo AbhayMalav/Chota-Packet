@@ -152,8 +152,9 @@ function PillSelect({ id, label, value, onChange, options, disabled }) {
           id={listboxId}
           role="listbox"
           aria-label={label}
-          className="absolute left-0 top-full mt-1.5 w-full min-w-[130px] rounded-2xl glass-card shadow-xl py-1.5 z-50 animate-fade-in max-h-60 overflow-y-auto overflow-x-hidden"
+          className="absolute left-0 top-full mt-1.5 w-full min-w-[130px] rounded-2xl glass-card shadow-xl z-50 animate-fade-in overflow-hidden"
         >
+          <div className="max-h-60 overflow-y-auto overflow-x-hidden py-1.5"> 
           {options.map((o, index) => (
             <button
               key={o.value}
@@ -175,6 +176,7 @@ function PillSelect({ id, label, value, onChange, options, disabled }) {
               {o.label}
             </button>
           ))}
+          </div>
         </div>
       )}
     </div>
@@ -308,8 +310,9 @@ function ModelPill({ models, selectedModel, onModelChange, loading }) {
           id="model-pill-listbox"
           role="listbox"
           aria-label="Select model"
-          className="absolute right-0 top-full mt-1.5 w-64 rounded-2xl glass-card shadow-xl py-1.5 z-50 animate-fade-in max-h-56 overflow-y-auto overflow-x-hidden"
-        >
+          className="absolute right-0 top-full mt-1.5 w-64 rounded-2xl glass-card shadow-xl z-50 animate-fade-in overflow-hidden"
+>
+  <div className="max-h-56 overflow-y-auto overflow-x-hidden py-1.5">
           {models.map((m, index) => (
             <button
               key={m.id}
@@ -339,6 +342,7 @@ function ModelPill({ models, selectedModel, onModelChange, loading }) {
               )}
             </button>
           ))}
+          </div>
         </div>
       )}
     </div>

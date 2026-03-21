@@ -10,3 +10,4 @@ backend/out.txt
 backend/test_output.txt
 /Datasets
 /training
+/backend/__pycache__
