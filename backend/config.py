@@ -14,37 +14,56 @@ WHISPER_MODEL_ID = "openai/whisper-tiny"   # downloaded once, cached by HuggingF
 
 # ──────────────────────────── Input limits ───────────────────────────────────
 
-MAX_INPUT_CHARS: int = 512          # Truncate/reject longer inputs (FR-01)
-MAX_AUDIO_SIZE_MB: int = 10         # Audio upload size cap (FR-15)
+MAX_INPUT_CHARS: int = 512
+MAX_AUDIO_SIZE_MB: int = 10
 MAX_AUDIO_SIZE_BYTES: int = MAX_AUDIO_SIZE_MB * 1024 * 1024
 
 # ──────────────────────────── Inference ──────────────────────────────────────
 
-TARGET_SAMPLE_RATE: int = 16_000    # Required by Whisper (FR-04)
-MAX_NEW_TOKENS: int = 200           # mT5 generation cap (FR-06)
-NUM_BEAMS: int = 4                  # Beam search width (FR-06)
-VARIANT_TEMPERATURE: float = 0.8   # Sampling temp for variant_mode (FR-29)
+TARGET_SAMPLE_RATE: int = 16_000
+MAX_NEW_TOKENS: int = 200
+NUM_BEAMS: int = 4
+VARIANT_TEMPERATURE: float = 0.8
 
 # ──────────────────────────── Post-processing ────────────────────────────────
 
-HALLUCINATION_MIN_TOKENS: int = 5   # Minimum output token count (FR-16)
-HALLUCINATION_NGRAM: int = 4        # N-gram size for repetition check (FR-16)
-HALLUCINATION_MAX_REPEATS: int = 3  # Max times an n-gram may appear (FR-16)
+HALLUCINATION_MIN_TOKENS: int = 5
+HALLUCINATION_NGRAM: int = 4
+HALLUCINATION_MAX_REPEATS: int = 3
 
 # ──────────────────────────── Timeouts ───────────────────────────────────────
 
-ENHANCE_TIMEOUT_S: int = 15         # /enhance Axios timeout (FR-14) - frontend reference only, not used by backend
-STT_TIMEOUT_S: int = 12             # /stt Axios timeout (FR-14) - frontend reference only, not used by backend
-HEALTH_TIMEOUT_S: int = 5           # /health check timeout (FR-13)
-OPENROUTER_TIMEOUT_S: int = 15      # Cloud inference timeout (NF-P8)
-VALIDATE_KEY_TIMEOUT_S: int = 5     # Key validation timeout (NF-P9)
+ENHANCE_TIMEOUT_S: int = 15
+STT_TIMEOUT_S: int = 12
+HEALTH_TIMEOUT_S: int = 5
+OPENROUTER_TIMEOUT_S: int = 15
+VALIDATE_KEY_TIMEOUT_S: int = 5
 
 # ──────────────────────────── CORS ───────────────────────────────────────────
 
-ALLOWED_ORIGINS: list[str] = [
+_CORS_DEFAULTS: list[str] = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
+
+def _parse_cors_origins() -> list[str]:
+    """
+    Build the CORS allowed-origins list from env + hardcoded dev defaults.
+    Set CORS_ORIGINS in production as a comma-separated list of origins.
+    Example: CORS_ORIGINS=https://chota-packet.vercel.app,https://custom-domain.com
+    """
+    raw = os.getenv("CORS_ORIGINS", "").strip()
+    extra: list[str] = []
+    if raw:
+        extra = [o.strip().rstrip("/") for o in raw.split(",") if o.strip()]
+
+    merged: list[str] = []
+    for origin in [*_CORS_DEFAULTS, *extra]:
+        if origin not in merged:
+            merged.append(origin)
+    return merged
+
+ALLOWED_ORIGINS: list[str] = _parse_cors_origins()
 
 # ──────────────────────────── Task prefixes ───────────────────────────────────
 
@@ -53,9 +72,8 @@ TASK_PREFIXES: dict[str, str] = {
     "hi": "prompt sudharo",
 }
 
-# Style tag inserted between prefix and colon:  "enhance prompt [code]: "
 STYLE_MAP: dict[str, str] = {
-    "general":    "",           # No tag - uses plain prefix
+    "general":    "",
     "stepbystep": "step-by-step",
     "code":       "code",
     "creative":   "creative",
@@ -79,9 +97,8 @@ OPENROUTER_AUTH_ENDPOINT: str = f"{OPENROUTER_BASE_URL}/auth/key"
 OPENROUTER_CHAT_ENDPOINT: str = f"{OPENROUTER_BASE_URL}/chat/completions"
 OPENROUTER_MODELS_ENDPOINT: str = f"{OPENROUTER_BASE_URL}/models"
 
-# Cloud output guard-rail (NF-R8)
 CLOUD_MAX_OUTPUT_TOKENS: int = 2_000
-OPENROUTER_COST_PER_TOKEN: float = 0.000005  # $5 per 1M tokens blended avg
+OPENROUTER_COST_PER_TOKEN: float = 0.000005
 
 # ──────────────────────────── MIME types ──────────────────────────────────────
 
@@ -90,7 +107,7 @@ ALLOWED_AUDIO_MIMES: set[str] = {
     "audio/ogg",
     "audio/wav",
     "audio/x-wav",
-    "audio/mpeg",   # mp3 - converted server-side
+    "audio/mpeg",
 }
 
 # ──────────────────────────── Devanagari Unicode range ───────────────────────
