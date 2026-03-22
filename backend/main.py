@@ -2,7 +2,7 @@
 main.py - Chota Packet FastAPI application entry point.
 
 Responsibilities:
-  - Define the FastAPI app with CORS configured for localhost:3000 only (NF-S1, A6)
+  - Define the FastAPI app with CORS configured for allowed origins (NF-S1, A6)
   - Lifespan context manager that:
       1. Checks ffmpeg availability (FR-38)
       2. Validates enhancement prompts (FR-27)
@@ -70,7 +70,6 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
             "Check enhancement_prompts.py.",
             missing,
         )
-        # Mark models as not loaded so /health reports the issue
         state = ModelState()
         state.loaded = False
         state.load_error = f"Missing enhancement prompts for: {missing}"
@@ -120,12 +119,13 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-# CORS - only allow localhost:3000 (NF-S1, A6)
+# CORS middleware — allow_methods="*" ensures OPTIONS preflight is handled
+# automatically by Starlette for all routes (NF-S1, A6)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
     allow_credentials=False,
-    allow_methods=["GET", "POST"],
+    allow_methods=["*"],          # ← FIXED: was ["GET", "POST"], OPTIONS was blocked
     allow_headers=["Content-Type", "X-OpenRouter-Key"],
 )
 

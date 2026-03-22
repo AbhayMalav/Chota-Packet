@@ -41,6 +41,21 @@ from openrouter_models import get_static_models
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
+# ──────────────────────────── GET / ──────────────────────────────────────────
+
+@router.get("/")
+async def root() -> JSONResponse:
+    """
+    Root probe endpoint.
+    Render's health checker and browser tab hits land here.
+    Returns a minimal OK payload — never 404.
+    """
+    return JSONResponse({
+        "service": "Chota Packet API",
+        "version": "2.0.0",
+        "status": "ok",
+        "docs": "/docs",
+    })
 
 # ──────────────────────────── Pydantic models ─────────────────────────────────
 
