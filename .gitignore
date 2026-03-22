@@ -4,10 +4,8 @@
 /backend/tests
 backend/test_failures.txt
 backend/.coverage
-backend/__pycache__/enhancement_prompts.cpython-312.pyc
-/backend/__pycache__
 backend/out.txt
 backend/test_output.txt
 /Datasets
 /training
-/backend/__pycache__
+*.pyc

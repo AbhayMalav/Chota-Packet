@@ -1,8 +1,8 @@
 import React from 'react'
 
 // ── NavBtn ────────────────────────────────────────────────────────────────────
-export function NavBtn({ onClick = () => {}, label, icon, active }) {
-  if (import.meta.env.DEV && !icon) {
+export function NavBtn({ onClick = () => { }, label, icon: Icon, active }) {
+  if (import.meta.env.DEV && !Icon) {
     console.warn(`[NavBtn] No icon provided for button: "${label}"`)
   }
 
@@ -20,7 +20,7 @@ export function NavBtn({ onClick = () => {}, label, icon, active }) {
       className={`btn-icon${active ? ' active' : ''}`}
     >
       <span className="w-5 h-5 flex items-center justify-center">
-        {icon}
+        {Icon && <Icon />}
       </span>
     </button>
   )
