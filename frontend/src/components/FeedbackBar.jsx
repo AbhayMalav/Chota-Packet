@@ -1,28 +1,40 @@
 import React, { useState, useCallback } from 'react'
 import { LS_FEEDBACK, FEEDBACK_CAP } from '../constants'
 
+const IconThumbUp = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M7 10v12" />
+    <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z" />
+  </svg>
+)
+
+const IconThumbDown = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M17 14V2" />
+    <path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z" />
+  </svg>
+)
+
 export default function FeedbackBar() {
-  const [voted, setVoted] = useState(null) // 'up' | 'down' | null
+  const [voted, setVoted] = useState(null)
 
   const vote = useCallback((v) => {
-    // No-op if the user clicks the same vote again
     if (voted === v) return
-
     setVoted(v)
 
     try {
       const raw = localStorage.getItem(LS_FEEDBACK)
       let stored = []
-
       try {
         const parsed = JSON.parse(raw || '[]')
         stored = Array.isArray(parsed) ? parsed : []
       } catch {
-        console.warn('[FeedbackBar] Corrupted feedback data in localStorage - resetting.')
+        console.warn('[FeedbackBar] Corrupted feedback data in localStorage — resetting.')
         stored = []
       }
 
-      // If user is switching their vote, replace the last entry instead of appending
       if (voted !== null && stored.length > 0) {
         stored[stored.length - 1] = { v, ts: Date.now() }
       } else if (stored.length < FEEDBACK_CAP) {
@@ -36,40 +48,30 @@ export default function FeedbackBar() {
   }, [voted])
 
   return (
-    <div className="flex items-center gap-3 mt-3">
-      <span className="text-xs" style={{ color: 'var(--theme-text-secondary)' }}>
-        Was this enhancement helpful?
-      </span>
+    <div className="flex items-center gap-1">
+      <button
+        className="btn-icon"
+        aria-label="Thumbs up"
+        aria-pressed={voted === 'up'}
+        onClick={() => vote('up')}
+        style={voted === 'up' ? { color: '#a855f7' } : undefined}
+      >
+        <IconThumbUp />
+      </button>
 
-      <div className="flex items-center gap-1">
-        <button
-          className="btn-icon"
-          aria-label="Thumbs up"
-          aria-pressed={voted === 'up'}
-          onClick={() => vote('up')}
-          style={voted === 'up' ? { color: '#a855f7' } : undefined}
-        >
-          👍
-        </button>
+      <button
+        className="btn-icon"
+        aria-label="Thumbs down"
+        aria-pressed={voted === 'down'}
+        onClick={() => vote('down')}
+        style={voted === 'down' ? { color: '#a855f7' } : undefined}
+      >
+        <IconThumbDown />
+      </button>
 
-        <button
-          className="btn-icon"
-          aria-label="Thumbs down"
-          aria-pressed={voted === 'down'}
-          onClick={() => vote('down')}
-          style={voted === 'down' ? { color: '#a855f7' } : undefined}
-        >
-          👎
-        </button>
-      </div>
-
-      {/* Confirmation - only shown after a vote is cast */}
       {voted !== null && (
-        <span
-          className="text-xs animate-fade-in"
-          style={{ color: 'var(--theme-text-secondary)' }}
-        >
-          Thanks for your feedback!
+        <span className="text-[11px] ml-1 animate-fade-in" style={{ color: 'var(--theme-text-secondary)' }}>
+          Thanks!
         </span>
       )}
     </div>

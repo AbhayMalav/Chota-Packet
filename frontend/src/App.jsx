@@ -3,7 +3,7 @@ import { health } from './services/api'
 import useEnhance from './hooks/useEnhance'
 import useSettings from './hooks/useSettings'
 import useMediaQuery from './hooks/useMediaQuery'
-import { LS_ONBOARDED, HISTORY_LIMIT, MAX_INPUT_CHARS } from './constants'
+import { LSONBOARDED, HISTORYLIMIT, MAXINPUTCHARS } from './constants'
 import CONFIG from './config'
 import StatusBanner from './components/StatusBanner'
 import InputArea from './components/InputArea'
@@ -14,12 +14,13 @@ import HistoryPanel from './components/HistoryPanel'
 import SettingsModal from './components/SettingsModal'
 import MicButton from './components/MicButton'
 import OnboardingOverlay from './components/OnboardingOverlay'
-import { NavBtn } from './components/NavBar'
+import NavBtn from './components/NavBar'
 import ErrorBoundary from './components/ErrorBoundary'
 import ShortcutsModal from './components/ShortcutsModal'
 import { ClockIcon, GearIcon, SunIcon, MoonIcon } from './components/icons'
 
-// ── App state machine ──────────────────────────────────────────────────────────
+// ─── State machine ────────────────────────────────────────────────────────────
+
 function appReducer(state, action) {
   switch (action.type) {
     case 'INPUT_CHANGED':
@@ -29,12 +30,16 @@ function appReducer(state, action) {
     case 'SUCCESS':
       return { ...state, uiState: 'OUTPUT', outputText: action.text, originalText: state.input }
     case 'ERROR':
-      // Clear stale output so previous result is never shown alongside an error state
+      // Clear stale output so previous result is never shown alongside an error
       return { ...state, uiState: 'ERROR', outputText: '', originalText: '' }
     case 'OUTPUT_EDIT':
       return { ...state, outputText: action.text }
     case 'RESET':
+      // Clears output only — keeps input intact, used by OutputCard's Clear button
       return { ...state, uiState: state.input.trim() ? 'INPUT_READY' : 'IDLE', outputText: '', originalText: '' }
+    case 'FULL_RESET':
+      // Clears everything — Ctrl+K shortcut
+      return { uiState: 'IDLE', input: '', outputText: '', originalText: '' }
     default:
       return state
   }
@@ -42,7 +47,8 @@ function appReducer(state, action) {
 
 const init = { uiState: 'IDLE', input: '', outputText: '', originalText: '' }
 
-// ── Component ──────────────────────────────────────────────────────────────────
+// ─── Component ────────────────────────────────────────────────────────────────
+
 export default function App() {
   const settings = useSettings()
   const { openRouterKey, inferenceMode, selectedModel, saveModel, models, darkMode, toggleDark } = settings
@@ -51,68 +57,69 @@ export default function App() {
   const { uiState, input, outputText, originalText } = appState
 
   // Controls
-  const [style, setStyle] = useState('general')
-  const [tone, setTone] = useState('')
-  const [level, setLevel] = useState('basic')
+  const [style,      setStyle]      = useState('general')
+  const [tone,       setTone]       = useState('')
+  const [level,      setLevel]      = useState('basic')
   const [outputLang, setOutputLang] = useState('auto')
-  // inputLang drives both MicButton and the API payload - was previously hardcoded to 'en'
-  // No input language picker in the UI yet - plain const until one is wired up.
+  // inputLang drives both MicButton and API payload
   const inputLang = 'en'
 
-
   // UI panels
-  const [historyOpen, setHistoryOpen] = useState(false)
-  const [settingsOpen, setSettingsOpen] = useState(false)
-  const [diffOpen, setDiffOpen] = useState(false)
+  const [historyOpen,   setHistoryOpen]   = useState(false)
+  const [settingsOpen,  setSettingsOpen]  = useState(false)
+  const [diffOpen,      setDiffOpen]      = useState(false)
   const [shortcutsOpen, setShortcutsOpen] = useState(false)
-  const [showOnboard, setShowOnboard] = useState(() => !localStorage.getItem(LS_ONBOARDED))
+  const [showOnboard,   setShowOnboard]   = useState(!localStorage.getItem(LSONBOARDED))
 
   // Backend health
   const [backendStatus, setBackendStatus] = useState('loading')
 
-  // Session history (in-memory, capped)
+  // Session history — in-memory, capped
   const [history, setHistory] = useState([])
 
-  // Enhance hook - error surface is handled via dispatch('ERROR') + console.warn
+  // Enhance hook
   const { run: runEnhance } = useEnhance()
 
   // Responsive layout
   const isDesktop = useMediaQuery('(min-width: 1024px)')
 
-  // Derive input limit: cloud models get a higher cap
-  const inputLimit = inferenceMode === 'cloud' ? 4096 : MAX_INPUT_CHARS
+  // Derived
+  const inputLimit = inferenceMode === 'cloud' ? 4096 : MAXINPUTCHARS
+  const isLoading  = uiState === 'LOADING'
+  const hasOutput  = uiState === 'OUTPUT' && !!outputText
 
-  // ─── Health check on mount ─────────────────────────────────────────────────
+  // ── Health check on mount ─────────────────────────────────────────────────
   useEffect(() => {
     health()
-      .then(({ data }) => setBackendStatus(data.status === 'ok' ? 'ok' : 'error'))
+      .then(data => setBackendStatus(data.status === 'ok' ? 'ok' : 'error'))
       .catch(() => setBackendStatus('error'))
   }, [])
 
-  // ─── Core enhance action ───────────────────────────────────────────────────
+  // ── Core enhance action ───────────────────────────────────────────────────
   const handleEnhance = useCallback(async (variantMode = false) => {
     if (!input.trim()) return
     dispatch({ type: 'LOADING' })
 
     const payload = {
-      text: input,
-      input_lang: inputLang,       // fixed: was always hardcoded 'en'
-      output_lang: outputLang,
+      text:              input,
+      input_lang:        inputLang,
+      output_lang:       outputLang,
       style,
       tone,
       enhancement_level: level,
-      variant_mode: variantMode,
-      inference_mode: inferenceMode,
-      model: selectedModel || undefined,
+      variant_mode:      variantMode,
+      inference_mode:    inferenceMode,
+      model:             selectedModel || undefined,
     }
 
     try {
       const data = await runEnhance(payload, openRouterKey)
       if (data?.enhanced_prompt) {
         dispatch({ type: 'SUCCESS', text: data.enhanced_prompt })
-        setHistory((prev) =>
-          [{ input, enhanced: data.enhanced_prompt, ts: Date.now() }, ...prev].slice(0, HISTORY_LIMIT)
-        )
+        setHistory(prev => [
+          { input, enhanced: data.enhanced_prompt, ts: Date.now() },
+          ...prev.slice(0, HISTORYLIMIT - 1),
+        ])
       } else {
         dispatch({ type: 'ERROR' })
       }
@@ -122,16 +129,22 @@ export default function App() {
     }
   }, [input, inputLang, outputLang, style, tone, level, inferenceMode, selectedModel, openRouterKey, runEnhance])
 
-  // ─── Keyboard shortcuts ────────────────────────────────────────────────────
+  // ── Keyboard shortcuts ────────────────────────────────────────────────────
   useEffect(() => {
-    const handler = (e) => {
-      // Guard first: if focus is inside a form element, suppress all shortcuts
-      // This fixes Ctrl+Enter firing both a newline AND an enhance in <textarea>
-      const active = document.activeElement
-      const inInput =
-        active &&
-        (['INPUT', 'TEXTAREA', 'SELECT'].includes(active.tagName) || active.isContentEditable)
+    // Alt+1–5 level map
+    const LEVEL_MAP = {
+      '1': 'basic',
+      '2': 'detailed',
+      '3': 'advanced',
+      '4': 'chain-of-thought',
+      '5': 'meta',
+    }
 
+    const handler = (e) => {
+      const active  = document.activeElement
+      const inInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(active.tagName) || active.isContentEditable
+
+      // Escape — close all panels (always fires)
       if (e.key === 'Escape') {
         setSettingsOpen(false)
         setHistoryOpen(false)
@@ -140,87 +153,70 @@ export default function App() {
         return
       }
 
+      // Shortcuts allowed through from inside input/textarea
       if (inInput) {
-        // Only Ctrl+Enter is allowed through from inputs (textarea sends the enhance)
-        if (e.ctrlKey && e.key === 'Enter') {
-          e.preventDefault()
-          handleEnhance()
-        }
+        if (e.ctrlKey && e.key === 'Enter')                         { e.preventDefault(); handleEnhance();      return }
+        if (e.ctrlKey && e.shiftKey && e.key === 'R' && hasOutput)  { e.preventDefault(); handleEnhance(true); return }
         return
       }
 
-      // Shortcuts that only work when focus is NOT in a form field
-      if (e.ctrlKey && e.key === 'Enter') {
+      // ── Shortcuts only active when focus is NOT in a form field ──────────
+
+      // Enhance / Regenerate
+      if (e.ctrlKey && e.key === 'Enter')                         { e.preventDefault(); handleEnhance();                                              return }
+      if (e.ctrlKey && e.shiftKey && e.key === 'R' && hasOutput)  { e.preventDefault(); handleEnhance(true);                                         return }
+
+      // Output
+      if (e.ctrlKey && e.shiftKey && e.key === 'C')               { e.preventDefault(); navigator.clipboard.writeText(outputText).catch(() => {});   return }
+      if (e.ctrlKey && e.shiftKey && e.key === 'X')               { e.preventDefault(); dispatch({ type: 'RESET' });                                 return }
+
+      // Reset
+      if (e.ctrlKey && e.key.toLowerCase() === 'k')               { e.preventDefault(); dispatch({ type: 'FULL_RESET' });                            return }
+
+      // Panels
+      if (e.ctrlKey && e.key.toLowerCase() === 'h')               { e.preventDefault(); setHistoryOpen(o => !o);                                     return }
+      if (e.ctrlKey && e.key === ',')                              { e.preventDefault(); setSettingsOpen(true);                                       return }
+      if (e.ctrlKey && e.key.toLowerCase() === 'i')               { e.preventDefault(); setShortcutsOpen(s => !s);                                   return }
+
+      // Theme
+      if (e.ctrlKey && e.shiftKey && e.key === 'D')               { e.preventDefault(); toggleDark();                                                return }
+
+      // Alt + 1–5 — enhancement level presets
+      if (e.altKey && !e.ctrlKey && !e.shiftKey && LEVEL_MAP[e.key]) {
         e.preventDefault()
-        handleEnhance()
-        return
-      }
-      if (e.ctrlKey && e.shiftKey && e.key === 'C') {
-        e.preventDefault()
-        navigator.clipboard.writeText(outputText).catch(() => { })
-        return
-      }
-      if (e.ctrlKey && e.key.toLowerCase() === 'k') {
-        e.preventDefault()
-        dispatch({ type: 'RESET' })
-        return
-      }
-      if (e.ctrlKey && e.key.toLowerCase() === 'i') {
-        e.preventDefault()
-        setShortcutsOpen((s) => !s)
+        setLevel(LEVEL_MAP[e.key])
       }
     }
 
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [handleEnhance, outputText])
-
-  const isLoading = uiState === 'LOADING'
-  const hasOutput = uiState === 'OUTPUT' && outputText
+  }, [handleEnhance, outputText, hasOutput, toggleDark])
 
   return (
     <ErrorBoundary>
-      <div className={darkMode ? '' : 'light'} style={{ minHeight: '100vh', position: 'relative' }}>
+      <div className={darkMode ? 'light' : ''} style={{ minHeight: '100vh', position: 'relative' }}>
 
         {/* Nebula background orbs */}
         <div className="nebula-orb-1 animate-nebula" aria-hidden="true" />
         <div className="nebula-orb-2 animate-nebula" aria-hidden="true" />
         <div className="nebula-orb-3" aria-hidden="true" />
 
-        {/* ── Navbar ── */}
+        {/* Navbar */}
         <header className="glass-navbar sticky top-0 z-30 px-4 py-2 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="font-extrabold text-sm gradient-text tracking-tight">
-              ✦ Chota Packet
-            </span>
+            <span className="font-extrabold text-sm gradient-text tracking-tight">Chota Packet</span>
           </div>
           <nav className="flex items-center gap-1" aria-label="App controls">
-            <NavBtn
-              onClick={() => setHistoryOpen((o) => !o)}
-              label="Session History"
-              icon={<ClockIcon />}
-              active={historyOpen}
-            />
-            <NavBtn
-              onClick={() => setSettingsOpen(true)}
-              label="Settings"
-              icon={<GearIcon />}
-              active={settingsOpen}
-            />
-            <NavBtn
-              onClick={toggleDark}
-              label={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-              icon={darkMode ? <SunIcon /> : <MoonIcon />}
-            />
+            <NavBtn onClick={() => setHistoryOpen(o => !o)}   label="Session History"                              icon={ClockIcon}                  active={historyOpen}  />
+            <NavBtn onClick={() => setSettingsOpen(true)}      label="Settings"                                     icon={GearIcon}                   active={settingsOpen} />
+            <NavBtn onClick={toggleDark}                       label={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'} icon={darkMode ? SunIcon : MoonIcon} />
           </nav>
         </header>
 
-        {/* ── Backend status banner ── */}
-        {CONFIG.SHOW_BACKEND_STATUS_BAR && (
-          <StatusBanner status={backendStatus} />
-        )}
+        {/* Backend status banner */}
+        {CONFIG.SHOWBACKENDSTATUSBAR && <StatusBanner status={backendStatus} />}
 
-        {/* ── Main layout ── */}
+        {/* Main layout */}
         <div className="flex" style={{ minHeight: 'calc(100vh - 56px)' }}>
 
           {/* History sidebar */}
@@ -244,20 +240,19 @@ export default function App() {
                 onChange={(val) => dispatch({ type: 'INPUT_CHANGED', value: val })}
                 onClear={() => dispatch({ type: 'RESET' })}
                 inputLimit={inputLimit}
-              >
-                <MicButton
-                  lang={inputLang}
-                  onTranscript={(text) => dispatch({ type: 'INPUT_CHANGED', value: text })}
-                />
-              </InputArea>
+              />
+              <MicButton
+                lang={inputLang}
+                onTranscript={(text) => dispatch({ type: 'INPUT_CHANGED', value: text })}
+              />
             </div>
 
             {/* Controls */}
             <div className="w-full">
               <ControlBar
-                style={style} onStyleChange={setStyle}
-                tone={tone} onToneChange={setTone}
-                level={level} onLevelChange={setLevel}
+                style={style}           onStyleChange={setStyle}
+                tone={tone}             onToneChange={setTone}
+                level={level}           onLevelChange={setLevel}
                 outputLang={outputLang} onOutputLangChange={setOutputLang}
                 onEnhance={() => handleEnhance(false)}
                 onRegenerate={() => handleEnhance(true)}
@@ -277,7 +272,7 @@ export default function App() {
                 className="w-full text-center text-sm py-3 px-4 rounded-xl border border-red-500/20 bg-red-500/5 animate-fade-in"
                 style={{ color: '#f87171' }}
               >
-                ⚠ Enhancement failed. Please check your connection or API key and try again.
+                Enhancement failed. Please check your connection or API key and try again.
               </div>
             )}
 
@@ -292,33 +287,16 @@ export default function App() {
                 />
               </div>
             )}
+
           </main>
         </div>
 
-        {/* ── Modals ── */}
-        {diffOpen && (
-          <DiffView
-            original={originalText}
-            enhanced={outputText}
-            onClose={() => setDiffOpen(false)}
-          />
-        )}
+        {/* Modals */}
+        {diffOpen      && <DiffView original={originalText} enhanced={outputText} onClose={() => setDiffOpen(false)} />}
+        {settingsOpen  && <SettingsModal settings={settings} onClose={() => setSettingsOpen(false)} onShowShortcuts={() => { setSettingsOpen(false); setShortcutsOpen(true) }} />}
+        {shortcutsOpen && <ShortcutsModal onClose={() => setShortcutsOpen(false)} />}
+        {showOnboard   && <OnboardingOverlay onDone={() => setShowOnboard(false)} />}
 
-        {settingsOpen && (
-          <SettingsModal
-            settings={settings}
-            onClose={() => setSettingsOpen(false)}
-            onShowShortcuts={() => { setSettingsOpen(false); setShortcutsOpen(true) }}
-          />
-        )}
-
-        {shortcutsOpen && (
-          <ShortcutsModal onClose={() => setShortcutsOpen(false)} />
-        )}
-
-        {showOnboard && (
-          <OnboardingOverlay onDone={() => setShowOnboard(false)} />
-        )}
       </div>
     </ErrorBoundary>
   )
