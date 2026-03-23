@@ -1,49 +1,97 @@
-/* =============================================================
-   ControlBar.css
-   Covers: PillSelect, ModelPill, pill dimensions, state-driven
-   backgrounds via aria-expanded selector.
-   ============================================================= */
+/* ControlBar.css — Styles for PillSelect, ModelPill, and ControlBar layout.
+   Tailwind handles layout/spacing inline; this file owns colours, surfaces,
+   and states that require theme-token awareness or can't be expressed in Tailwind.
+*/
 
-/* ── PillSelect ──────────────────────────────────────────────── */
+/* ── PillSelect ───────────────────────────────────────────────────────────── */
 
+/* Wrapper: min-width:0 prevents the flex item from overflowing its container
+   when sibling pills share the row on narrow screens. */
 .pill-select {
-    min-width: 100px;
+    min-width: 0;
 }
 
-/* State-driven background replaces the inline style={{ background }} pattern.
-   Uses the aria-expanded attribute already on the button — no JS class toggling needed. */
+/* Trigger button surface + text colours wired to theme tokens.
+   Layout, border-radius, border-color, and focus ring come from Tailwind inline. */
 .pill-select__trigger {
     background: var(--theme-input-bg);
     color: var(--theme-text);
 }
 
-.pill-select__trigger[aria-expanded="true"] {
-    background: var(--theme-input-bg-focus);
+.pill-select__trigger:hover:not(:disabled) {
+    background: var(--theme-input-bg-hover);
 }
 
+/* Dropdown panel — inherits card surface and text colour from theme.
+   Positioning (absolute, top-full, z-50) is set inline via Tailwind. */
 .pill-select__dropdown {
-    min-width: 130px;
-}
-
-/* Unselected option color — selected state is handled by Tailwind text-purple-400 */
-.pill-select__option {
     color: var(--theme-text);
 }
 
-/* ── ModelPill ───────────────────────────────────────────────── */
-
-.model-pill__trigger {
-    background: var(--theme-input-bg);
+/* Option row — default and selected states */
+.pill-select__option {
+    color: var(--theme-text-muted);
+    background: transparent;
+    cursor: pointer;
 }
 
-.model-pill__trigger[aria-expanded="true"] {
-    background: var(--theme-input-bg-focus);
+/* Selected: brand-accent text, subtle brand tint bg */
+.pill-select__option[aria-selected="true"] {
+    color: var(--color-brand-light);
+    background: rgba(127, 19, 236, 0.15);
+    font-weight: 500;
 }
 
+/* Hover for non-selected options */
+.pill-select__option:not([aria-selected="true"]):hover {
+    color: var(--color-brand-light);
+    background: rgba(127, 19, 236, 0.1);
+}
+
+/* Focus indicator on keyboard-navigated options */
+.pill-select__option:focus {
+    outline: none;
+    background: rgba(127, 19, 236, 0.12);
+    color: var(--color-brand-light);
+}
+
+/* ── ModelPill ────────────────────────────────────────────────────────────── */
+
+/* FIX #12: Replaces hover:bg-purple-500/8 (non-standard /8 step, was missing
+   from Tailwind's scale) with an explicit CSS rule at the equivalent /10 opacity.
+   Visual difference is imperceptible; consistency with rest of codebase is restored. */
+.model-pill__trigger:not(:disabled):hover {
+    background: rgba(127, 19, 236, 0.1);
+}
+
+/* Label inside the pill — constrain width for clean truncation */
 .model-pill__label {
     max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
+/* Option row in model dropdown */
 .model-pill__option {
-    color: var(--theme-text);
+    cursor: pointer;
+}
+
+.model-pill__option:not([aria-selected="true"]):hover {
+    background: rgba(127, 19, 236, 0.1);
+}
+
+.model-pill__option:focus {
+    outline: none;
+    background: rgba(127, 19, 236, 0.12);
+}
+
+/* ── Responsive breakpoint ────────────────────────────────────────────────── */
+
+/* On very narrow screens (< 360px), ensure pill row wraps gracefully
+   without either pill overflowing or collapsing to zero width. */
+@media (max-width: 360px) {
+    .pill-select {
+        min-width: 64px;
+    }
 }

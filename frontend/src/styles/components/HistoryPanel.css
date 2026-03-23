@@ -1,87 +1,128 @@
-/* =============================================================
-   HistoryPanel.css
-   Covers: EmptyState, HistoryItem, panel layout, search, headers
-   ============================================================= */
+/* HistoryPanel.css — Styles for the session history sidebar.
+   Layout/spacing handled inline via Tailwind.
+   This file owns: colour theming, BEM modifier states, sticky header surfaces,
+   and the load-button keyboard-focus fix.
+*/
 
-/* ── Empty state ─────────────────────────────────────────────── */
-
-.history-empty__icon {
-    background: rgba(127, 19, 236, 0.08);
-    border: 1px solid rgba(127, 19, 236, 0.12);
-    color: rgba(127, 19, 236, 0.35);
-}
-
-/* ── History item ────────────────────────────────────────────── */
-
-.history-item {
-    border-bottom-color: rgba(127, 19, 236, 0.08);
-    border-left-color: transparent;
-    transition: border-left-color 0.15s ease;
-}
-
-.history-item:hover {
-    border-left-color: rgba(168, 85, 247, 0.4);
-}
-
-/* Pinned state — accent strip holds on hover too */
-.history-item--pinned,
-.history-item--pinned:hover {
-    border-left-color: #a855f7;
-}
-
-.history-item__pin-badge {
-    background: rgba(168, 85, 247, 0.12);
-    color: #a855f7;
-}
-
-.history-item__pin-btn--active {
-    color: #a855f7;
-}
-
-/* ── Panel header ────────────────────────────────────────────── */
+/* ── Panel Header ─────────────────────────────────────────────────────────── */
 
 .history-panel__header {
-    border-color: rgba(127, 19, 236, 0.12);
+    border-color: var(--theme-border-sidebar);
 }
 
 .history-panel__header-icon {
     background: rgba(127, 19, 236, 0.1);
-    border: 1px solid rgba(127, 19, 236, 0.18);
-    color: #a855f7;
+    color: var(--color-brand-light);
 }
 
-/* ── Export dropdown ─────────────────────────────────────────── */
-
-.history-panel__export-item {
-    color: var(--theme-text);
-}
-
-/* ── Search ──────────────────────────────────────────────────── */
+/* ── Search ───────────────────────────────────────────────────────────────── */
 
 .history-panel__search-section {
-    border-color: rgba(127, 19, 236, 0.08);
+    border-color: var(--theme-border-sidebar);
 }
 
 .history-panel__search-input {
     background: var(--theme-input-bg);
     color: var(--theme-text);
-    border-color: rgba(127, 19, 236, 0.12);
-    min-height: 36px;
+    border-color: var(--theme-border);
 }
 
-/* ── Items list ──────────────────────────────────────────────── */
-
-.history-panel__list {
-    scrollbar-width: thin;
+.history-panel__search-input::placeholder {
+    color: var(--theme-placeholder);
 }
 
-/* ── Section headers (Pinned / Recent) ───────────────────────── */
+/* Bumped from /20 to /30 — /20 was too low-contrast on both themes */
+.history-panel__search-input:focus {
+    outline: none;
+    border-color: rgba(127, 19, 236, 0.4);
+    box-shadow: 0 0 0 1px rgba(127, 19, 236, 0.3);
+}
 
+/* ── Section Headers (sticky) ────────────────────────────────────────────── */
+
+/* Sticky headers need an opaque background so list items
+   don't scroll through them. Uses sidebar token, not transparent. */
 .history-panel__section-header {
     background: var(--theme-bg-sidebar);
-    border-bottom: 1px solid rgba(127, 19, 236, 0.06);
+    border-bottom: 1px solid var(--theme-border-sidebar);
 }
 
 .history-panel__accent-label {
-    color: #a855f7;
+    color: var(--color-brand-light);
+}
+
+/* ── History Items ────────────────────────────────────────────────────────── */
+
+.history-item {
+    border-bottom-color: var(--theme-border);
+    /* left accent border — transparent by default, coloured when pinned */
+    border-left-color: transparent;
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+/* FIX #18: was hover:bg-purple-500/[0.04] (arbitrary value).
+   Replaced with a consistent /8 step to match all other hover states. */
+.history-item:hover {
+    background: rgba(127, 19, 236, 0.08);
+}
+
+/* Pinned modifier: prominent left accent stripe */
+.history-item--pinned {
+    border-left-color: var(--color-brand-light);
+    background: rgba(127, 19, 236, 0.04);
+}
+
+.history-item--pinned:hover {
+    background: rgba(127, 19, 236, 0.1);
+}
+
+/* ── Pin Badge ────────────────────────────────────────────────────────────── */
+
+.history-item__pin-badge {
+    color: var(--color-brand-light);
+    background: rgba(127, 19, 236, 0.12);
+    border: 1px solid rgba(127, 19, 236, 0.2);
+}
+
+/* ── Pin Button (active/pinned state) ────────────────────────────────────── */
+
+.history-item__pin-btn--active {
+    color: var(--color-brand-light);
+    background: rgba(127, 19, 236, 0.12);
+}
+
+.history-item__pin-btn--active:hover {
+    background: rgba(127, 19, 236, 0.2);
+}
+
+/* ── Load Button — keyboard focus fix (Finding #14) ─────────────────────── */
+
+/* The Load button uses opacity-0 / group-hover:opacity-100 for a hover-reveal
+   pattern. This is invisible to keyboard-only users who Tab to it.
+   The fix: reveal it unconditionally on focus-visible, which only fires
+   for keyboard navigation — mouse users see no change in behaviour. */
+.history-item .btn-icon:focus-visible {
+    opacity: 1;
+}
+
+/* ── Export Item ──────────────────────────────────────────────────────────── */
+
+.history-panel__export-item {
+    color: var(--theme-text-muted);
+}
+
+.history-panel__export-item:hover {
+    color: var(--color-brand-light);
+    background: rgba(127, 19, 236, 0.1);
+}
+
+/* ── Empty State ──────────────────────────────────────────────────────────── */
+
+.history-empty__icon {
+    background: rgba(127, 19, 236, 0.08);
+    color: var(--theme-text-secondary);
+    border: 1px solid var(--theme-border);
 }

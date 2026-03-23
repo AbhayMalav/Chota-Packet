@@ -1,7 +1,60 @@
-/* =============================================================
-   OutputCard.css
-   ============================================================= */
+/* OutputCard.css — Styles for the enhanced prompt output card.
+   shimmer-border-top is defined in index.css (shared animation).
+   This file owns: text content area, action bar, copy-success state, code blocks.
+*/
 
-.output-card__footer {
-    min-height: 38px;
+/* ── Output Text Area ─────────────────────────────────────────────────────── */
+
+.output-card__text {
+    color: var(--theme-text);
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 0.875rem;
+}
+
+/* Code blocks inside the output text */
+.output-card__text pre,
+.output-card__text code {
+    background: var(--theme-input-bg);
+    border: 1px solid var(--theme-border);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    color: var(--color-brand-light);
+}
+
+.output-card__text pre {
+    padding: 10px 12px;
+    overflow-x: auto;
+}
+
+/* ── Action Bar ───────────────────────────────────────────────────────────── */
+
+/* Separator line between output text and the action row */
+.output-card__actions {
+    border-top: 1px solid var(--theme-border);
+}
+
+/* ── Copy Button — Copied State ───────────────────────────────────────────── */
+
+/* Shown for ~1.5s after a successful clipboard write.
+   Uses an emerald green matching Tailwind's text-emerald-400. */
+.output-card__copy-btn--copied {
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.1);
+}
+
+.output-card__copy-btn--copied:hover {
+    color: #6ee7b7;
+    background: rgba(52, 211, 153, 0.15);
+}
+
+/* ── Editable output overlay ─────────────────────────────────────────────── */
+
+/* When the output is in edit mode the div gets a light ring */
+.output-card__text[contenteditable="true"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.3) inset;
+    border-radius: 8px;
 }

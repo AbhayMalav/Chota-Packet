@@ -1,32 +1,47 @@
-/* =============================================================
-   OnboardingOverlay.css
-   Covers: dialog card, inner glow, hero icon container.
-   Intentionally NOT using .glass-card — card opacity (0.96)
-   is stronger than the shared glass token (0.8) by design.
-   ============================================================= */
+/* OnboardingOverlay.css — Styles for the first-run onboarding overlay.
+   Shown once, dismissed by the user, never shown again (controlled by LS_ONBOARDED).
+   Entrance animation uses animate-fade-in from index.css.
+*/
 
-/* ── Card ────────────────────────────────────────────────────── */
+/* ── Backdrop ─────────────────────────────────────────────────────────────── */
 
-.onboarding__card {
-    background: rgba(17, 17, 32, 0.96);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(127, 19, 236, 0.22);
+/* FIX: was style={{ background: '#000' }} inline — fully opaque, accessibility
+   failure (no visible app context behind it).
+   Now uses the shared overlay token with 65% opacity in dark, 35% in light. */
+.onboard__backdrop {
+    background: var(--theme-bg-overlay);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
-/* ── Inner glow (decorative ambient ring inside the card) ────── */
+/* ── Card ─────────────────────────────────────────────────────────────────── */
 
-.onboarding__card-glow {
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    box-shadow: inset 0 0 80px rgba(127, 19, 236, 0.06);
+/* will-change promoted only during entrance animation, not permanently */
+.onboard__card {
+    will-change: transform;
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* ── Hero icon container ─────────────────────────────────────── */
+/* ── Step Feature Icons ───────────────────────────────────────────────────── */
 
-.onboarding__hero-icon {
-    background: radial-gradient(circle at center, rgba(127, 19, 236, 0.25) 0%, rgba(127, 19, 236, 0.05) 70%);
+.onboard__feature-icon {
+    background: rgba(127, 19, 236, 0.12);
+    color: var(--color-brand-light);
     border: 1px solid rgba(127, 19, 236, 0.2);
+}
+
+/* ── Progress Dots ────────────────────────────────────────────────────────── */
+
+.onboard__step-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: var(--theme-border);
+    transition: all 0.2s ease;
+}
+
+/* FIX: was bg-purple-500 inline — now uses token */
+.onboard__step-dot--active {
+    background: var(--color-brand-light);
+    width: 18px;
 }

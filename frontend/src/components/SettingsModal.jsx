@@ -133,7 +133,7 @@ export default function SettingsModal({ onClose = () => { }, settings, onShowSho
       ref={dialogRef}
       onClick={handleDisarmClear}
     >
-      <div className="settings__container relative flex flex-col glass-card gradient-border rounded-2xl w-full mx-4 overflow-hidden">
+      <div className="settings__container relative flex flex-col glass-card gradient-border rounded-2xl w-full max-w-md mx-auto overflow-hidden">
 
         {/* Inner glow */}
         <div className="settings__card-glow" aria-hidden="true" />

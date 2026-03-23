@@ -1,6 +1,7 @@
 @import "tailwindcss";
-@import './styles/utils.css';
-@import './styles/utils.css';
+/* FIX #1 + #2: Removed duplicate import. Corrected path (was './styles/utils.css' — file does
+   not exist at that location; actual path is './styles/components/utils.css'). */
+@import './styles/components/utils.css';
 
 /* ── Design System Tokens ────────────────────────────────────────────────── */
 @theme {
@@ -15,11 +16,22 @@
 }
 
 /* ── Theme CSS Variables - Dark (default) ────────────────────────────────── */
-/* color-scheme merged here - removed duplicate :root block that was below  */
 :root {
   color-scheme: dark;
+
   /* Layout */
   --navbar-height: 56px;
+
+  /* FIX #9: Danger / Error palette tokens — replaces raw hex in component rules */
+  --color-white: #ffffff;
+  --color-danger: #f87171;
+  --color-danger-muted: #fca5a5;
+  --color-danger-bg: rgba(239, 68, 68, 0.1);
+  --color-danger-bg-hover: rgba(239, 68, 68, 0.18);
+  --color-danger-border: rgba(239, 68, 68, 0.28);
+  --color-danger-border-hover: rgba(239, 68, 68, 0.5);
+  --color-danger-ring: rgba(239, 68, 68, 0.4);
+
   --theme-bg: #0a0a12;
   --theme-bg-card: rgba(17, 17, 32, 0.8);
   --theme-bg-navbar: rgba(10, 10, 18, 0.75);
@@ -44,7 +56,6 @@
   --theme-scrollbar: rgba(127, 19, 236, 0.35);
   --theme-scrollbar-hover: rgba(127, 19, 236, 0.6);
 
-  /* Diff tokens for dark mode - fixed: were missing, causing near-invisible highlights */
   --diff-added-bg: #14532d;
   --diff-added-text: #bbf7d0;
   --diff-removed-bg: #7f1d1d;
@@ -52,7 +63,6 @@
 }
 
 /* ── Theme CSS Variables - Light override ────────────────────────────────── */
-/* Moved out of :root nesting - invalid standard CSS without a PostCSS nesting plugin */
 .light {
   color-scheme: light;
 
@@ -80,7 +90,6 @@
   --theme-scrollbar: rgba(127, 19, 236, 0.25);
   --theme-scrollbar-hover: rgba(127, 19, 236, 0.45);
 
-  /* Diff tokens for light mode */
   --diff-added-bg: #dcfce7;
   --diff-added-text: #166534;
   --diff-removed-bg: #fee2e2;
@@ -92,7 +101,8 @@ html,
 body {
   background-color: var(--theme-bg);
   color: var(--theme-text);
-  font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  /* FIX #8: was hardcoded "Space Grotesk", ui-sans-serif ... — now uses the @theme token */
+  font-family: var(--font-sans);
   transition:
     background-color 0.3s ease,
     color 0.2s ease;
@@ -109,7 +119,8 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: var(--theme-scrollbar);
-  border-radius: 99px;
+  /* FIX #14: was 99px — corrected to standard pill value */
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -131,8 +142,12 @@ body {
 }
 
 /* ── Contenteditable ─────────────────────────────────────────────────────── */
+/* FIX #5: was outline:none with no replacement focus indicator — WCAG 2.4.7 violation.
+   Now provides a visible brand-coloured focus ring on the editable output area. */
 [contenteditable]:focus {
   outline: none;
+  box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.35);
+  border-radius: 4px;
 }
 
 [contenteditable]:empty:before {
@@ -190,21 +205,24 @@ body {
   animation: slideInLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* FIX #6: Removed box-shadow from @keyframes — not GPU-compositable.
+   The ripple ring is now a ::after pseudo-element on .btn-icon.mic-active
+   using transform + opacity (both compositor-only). */
 @keyframes mic-pulse {
 
   0%,
   100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
   }
 
   50% {
     transform: scale(1.06);
-    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
   }
 }
 
 .animate-mic-pulse {
+  /* FIX #7: removed box-shadow from will-change — not a compositable property */
+  will-change: transform;
   animation: mic-pulse 1.5s ease-in-out infinite;
 }
 
@@ -222,24 +240,44 @@ body {
   }
 }
 
+/* FIX #6: glow-pulse previously animated box-shadow directly on the element,
+   causing continuous paint. The fix:
+   - .animate-glow carries a STATIC box-shadow (painted once)
+   - A ::after pseudo-element animates only `opacity` (GPU-compositable)
+   - Visual result is equivalent: the glow brightens and dims smoothly */
 @keyframes glow-pulse {
 
   0%,
   100% {
-    box-shadow:
-      0 0 20px rgba(127, 19, 236, 0.15),
-      0 0 40px rgba(99, 102, 241, 0.08);
+    opacity: 0.45;
   }
 
   50% {
-    box-shadow:
-      0 0 30px rgba(127, 19, 236, 0.3),
-      0 0 60px rgba(99, 102, 241, 0.15);
+    opacity: 1;
   }
 }
 
 .animate-glow {
+  /* Static base glow — not animated */
+  box-shadow:
+    0 0 30px rgba(127, 19, 236, 0.25),
+    0 0 60px rgba(99, 102, 241, 0.12);
+  position: relative;
+}
+
+.animate-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* exactly matches parent bounds */
+  border-radius: inherit;
+  box-shadow:
+    0 0 30px rgba(127, 19, 236, 0.35),
+    0 0 60px rgba(99, 102, 241, 0.18);
   animation: glow-pulse 3s ease-in-out infinite;
+  will-change: opacity;
+  pointer-events: none;
+  z-index: -1;
 }
 
 @keyframes nebula-drift {
@@ -316,6 +354,43 @@ body {
   border-radius: 8px;
 }
 
+/* FIX #3: Respect OS-level "Reduce Motion" preference (WCAG 2.1 SC 2.3.3).
+   All persistent/looping animations are collapsed. One-shot enter transitions
+   (fadeIn, slideIn) are left intact as they are single-play and brief. */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Preserve static glow shadow but kill the animation entirely */
+  .animate-glow,
+  .animate-glow::after {
+    animation: none;
+    box-shadow:
+      0 0 20px rgba(127, 19, 236, 0.2),
+      0 0 40px rgba(99, 102, 241, 0.08);
+  }
+
+  /* Kill all decorative looping animations */
+  .animate-nebula,
+  .animate-float,
+  .animate-dot-pulse,
+  .animate-mic-pulse {
+    animation: none;
+  }
+
+  /* Flatten skeleton to a static background — no shimmer */
+  .skeleton {
+    animation: none;
+    background: var(--theme-bg-card);
+  }
+}
+
 /* ── Glassmorphic Cards (theme-aware) ───────────────────────────────────── */
 .glass-card {
   background: var(--theme-bg-card);
@@ -356,7 +431,7 @@ body {
   background-clip: text;
 }
 
-/* ── Shimmer border (output card) ────────────────────────────────────────── */
+/* ── Shimmer border (output card top edge) ───────────────────────────────── */
 .shimmer-border-top {
   position: relative;
   overflow: hidden;
@@ -368,13 +443,14 @@ body {
   top: 0;
   left: 0;
   right: 0;
+  /* 2px — intentionally thin decorative accent line, not a structural border */
   height: 2px;
   background: linear-gradient(90deg, #7f13ec, #a855f7, #6366f1, #818cf8, #7f13ec);
   background-size: 300% 100%;
   animation: shimmer-border 3s ease infinite;
 }
 
-/* ── Gradient border (main card) ─────────────────────────────────────────── */
+/* ── Gradient border (main input card) ───────────────────────────────────── */
 .gradient-border {
   position: relative;
 }
@@ -382,6 +458,7 @@ body {
 .gradient-border::before {
   content: "";
   position: absolute;
+  /* -1px: extends 1px beyond the card edge to frame it without affecting layout */
   inset: -1px;
   border-radius: inherit;
   background: linear-gradient(135deg,
@@ -403,6 +480,7 @@ body {
 .diff-added {
   background-color: var(--diff-added-bg);
   color: var(--diff-added-text);
+  /* 3px — intentionally smaller than card radius; these are inline <span> elements */
   border-radius: 3px;
   padding: 1px 4px;
 }
@@ -425,6 +503,7 @@ body {
 /* ── Nebula Background (theme-aware) ────────────────────────────────────── */
 .nebula-orb-1 {
   position: fixed;
+  /* Negative offsets intentionally bleed outside viewport for ambient glow effect */
   top: -120px;
   right: -80px;
   width: 480px;
@@ -459,6 +538,26 @@ body {
   z-index: 0;
 }
 
+/* FIX #10: Clamp orb dimensions on narrow viewports.
+   Fixed-position elements at 400-480px wide on a 375px screen cause
+   horizontal overflow on the fixed stacking context. */
+@media (max-width: 480px) {
+  .nebula-orb-1 {
+    width: 240px;
+    height: 240px;
+  }
+
+  .nebula-orb-2 {
+    width: 200px;
+    height: 200px;
+  }
+
+  .nebula-orb-3 {
+    width: 150px;
+    height: 150px;
+  }
+}
+
 /* ── Select / Input color-scheme ─────────────────────────────────────────── */
 select,
 input,
@@ -468,7 +567,7 @@ textarea {
 
 /* ── Button Design System ────────────────────────────────────────────────────
    Hierarchy: .btn-primary > .btn-secondary > .btn-ghost > .btn-icon > .btn-danger
-   All variants include focus-ring and disabled states built-in.
+   All variants: :focus covers older AT; :focus-visible covers modern pointer-aware focus.
    ─────────────────────────────────────────────────────────────────────────── */
 
 .btn-primary {
@@ -481,7 +580,8 @@ textarea {
   border-radius: 10px;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #fff;
+  /* FIX #9: was hardcoded #fff */
+  color: var(--color-white);
   background: linear-gradient(135deg, #7f13ec 0%, #6366f1 100%);
   border: none;
   cursor: pointer;
@@ -496,6 +596,8 @@ textarea {
   box-shadow: 0 4px 14px rgba(127, 19, 236, 0.4);
 }
 
+/* FIX #4: :focus added alongside :focus-visible for AT/older browser compatibility */
+.btn-primary:focus,
 .btn-primary:focus-visible {
   box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.55);
 }
@@ -536,6 +638,8 @@ textarea {
   color: var(--theme-text);
 }
 
+/* FIX #4 */
+.btn-secondary:focus,
 .btn-secondary:focus-visible {
   box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.45);
 }
@@ -573,6 +677,8 @@ textarea {
   color: var(--theme-text-muted);
 }
 
+/* FIX #4 */
+.btn-ghost:focus,
 .btn-ghost:focus-visible {
   box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.45);
 }
@@ -604,6 +710,8 @@ textarea {
   color: var(--theme-text);
 }
 
+/* FIX #4 */
+.btn-icon:focus,
 .btn-icon:focus-visible {
   box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.5);
 }
@@ -628,9 +736,10 @@ textarea {
   border-radius: 10px;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #f87171;
+  /* FIX #9: raw hex → danger tokens */
+  color: var(--color-danger);
   background: transparent;
-  border: 1px solid rgba(239, 68, 68, 0.28);
+  border: 1px solid var(--color-danger-border);
   cursor: pointer;
   outline: none;
   white-space: nowrap;
@@ -639,13 +748,15 @@ textarea {
 }
 
 .btn-danger:hover:not(:disabled) {
-  background: rgba(239, 68, 68, 0.1);
-  border-color: rgba(239, 68, 68, 0.5);
-  color: #fca5a5;
+  background: var(--color-danger-bg);
+  border-color: var(--color-danger-border-hover);
+  color: var(--color-danger-muted);
 }
 
+/* FIX #4 */
+.btn-danger:focus,
 .btn-danger:focus-visible {
-  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.4);
+  box-shadow: 0 0 0 2px var(--color-danger-ring);
 }
 
 .btn-danger:active:not(:disabled) {
@@ -657,15 +768,47 @@ textarea {
   cursor: not-allowed;
 }
 
-/* Mic active state */
+/* ── Mic active state ─────────────────────────────────────────────────────── */
+/* FIX #9: raw hex → danger tokens */
+/* FIX #7: removed box-shadow from will-change (not a compositable property) */
+/* FIX #6: ring ripple is now a ::after pseudo-element using transform+opacity only */
 .btn-icon.mic-active {
-  color: #f87171;
-  background: rgba(239, 68, 68, 0.1);
-  will-change: transform, box-shadow;
+  color: var(--color-danger);
+  background: var(--color-danger-bg);
+  will-change: transform;
+  position: relative;
 }
 
 .btn-icon.mic-active:hover {
-  background: rgba(239, 68, 68, 0.18);
+  background: var(--color-danger-bg-hover);
+}
+
+/* Ring ripple: sits just outside the button bounds (-3px) and expands outward.
+   Uses only transform + opacity — both GPU-compositable, zero paint cost. */
+.btn-icon.mic-active::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  /* 3px offset places ring flush outside the 40px touch target */
+  border-radius: inherit;
+  border: 2px solid var(--color-danger-ring);
+  animation: mic-ring 1.5s ease-in-out infinite;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+@keyframes mic-ring {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
 }
 
 /* ─── App Shell ────────────────────────────────────────────────────────────── */

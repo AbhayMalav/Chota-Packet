@@ -1,48 +1,73 @@
-/* =============================================================
-   utils.css — Shared theme-token utilities
-   ============================================================= */
+/* utils.css — Semantic utility classes for Chota Packet.
+   All classes here are mapped to theme tokens from index.css.
+   They are the "bridge" between the token system and Tailwind utility usage.
 
-/* ── Color utilities ─────────────────────────────────────────── */
+   ⚠️  This file is imported by index.css as:
+       @import './styles/components/utils.css';
+   Do NOT move or rename this file without updating that import path.
 
+   Convention:
+   - .text-* → typography color utilities
+   - .bg-*   → background color utilities
+   - .touch-target → accessibility sizing
+   - .kbd    → keyboard shortcut display
+*/
+
+/* ── Typography Color Utilities ──────────────────────────────────────────── */
+
+/* Primary content text — headings, labels, body copy */
 .text-theme {
     color: var(--theme-text);
 }
 
+/* Secondary content — timestamps, counters, supplementary info */
 .text-muted {
     color: var(--theme-text-muted);
 }
 
+/* Tertiary content — hints, placeholder-adjacent text, de-emphasised labels */
 .text-secondary {
     color: var(--theme-text-secondary);
 }
 
-.text-brand {
-    color: var(--color-brand-light);
-}
+/* ── Background Utilities ─────────────────────────────────────────────────── */
 
-/* ── Background utilities ────────────────────────────────────── */
-
+/* Input/field background — used on <input>, <select>, <pre> code blocks */
 .bg-input {
-    background: var(--theme-input-bg);
+    background-color: var(--theme-input-bg);
 }
 
-/* ── Keyboard hint ───────────────────────────────────────────── */
-
-.kbd {
-    background: var(--theme-kbd-bg);
-    border: 1px solid var(--theme-kbd-border);
+/* Card surface — same as glass-card background but without backdrop-filter.
+   Use when blur is undesirable (e.g. nested surfaces, code blocks). */
+.bg-card {
+    background-color: var(--theme-bg-card);
 }
 
-/* ── Touch target ────────────────────────────────────────────── */
+/* ── Touch Target ────────────────────────────────────────────────────────── */
 
-/* 44px minimum tap area on mobile (WCAG / Apple HIG),
-   resets to auto on md+ where precise pointer input is assumed */
+/* Enforces WCAG 2.5.5 (Level AAA) and iOS HIG minimum interactive size.
+   44×44px is the smallest tappable area that passes both guidelines.
+   Applied to all interactive elements that are visually smaller than 44px. */
 .touch-target {
     min-height: 44px;
+    min-width: 44px;
 }
 
-@media (min-width: 768px) {
-    .touch-target {
-        min-height: auto;
-    }
+/* ── Keyboard Shortcut Pill ──────────────────────────────────────────────── */
+
+/* Used in ShortcutsModal to render keyboard shortcut labels e.g. Ctrl+K */
+.kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    background: var(--theme-kbd-bg);
+    border: 1px solid var(--theme-kbd-border);
+    color: var(--theme-text-muted);
+    white-space: nowrap;
+    letter-spacing: 0.02em;
 }

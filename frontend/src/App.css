@@ -1,8 +1,13 @@
-/* App.css - intentionally minimal; all theming and design tokens live in index.css.
-   Only document-level layout rules for #root belong here. */
+/* App.css — intentionally minimal; all theming and design tokens live in index.css.
+   Only document-level layout rules for the React root belong here.
 
-#root {
+   NOTE: Long-term, add class="app-container" to <div id="root"> in index.html
+   and migrate this selector to .app-container for cleaner specificity management. */
+
+/* FIX #11: was #root (ID selector) — changed to attribute selector to avoid
+   ID specificity in the cascade. Functional behaviour is identical. */
+[id="root"] {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0;
+  /* FIX: removed padding: 0 — redundant alongside margin: auto centering */
 }

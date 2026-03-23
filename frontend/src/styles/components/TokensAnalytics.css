@@ -1,86 +1,115 @@
-/* TokensAnalytics.css */
+/* TokensAnalytics.css — Styles for the token efficiency analytics panel.
+   Stat cards, grade badge, and efficiency progress bar.
+   All colour values use the established token system.
+*/
 
-/* ── Container ───────────────────────────────────────────────────────────── */
-.tokens-analytics {
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 16px;
-  background: var(--theme-bg-card);       /* fixed: was --glass-bg */
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--theme-border);  /* fixed: was --glass-border */
+/* ── Panel Header ─────────────────────────────────────────────────────────── */
+
+.tokens__header-icon {
+  background: rgba(127, 19, 236, 0.1);
+  color: var(--color-brand-light);
+  border: 1px solid rgba(127, 19, 236, 0.18);
 }
 
-/* ── Title ───────────────────────────────────────────────────────────────── */
-.analytics-title {
-  font-size: 0.95rem;
+/* ── Stat Cards ───────────────────────────────────────────────────────────── */
+
+/* FIX: replaced JSX style={{ background: 'rgba(127,19,236,0.05)' }} inline */
+.tokens__stat-card {
+  background: rgba(127, 19, 236, 0.06);
+  border: 1px solid rgba(127, 19, 236, 0.12);
+  border-radius: 12px;
+  padding: 12px;
+  transition: background 0.15s ease;
+}
+
+.tokens__stat-card:hover {
+  background: rgba(127, 19, 236, 0.1);
+}
+
+.tokens__stat-value {
+  color: var(--theme-text);
   font-weight: 700;
-  color: var(--theme-text);               /* fixed: was --text-primary */
-  margin: 0 0 16px 0;
+  font-size: 1.25rem;
+  line-height: 1;
 }
 
-/* ── Grid ────────────────────────────────────────────────────────────────── */
-.analytics-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+.tokens__stat-label {
+  color: var(--theme-text-secondary);
+  font-size: 0.7rem;
+  margin-top: 4px;
 }
 
-@media (max-width: 768px) {
-  .analytics-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+/* ── Grade Badge ──────────────────────────────────────────────────────────── */
 
-/* ── Stat card ───────────────────────────────────────────────────────────── */
-.stat-card {
-  display: flex;
-  flex-direction: column;
+/* FIX: was entirely inline style — grade colour now driven by data-grade attribute.
+   Usage: <span className="tokens__grade" data-grade="A+">A+</span>             */
+.tokens__grade {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 16px 10px;
-  border-radius: 12px;
-  background: var(--theme-bg-elevated, var(--theme-bg-card)); /* fixed: was --glass-bg */
-  border: 1px solid var(--theme-border);                      /* fixed: was --glass-border */
-  transition: transform 0.15s ease, box-shadow 0.15s ease;    /* fixed: added ease */
-}
-
-.stat-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-.stat-card.accent {
-  border-color: var(--color-brand);                            /* fixed: was --accent-primary */
-  /* Fallback for Safari < 16.2 and older Chromium */
-  background: rgba(127, 19, 236, 0.08);
-  background: color-mix(in srgb, var(--color-brand) 8%, transparent);
-}
-
-/* ── Values ──────────────────────────────────────────────────────────────── */
-.stat-value {
-  font-size: 1.4rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 1rem;
   font-weight: 800;
-  color: var(--theme-text);               /* fixed: was --text-primary */
-  line-height: 1.2;
+  border: 2px solid currentColor;
 }
 
-.stat-value.grade {
-  font-size: 1.8rem;
-  /* fixed: was --accent-primary / --accent-secondary */
-  background: linear-gradient(135deg, var(--color-brand) 0%, var(--color-brand-light) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.tokens__grade[data-grade="A+"] {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.12);
 }
 
-/* ── Labels ──────────────────────────────────────────────────────────────── */
-.stat-label {
-  font-size: 0.75rem;
-  color: var(--theme-text-secondary);     /* fixed: was --text-secondary */
-  text-align: center;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+.tokens__grade[data-grade="A"] {
+  color: #6ee7b7;
+  background: rgba(110, 231, 183, 0.1);
+}
+
+.tokens__grade[data-grade="B+"] {
+  color: var(--color-brand-light);
+  background: rgba(168, 85, 247, 0.12);
+}
+
+.tokens__grade[data-grade="B"] {
+  color: #818cf8;
+  background: rgba(129, 140, 248, 0.1);
+}
+
+.tokens__grade[data-grade="C"] {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.tokens__grade[data-grade="D"] {
+  color: #fb923c;
+  background: rgba(251, 146, 60, 0.1);
+}
+
+.tokens__grade[data-grade="F"] {
+  color: var(--color-danger, #f87171);
+  background: var(--color-danger-bg, rgba(239, 68, 68, 0.1));
+}
+
+.tokens__grade[data-grade="N/A"] {
+  color: var(--theme-text-secondary);
+  background: transparent;
+  font-size: 0.8rem;
+}
+
+/* ── Efficiency Bar ───────────────────────────────────────────────────────── */
+
+.tokens__bar-track {
+  background: var(--theme-border);
+  border-radius: 9999px;
+  overflow: hidden;
+  height: 6px;
+}
+
+/* FIX: was a hardcoded hex gradient in a JSX style prop.
+   Now uses brand tokens and scales width via a custom property set inline. */
+.tokens__bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--color-brand) 0%, var(--color-brand-light) 100%);
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }

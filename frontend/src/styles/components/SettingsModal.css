@@ -1,119 +1,172 @@
-/* =============================================================
-   SettingsModal.css
-   ============================================================= */
+/* SettingsModal.css
+   CRITICAL: All classes use settings__ (double underscore BEM) to match JSX.
+   max-width is owned by Tailwind max-w-md on settings__container in JSX.
+*/
 
-/* ── Modal shell ─────────────────────────────────────────────── */
+/* ── Modal Card ───────────────────────────────────────────────────────────── */
 
 .settings__container {
-    max-width: 480px;
-    max-height: 88vh;
+    max-height: min(640px, calc(100vh - 48px));
 }
+
+/* ── Inner Glow ───────────────────────────────────────────────────────────── */
 
 .settings__card-glow {
     position: absolute;
     inset: 0;
     border-radius: inherit;
+    background: radial-gradient(ellipse at 50% 0%,
+            rgba(127, 19, 236, 0.08) 0%,
+            transparent 65%);
     pointer-events: none;
-    box-shadow: inset 0 0 80px rgba(127, 19, 236, 0.04);
+    z-index: 0;
 }
 
-/* ── Header ──────────────────────────────────────────────────── */
+/* ── Header ───────────────────────────────────────────────────────────────── */
 
 .settings__header {
-    border-color: rgba(127, 19, 236, 0.12);
+    border-bottom: 1px solid var(--theme-border);
+    flex-shrink: 0;
 }
 
 .settings__header-icon {
-    background: rgba(127, 19, 236, 0.15);
-    border: 1px solid rgba(127, 19, 236, 0.28);
-    color: #a855f7;
-}
-
-/* ── Scrollable body ─────────────────────────────────────────── */
-
-.settings__body {
-    scrollbar-width: thin;
-}
-
-/* ── Section icon (SectionLabel reusable component) ──────────── */
-
-.settings__section-icon {
     background: rgba(127, 19, 236, 0.12);
-    border: 1px solid rgba(127, 19, 236, 0.22);
-    color: #a855f7;
+    color: var(--color-brand-light);
+    border: 1px solid rgba(127, 19, 236, 0.2);
 }
 
-/* ── Divider ─────────────────────────────────────────────────── */
+/* ── Divider ──────────────────────────────────────────────────────────────── */
 
 .settings__divider {
     height: 1px;
-    margin: 1.25rem 0;
-    background: linear-gradient(90deg, transparent, rgba(127, 19, 236, 0.18), transparent);
+    background: var(--theme-border);
+    margin: 6px 0;
 }
 
-/* ── Inference mode row ──────────────────────────────────────── */
+/* ── Section Icons ────────────────────────────────────────────────────────── */
+
+.settings__section-icon {
+    background: rgba(127, 19, 236, 0.1);
+    color: var(--color-brand-light);
+    border: 1px solid rgba(127, 19, 236, 0.18);
+}
+
+/* ── Inference Mode Row ───────────────────────────────────────────────────── */
 
 .settings__mode-row--cloud {
-    background: rgba(59, 130, 246, 0.05);
-    border-color: rgba(59, 130, 246, 0.18);
+    background: rgba(96, 165, 250, 0.05);
+    border-color: rgba(96, 165, 250, 0.2);
 }
 
 .settings__mode-row--local {
-    background: rgba(16, 185, 129, 0.05);
-    border-color: rgba(16, 185, 129, 0.18);
+    background: rgba(52, 211, 153, 0.05);
+    border-color: rgba(52, 211, 153, 0.2);
 }
 
-/* ── Inference mode badge ────────────────────────────────────── */
+/* ── Inference Mode Badge ─────────────────────────────────────────────────── */
 
 .settings__mode-badge--cloud {
-    background: rgba(59, 130, 246, 0.1);
     color: #60a5fa;
+    background: rgba(96, 165, 250, 0.1);
 }
 
 .settings__mode-badge--local {
-    background: rgba(16, 185, 129, 0.1);
     color: #34d399;
+    background: rgba(52, 211, 153, 0.1);
 }
 
-/* ── Key saved row ───────────────────────────────────────────── */
+/* ── Model Select ─────────────────────────────────────────────────────────── */
 
-.settings__key-saved-row {
-    background: rgba(0, 0, 0, 0.15);
-    border-color: rgba(127, 19, 236, 0.1);
+.settings__model-select {
+    background: var(--theme-input-bg);
+    color: var(--theme-text);
+    border-color: var(--theme-border);
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
 }
 
-.settings__key-saved-row--confirm {
-    border-color: rgba(239, 68, 68, 0.25);
+.settings__model-select:focus {
+    outline: none;
+    border-color: rgba(127, 19, 236, 0.4);
+    box-shadow: 0 0 0 1px rgba(127, 19, 236, 0.25);
 }
-
-/* ── Confirm/clear button ────────────────────────────────────── */
-
-.settings__clear-btn {
-    color: #f87171;
-    background: transparent;
-    border: 1px solid transparent;
-}
-
-.settings__clear-btn--confirm {
-    background: rgba(239, 68, 68, 0.12);
-    border-color: rgba(239, 68, 68, 0.25);
-}
-
-/* ── Model select options ────────────────────────────────────── */
 
 .settings__model-select option {
     background: var(--theme-option-bg);
+    color: var(--theme-text);
 }
 
-/* ── Shortcuts button ────────────────────────────────────────── */
+/* ── Saved Key Row ────────────────────────────────────────────────────────── */
+
+.settings__key-saved-row {
+    background: rgba(127, 19, 236, 0.05);
+    border-color: rgba(127, 19, 236, 0.15);
+}
+
+.settings__key-saved-row--confirm {
+    background: rgba(239, 68, 68, 0.05);
+    border-color: rgba(239, 68, 68, 0.25);
+}
+
+/* ── Clear Button ─────────────────────────────────────────────────────────── */
+
+.settings__clear-btn {
+    color: var(--theme-text-secondary);
+    background: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+}
+
+.settings__clear-btn:hover {
+    color: var(--theme-text-muted);
+    background: rgba(127, 19, 236, 0.07);
+}
+
+.settings__clear-btn--confirm {
+    color: var(--color-danger, #f87171);
+    border-color: rgba(239, 68, 68, 0.3);
+    background: rgba(239, 68, 68, 0.07);
+}
+
+.settings__clear-btn--confirm:hover {
+    background: rgba(239, 68, 68, 0.14);
+    border-color: rgba(239, 68, 68, 0.5);
+}
+
+/* ── Shortcuts Button ─────────────────────────────────────────────────────── */
 
 .settings__shortcuts-btn {
-    border-color: rgba(127, 19, 236, 0.12);
+    background: var(--theme-input-bg);
+    border-color: var(--theme-border);
+    color: var(--theme-text);
+    border-radius: 12px;
+    transition: all 0.15s ease;
+    cursor: pointer;
 }
 
-/* ── Footer ──────────────────────────────────────────────────── */
+.settings__shortcuts-btn:hover {
+    background: var(--theme-input-bg-hover);
+    border-color: rgba(127, 19, 236, 0.28);
+}
+
+.settings__shortcuts-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.4);
+}
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
 
 .settings__footer {
-    border-color: rgba(127, 19, 236, 0.1);
-    background: rgba(0, 0, 0, 0.12);
+    border-top: 1px solid var(--theme-border);
+    flex-shrink: 0;
+}
+
+/* ── Body ─────────────────────────────────────────────────────────────────── */
+
+.settings__body {
+    scrollbar-width: thin;
+    scrollbar-color: var(--theme-scrollbar) transparent;
 }
