@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { STYLES, TONES, LEVELS, OUT_LANGS } from '../constants'
+import { SparklesIcon, RegenerateIcon } from './icons'
+import '../styles/components/ControlBar.css'
+
 
 // ── Spinner (shared by Enhance button) ───────────────────────────────────────
 function LoadSpinner() {
@@ -15,6 +18,7 @@ function LoadSpinner() {
   )
 }
 
+
 // ── PillSelect ────────────────────────────────────────────────────────────────
 function PillSelect({ id, label, value, onChange, options, disabled }) {
   const [open, setOpen] = useState(false)
@@ -25,7 +29,6 @@ function PillSelect({ id, label, value, onChange, options, disabled }) {
   const selectedIndex = options.findIndex((o) => o.value === value)
   const selectedLabel = options[selectedIndex]?.label || ''
 
-  // Reset focused index to current selection when opening
   const openDropdown = useCallback(() => {
     if (disabled) return
     setFocusedIndex(selectedIndex >= 0 ? selectedIndex : 0)
@@ -39,7 +42,6 @@ function PillSelect({ id, label, value, onChange, options, disabled }) {
     closeDropdown()
   }, [onChange, closeDropdown])
 
-  // Close on outside click
   useEffect(() => {
     if (!open) return
     const handleOutside = (e) => {
@@ -51,7 +53,6 @@ function PillSelect({ id, label, value, onChange, options, disabled }) {
     return () => document.removeEventListener('mousedown', handleOutside)
   }, [open, closeDropdown])
 
-  // Focus the highlighted option in the DOM when index changes
   useEffect(() => {
     if (open) optionRefs.current[focusedIndex]?.focus()
   }, [open, focusedIndex])
@@ -99,11 +100,10 @@ function PillSelect({ id, label, value, onChange, options, disabled }) {
   const listboxId = `${id}-listbox`
 
   return (
-    <div className="flex flex-col gap-1 flex-1 min-w-[100px] relative" ref={dropdownRef}>
+    <div className="flex flex-col gap-1 flex-1 pill-select relative" ref={dropdownRef}>
       <label
         htmlFor={id}
-        className="text-[10px] font-bold uppercase tracking-widest"
-        style={{ color: 'var(--theme-text-muted)' }}
+        className="text-muted text-[10px] font-bold uppercase tracking-widest"
       >
         {label}
       </label>
@@ -119,7 +119,8 @@ function PillSelect({ id, label, value, onChange, options, disabled }) {
         onKeyDown={handleTriggerKeyDown}
         disabled={disabled}
         className={[
-          'flex items-center justify-between rounded-full border text-xs px-3 py-2 min-h-[44px] md:min-h-auto',
+          'pill-select__trigger touch-target',
+          'flex items-center justify-between rounded-full border text-xs px-3 py-2',
           'focus:outline-none focus:border-purple-500/40 focus:ring-1 focus:ring-purple-500/30',
           'disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-all duration-200',
           'hover:border-purple-500/30',
@@ -127,10 +128,6 @@ function PillSelect({ id, label, value, onChange, options, disabled }) {
             ? 'border-purple-500/40 ring-1 ring-purple-500/30'
             : 'border-purple-500/15',
         ].join(' ')}
-        style={{
-          background: open ? 'var(--theme-input-bg-focus)' : 'var(--theme-input-bg)',
-          color: 'var(--theme-text)',
-        }}
       >
         <span className="truncate pr-2">{selectedLabel}</span>
         <svg
@@ -152,36 +149,36 @@ function PillSelect({ id, label, value, onChange, options, disabled }) {
           id={listboxId}
           role="listbox"
           aria-label={label}
-          className="absolute left-0 top-full mt-1.5 w-full min-w-[130px] rounded-2xl glass-card shadow-xl z-50 animate-fade-in overflow-hidden"
+          className="pill-select__dropdown absolute left-0 top-full mt-1.5 w-full rounded-2xl glass-card shadow-xl z-50 animate-fade-in overflow-hidden"
         >
-          <div className="max-h-60 overflow-y-auto overflow-x-hidden py-1.5"> 
-          {options.map((o, index) => (
-            <button
-              key={o.value}
-              id={`${id}-opt-${index}`}
-              role="option"
-              aria-selected={o.value === value}
-              tabIndex={-1}
-              ref={(el) => (optionRefs.current[index] = el)}
-              onClick={() => selectOption(o.value)}
-              onKeyDown={(e) => handleOptionKeyDown(e, index)}
-              className={[
-                'w-full text-left px-3 py-2 text-xs transition-all duration-150',
-                o.value === value
-                  ? 'bg-purple-500/15 text-purple-400 font-medium'
-                  : 'hover:bg-purple-500/10 hover:text-purple-400',
-              ].join(' ')}
-              style={{ color: o.value === value ? undefined : 'var(--theme-text)' }}
-            >
-              {o.label}
-            </button>
-          ))}
+          <div className="max-h-60 overflow-y-auto overflow-x-hidden py-1.5">
+            {options.map((o, index) => (
+              <button
+                key={o.value}
+                id={`${id}-opt-${index}`}
+                role="option"
+                aria-selected={o.value === value}
+                tabIndex={-1}
+                ref={(el) => (optionRefs.current[index] = el)}
+                onClick={() => selectOption(o.value)}
+                onKeyDown={(e) => handleOptionKeyDown(e, index)}
+                className={[
+                  'pill-select__option w-full text-left px-3 py-2 text-xs transition-all duration-150',
+                  o.value === value
+                    ? 'bg-purple-500/15 text-purple-400 font-medium'
+                    : 'hover:bg-purple-500/10 hover:text-purple-400',
+                ].join(' ')}
+              >
+                {o.label}
+              </button>
+            ))}
           </div>
         </div>
       )}
     </div>
   )
 }
+
 
 // ── ModelPill ─────────────────────────────────────────────────────────────────
 function ModelPill({ models, selectedModel, onModelChange, loading }) {
@@ -276,22 +273,21 @@ function ModelPill({ models, selectedModel, onModelChange, loading }) {
         aria-expanded={open}
         aria-controls="model-pill-listbox"
         className={[
-          'flex items-center gap-1.5 px-3 py-2 min-h-[44px] md:min-h-auto rounded-full border text-xs font-medium whitespace-nowrap',
+          'model-pill__trigger touch-target',
+          'flex items-center gap-1.5 px-3 py-2 rounded-full border text-xs font-medium whitespace-nowrap',
           'focus:outline-none focus-ring transition-all duration-200',
           isEmpty || loading
             ? 'border-purple-500/10 text-gray-600 opacity-40 cursor-not-allowed'
             : 'border-purple-500/20 text-purple-300 hover:border-purple-500/40 hover:bg-purple-500/8 hover:text-purple-200',
           open ? 'border-purple-500/40 ring-1 ring-purple-500/25' : '',
         ].join(' ')}
-        style={{ background: 'var(--theme-input-bg)' }}
       >
-        {/* chip icon */}
         <svg viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3 flex-shrink-0 opacity-70" aria-hidden="true">
           <path d="M13 7H7v6h6V7z" />
           <path fillRule="evenodd" d="M7 2a1 1 0 012 0v1h2V2a1 1 0 112 0v1h2a2 2 0 012 2v2h1a1 1 0 110 2h-1v2h1a1 1 0 110 2h-1v2a2 2 0 01-2 2h-2v1a1 1 0 11-2 0v-1H9v1a1 1 0 11-2 0v-1H5a2 2 0 01-2-2v-2H2a1 1 0 110-2h1V9H2a1 1 0 010-2h1V5a2 2 0 012-2h2V2zM5 5h10v10H5V5z" clipRule="evenodd" />
         </svg>
 
-        <span className="truncate max-w-[120px]">{isEmpty ? 'No models' : truncated}</span>
+        <span className="truncate model-pill__label">{isEmpty ? 'No models' : truncated}</span>
 
         {!isEmpty && !loading && (
           <svg
@@ -311,43 +307,43 @@ function ModelPill({ models, selectedModel, onModelChange, loading }) {
           role="listbox"
           aria-label="Select model"
           className="absolute right-0 top-full mt-1.5 w-64 rounded-2xl glass-card shadow-xl z-50 animate-fade-in overflow-hidden"
->
-  <div className="max-h-56 overflow-y-auto overflow-x-hidden py-1.5">
-          {models.map((m, index) => (
-            <button
-              key={m.id}
-              id={`model-opt-${index}`}
-              role="option"
-              aria-selected={m.id === selectedModel}
-              tabIndex={-1}
-              ref={(el) => (optionRefs.current[index] = el)}
-              onClick={() => selectModel(m.id)}
-              onKeyDown={(e) => handleOptionKeyDown(e, index)}
-              className={[
-                'w-full text-left px-3 py-2.5 transition-all duration-150',
-                m.id === selectedModel
-                  ? 'bg-purple-500/15 text-purple-400'
-                  : 'hover:bg-purple-500/10 hover:text-purple-400',
-              ].join(' ')}
-              style={{ color: m.id === selectedModel ? undefined : 'var(--theme-text)' }}
-            >
-              <p className={`text-xs font-medium truncate ${m.id === selectedModel ? 'text-purple-400' : ''}`}>
-                {m.name}
-              </p>
-              {m.context_length && (
-                <p className="text-[10px] text-gray-600 mt-0.5">
-                  {m.context_length.toLocaleString()} ctx
-                  {m.cost_per_1k_tokens === 0 && ' · free'}
+        >
+          <div className="max-h-56 overflow-y-auto overflow-x-hidden py-1.5">
+            {models.map((m, index) => (
+              <button
+                key={m.id}
+                id={`model-opt-${index}`}
+                role="option"
+                aria-selected={m.id === selectedModel}
+                tabIndex={-1}
+                ref={(el) => (optionRefs.current[index] = el)}
+                onClick={() => selectModel(m.id)}
+                onKeyDown={(e) => handleOptionKeyDown(e, index)}
+                className={[
+                  'model-pill__option w-full text-left px-3 py-2.5 transition-all duration-150',
+                  m.id === selectedModel
+                    ? 'bg-purple-500/15 text-purple-400'
+                    : 'hover:bg-purple-500/10 hover:text-purple-400',
+                ].join(' ')}
+              >
+                <p className={`text-xs font-medium truncate ${m.id === selectedModel ? 'text-purple-400' : ''}`}>
+                  {m.name}
                 </p>
-              )}
-            </button>
-          ))}
+                {m.context_length && (
+                  <p className="text-[10px] text-gray-600 mt-0.5">
+                    {m.context_length.toLocaleString()} ctx
+                    {m.cost_per_1k_tokens === 0 && ' · free'}
+                  </p>
+                )}
+              </button>
+            ))}
           </div>
         </div>
       )}
     </div>
   )
 }
+
 
 // ── ControlBar ────────────────────────────────────────────────────────────────
 export default function ControlBar({
@@ -378,7 +374,7 @@ export default function ControlBar({
           disabled={!canEnhance || loading}
           aria-label="Enhance prompt"
           className={[
-            'flex-1 flex items-center justify-center gap-2 py-3 min-h-[44px] rounded-full',
+            'touch-target flex-1 flex items-center justify-center gap-2 py-3 rounded-full',
             'gradient-brand text-white font-semibold text-sm tracking-wide',
             'shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40 hover:brightness-110',
             'active:brightness-90 active:scale-[0.98]',
@@ -386,7 +382,7 @@ export default function ControlBar({
             'transition-all duration-200',
           ].join(' ')}
         >
-          {loading ? <LoadSpinner /> : <span aria-hidden="true">✦</span>}
+          {loading ? <LoadSpinner /> : <SparklesIcon className="w-3.5 h-3.5" />}
           {loading ? 'Enhancing…' : 'Enhance'}
         </button>
 
@@ -401,12 +397,12 @@ export default function ControlBar({
             title="Regenerate with variation"
             aria-label="Regenerate"
             className={[
-              'flex items-center gap-1.5 px-4 py-3 min-h-[44px] rounded-full border border-purple-500/25',
+              'touch-target flex items-center gap-1.5 px-4 py-3 rounded-full border border-purple-500/25',
               'text-purple-400 text-sm font-medium',
               'hover:bg-purple-500/10 hover:border-purple-500/40 transition-all duration-200 whitespace-nowrap',
             ].join(' ')}
           >
-            <span>↺</span>
+            <RegenerateIcon className="w-3.5 h-3.5" />
             <span>Regen</span>
           </button>
         )}

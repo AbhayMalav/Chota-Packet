@@ -1,0 +1,48 @@
+/* =============================================================
+   utils.css — Shared theme-token utilities
+   ============================================================= */
+
+/* ── Color utilities ─────────────────────────────────────────── */
+
+.text-theme {
+    color: var(--theme-text);
+}
+
+.text-muted {
+    color: var(--theme-text-muted);
+}
+
+.text-secondary {
+    color: var(--theme-text-secondary);
+}
+
+.text-brand {
+    color: var(--color-brand-light);
+}
+
+/* ── Background utilities ────────────────────────────────────── */
+
+.bg-input {
+    background: var(--theme-input-bg);
+}
+
+/* ── Keyboard hint ───────────────────────────────────────────── */
+
+.kbd {
+    background: var(--theme-kbd-bg);
+    border: 1px solid var(--theme-kbd-border);
+}
+
+/* ── Touch target ────────────────────────────────────────────── */
+
+/* 44px minimum tap area on mobile (WCAG / Apple HIG),
+   resets to auto on md+ where precise pointer input is assumed */
+.touch-target {
+    min-height: 44px;
+}
+
+@media (min-width: 768px) {
+    .touch-target {
+        min-height: auto;
+    }
+}

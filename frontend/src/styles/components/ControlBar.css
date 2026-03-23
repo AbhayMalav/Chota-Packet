@@ -1,0 +1,49 @@
+/* =============================================================
+   ControlBar.css
+   Covers: PillSelect, ModelPill, pill dimensions, state-driven
+   backgrounds via aria-expanded selector.
+   ============================================================= */
+
+/* ── PillSelect ──────────────────────────────────────────────── */
+
+.pill-select {
+    min-width: 100px;
+}
+
+/* State-driven background replaces the inline style={{ background }} pattern.
+   Uses the aria-expanded attribute already on the button — no JS class toggling needed. */
+.pill-select__trigger {
+    background: var(--theme-input-bg);
+    color: var(--theme-text);
+}
+
+.pill-select__trigger[aria-expanded="true"] {
+    background: var(--theme-input-bg-focus);
+}
+
+.pill-select__dropdown {
+    min-width: 130px;
+}
+
+/* Unselected option color — selected state is handled by Tailwind text-purple-400 */
+.pill-select__option {
+    color: var(--theme-text);
+}
+
+/* ── ModelPill ───────────────────────────────────────────────── */
+
+.model-pill__trigger {
+    background: var(--theme-input-bg);
+}
+
+.model-pill__trigger[aria-expanded="true"] {
+    background: var(--theme-input-bg-focus);
+}
+
+.model-pill__label {
+    max-width: 120px;
+}
+
+.model-pill__option {
+    color: var(--theme-text);
+}

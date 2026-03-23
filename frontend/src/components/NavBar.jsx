@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 // ── NavBtn ────────────────────────────────────────────────────────────────────
 export function NavBtn({ onClick = () => { }, label, icon: Icon, active }) {
   if (import.meta.env.DEV && !Icon) {
@@ -26,6 +27,7 @@ export function NavBtn({ onClick = () => { }, label, icon: Icon, active }) {
   )
 }
 
+
 // ── KbdHint ───────────────────────────────────────────────────────────────────
 export function KbdHint({ keys, action }) {
   // Render nothing if either prop is missing
@@ -35,18 +37,12 @@ export function KbdHint({ keys, action }) {
   const keyList = Array.isArray(keys) ? keys : [keys]
 
   return (
-    <div className="flex items-center gap-1.5 text-xs" style={{ color: 'var(--theme-text-secondary)' }}>
+    <div className="text-secondary flex items-center gap-1.5 text-xs">
       <span className="flex items-center gap-1">
         {keyList.map((key, i) => (
           <React.Fragment key={key}>
             {i > 0 && <span className="opacity-50">+</span>}
-            <kbd
-              className="px-1.5 py-0.5 rounded text-[0.7rem] font-mono font-semibold"
-              style={{
-                background: 'var(--theme-kbd-bg)',
-                border: '1px solid var(--theme-kbd-border)',
-              }}
-            >
+            <kbd className="kbd px-1.5 py-0.5 rounded text-[0.7rem] font-mono font-semibold">
               {key}
             </kbd>
           </React.Fragment>

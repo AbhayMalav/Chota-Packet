@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import useRecorder from '../hooks/useRecorder'
 import { MicIcon, StopIcon, XIcon } from './icons'
 
+
 // Inline spinner - matches ControlBar's LoadSpinner pattern
 function Spinner() {
   return (
@@ -17,10 +18,12 @@ function Spinner() {
   )
 }
 
+
 export default function MicButton({ onTranscript = () => { }, lang }) {
   const { recording, error, start, stop } = useRecorder({ onTranscript, lang })
   const [starting, setStarting] = useState(false)
   const [dismissed, setDismissed] = useState(false)
+
 
   // Reset dismissed state whenever a new error arrives
   const prevError = React.useRef(null)
@@ -28,6 +31,7 @@ export default function MicButton({ onTranscript = () => { }, lang }) {
     prevError.current = error
     if (error) setDismissed(false)
   }
+
 
   const handleClick = async () => {
     if (recording) { stop(); return }
@@ -38,6 +42,7 @@ export default function MicButton({ onTranscript = () => { }, lang }) {
       setStarting(false)
     }
   }
+
 
   const errorMessage = error
     ? (error instanceof Error ? error.message : String(error))
@@ -51,6 +56,7 @@ export default function MicButton({ onTranscript = () => { }, lang }) {
       ? 'Stop recording'
       : 'Start voice input'
 
+
   return (
     <div className="flex flex-col items-end gap-1.5">
 
@@ -59,20 +65,11 @@ export default function MicButton({ onTranscript = () => { }, lang }) {
         disabled={isDisabled}
         aria-label={ariaLabel}
         title={ariaLabel}
-        style={{ willChange: recording ? 'transform, box-shadow' : 'auto' }}
         className={[
           'btn-icon',
-          // Active recording state
-          recording
-            ? 'mic-active animate-mic-pulse'
-            : '',
-          // Reduced-motion fallback: static red ring instead of pulse
-          recording
-            ? 'motion-reduce:animate-none motion-reduce:ring-2 motion-reduce:ring-red-500/60'
-            : '',
-          isDisabled
-            ? 'opacity-50 cursor-not-allowed'
-            : '',
+          recording ? 'mic-active animate-mic-pulse' : '',
+          recording ? 'motion-reduce:animate-none motion-reduce:ring-2 motion-reduce:ring-red-500/60' : '',
+          isDisabled ? 'opacity-50 cursor-not-allowed' : '',
         ].filter(Boolean).join(' ')}
       >
         {starting
@@ -95,8 +92,7 @@ export default function MicButton({ onTranscript = () => { }, lang }) {
           <button
             onClick={() => setDismissed(true)}
             aria-label="Dismiss microphone error"
-            className="flex-shrink-0 mt-0.5 transition-colors"
-            style={{ color: 'rgba(248,113,113,0.6)' }}
+            className="text-red-400/60 flex-shrink-0 mt-0.5 transition-colors"
           >
             <XIcon className="w-3 h-3" />
           </button>

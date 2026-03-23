@@ -1,10 +1,13 @@
 import React, { useMemo } from 'react'
 import { diff_match_patch } from 'diff-match-patch'
+import { XIcon } from './icons'
+
 
 // diff operation constants
 const DIFF_DELETE = -1
 const DIFF_INSERT = 1
 const DIFF_EQUAL = 0
+
 
 export default function DiffView({ original, enhanced, onClose }) {
   const diffs = useMemo(() => {
@@ -33,7 +36,7 @@ export default function DiffView({ original, enhanced, onClose }) {
     >
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold" style={{ color: 'var(--theme-text)' }}>
+        <h3 className="text-theme text-sm font-semibold">
           Changes
         </h3>
         <button
@@ -41,27 +44,27 @@ export default function DiffView({ original, enhanced, onClose }) {
           onClick={onClose}
           aria-label="Close diff view"
         >
-          ✕
+          <XIcon className="w-4 h-4" />
         </button>
       </div>
 
       {/* Legend */}
-      <div className="flex items-center gap-4 text-xs" style={{ color: 'var(--theme-text-secondary)' }}>
+      <div className="text-secondary flex items-center gap-4 text-xs">
         <span><span className="diff-added px-1">added</span></span>
         <span><span className="diff-removed px-1">removed</span></span>
       </div>
 
       {/* Diff content */}
-      <div className="text-sm leading-relaxed" style={{ color: 'var(--theme-text)' }}>
+      <div className="text-theme text-sm leading-relaxed">
         {diffs.length === 0 && (
-          <p style={{ color: 'var(--theme-text-muted)' }}>
+          <p className="text-muted">
             Nothing to compare yet.
           </p>
         )}
 
         {noDifferences && (
-          <p style={{ color: 'var(--theme-text-muted)' }}>
-            No differences - the texts are identical.
+          <p className="text-muted">
+            No differences — the texts are identical.
           </p>
         )}
 

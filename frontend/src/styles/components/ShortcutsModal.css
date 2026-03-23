@@ -1,15 +1,8 @@
-/* ── Overlay ─────────────────────────────────────────────────────────────── */
-
-/* fadeIn defined locally - no implicit dependency on index.css */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
+/* =============================================================
+   ShortcutsModal.css
+   Note: fadeIn keyframes removed — use .animate-fade-in from
+   index.css instead. scaleUp is unique to this modal, kept here.
+   ============================================================= */
 
 @keyframes scaleUp {
   from {
@@ -23,6 +16,9 @@
   }
 }
 
+
+/* ── Overlay ─────────────────────────────────────────────────── */
+
 .shortcuts-overlay {
   position: fixed;
   inset: 0;
@@ -33,10 +29,12 @@
   background: var(--theme-bg-overlay);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  animation: fadeIn 0.2s ease-out;
+  /* fadeIn removed — animate-fade-in class added in JSX instead */
 }
 
-/* ── Modal card ──────────────────────────────────────────────────────────── */
+
+/* ── Modal card ──────────────────────────────────────────────── */
+
 .shortcuts-modal {
   width: min(420px, 90vw);
   padding: 28px 24px 22px;
@@ -47,7 +45,9 @@
   animation: scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* ── Header ──────────────────────────────────────────────────────────────── */
+
+/* ── Header ──────────────────────────────────────────────────── */
+
 .shortcuts-header {
   display: flex;
   align-items: center;
@@ -60,7 +60,6 @@
   font-weight: 700;
   color: var(--theme-text);
   margin: 0;
-  /* Transparent outline replaced outline:none - visible on focus for keyboard users */
   outline: 2px solid transparent;
   outline-offset: 2px;
   border-radius: 4px;
@@ -70,26 +69,11 @@
   outline-color: rgba(127, 19, 236, 0.5);
 }
 
-.shortcuts-close {
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--theme-text-muted);
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
+/* .shortcuts-close removed — btn-icon already handles all hover/focus states */
 
-.shortcuts-close:hover,
-.shortcuts-close:focus-visible {
-  background: var(--theme-input-bg-hover);
-  color: var(--theme-text);
-  border-color: var(--theme-border);
-  outline: none;
-}
 
-/* ── Shortcuts list ──────────────────────────────────────────────────────── */
+/* ── Shortcuts list ──────────────────────────────────────────── */
+
 .shortcuts-list {
   list-style: none;
   margin: 0;
@@ -114,7 +98,9 @@
   border-color: var(--theme-border);
 }
 
-/* ── Key chips ───────────────────────────────────────────────────────────── */
+
+/* ── Key chips ───────────────────────────────────────────────── */
+
 .shortcut-keys {
   display: flex;
   align-items: center;
@@ -155,7 +141,9 @@
   font-weight: 500;
 }
 
-/* ── Error state ─────────────────────────────────────────────────────────── */
+
+/* ── Error state ─────────────────────────────────────────────── */
+
 .shortcuts-error {
   padding: 16px;
   border-radius: 8px;
@@ -165,6 +153,10 @@
   font-size: 0.9rem;
   text-align: center;
 }
+
+
+/* ── Body ────────────────────────────────────────────────────── */
+
 .shortcuts-body {
   display: flex;
   flex-direction: column;

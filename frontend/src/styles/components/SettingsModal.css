@@ -1,0 +1,119 @@
+/* =============================================================
+   SettingsModal.css
+   ============================================================= */
+
+/* ── Modal shell ─────────────────────────────────────────────── */
+
+.settings__container {
+    max-width: 480px;
+    max-height: 88vh;
+}
+
+.settings__card-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 0 0 80px rgba(127, 19, 236, 0.04);
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+
+.settings__header {
+    border-color: rgba(127, 19, 236, 0.12);
+}
+
+.settings__header-icon {
+    background: rgba(127, 19, 236, 0.15);
+    border: 1px solid rgba(127, 19, 236, 0.28);
+    color: #a855f7;
+}
+
+/* ── Scrollable body ─────────────────────────────────────────── */
+
+.settings__body {
+    scrollbar-width: thin;
+}
+
+/* ── Section icon (SectionLabel reusable component) ──────────── */
+
+.settings__section-icon {
+    background: rgba(127, 19, 236, 0.12);
+    border: 1px solid rgba(127, 19, 236, 0.22);
+    color: #a855f7;
+}
+
+/* ── Divider ─────────────────────────────────────────────────── */
+
+.settings__divider {
+    height: 1px;
+    margin: 1.25rem 0;
+    background: linear-gradient(90deg, transparent, rgba(127, 19, 236, 0.18), transparent);
+}
+
+/* ── Inference mode row ──────────────────────────────────────── */
+
+.settings__mode-row--cloud {
+    background: rgba(59, 130, 246, 0.05);
+    border-color: rgba(59, 130, 246, 0.18);
+}
+
+.settings__mode-row--local {
+    background: rgba(16, 185, 129, 0.05);
+    border-color: rgba(16, 185, 129, 0.18);
+}
+
+/* ── Inference mode badge ────────────────────────────────────── */
+
+.settings__mode-badge--cloud {
+    background: rgba(59, 130, 246, 0.1);
+    color: #60a5fa;
+}
+
+.settings__mode-badge--local {
+    background: rgba(16, 185, 129, 0.1);
+    color: #34d399;
+}
+
+/* ── Key saved row ───────────────────────────────────────────── */
+
+.settings__key-saved-row {
+    background: rgba(0, 0, 0, 0.15);
+    border-color: rgba(127, 19, 236, 0.1);
+}
+
+.settings__key-saved-row--confirm {
+    border-color: rgba(239, 68, 68, 0.25);
+}
+
+/* ── Confirm/clear button ────────────────────────────────────── */
+
+.settings__clear-btn {
+    color: #f87171;
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+.settings__clear-btn--confirm {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.25);
+}
+
+/* ── Model select options ────────────────────────────────────── */
+
+.settings__model-select option {
+    background: var(--theme-option-bg);
+}
+
+/* ── Shortcuts button ────────────────────────────────────────── */
+
+.settings__shortcuts-btn {
+    border-color: rgba(127, 19, 236, 0.12);
+}
+
+/* ── Footer ──────────────────────────────────────────────────── */
+
+.settings__footer {
+    border-color: rgba(127, 19, 236, 0.1);
+    background: rgba(0, 0, 0, 0.12);
+}

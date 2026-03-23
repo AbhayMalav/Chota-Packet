@@ -1,0 +1,87 @@
+/* =============================================================
+   HistoryPanel.css
+   Covers: EmptyState, HistoryItem, panel layout, search, headers
+   ============================================================= */
+
+/* ── Empty state ─────────────────────────────────────────────── */
+
+.history-empty__icon {
+    background: rgba(127, 19, 236, 0.08);
+    border: 1px solid rgba(127, 19, 236, 0.12);
+    color: rgba(127, 19, 236, 0.35);
+}
+
+/* ── History item ────────────────────────────────────────────── */
+
+.history-item {
+    border-bottom-color: rgba(127, 19, 236, 0.08);
+    border-left-color: transparent;
+    transition: border-left-color 0.15s ease;
+}
+
+.history-item:hover {
+    border-left-color: rgba(168, 85, 247, 0.4);
+}
+
+/* Pinned state — accent strip holds on hover too */
+.history-item--pinned,
+.history-item--pinned:hover {
+    border-left-color: #a855f7;
+}
+
+.history-item__pin-badge {
+    background: rgba(168, 85, 247, 0.12);
+    color: #a855f7;
+}
+
+.history-item__pin-btn--active {
+    color: #a855f7;
+}
+
+/* ── Panel header ────────────────────────────────────────────── */
+
+.history-panel__header {
+    border-color: rgba(127, 19, 236, 0.12);
+}
+
+.history-panel__header-icon {
+    background: rgba(127, 19, 236, 0.1);
+    border: 1px solid rgba(127, 19, 236, 0.18);
+    color: #a855f7;
+}
+
+/* ── Export dropdown ─────────────────────────────────────────── */
+
+.history-panel__export-item {
+    color: var(--theme-text);
+}
+
+/* ── Search ──────────────────────────────────────────────────── */
+
+.history-panel__search-section {
+    border-color: rgba(127, 19, 236, 0.08);
+}
+
+.history-panel__search-input {
+    background: var(--theme-input-bg);
+    color: var(--theme-text);
+    border-color: rgba(127, 19, 236, 0.12);
+    min-height: 36px;
+}
+
+/* ── Items list ──────────────────────────────────────────────── */
+
+.history-panel__list {
+    scrollbar-width: thin;
+}
+
+/* ── Section headers (Pinned / Recent) ───────────────────────── */
+
+.history-panel__section-header {
+    background: var(--theme-bg-sidebar);
+    border-bottom: 1px solid rgba(127, 19, 236, 0.06);
+}
+
+.history-panel__accent-label {
+    color: #a855f7;
+}

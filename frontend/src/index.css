@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import './styles/utils.css';
+@import './styles/utils.css';
 
 /* ── Design System Tokens ────────────────────────────────────────────────── */
 @theme {
@@ -16,7 +18,8 @@
 /* color-scheme merged here - removed duplicate :root block that was below  */
 :root {
   color-scheme: dark;
-
+  /* Layout */
+  --navbar-height: 56px;
   --theme-bg: #0a0a12;
   --theme-bg-card: rgba(17, 17, 32, 0.8);
   --theme-bg-navbar: rgba(10, 10, 18, 0.75);
@@ -663,4 +666,18 @@ textarea {
 
 .btn-icon.mic-active:hover {
   background: rgba(239, 68, 68, 0.18);
+}
+
+/* ─── App Shell ────────────────────────────────────────────────────────────── */
+
+/* Full-viewport shell — wraps everything including the navbar */
+.app-root {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Content area below the sticky navbar.
+   Uses --navbar-height so resizing the nav never requires touching this rule. */
+.app-layout {
+  min-height: calc(100vh - var(--navbar-height));
 }

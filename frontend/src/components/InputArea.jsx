@@ -1,4 +1,7 @@
 import React, { useRef, useEffect } from 'react'
+import { ExclamationTriangleIcon } from './icons'
+import '../styles/components/InputArea.css'
+
 
 export default function InputArea({
   value = '',
@@ -11,6 +14,7 @@ export default function InputArea({
   const charCount = value.length
   const isOverLimit = inputLimit != null && charCount > inputLimit
 
+
   // Auto-resize textarea up to 280px
   useEffect(() => {
     const el = textareaRef.current
@@ -18,6 +22,7 @@ export default function InputArea({
     el.style.height = 'auto'
     el.style.height = Math.min(el.scrollHeight, 280) + 'px'
   }, [value])
+
 
   return (
     <div className="flex flex-col gap-2">
@@ -46,38 +51,27 @@ export default function InputArea({
           }}
           placeholder="Type or paste your prompt here…"
           rows={4}
-          className="w-full resize-none rounded-xl border border-purple-500/15
+          className="input-area__textarea bg-input text-theme w-full resize-none rounded-xl border border-purple-500/15
                      px-4 py-3.5 text-sm leading-relaxed min-h-[44px]
                      focus:outline-none focus:border-purple-500/40
                      focus:ring-1 focus:ring-purple-500/30
-                     focus:bg-[var(--theme-input-bg-focus)]
                      transition-all duration-200 focus-ring"
-          style={{
-            background: 'var(--theme-input-bg)',
-            color: 'var(--theme-text)',        // fixed: --theme-input-text does not exist
-          }}
           aria-label="Prompt input"
-          aria-describedby="char-count"        // fixed: id now actually exists on the span below
+          aria-describedby="char-count"
         />
       </div>
 
       {/* Footer: counter + mic + clear */}
       <div className="flex items-center justify-between px-3 pb-3 pt-1 gap-2">
-        {/*
-          id="char-count" wires the aria-describedby on the textarea.
-          aria-live="polite" replaces the removed role="alert" duplicate -
-          screen readers will announce the counter change without a visual duplicate.
-        */}
         <span
           id="char-count"
           aria-live="polite"
-          className={`text-xs transition-colors ${isOverLimit
-              ? 'text-red-400 font-medium'
-              : 'text-[var(--theme-text-secondary)]'
+          className={`flex items-center gap-1 text-xs transition-colors ${isOverLimit ? 'text-red-400 font-medium' : 'text-secondary'
             }`}
         >
+          {isOverLimit && <ExclamationTriangleIcon className="w-3 h-3 flex-shrink-0" />}
           {isOverLimit
-            ? `⚠ Limit exceeded (${charCount}/${inputLimit} chars)`
+            ? `Limit exceeded (${charCount}/${inputLimit} chars)`
             : inputLimit != null
               ? `${charCount} / ${inputLimit}`
               : `${charCount}`}

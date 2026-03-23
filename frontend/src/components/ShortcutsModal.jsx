@@ -1,60 +1,57 @@
 import React, { useEffect, useRef } from 'react'
-import './ShortcutsModal.css'
+import { XIcon } from './icons'
+import '../styles/components/ShortcutsModal.css'
 
-// ─── Icon ─────────────────────────────────────────────────────────────────────
-
-const IconX = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M18 6 6 18M6 6l12 12" />
-  </svg>
-)
 
 // ─── Shortcut definitions — must exactly match bindings in App.jsx ────────────
+
 
 const SHORTCUT_GROUPS = [
   {
     group: 'Enhance',
     items: [
-      { keys: ['Ctrl', 'Enter'],         desc: 'Enhance prompt'             },
-      { keys: ['Ctrl', 'Shift', 'R'],    desc: 'Regenerate (variant)'       },
+      { keys: ['Ctrl', 'Enter'], desc: 'Enhance prompt' },
+      { keys: ['Ctrl', 'Shift', 'R'], desc: 'Regenerate (variant)' },
     ],
   },
   {
     group: 'Output',
     items: [
-      { keys: ['Ctrl', 'Shift', 'C'],    desc: 'Copy output to clipboard'   },
-      { keys: ['Ctrl', 'Shift', 'X'],    desc: 'Clear output only'          },
-      { keys: ['Ctrl', 'K'],             desc: 'Clear everything'           },
+      { keys: ['Ctrl', 'Shift', 'C'], desc: 'Copy output to clipboard' },
+      { keys: ['Ctrl', 'Shift', 'X'], desc: 'Clear output only' },
+      { keys: ['Ctrl', 'K'], desc: 'Clear everything' },
     ],
   },
   {
     group: 'Panels',
     items: [
-      { keys: ['Ctrl', 'H'],             desc: 'Toggle history panel'       },
-      { keys: ['Ctrl', ','],             desc: 'Open settings'              },
-      { keys: ['Ctrl', 'I'],             desc: 'Toggle shortcuts panel'     },
-      { keys: ['Ctrl', 'Shift', 'D'],    desc: 'Toggle dark / light mode'   },
-      { keys: ['Escape'],                desc: 'Close any open panel'       },
+      { keys: ['Ctrl', 'H'], desc: 'Toggle history panel' },
+      { keys: ['Ctrl', ','], desc: 'Open settings' },
+      { keys: ['Ctrl', 'I'], desc: 'Toggle shortcuts panel' },
+      { keys: ['Ctrl', 'Shift', 'D'], desc: 'Toggle dark / light mode' },
+      { keys: ['Escape'], desc: 'Close any open panel' },
     ],
   },
   {
     group: 'Level presets',
     items: [
-      { keys: ['Alt', '1'],              desc: 'Level → Basic'              },
-      { keys: ['Alt', '2'],              desc: 'Level → Detailed'           },
-      { keys: ['Alt', '3'],              desc: 'Level → Advanced'           },
-      { keys: ['Alt', '4'],              desc: 'Level → Chain of Thought'   },
-      { keys: ['Alt', '5'],              desc: 'Level → Meta'               },
+      { keys: ['Alt', '1'], desc: 'Level → Basic' },
+      { keys: ['Alt', '2'], desc: 'Level → Detailed' },
+      { keys: ['Alt', '3'], desc: 'Level → Advanced' },
+      { keys: ['Alt', '4'], desc: 'Level → Chain of Thought' },
+      { keys: ['Alt', '5'], desc: 'Level → Meta' },
     ],
   },
 ]
 
+
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function ShortcutsModal({ onClose = () => {} }) {
+
+export default function ShortcutsModal({ onClose = () => { } }) {
   const dialogRef = useRef(null)
-  const titleRef  = useRef(null)
+  const titleRef = useRef(null)
+
 
   // Focus trap + Escape handler
   useEffect(() => {
@@ -84,12 +81,12 @@ export default function ShortcutsModal({ onClose = () => {} }) {
       const focusable = Array.from(dialog.querySelectorAll(focusableSelectors))
       if (!focusable.length) return
       const first = focusable[0]
-      const last  = focusable[focusable.length - 1]
+      const last = focusable[focusable.length - 1]
 
       if (e.shiftKey) {
         if (document.activeElement === first) { e.preventDefault(); last.focus() }
       } else {
-        if (document.activeElement === last)  { e.preventDefault(); first.focus() }
+        if (document.activeElement === last) { e.preventDefault(); first.focus() }
       }
     }
 
@@ -100,6 +97,7 @@ export default function ShortcutsModal({ onClose = () => {} }) {
     }
   }, [onClose])
 
+
   const handleBackdropClick = (e) => {
     if (e.target === dialogRef.current) {
       if (import.meta.env.DEV) console.debug('[ShortcutsModal] Closed via backdrop')
@@ -107,10 +105,11 @@ export default function ShortcutsModal({ onClose = () => {} }) {
     }
   }
 
+
   return (
     <div
       ref={dialogRef}
-      className="shortcuts-overlay"
+      className="shortcuts-overlay animate-fade-in"
       onClick={handleBackdropClick}
       role="dialog"
       aria-modal="true"
@@ -129,14 +128,14 @@ export default function ShortcutsModal({ onClose = () => {} }) {
             Keyboard Shortcuts
           </h2>
           <button
-            className="shortcuts-close btn-icon"
+            className="btn-icon"
             aria-label="Close shortcuts"
             onClick={() => {
               if (import.meta.env.DEV) console.debug('[ShortcutsModal] Closed via button')
               onClose()
             }}
           >
-            <IconX />
+            <XIcon className="w-4 h-4" />
           </button>
         </div>
 
@@ -145,7 +144,6 @@ export default function ShortcutsModal({ onClose = () => {} }) {
           {SHORTCUT_GROUPS.map((group) => (
             <div key={group.group} className="shortcut-group">
 
-              {/* Group label */}
               <p className="shortcut-group-label">{group.group}</p>
 
               <ul className="shortcuts-list">

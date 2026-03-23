@@ -5,8 +5,11 @@ import {
   SearchIcon, PinIcon, DownloadIcon,
   HistoryIcon, LoadIcon, XIcon, ChevronDownIcon,
 } from './icons'
+import '../styles/components/HistoryPanel.css'
+
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
+
 
 function exportItems(items, format = 'json') {
   const content =
@@ -31,6 +34,7 @@ function exportItems(items, format = 'json') {
   }
 }
 
+
 function timeAgo(ts) {
   const diff = Date.now() - ts
   if (diff < 60_000) return 'Just now'
@@ -39,25 +43,20 @@ function timeAgo(ts) {
   return new Date(ts).toLocaleDateString()
 }
 
+
 // ── Empty state ───────────────────────────────────────────────────────────────
+
 
 function EmptyState({ isFiltered }) {
   return (
     <div className="flex flex-col items-center justify-center py-16 px-6 text-center">
-      <div
-        className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4"
-        style={{
-          background: 'rgba(127,19,236,0.08)',
-          border: '1px solid rgba(127,19,236,0.12)',
-          color: 'rgba(127,19,236,0.35)',
-        }}
-      >
+      <div className="history-empty__icon w-12 h-12 rounded-2xl flex items-center justify-center mb-4">
         <HistoryIcon className="w-5 h-5" />
       </div>
-      <p className="text-sm font-semibold mb-1" style={{ color: 'var(--theme-text-muted)' }}>
+      <p className="text-muted text-sm font-semibold mb-1">
         {isFiltered ? 'No matches found' : 'No history yet'}
       </p>
-      <p className="text-[11px] leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+      <p className="text-secondary text-[11px] leading-relaxed">
         {isFiltered
           ? 'Try a different search term.'
           : 'Enhanced prompts will appear here.'}
@@ -66,42 +65,24 @@ function EmptyState({ isFiltered }) {
   )
 }
 
+
 // ── History item ──────────────────────────────────────────────────────────────
+
 
 function HistoryItem({ item, onSelect, onPin, onUnpin }) {
   return (
     <div
-      className="group relative flex gap-3 px-4 py-3.5 transition-all duration-150
-                 border-b border-l-2 cursor-pointer
-                 hover:bg-purple-500/[0.04]"
-      style={{
-        borderBottomColor: 'rgba(127,19,236,0.08)',
-        borderLeftColor: item.pinned ? '#a855f7' : 'transparent',
-      }}
-      onMouseEnter={(e) => {
-        if (!item.pinned) e.currentTarget.style.borderLeftColor = 'rgba(168,85,247,0.4)'
-      }}
-      onMouseLeave={(e) => {
-        if (!item.pinned) e.currentTarget.style.borderLeftColor = 'transparent'
-      }}
+      className={`history-item group relative flex gap-3 px-4 py-3.5 transition-all duration-150 border-b border-l-2 cursor-pointer hover:bg-purple-500/[0.04]${item.pinned ? ' history-item--pinned' : ''}`}
     >
-      {/* Pin indicator strip colour is handled by borderLeftColor above */}
-
       {/* Content */}
       <div className="flex-1 min-w-0" onClick={() => onSelect?.(item)}>
         {/* Meta row */}
         <div className="flex items-center gap-1.5 mb-1.5">
-          <span className="text-[10px] font-medium" style={{ color: 'var(--theme-text-secondary)' }}>
+          <span className="text-secondary text-[10px] font-medium">
             {timeAgo(item.ts)}
           </span>
           {item.pinned && (
-            <span
-              className="flex items-center gap-0.5 text-[10px] font-semibold px-1.5 py-0.5 rounded-full"
-              style={{
-                background: 'rgba(168,85,247,0.12)',
-                color: '#a855f7',
-              }}
-            >
+            <span className="history-item__pin-badge flex items-center gap-0.5 text-[10px] font-semibold px-1.5 py-0.5 rounded-full">
               <PinIcon className="w-2.5 h-2.5" filled />
               Pinned
             </span>
@@ -109,15 +90,12 @@ function HistoryItem({ item, onSelect, onPin, onUnpin }) {
         </div>
 
         {/* Input preview */}
-        <p className="text-xs font-semibold truncate mb-0.5" style={{ color: 'var(--theme-text)' }}>
+        <p className="text-theme text-xs font-semibold truncate mb-0.5">
           {item.input}
         </p>
 
         {/* Enhanced preview */}
-        <p
-          className="text-[11px] line-clamp-2 leading-relaxed"
-          style={{ color: 'var(--theme-text-secondary)' }}
-        >
+        <p className="text-secondary text-[11px] line-clamp-2 leading-relaxed">
           {item.enhanced}
         </p>
       </div>
@@ -129,11 +107,7 @@ function HistoryItem({ item, onSelect, onPin, onUnpin }) {
           onClick={() => (item.pinned ? onUnpin(item.ts) : onPin(item))}
           aria-label={item.pinned ? 'Unpin prompt' : 'Pin prompt'}
           title={item.pinned ? 'Unpin' : 'Pin'}
-          className="btn-icon w-7 h-7 min-w-0 min-h-0 rounded-lg transition-all duration-150"
-          style={{
-            color: item.pinned ? '#a855f7' : undefined,
-            opacity: item.pinned ? 1 : undefined,
-          }}
+          className={`btn-icon w-7 h-7 min-w-0 min-h-0 rounded-lg transition-all duration-150${item.pinned ? ' history-item__pin-btn--active' : ''}`}
         >
           <PinIcon className="w-3.5 h-3.5" filled={item.pinned} />
         </button>
@@ -143,8 +117,7 @@ function HistoryItem({ item, onSelect, onPin, onUnpin }) {
           onClick={() => onSelect?.(item)}
           aria-label="Load this prompt"
           title="Load prompt"
-          className="btn-icon w-7 h-7 min-w-0 min-h-0 rounded-lg
-                     opacity-0 group-hover:opacity-100 transition-all duration-150"
+          className="btn-icon w-7 h-7 min-w-0 min-h-0 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-150"
         >
           <LoadIcon className="w-3.5 h-3.5" />
         </button>
@@ -153,7 +126,9 @@ function HistoryItem({ item, onSelect, onPin, onUnpin }) {
   )
 }
 
+
 // ── Main component ────────────────────────────────────────────────────────────
+
 
 export default function HistoryPanel({ history = [], onSelect, open, onClose }) {
   const { pinned, pin, unpin } = usePinned()
@@ -162,6 +137,7 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
   const dropdownRef = useRef(null)
   const searchRef = useRef(null)
   const isDesktop = useMediaQuery('(min-width: 1024px)')
+
 
   // Close export dropdown on outside click
   useEffect(() => {
@@ -175,6 +151,7 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
     return () => document.removeEventListener('mousedown', handle)
   }, [exportOpen])
 
+
   // Focus search when panel opens on mobile
   useEffect(() => {
     if (!isDesktop && open) {
@@ -182,7 +159,9 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
     }
   }, [open, isDesktop])
 
+
   if (!isDesktop && !open) return null
+
 
   const allItems = [
     ...pinned.map((p) => ({ ...p, pinned: true })),
@@ -198,36 +177,28 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
     )
   })
 
+
   const pinnedItems = allItems.filter((i) => i.pinned)
   const historyItems = allItems.filter((i) => !i.pinned)
   const isFiltered = search.trim().length > 0
   const isEmpty = allItems.length === 0
 
+
   const panelContent = (
     <div className="flex flex-col h-full">
 
       {/* ── Header ── */}
-      <div
-        className="flex items-center justify-between px-4 py-3.5 flex-shrink-0 border-b"
-        style={{ borderColor: 'rgba(127,19,236,0.12)' }}
-      >
+      <div className="history-panel__header flex items-center justify-between px-4 py-3.5 flex-shrink-0 border-b">
         <div className="flex items-center gap-2">
-          <span
-            className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
-            style={{
-              background: 'rgba(127,19,236,0.1)',
-              border: '1px solid rgba(127,19,236,0.18)',
-              color: '#a855f7',
-            }}
-          >
+          <span className="history-panel__header-icon w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0">
             <HistoryIcon className="w-3.5 h-3.5" />
           </span>
           <div>
-            <h2 className="text-sm font-bold leading-none" style={{ color: 'var(--theme-text)' }}>
+            <h2 className="text-theme text-sm font-bold leading-none">
               History
             </h2>
             {allItems.length > 0 && (
-              <p className="text-[10px] mt-0.5" style={{ color: 'var(--theme-text-secondary)' }}>
+              <p className="text-secondary text-[10px] mt-0.5">
                 {allItems.length} {allItems.length === 1 ? 'entry' : 'entries'}
                 {pinnedItems.length > 0 && ` · ${pinnedItems.length} pinned`}
               </p>
@@ -253,13 +224,9 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
               {exportOpen && (
                 <div
                   role="menu"
-                  className="absolute right-0 top-full mt-1.5 w-40 rounded-xl glass-card
-                             shadow-xl shadow-black/20 py-1 z-10 animate-fade-in overflow-hidden"
+                  className="absolute right-0 top-full mt-1.5 w-40 rounded-xl glass-card shadow-xl shadow-black/20 py-1 z-10 animate-fade-in overflow-hidden"
                 >
-                  <p
-                    className="px-3 pt-2 pb-1 text-[10px] font-bold uppercase tracking-widest"
-                    style={{ color: 'var(--theme-text-secondary)' }}
-                  >
+                  <p className="text-secondary px-3 pt-2 pb-1 text-[10px] font-bold uppercase tracking-widest">
                     Export as
                   </p>
                   {[
@@ -270,9 +237,7 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
                       key={fmt}
                       role="menuitem"
                       onClick={() => { exportItems(allItems, fmt); setExportOpen(false) }}
-                      className="w-full text-left px-3 py-2 text-xs transition-all duration-150
-                                 hover:bg-purple-500/10 hover:text-purple-400 flex items-center gap-2"
-                      style={{ color: 'var(--theme-text)' }}
+                      className="history-panel__export-item w-full text-left px-3 py-2 text-xs transition-all duration-150 hover:bg-purple-500/10 hover:text-purple-400 flex items-center gap-2"
                     >
                       <DownloadIcon className="w-3 h-3 opacity-50" />
                       {label}
@@ -297,15 +262,9 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
       </div>
 
       {/* ── Search ── */}
-      <div
-        className="px-4 py-3 flex-shrink-0 border-b"
-        style={{ borderColor: 'rgba(127,19,236,0.08)' }}
-      >
+      <div className="history-panel__search-section px-4 py-3 flex-shrink-0 border-b">
         <div className="relative">
-          <span
-            className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
-            style={{ color: 'var(--theme-text-secondary)' }}
-          >
+          <span className="text-secondary absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
             <SearchIcon className="w-3.5 h-3.5" />
           </span>
           <input
@@ -315,23 +274,13 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search prompts…"
             aria-label="Search history"
-            className="w-full pl-8 pr-3 py-2 rounded-lg text-xs border
-                       focus:outline-none focus:border-purple-500/40
-                       focus:ring-1 focus:ring-purple-500/20
-                       transition-all duration-200"
-            style={{
-              background: 'var(--theme-input-bg)',
-              color: 'var(--theme-text)',
-              borderColor: 'rgba(127,19,236,0.12)',
-              minHeight: '36px',
-            }}
+            className="history-panel__search-input w-full pl-8 pr-3 py-2 rounded-lg text-xs border focus:outline-none focus:border-purple-500/40 focus:ring-1 focus:ring-purple-500/20 transition-all duration-200"
           />
           {search && (
             <button
               onClick={() => setSearch('')}
               aria-label="Clear search"
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 transition-colors"
-              style={{ color: 'var(--theme-text-secondary)' }}
+              className="text-secondary absolute right-2.5 top-1/2 -translate-y-1/2 transition-colors"
             >
               <XIcon className="w-3.5 h-3.5" />
             </button>
@@ -340,7 +289,7 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
       </div>
 
       {/* ── Items ── */}
-      <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: 'thin' }}>
+      <div className="history-panel__list flex-1 overflow-y-auto">
         {isEmpty ? (
           <EmptyState isFiltered={isFiltered} />
         ) : (
@@ -348,18 +297,9 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
             {/* Pinned section */}
             {pinnedItems.length > 0 && (
               <>
-                <div
-                  className="px-4 py-2 flex items-center gap-1.5 sticky top-0"
-                  style={{
-                    background: 'var(--theme-bg-sidebar)',
-                    borderBottom: '1px solid rgba(127,19,236,0.06)',
-                  }}
-                >
-                  <PinIcon className="w-3 h-3" filled style={{ color: '#a855f7' }} />
-                  <span
-                    className="text-[10px] font-bold uppercase tracking-widest"
-                    style={{ color: '#a855f7' }}
-                  >
+                <div className="history-panel__section-header px-4 py-2 flex items-center gap-1.5 sticky top-0">
+                  <PinIcon className="history-panel__accent-label w-3 h-3" filled />
+                  <span className="history-panel__accent-label text-[10px] font-bold uppercase tracking-widest">
                     Pinned
                   </span>
                 </div>
@@ -379,18 +319,9 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
             {historyItems.length > 0 && (
               <>
                 {pinnedItems.length > 0 && (
-                  <div
-                    className="px-4 py-2 flex items-center gap-1.5 sticky top-0"
-                    style={{
-                      background: 'var(--theme-bg-sidebar)',
-                      borderBottom: '1px solid rgba(127,19,236,0.06)',
-                    }}
-                  >
-                    <HistoryIcon className="w-3 h-3" style={{ color: 'var(--theme-text-secondary)' }} />
-                    <span
-                      className="text-[10px] font-bold uppercase tracking-widest"
-                      style={{ color: 'var(--theme-text-secondary)' }}
-                    >
+                  <div className="history-panel__section-header px-4 py-2 flex items-center gap-1.5 sticky top-0">
+                    <HistoryIcon className="text-secondary w-3 h-3" />
+                    <span className="text-secondary text-[10px] font-bold uppercase tracking-widest">
                       Recent
                     </span>
                   </div>
@@ -412,11 +343,11 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
     </div>
   )
 
+
   if (isDesktop) {
     return (
       <div
         className="flex flex-col h-full w-72 flex-shrink-0 glass-sidebar"
-        style={{ borderRight: '1px solid rgba(127,19,236,0.12)' }}
         role="complementary"
         aria-label="Session history"
       >
@@ -424,6 +355,7 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
       </div>
     )
   }
+
 
   return (
     <>
@@ -434,7 +366,6 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
       />
       <div
         className="fixed left-0 top-0 h-full w-80 z-50 flex flex-col animate-slide-in-left glass-sidebar"
-        style={{ borderRight: '1px solid rgba(127,19,236,0.12)' }}
         role="complementary"
         aria-label="Session history"
       >

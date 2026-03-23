@@ -1,0 +1,13 @@
+/* =============================================================
+   InputArea.css
+   Covers: textarea theme-aware background states.
+   Auto-resize height is handled via JS (intentional) — not CSS.
+   ============================================================= */
+
+.input-area__textarea {
+    max-height: 280px;
+}
+
+.input-area__textarea:focus {
+    background: var(--theme-input-bg-focus);
+}
