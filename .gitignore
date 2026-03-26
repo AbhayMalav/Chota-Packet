@@ -2,6 +2,7 @@
 /.venv
 /backend/__pycache__
 /backend/tests
+/backend/.venv
 backend/test_failures.txt
 backend/.coverage
 backend/out.txt

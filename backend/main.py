@@ -1,20 +1,3 @@
-"""
-main.py - Chota Packet FastAPI application entry point.
-
-Responsibilities:
-  - Define the FastAPI app with CORS configured for allowed origins (NF-S1, A6)
-  - Lifespan context manager that:
-      1. Checks ffmpeg availability (FR-38)
-      2. Validates enhancement prompts (FR-27)
-      3. Loads ML models (FR-09) - dual-mode (real / mock stub)
-      4. Sets app.state flags for health endpoint
-  - Include all routers from routes.py
-  - Structured logging
-
-Usage:
-    uvicorn main:app --reload --host 0.0.0.0 --port 8000
-"""
-
 from __future__ import annotations
 
 import logging
@@ -39,8 +22,22 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+_SEPARATOR = "=" * 60
+
+
+# ─────────────────────────── Helpers ─────────────────────────────────────────
+
+
+def _make_error_state(error_msg: str) -> ModelState:
+    """Return a ModelState that signals a failed / unloaded backend."""
+    state = ModelState()
+    state.loaded = False
+    state.load_error = error_msg
+    return state
+
 
 # ─────────────────────────── Lifespan ────────────────────────────────────────
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
@@ -48,64 +45,96 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     Server startup / shutdown lifecycle (FR-09, FR-19, FR-27, FR-38).
 
     On startup:
-      1. ffmpeg check
+      1. ffmpeg availability check
       2. Enhancement prompt validation
       3. Model loading (real or mock)
     On shutdown:
-      (No cleanup needed - models are GC'd automatically)
+      Logs clean shutdown (models are GC'd automatically).
     """
-    logger.info("=" * 60)
+    logger.info(_SEPARATOR)
     logger.info("  Chota Packet Backend - Starting Up")
-    logger.info("=" * 60)
+    logger.info(_SEPARATOR)
 
-    # 1. ffmpeg check (FR-38)
+    # Pre-initialise app.state.models to a safe default so that any route
+    # accessing it before or after a failed startup never hits AttributeError.
+    app.state.models = _make_error_state("Startup incomplete")
+
+    # ── 1. ffmpeg check (FR-38) ───────────────────────────────────────────────
     ffmpeg_ok = check_ffmpeg()
     app.state.ffmpeg_available = ffmpeg_ok
+    if not ffmpeg_ok:
+        logger.warning(
+            "[lifespan] ffmpeg not found on PATH. "
+            "Audio/video transcription features will be unavailable. "
+            "Install ffmpeg and restart to enable."
+        )
 
-    # 2. Validate enhancement system prompts (FR-27)
+    # ── 2. Validate enhancement system prompts (FR-27) ───────────────────────
     missing = validate_enhancement_prompts()
     if missing:
+        error_msg = f"Missing enhancement prompts for levels: {missing}"
         logger.error(
-            "FATAL: Enhancement system prompts missing for levels: %s. "
-            "Check enhancement_prompts.py.",
+            "[lifespan] FATAL: Enhancement system prompts missing for levels: %s. "
+            "Check enhancement_prompts.py. Server will start in degraded mode.",
             missing,
         )
-        state = ModelState()
-        state.loaded = False
-        state.load_error = f"Missing enhancement prompts for: {missing}"
-        app.state.models = state
+        app.state.models = _make_error_state(error_msg)
+
     else:
-        # 3. Load ML models (FR-09, FR-19)
+        # ── 3. Load ML models (FR-09, FR-19) ─────────────────────────────────
         try:
             state = load_models()
             app.state.models = state
             if state.mock_mode:
                 logger.info(
-                    "🟡 Running in MOCK MODE - real model weights not found.\n"
-                    "   Drop LoRA adapter in backend/models/mt5_lora_merged/ and restart."
+                    "[lifespan] Running in MOCK MODE - real model weights not found. "
+                    "Drop LoRA adapter in backend/models/mt5_lora_merged/ and restart."
                 )
             else:
-                logger.info("🟢 Real inference mode - both models loaded.")
+                logger.info("[lifespan] Real inference mode - both models loaded successfully.")
         except RuntimeError as exc:
-            logger.error("❌ Model loading failed: %s", exc)
-            state = ModelState()
-            state.loaded = False
-            state.load_error = str(exc)
-            app.state.models = state
+            logger.error(
+                "[lifespan] Model loading failed (RuntimeError): %s",
+                exc,
+                exc_info=True,
+            )
+            app.state.models = _make_error_state(str(exc))
+        except Exception as exc:
+            # Catches ImportError, OSError, MemoryError, torch errors, etc.
+            # Without this, the exception escapes the lifespan, the server
+            # crashes, and app.state.models is never set — causing AttributeError
+            # on every subsequent request.
+            logger.error(
+                "[lifespan] Unexpected error during model loading: %s",
+                exc,
+                exc_info=True,
+            )
+            app.state.models = _make_error_state(
+                f"Unexpected model load failure: {type(exc).__name__}: {exc}"
+            )
 
-    logger.info("=" * 60)
-    logger.info("  Startup complete. Backend ready at http://localhost:8000")
-    logger.info(
-        "  Health: http://localhost:8000/health | Docs: http://localhost:8000/docs"
-    )
-    logger.info("=" * 60)
+    # ── Startup summary ───────────────────────────────────────────────────────
+    models_state: ModelState = app.state.models
+    if models_state.loaded:
+        status_line = "STATUS: OK" + (" (mock mode)" if models_state.mock_mode else "")
+    else:
+        status_line = f"STATUS: DEGRADED — {models_state.load_error}"
+
+    logger.info(_SEPARATOR)
+    logger.info("  Startup complete.")
+    logger.info("  ffmpeg: %s", "available" if ffmpeg_ok else "NOT FOUND")
+    logger.info("  Models: %s", status_line)
+    logger.info("  Health : http://localhost:8000/health")
+    logger.info("  Docs   : http://localhost:8000/docs")
+    logger.info(_SEPARATOR)
 
     yield  # ← application runs here
 
-    logger.info("Chota Packet Backend - Shutting down.")
+    logger.info("[lifespan] Chota Packet Backend - Shutting down cleanly.")
 
 
 # ─────────────────────────── FastAPI app ─────────────────────────────────────
+
 
 app = FastAPI(
     title="Chota Packet API",
@@ -120,12 +149,14 @@ app = FastAPI(
 )
 
 # CORS middleware — allow_methods="*" ensures OPTIONS preflight is handled
-# automatically by Starlette for all routes (NF-S1, A6)
+# automatically by Starlette for all routes (NF-S1, A6).
+# allow_credentials MUST be False when allow_origins contains wildcards;
+# browsers block credentialed requests to wildcard origins per the CORS spec.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
     allow_credentials=False,
-    allow_methods=["*"],          # ← FIXED: was ["GET", "POST"], OPTIONS was blocked
+    allow_methods=["*"],
     allow_headers=["Content-Type", "X-OpenRouter-Key"],
 )
 

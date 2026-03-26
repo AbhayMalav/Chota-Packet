@@ -4,62 +4,74 @@ models.py - Model loading, inference, and post-processing for Chota Packet.
 Architecture:
   - Dual-mode: if backend/models/mt5_lora_merged/ exists  →  real mT5 + Whisper inference
                otherwise                                   →  mock stub mode (dev/CI friendly)
-  - When real weights are ready, drop them in and restart - no code change needed.
+  - When real weights are ready, drop them in and restart — no code change needed.
   - float32 is used unconditionally on CPU (R-02: float16 crashes on CPU).
+  - All audio is decoded via ffmpeg → raw float32 PCM before inference,
+    which supports every format routes.py accepts (MP3, WebM, OGG, WAV).
 """
 
 from __future__ import annotations
 
-import os
 import io
-import re
 import logging
+import os
+import re
 import subprocess
 from collections import Counter
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Any, Optional
 
 import numpy as np
 
 from config import (
-    MT5_MODEL_DIR,
-    WHISPER_MODEL_ID,
-    TARGET_SAMPLE_RATE,
-    MAX_NEW_TOKENS,
-    NUM_BEAMS,
-    VARIANT_TEMPERATURE,
+    DEVANAGARI_END,
+    DEVANAGARI_START,
+    HALLUCINATION_MAX_REPEATS,
     HALLUCINATION_MIN_TOKENS,
     HALLUCINATION_NGRAM,
-    HALLUCINATION_MAX_REPEATS,
-    TASK_PREFIXES,
+    MAX_NEW_TOKENS,
+    MT5_MODEL_DIR,
+    NUM_BEAMS,
     STYLE_MAP,
+    TASK_PREFIXES,
+    TARGET_SAMPLE_RATE,
     TONE_MAP,
-    DEVANAGARI_START,
-    DEVANAGARI_END,
+    VARIANT_TEMPERATURE,
+    WHISPER_MODEL_ID,
 )
 
 logger = logging.getLogger(__name__)
 
+# Tokenizer input cap for mT5 — system_prompt + prefix + user text combined.
+# 512 is safe for mT5-small; raise to 1024 if you observe silent truncation.
+# Add MAX_TOKENIZER_INPUT_TOKENS to config.py to override.
+try:
+    from config import MAX_TOKENIZER_INPUT_TOKENS
+except ImportError:
+    MAX_TOKENIZER_INPUT_TOKENS = 512
+
 
 # ─────────────────────────── State container ──────────────────────────────────
+
 
 @dataclass
 class ModelState:
     """Holds all loaded model objects. Stored in app.state.models."""
 
-    mock_mode: bool = True                  # True until real weights are found
+    mock_mode: bool = True  # True until real weights are confirmed present
 
-    # Real model objects (populated only in production mode)
-    whisper_processor: object = field(default=None, repr=False)
-    whisper_model: object = field(default=None, repr=False)
-    mt5_tokenizer: object = field(default=None, repr=False)
-    mt5_model: object = field(default=None, repr=False)
+    # Real model objects — None in mock mode; typed as Any until HF stubs are available
+    whisper_processor: Optional[Any] = field(default=None, repr=False)
+    whisper_model: Optional[Any] = field(default=None, repr=False)
+    mt5_tokenizer: Optional[Any] = field(default=None, repr=False)
+    mt5_model: Optional[Any] = field(default=None, repr=False)
 
     loaded: bool = False
     load_error: Optional[str] = None
 
 
 # ─────────────────────────── Model loading ────────────────────────────────────
+
 
 def load_models() -> ModelState:
     """
@@ -75,12 +87,11 @@ def load_models() -> ModelState:
         RuntimeError if real model directory exists but loading fails.
     """
     state = ModelState()
-
     real_model_exists = os.path.isdir(MT5_MODEL_DIR)
 
     if not real_model_exists:
         logger.warning(
-            "⚡ MOCK MODE: '%s' not found. Using stub inference. "
+            "[load_models] MOCK MODE: '%s' not found. Using stub inference. "
             "Drop trained LoRA weights there and restart for real inference.",
             MT5_MODEL_DIR,
         )
@@ -88,42 +99,56 @@ def load_models() -> ModelState:
         state.loaded = True
         return state
 
-    # ── Real model loading ───────────────────────────────────────────────────
-    logger.info("Loading real models from %s ...", MT5_MODEL_DIR)
+    logger.info("[load_models] Real model directory found at '%s'. Loading ...", MT5_MODEL_DIR)
+
     try:
         import torch
         from transformers import (
             MT5ForConditionalGeneration,
             T5Tokenizer,
-            WhisperProcessor,
             WhisperForConditionalGeneration,
+            WhisperProcessor,
         )
 
-        # Whisper Tiny - HuggingFace Hub (cached after first download)
-        logger.info("  Loading Whisper Tiny ...")
+        # Whisper Tiny — HuggingFace Hub (cached after first download)
+        logger.info("[load_models] Loading Whisper Tiny (%s) ...", WHISPER_MODEL_ID)
         state.whisper_processor = WhisperProcessor.from_pretrained(WHISPER_MODEL_ID)
         state.whisper_model = WhisperForConditionalGeneration.from_pretrained(
             WHISPER_MODEL_ID,
-            torch_dtype=torch.float32,   # float16 crashes on CPU (R-02)
+            torch_dtype=torch.float32,  # float16 crashes on CPU (R-02)
         )
         state.whisper_model.eval()
+        logger.info("[load_models] Whisper Tiny loaded.")
 
         # mT5-small + merged LoRA adapter
-        logger.info("  Loading mT5-small + LoRA adapter from %s ...", MT5_MODEL_DIR)
+        logger.info("[load_models] Loading mT5-small + LoRA adapter from '%s' ...", MT5_MODEL_DIR)
         state.mt5_tokenizer = T5Tokenizer.from_pretrained(MT5_MODEL_DIR)
         state.mt5_model = MT5ForConditionalGeneration.from_pretrained(
             MT5_MODEL_DIR,
             torch_dtype=torch.float32,
         )
         state.mt5_model.eval()
+        logger.info("[load_models] mT5-small loaded.")
 
         state.mock_mode = False
         state.loaded = True
-        logger.info("✅ Models loaded successfully (real inference mode).")
+        logger.info("[load_models] All models loaded successfully (real inference mode).")
 
+    except ImportError as exc:
+        error_msg = f"Missing dependency during model load: {exc}"
+        logger.error("[load_models] %s", error_msg, exc_info=True)
+        state.load_error = error_msg
+        state.loaded = False
+        raise RuntimeError(error_msg) from exc
     except Exception as exc:
-        error_msg = f"Model loading failed: {exc}"
-        logger.error(error_msg)
+        error_msg = f"Model loading failed: {type(exc).__name__}: {exc}"
+        logger.error(
+            "[load_models] %s — full traceback above. "
+            "Check model directory integrity: %s",
+            error_msg,
+            MT5_MODEL_DIR,
+            exc_info=True,  # preserves full stack trace in logs
+        )
         state.load_error = error_msg
         state.loaded = False
         raise RuntimeError(error_msg) from exc
@@ -132,6 +157,7 @@ def load_models() -> ModelState:
 
 
 # ─────────────────────────── ffmpeg check ─────────────────────────────────────
+
 
 def check_ffmpeg() -> bool:
     """
@@ -147,19 +173,27 @@ def check_ffmpeg() -> bool:
             timeout=5,
         )
         available = result.returncode == 0
-    except (FileNotFoundError, subprocess.TimeoutExpired):
+        if available:
+            # Log first line of version output for debugging codec/version issues
+            version_line = result.stdout.decode(errors="replace").splitlines()[0] if result.stdout else "unknown"
+            logger.info("[check_ffmpeg] ffmpeg available: %s", version_line)
+    except (FileNotFoundError, OSError, subprocess.TimeoutExpired):
+        # FileNotFoundError: ffmpeg not on PATH
+        # OSError:           snap/flatpak/restricted PATH environments
+        # TimeoutExpired:    ffmpeg hangs (extremely rare, but possible on some systems)
         available = False
 
     if not available:
         logger.warning(
-            "⚠️  ffmpeg not found on PATH. "
-            "Audio conversion will fail. "
+            "[check_ffmpeg] ffmpeg not found on PATH. "
+            "Audio transcription will be unavailable. "
             "Install ffmpeg: https://ffmpeg.org/download.html"
         )
     return available
 
 
 # ─────────────────────────── Prefix builder ───────────────────────────────────
+
 
 def build_prefix(
     input_lang: str,
@@ -172,10 +206,10 @@ def build_prefix(
     Compose the full task prefix string for mT5 tokenization (FR-06, FR-21, FR-24, FR-27, FR-30).
 
     Examples:
-        build_prefix("en", "code", "formal", "advanced")
+        build_prefix("en", "code", "formal", "advanced", output_lang="auto")
         → "enhance prompt [code] [formal] [advanced]: "
 
-        build_prefix("hi", "general", "", "basic")
+        build_prefix("hi", "general", "", "basic", output_lang="auto")
         → "prompt sudharo: "
 
         build_prefix("hi", "general", "", "basic", output_lang="en")
@@ -208,6 +242,7 @@ def build_prefix(
 
 # ─────────────────────────── Hallucination check ──────────────────────────────
 
+
 def check_hallucination(tokens: list[str]) -> bool:
     """
     Detect too-short or repetitive output (FR-16).
@@ -218,20 +253,22 @@ def check_hallucination(tokens: list[str]) -> bool:
         True if the output is hallucinated/unreliable and should be rejected.
     """
     if len(tokens) < HALLUCINATION_MIN_TOKENS:
-        logger.debug("Hallucination: output too short (%d tokens)", len(tokens))
+        logger.debug("[check_hallucination] Output too short (%d tokens)", len(tokens))
         return True
 
     # N-gram repetition check
     ngrams = [
-        tuple(tokens[i : i + HALLUCINATION_NGRAM])
+        tuple(tokens[i: i + HALLUCINATION_NGRAM])
         for i in range(len(tokens) - HALLUCINATION_NGRAM + 1)
     ]
     counts = Counter(ngrams)
     if counts and counts.most_common(1)[0][1] > HALLUCINATION_MAX_REPEATS:
+        top_ngram, top_count = counts.most_common(1)[0]
         logger.debug(
-            "Hallucination: n-gram '%s' repeated %d times",
-            counts.most_common(1)[0][0],
-            counts.most_common(1)[0][1],
+            "[check_hallucination] N-gram %r repeated %d times (max=%d)",
+            top_ngram,
+            top_count,
+            HALLUCINATION_MAX_REPEATS,
         )
         return True
 
@@ -239,6 +276,7 @@ def check_hallucination(tokens: list[str]) -> bool:
 
 
 # ─────────────────────────── Script normalization ─────────────────────────────
+
 
 def normalize_script(text: str) -> tuple[str, str]:
     """
@@ -255,21 +293,76 @@ def normalize_script(text: str) -> tuple[str, str]:
 
     if ratio > 0.3:
         return cleaned, "devanagari"
-    elif re.search(r"\b(mera|meri|aap|karo|karna|hai|hain|ke liye|ke|ka|ki)\b", cleaned, re.I):
-        return cleaned, "roman"  # Hinglish detected
+    # Hinglish detection: word-boundary anchored to reduce false positives on
+    # English words that happen to contain these substrings (e.g. "sake", "kayak")
+    elif re.search(
+        r"(?<![a-zA-Z])(mera|meri|aap|karo|karna|hai|hain|ke liye|ke|ka|ki)(?![a-zA-Z])",
+        cleaned,
+        re.I,
+    ):
+        return cleaned, "roman"
     else:
         return cleaned, "en"
 
 
+# ─────────────────────────── Audio decoding ───────────────────────────────────
+
+
+def _decode_audio_via_ffmpeg(audio_bytes: bytes) -> np.ndarray:
+    """
+    Convert any audio format to 16kHz mono float32 numpy array using ffmpeg.
+
+    This is the only audio decoding path used in production. soundfile alone
+    does not support MP3 or WebM, which routes.py explicitly accepts via magic
+    bytes check — ffmpeg handles all of them uniformly.
+
+    Args:
+        audio_bytes: Raw bytes of any audio file (WAV, MP3, WebM, OGG, etc.)
+    Returns:
+        float32 numpy array at TARGET_SAMPLE_RATE, mono.
+    Raises:
+        ValueError if ffmpeg conversion fails (bad file, corrupt bytes, etc.)
+    """
+    try:
+        result = subprocess.run(
+            [
+                "ffmpeg",
+                "-loglevel", "error",
+                "-i", "pipe:0",       # read from stdin
+                "-f", "f32le",        # raw 32-bit float little-endian
+                "-ar", str(TARGET_SAMPLE_RATE),  # resample to 16kHz
+                "-ac", "1",           # downmix to mono
+                "pipe:1",             # write to stdout
+            ],
+            input=audio_bytes,
+            capture_output=True,
+            timeout=30,
+        )
+    except subprocess.TimeoutExpired:
+        raise ValueError("ffmpeg audio conversion timed out (file may be too long or corrupt)")
+    except (FileNotFoundError, OSError) as exc:
+        raise ValueError(f"ffmpeg not available for audio conversion: {exc}") from exc
+
+    if result.returncode != 0:
+        stderr = result.stderr.decode(errors="replace").strip()
+        raise ValueError(f"ffmpeg audio conversion failed (exit {result.returncode}): {stderr}")
+
+    if not result.stdout:
+        raise ValueError("ffmpeg produced empty audio output — file may contain no audio stream")
+
+    return np.frombuffer(result.stdout, dtype=np.float32)
+
+
 # ─────────────────────────── Local enhance inference ──────────────────────────
+
 
 def run_local_enhance(
     text: str,
     prefix: str,
     system_prompt: str,
     variant_mode: bool = False,
-    mt5_tokenizer=None,
-    mt5_model=None,
+    mt5_tokenizer: Optional[Any] = None,
+    mt5_model: Optional[Any] = None,
     mock_mode: bool = False,
 ) -> str:
     """
@@ -288,11 +381,11 @@ def run_local_enhance(
         mock_mode:     If True, skip real inference and return stub output.
 
     Returns:
-        Enhanced prompt string, or raises ValueError if output is bad.
+        Enhanced prompt string.
+    Raises:
+        ValueError if output is empty or flagged as hallucinated.
     """
     if mock_mode:
-        # --- MOCK PATH ---
-        # Returns a realistic-looking placeholder so we can test the full stack.
         mock_output = (
             f"[MOCK ENHANCED] You are an expert assistant. "
             f"Help the user with the following task:\n\n"
@@ -300,19 +393,28 @@ def run_local_enhance(
             f"Provide a clear, structured, and detailed response. "
             f"Use step-by-step format where applicable."
         )
-        logger.debug("Mock enhance → returning stub output")
+        logger.debug(
+            "[run_local_enhance] Mock mode — returning stub (text_len=%d)", len(text)
+        )
         return mock_output
 
-    # --- REAL PATH ---
-    import torch
+    # ── Real inference path ───────────────────────────────────────────────────
+    try:
+        import torch
+    except ImportError as exc:
+        raise ValueError(
+            "torch is not installed — cannot run local inference"
+        ) from exc
 
-    # Concatenate system prompt + prefix + user input
+    # system_prompt + prefix + user text fed together as the encoder input.
+    # MAX_TOKENIZER_INPUT_TOKENS caps total combined length to avoid OOM on
+    # large system prompts; if silent truncation is observed, raise the value.
     full_input = f"{system_prompt} {prefix}{text}".strip()
 
     inputs = mt5_tokenizer(
         full_input,
         return_tensors="pt",
-        max_length=128,
+        max_length=MAX_TOKENIZER_INPUT_TOKENS,
         truncation=True,
     )
 
@@ -338,11 +440,22 @@ def run_local_enhance(
     cleaned = decoded.strip()
 
     if not cleaned:
+        logger.warning(
+            "[run_local_enhance] Model returned empty output "
+            "(text_len=%d, variant_mode=%s)",
+            len(text),
+            variant_mode,
+        )
         raise ValueError("Model returned empty output")
 
-    # Hallucination check
     tokens = cleaned.split()
     if check_hallucination(tokens):
+        logger.warning(
+            "[run_local_enhance] Output flagged as hallucinated "
+            "(tokens=%d, text_len=%d)",
+            len(tokens),
+            len(text),
+        )
         raise ValueError("Output flagged as repetitive or too short")
 
     return cleaned
@@ -350,18 +463,23 @@ def run_local_enhance(
 
 # ─────────────────────────── STT inference ────────────────────────────────────
 
+
 def run_stt(
     audio_bytes: bytes,
     lang: str,
-    whisper_processor=None,
-    whisper_model=None,
+    whisper_processor: Optional[Any] = None,
+    whisper_model: Optional[Any] = None,
     mock_mode: bool = False,
 ) -> tuple[str, Optional[str]]:
     """
     Run Whisper Tiny speech-to-text transcription (FR-04).
 
+    Audio is always decoded via ffmpeg → raw float32 PCM before inference.
+    This supports every format routes.py accepts (MP3, WebM, OGG, WAV)
+    since soundfile alone does not handle MP3 or WebM.
+
     Args:
-        audio_bytes:       Raw audio file bytes (any format; converted to WAV).
+        audio_bytes:       Raw audio file bytes (any format).
         lang:              "en" or "hi".
         whisper_processor: Loaded WhisperProcessor (None in mock mode).
         whisper_model:     Loaded WhisperForConditionalGeneration (None in mock mode).
@@ -369,10 +487,13 @@ def run_stt(
 
     Returns:
         (transcript_text, warning_or_None)
-        e.g. ("hello world", None)  or  ("", "No speech detected")
     """
     if mock_mode:
-        logger.debug("Mock STT → returning stub transcript")
+        logger.debug(
+            "[run_stt] Mock mode — returning stub transcript (lang=%s, size=%d bytes)",
+            lang,
+            len(audio_bytes),
+        )
         sample = (
             "meri website ke liye ek homepage design karo"
             if lang == "hi"
@@ -381,34 +502,34 @@ def run_stt(
         return sample, None
 
     # ── Real Whisper path ────────────────────────────────────────────────────
-    import torch
-    import soundfile as sf
-
-    # Convert audio bytes → numpy array at 16kHz mono via soundfile + librosa
     try:
-        audio_array, sample_rate = sf.read(io.BytesIO(audio_bytes))
+        import torch
+    except ImportError as exc:
+        raise ValueError("torch is not installed — cannot run STT inference") from exc
 
-        # Stereo → mono
-        if audio_array.ndim > 1:
-            audio_array = audio_array.mean(axis=1)
+    # Convert audio bytes → float32 numpy array via ffmpeg.
+    # This handles MP3, WebM, OGG, WAV and all other formats uniformly.
+    # soundfile is NOT used here — it does not support MP3 or WebM.
+    try:
+        audio_array = _decode_audio_via_ffmpeg(audio_bytes)
+    except ValueError as exc:
+        logger.warning(
+            "[run_stt] Audio decode failed (lang=%s, size=%d bytes): %s",
+            lang,
+            len(audio_bytes),
+            exc,
+        )
+        raise
 
-        # Resample to 16kHz if needed
-        if sample_rate != TARGET_SAMPLE_RATE:
-            import librosa
-            audio_array = librosa.resample(
-                audio_array.astype(np.float32),
-                orig_sr=sample_rate,
-                target_sr=TARGET_SAMPLE_RATE,
-            )
-
-        audio_array = audio_array.astype(np.float32)
-
-    except Exception as exc:
-        raise ValueError(f"Audio decoding failed: {exc}") from exc
+    if audio_array.size == 0:
+        return "", "No speech detected"
 
     # Silence / noise threshold check
     rms = float(np.sqrt(np.mean(audio_array ** 2)))
     if rms < 0.001:
+        logger.debug(
+            "[run_stt] Audio below silence threshold (rms=%.6f, lang=%s)", rms, lang
+        )
         return "", "No speech detected"
 
     # Whisper forced decoder language

@@ -1,18 +1,20 @@
 """
 tests/conftest.py — Shared fixtures for Chota Packet backend tests.
 
-All tests use mock/stub model objects so they run in <30 seconds
-without loading the real ~1.5 GB model weights (FR-39 constraint).
+All tests use mock/stub model objects so they run without real model weights.
+client is function-scoped to prevent state mutations bleeding between tests.
 """
+
+from __future__ import annotations
 
 import pytest
 from fastapi.testclient import TestClient
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture
 def mock_model_state():
-    """Return a ModelState that simulates successful mock-mode loading."""
+    """Fresh ModelState in mock mode for each test."""
     from models import ModelState
     state = ModelState()
     state.loaded = True
@@ -25,15 +27,14 @@ def mock_model_state():
     return state
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture
 def client(mock_model_state):
     """
-    TestClient with models pre-loaded in mock mode and ffmpeg assumed available.
-    We patch the lifespan to inject mock state directly.
+    TestClient with mock model state and ffmpeg available.
+    Function-scoped — each test gets a clean app state.
     """
     from main import app
 
-    # Override app state to avoid real model loading in tests
     app.state.models = mock_model_state
     app.state.ffmpeg_available = True
 
@@ -42,17 +43,28 @@ def client(mock_model_state):
 
 
 @pytest.fixture
-def real_model_state():
+def client_no_ffmpeg(mock_model_state):
     """
-    ModelState simulating loaded real models for tests that need
-    to verify real-model code paths via mocks.
+    TestClient simulating an environment where ffmpeg is not available.
+    Used to test the 503 guard on /stt in real (non-mock) mode.
     """
+    from main import app
     from models import ModelState
-    state = ModelState()
-    state.loaded = True
-    state.mock_mode = False
-    state.whisper_processor = MagicMock()
-    state.whisper_model = MagicMock()
-    state.mt5_tokenizer = MagicMock()
-    state.mt5_model = MagicMock()
-    return state
+
+    real_state = ModelState()
+    real_state.loaded = True
+    real_state.mock_mode = False   # real mode — ffmpeg absence matters
+    real_state.whisper_processor = MagicMock()
+    real_state.whisper_model = MagicMock()
+    real_state.mt5_tokenizer = MagicMock()
+    real_state.mt5_model = MagicMock()
+
+    app.state.models = real_state
+    app.state.ffmpeg_available = False
+
+    with TestClient(app, raise_server_exceptions=True) as c:
+        yield c
+    
+    # Restore defaults so other fixtures aren't affected
+    app.state.ffmpeg_available = True
+    app.state.models = mock_model_state
