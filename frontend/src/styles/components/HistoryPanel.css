@@ -126,3 +126,106 @@
     color: var(--theme-text-secondary);
     border: 1px solid var(--theme-border);
 }
+
+/* ── Sidebar Width Transition ─────────────────────────────────────────────── */
+
+.glass-sidebar {
+    /* Smooth collapse/expand — overrides the static class with a transition */
+    transition:
+        width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+        min-width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    /* Default: expanded */
+    width: 288px;
+    min-width: 288px;
+}
+
+/* Collapsed: icon-strip only */
+.glass-sidebar.sidebar-collapsed {
+    width: 56px;
+    min-width: 56px;
+}
+
+/* ── Sidebar Collapse Toggle ──────────────────────────────────────────────── */
+
+.sidebar__toggle-btn {
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+/* Rotate arrow 180° to point right when sidebar is collapsed */
+.sidebar-collapsed .sidebar__toggle-btn {
+    transform: rotate(180deg);
+}
+
+/* ── Text / label visibility in collapsed mode ───────────────────────────── */
+
+/* Fade out any labelled text inside the sidebar when collapsed.
+   We target specific wrapper classes rather than all text to avoid
+   flicker on icons that use currentColor fills. */
+.sidebar-collapsed .sidebar__label,
+.sidebar-collapsed .history-panel__header-icon + div,
+.sidebar-collapsed .history-panel__search-section,
+.sidebar-collapsed .history-panel__list,
+.sidebar-collapsed .history-panel__section-header {
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    overflow: hidden;
+}
+
+/* ── Sidebar Footer ───────────────────────────────────────────────────────── */
+
+.sidebar__footer {
+    flex-shrink: 0;
+    border-top: 1px solid var(--theme-border-sidebar);
+    padding: 8px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Full-width footer row item (expanded mode) */
+.sidebar__footer-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--theme-text-muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease;
+    text-align: left;
+}
+
+.sidebar__footer-btn:hover {
+    background: rgba(127, 19, 236, 0.08);
+    color: var(--theme-text);
+}
+
+.sidebar__footer-btn:focus,
+.sidebar__footer-btn:focus-visible {
+    box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.5);
+}
+
+.sidebar__footer-btn:active {
+    transform: scale(0.97);
+}
+
+/* In collapsed mode: centre the icon, hide the label span */
+.sidebar-collapsed .sidebar__footer {
+    align-items: center;
+}
+
+.sidebar-collapsed .sidebar__footer-btn {
+    justify-content: center;
+    padding: 10px 0;
+    width: 40px;
+}

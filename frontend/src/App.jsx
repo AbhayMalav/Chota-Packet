@@ -4,6 +4,8 @@ import useEnhance from './hooks/useEnhance'
 import useSettings from './hooks/useSettings'
 import useMediaQuery from './hooks/useMediaQuery'
 import { LS_ONBOARDED, HISTORY_LIMIT, MAX_INPUT_CHARS } from './constants'
+
+const LS_SIDEBAR_COLLAPSED = 'cp-sidebar-collapsed'
 import CONFIG from './config'
 import StatusBanner from './components/StatusBanner'
 import InputArea from './components/InputArea'
@@ -17,7 +19,7 @@ import OnboardingOverlay from './components/OnboardingOverlay'
 import { NavBtn } from './components/NavBar'
 import ErrorBoundary from './components/ErrorBoundary'
 import ShortcutsModal from './components/ShortcutsModal'
-import { ClockIcon, GearIcon, SunIcon, MoonIcon } from './components/icons'
+import { ClockIcon, SunIcon, MoonIcon } from './components/icons'
 
 
 // ─── State machine ────────────────────────────────────────────────────────────
@@ -78,6 +80,18 @@ export default function App() {
   const [diffOpen, setDiffOpen] = useState(false)
   const [shortcutsOpen, setShortcutsOpen] = useState(false)
   const [showOnboard, setShowOnboard] = useState(!localStorage.getItem(LS_ONBOARDED))
+
+
+  // Sidebar collapse — persisted to localStorage
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(
+    () => localStorage.getItem(LS_SIDEBAR_COLLAPSED) === 'true'
+  )
+
+
+  // Persist sidebar state
+  useEffect(() => {
+    localStorage.setItem(LS_SIDEBAR_COLLAPSED, sidebarCollapsed)
+  }, [sidebarCollapsed])
 
 
   // Backend health
@@ -243,7 +257,6 @@ export default function App() {
             <div className="lg:hidden flex items-center">
               <NavBtn onClick={() => setHistoryOpen(o => !o)} label="Session History" icon={ClockIcon} active={historyOpen} />
             </div>
-            <NavBtn onClick={() => setSettingsOpen(true)} label="Settings" icon={GearIcon} active={settingsOpen} />
             <NavBtn onClick={toggleDark} label={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'} icon={darkMode ? SunIcon : MoonIcon} />
           </nav>
         </header>
@@ -267,6 +280,11 @@ export default function App() {
               dispatch({ type: 'INPUT_CHANGED', value: item.input })
               if (!isDesktop) setHistoryOpen(false)
             }}
+            collapsed={sidebarCollapsed}
+            onToggle={() => setSidebarCollapsed(c => !c)}
+            onOpenSettings={() => setSettingsOpen(true)}
+            darkMode={darkMode}
+            onToggleDark={toggleDark}
           />
 
 

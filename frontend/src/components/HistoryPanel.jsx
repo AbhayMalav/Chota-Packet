@@ -3,7 +3,8 @@ import usePinned from '../hooks/usePinned'
 import useMediaQuery from '../hooks/useMediaQuery'
 import {
   SearchIcon, PinIcon, DownloadIcon,
-  HistoryIcon, LoadIcon, XIcon, ChevronDownIcon,
+  HistoryIcon, LoadIcon, XIcon,
+  ChevronLeftIcon, GearIcon, SunIcon, MoonIcon,
 } from './icons'
 import '../styles/components/HistoryPanel.css'
 
@@ -130,7 +131,17 @@ function HistoryItem({ item, onSelect, onPin, onUnpin }) {
 // ── Main component ────────────────────────────────────────────────────────────
 
 
-export default function HistoryPanel({ history = [], onSelect, open, onClose }) {
+export default function HistoryPanel({
+  history = [],
+  onSelect,
+  open,
+  onClose,
+  collapsed = false,
+  onToggle,
+  onOpenSettings,
+  darkMode,
+  onToggleDark,
+}) {
   const { pinned, pin, unpin } = usePinned()
   const [search, setSearch] = useState('')
   const [exportOpen, setExportOpen] = useState(false)
@@ -184,31 +195,65 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
   const isEmpty = allItems.length === 0
 
 
+  // ── Sidebar footer (Settings + Theme, desktop only) ───────────────────────
+  const sidebarFooter = (
+    <div className="sidebar__footer">
+      <button
+        onClick={onOpenSettings}
+        aria-label="Settings"
+        title="Settings"
+        className="sidebar__footer-btn"
+      >
+        <GearIcon className="w-4 h-4 flex-shrink-0" />
+        {!collapsed && <span className="sidebar__label">Settings</span>}
+      </button>
+      <button
+        onClick={onToggleDark}
+        aria-label={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+        title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+        className="sidebar__footer-btn"
+      >
+        {darkMode
+          ? <SunIcon className="w-4 h-4 flex-shrink-0" />
+          : <MoonIcon className="w-4 h-4 flex-shrink-0" />
+        }
+        {!collapsed && (
+          <span className="sidebar__label">
+            {darkMode ? 'Light Mode' : 'Dark Mode'}
+          </span>
+        )}
+      </button>
+    </div>
+  )
+
+
   const panelContent = (
     <div className="flex flex-col h-full">
 
       {/* ── Header ── */}
-      <div className="history-panel__header flex items-center justify-between px-4 py-3.5 flex-shrink-0 border-b">
-        <div className="flex items-center gap-2">
+      <div className="history-panel__header flex items-center justify-between px-3 py-3.5 flex-shrink-0 border-b">
+        <div className="flex items-center gap-2 min-w-0">
           <span className="history-panel__header-icon w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0">
             <HistoryIcon className="w-3.5 h-3.5" />
           </span>
-          <div>
-            <h2 className="text-theme text-sm font-bold leading-none">
-              History
-            </h2>
-            {allItems.length > 0 && (
-              <p className="text-secondary text-[10px] mt-0.5">
-                {allItems.length} {allItems.length === 1 ? 'entry' : 'entries'}
-                {pinnedItems.length > 0 && ` · ${pinnedItems.length} pinned`}
-              </p>
-            )}
-          </div>
+          {!collapsed && (
+            <div className="sidebar__label min-w-0">
+              <h2 className="text-theme text-sm font-bold leading-none">
+                History
+              </h2>
+              {allItems.length > 0 && (
+                <p className="text-secondary text-[10px] mt-0.5">
+                  {allItems.length} {allItems.length === 1 ? 'entry' : 'entries'}
+                  {pinnedItems.length > 0 && ` · ${pinnedItems.length} pinned`}
+                </p>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="flex items-center gap-1">
-          {/* Export dropdown */}
-          {allItems.length > 0 && (
+          {/* Export dropdown — expanded mode only */}
+          {!collapsed && allItems.length > 0 && (
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setExportOpen((o) => !o)}
@@ -248,7 +293,19 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
             </div>
           )}
 
-          {/* Close - mobile only */}
+          {/* Collapse toggle — desktop only */}
+          {isDesktop && (
+            <button
+              onClick={onToggle}
+              aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+              title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+              className="btn-icon sidebar__toggle-btn w-8 h-8 min-w-0 min-h-0 rounded-lg"
+            >
+              <ChevronLeftIcon className="w-4 h-4" />
+            </button>
+          )}
+
+          {/* Close — mobile only */}
           {!isDesktop && (
             <button
               onClick={onClose}
@@ -262,84 +319,95 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
       </div>
 
       {/* ── Search ── */}
-      <div className="history-panel__search-section px-4 py-3 flex-shrink-0 border-b">
-        <div className="relative">
-          <span className="text-secondary absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
-            <SearchIcon className="w-3.5 h-3.5" />
-          </span>
-          <input
-            ref={searchRef}
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search prompts…"
-            aria-label="Search history"
-            className="history-panel__search-input w-full pl-8 pr-3 py-2 rounded-lg text-xs border focus:outline-none focus:border-purple-500/40 focus:ring-1 focus:ring-purple-500/20 transition-all duration-200"
-          />
-          {search && (
-            <button
-              onClick={() => setSearch('')}
-              aria-label="Clear search"
-              className="text-secondary absolute right-2.5 top-1/2 -translate-y-1/2 transition-colors"
-            >
-              <XIcon className="w-3.5 h-3.5" />
-            </button>
-          )}
+      {!collapsed && (
+        <div className="history-panel__search-section px-4 py-3 flex-shrink-0 border-b">
+          <div className="relative">
+            <span className="text-secondary absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
+              <SearchIcon className="w-3.5 h-3.5" />
+            </span>
+            <input
+              ref={searchRef}
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search prompts…"
+              aria-label="Search history"
+              className="history-panel__search-input w-full pl-8 pr-3 py-2 rounded-lg text-xs border focus:outline-none focus:border-purple-500/40 focus:ring-1 focus:ring-purple-500/20 transition-all duration-200"
+            />
+            {search && (
+              <button
+                onClick={() => setSearch('')}
+                aria-label="Clear search"
+                className="text-secondary absolute right-2.5 top-1/2 -translate-y-1/2 transition-colors"
+              >
+                <XIcon className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* ── Items ── */}
-      <div className="history-panel__list flex-1 overflow-y-auto">
-        {isEmpty ? (
-          <EmptyState isFiltered={isFiltered} />
-        ) : (
-          <>
-            {/* Pinned section */}
-            {pinnedItems.length > 0 && (
-              <>
-                <div className="history-panel__section-header px-4 py-2 flex items-center gap-1.5 sticky top-0">
-                  <PinIcon className="history-panel__accent-label w-3 h-3" filled />
-                  <span className="history-panel__accent-label text-[10px] font-bold uppercase tracking-widest">
-                    Pinned
-                  </span>
-                </div>
-                {pinnedItems.map((item) => (
-                  <HistoryItem
-                    key={`${item.ts}-pinned`}
-                    item={item}
-                    onSelect={onSelect}
-                    onPin={pin}
-                    onUnpin={unpin}
-                  />
-                ))}
-              </>
-            )}
-
-            {/* Recent section */}
-            {historyItems.length > 0 && (
-              <>
-                {pinnedItems.length > 0 && (
+      {!collapsed && (
+        <div className="history-panel__list flex-1 overflow-y-auto">
+          {isEmpty ? (
+            <EmptyState isFiltered={isFiltered} />
+          ) : (
+            <>
+              {/* Pinned section */}
+              {pinnedItems.length > 0 && (
+                <>
                   <div className="history-panel__section-header px-4 py-2 flex items-center gap-1.5 sticky top-0">
-                    <HistoryIcon className="text-secondary w-3 h-3" />
-                    <span className="text-secondary text-[10px] font-bold uppercase tracking-widest">
-                      Recent
+                    <PinIcon className="history-panel__accent-label w-3 h-3" filled />
+                    <span className="history-panel__accent-label text-[10px] font-bold uppercase tracking-widest">
+                      Pinned
                     </span>
                   </div>
-                )}
-                {historyItems.map((item) => (
-                  <HistoryItem
-                    key={`${item.ts}-${item.input.slice(0, 12)}`}
-                    item={item}
-                    onSelect={onSelect}
-                    onPin={pin}
-                    onUnpin={unpin}
-                  />
-                ))}
-              </>
-            )}
-          </>
-        )}
-      </div>
+                  {pinnedItems.map((item) => (
+                    <HistoryItem
+                      key={`${item.ts}-pinned`}
+                      item={item}
+                      onSelect={onSelect}
+                      onPin={pin}
+                      onUnpin={unpin}
+                    />
+                  ))}
+                </>
+              )}
+
+              {/* Recent section */}
+              {historyItems.length > 0 && (
+                <>
+                  {pinnedItems.length > 0 && (
+                    <div className="history-panel__section-header px-4 py-2 flex items-center gap-1.5 sticky top-0">
+                      <HistoryIcon className="text-secondary w-3 h-3" />
+                      <span className="text-secondary text-[10px] font-bold uppercase tracking-widest">
+                        Recent
+                      </span>
+                    </div>
+                  )}
+                  {historyItems.map((item) => (
+                    <HistoryItem
+                      key={`${item.ts}-${item.input.slice(0, 12)}`}
+                      item={item}
+                      onSelect={onSelect}
+                      onPin={pin}
+                      onUnpin={unpin}
+                    />
+                  ))}
+                </>
+              )}
+            </>
+          )}
+        </div>
+      )}
+
+      {/* Collapsed: flex spacer pushes footer to bottom */}
+      {collapsed && <div className="flex-1" />}
+
+      {/* ── Footer: Settings + Theme (desktop sidebar only) ── */}
+      {isDesktop && sidebarFooter}
+
     </div>
   )
 
@@ -347,7 +415,7 @@ export default function HistoryPanel({ history = [], onSelect, open, onClose }) 
   if (isDesktop) {
     return (
       <div
-        className="flex flex-col h-full w-72 flex-shrink-0 glass-sidebar"
+        className={`flex flex-col h-full flex-shrink-0 glass-sidebar${collapsed ? ' sidebar-collapsed' : ''}`}
         role="complementary"
         aria-label="Session history"
       >
