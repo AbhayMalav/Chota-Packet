@@ -16,6 +16,16 @@
       rel="stylesheet"
     />
     <title>Chota Packet - Edge AI Prompt Enhancer</title>
+    <script>
+      (function() {
+        try {
+          var dark = localStorage.getItem('chota_dark');
+          if (dark === '0') {
+            document.documentElement.classList.add('light');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

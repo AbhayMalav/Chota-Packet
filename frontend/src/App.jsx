@@ -240,7 +240,9 @@ export default function App() {
             <span className="font-extrabold text-sm gradient-text tracking-tight">Chota Packet</span>
           </div>
           <nav className="flex items-center gap-1" aria-label="App controls">
-            <NavBtn onClick={() => setHistoryOpen(o => !o)} label="Session History" icon={ClockIcon} active={historyOpen} />
+            <div className="lg:hidden flex items-center">
+              <NavBtn onClick={() => setHistoryOpen(o => !o)} label="Session History" icon={ClockIcon} active={historyOpen} />
+            </div>
             <NavBtn onClick={() => setSettingsOpen(true)} label="Settings" icon={GearIcon} active={settingsOpen} />
             <NavBtn onClick={toggleDark} label={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'} icon={darkMode ? SunIcon : MoonIcon} />
           </nav>
