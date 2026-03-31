@@ -39,6 +39,9 @@ function appReducer(state, action) {
       return { ...state, uiState: 'ERROR', outputText: '', originalText: '' }
     case 'OUTPUT_EDIT':
       return { ...state, outputText: action.text }
+    case 'CLEAR_INPUT':
+      // Clears input only — keeps output intact, used by InputArea's Clear button
+      return { ...state, input: '', uiState: state.uiState === 'OUTPUT' ? 'OUTPUT' : 'IDLE' }
     case 'RESET':
       // Clears output only — keeps input intact, used by OutputCard's Clear button
       return { ...state, uiState: state.input.trim() ? 'INPUT_READY' : 'IDLE', outputText: '', originalText: '' }
@@ -59,7 +62,7 @@ const init = { uiState: 'IDLE', input: '', outputText: '', originalText: '' }
 
 export default function App() {
   const settings = useSettings()
-  const { openRouterKey, inferenceMode, selectedModel, saveModel, models, darkMode, toggleDark } = settings
+  const { openRouterKey, inferenceMode, selectedModel, saveModel, models, darkMode, toggleDark, theme, setTheme } = settings
 
 
   const [appState, dispatch] = useReducer(appReducer, init)
@@ -359,6 +362,8 @@ export default function App() {
             onOpenSettings={() => setSettingsOpen(true)}
             darkMode={darkMode}
             onToggleDark={toggleDark}
+            theme={theme}
+            setTheme={setTheme}
           />
 
 
@@ -371,7 +376,7 @@ export default function App() {
               <InputArea
                 value={input}
                 onChange={(val) => dispatch({ type: 'INPUT_CHANGED', value: val })}
-                onClear={() => dispatch({ type: 'RESET' })}
+                onClear={() => dispatch({ type: 'CLEAR_INPUT' })}
                 inputLimit={inputLimit}
               />
               <MicButton

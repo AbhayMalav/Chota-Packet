@@ -94,6 +94,18 @@ export const LS_PINNED = 'chota_pinned'
 export const LS_ONBOARDED = 'chota_onboarded'
 export const LS_FEEDBACK = 'chota_feedback'
 export const LS_ANALYTICS = 'cp-token-analytics'  // ← ADDED
+export const LS_THEME = 'cp-theme'
+
+
+export const THEMES = [
+  { id: 'brand', label: 'Default', color: '#7f13ec' },
+  { id: 'orange', label: 'Orange', color: '#F97316' },
+  { id: 'carrot', label: 'Carrot Red', color: '#E4400A' },
+  { id: 'blue', label: 'Blue', color: '#3B82F6' },
+  { id: 'teal', label: 'Teal', color: '#14B8A6' },
+  { id: 'brown', label: 'Brown', color: '#92400E' },
+  { id: 'dusk', label: 'Dusk', background: 'linear-gradient(135deg, #7C3AED 0%, #EC4899 100%)' },
+]
 
 
 // ── Utilities ─────────────────────────────────────────────────────────────────

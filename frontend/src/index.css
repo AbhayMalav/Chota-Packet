@@ -6,16 +6,66 @@
 /* ── Design System Tokens ────────────────────────────────────────────────── */
 @theme {
   --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --color-brand: #7f13ec;
-  --color-brand-light: #a855f7;
-  --color-brand-dark: #6010b8;
-  --color-accent: #6366f1;
+  --color-brand: rgb(var(--brand-rgb));
+  --color-brand-light: rgb(var(--brand-light-rgb));
+  --color-brand-dark: rgb(var(--brand-dark-rgb));
+  --color-accent: rgb(var(--accent-rgb));
   --color-bg-deep: #0a0a12;
   --color-bg-card: #111120;
   --color-bg-elevated: #16162a;
 }
 
 /* ── Theme CSS Variables - Dark (default) ────────────────────────────────── */
+
+:root {
+  --brand-rgb: 127, 19, 236;
+  --brand-light-rgb: 168, 85, 247;
+  --brand-dark-rgb: 96, 16, 184;
+  --accent-rgb: 99, 102, 241;
+}
+
+.theme-orange {
+  --brand-rgb: 249, 115, 22;
+  --brand-light-rgb: 251, 146, 60;
+  --brand-dark-rgb: 234, 88, 12;
+  --accent-rgb: 245, 158, 11;
+}
+
+.theme-carrot {
+  --brand-rgb: 228, 64, 10;
+  --brand-light-rgb: 249, 115, 22;
+  --brand-dark-rgb: 194, 65, 12;
+  --accent-rgb: 239, 68, 68;
+}
+
+.theme-blue {
+  --brand-rgb: 59, 130, 246;
+  --brand-light-rgb: 96, 165, 250;
+  --brand-dark-rgb: 37, 99, 235;
+  --accent-rgb: 14, 165, 233;
+}
+
+.theme-teal {
+  --brand-rgb: 20, 184, 166;
+  --brand-light-rgb: 45, 212, 191;
+  --brand-dark-rgb: 15, 118, 110;
+  --accent-rgb: 16, 185, 129;
+}
+
+.theme-brown {
+  --brand-rgb: 146, 64, 14;
+  --brand-light-rgb: 180, 83, 9;
+  --brand-dark-rgb: 120, 53, 15;
+  --accent-rgb: 217, 119, 6;
+}
+
+.theme-dusk {
+  --brand-rgb: 124, 58, 237;
+  --brand-light-rgb: 167, 139, 250;
+  --brand-dark-rgb: 109, 40, 217;
+  --accent-rgb: 236, 72, 153;
+}
+
 :root {
   color-scheme: dark;
 
@@ -40,21 +90,21 @@
   --theme-text: #e2e2f0;
   --theme-text-muted: #a0a0b8;
   --theme-text-secondary: #6a6a8a;
-  --theme-border: rgba(127, 19, 236, 0.15);
-  --theme-border-navbar: rgba(127, 19, 236, 0.12);
-  --theme-border-sidebar: rgba(127, 19, 236, 0.15);
+  --theme-border: rgba(var(--brand-rgb), 0.15);
+  --theme-border-navbar: rgba(var(--brand-rgb), 0.12);
+  --theme-border-sidebar: rgba(var(--brand-rgb), 0.15);
   --theme-placeholder: #4a4a6a;
   --theme-input-bg: rgba(0, 0, 0, 0.3);
   --theme-input-bg-focus: rgba(0, 0, 0, 0.4);
-  --theme-input-bg-hover: rgba(127, 19, 236, 0.05);
+  --theme-input-bg-hover: rgba(var(--brand-rgb), 0.05);
   --theme-option-bg: #111120;
   --theme-kbd-bg: rgba(31, 41, 55, 0.5);
   --theme-kbd-border: rgba(55, 65, 81, 0.8);
-  --theme-nebula-1: rgba(127, 19, 236, 0.12);
-  --theme-nebula-2: rgba(99, 102, 241, 0.1);
-  --theme-nebula-3: rgba(127, 19, 236, 0.04);
-  --theme-scrollbar: rgba(127, 19, 236, 0.35);
-  --theme-scrollbar-hover: rgba(127, 19, 236, 0.6);
+  --theme-nebula-1: rgba(var(--brand-rgb), 0.12);
+  --theme-nebula-2: rgba(var(--accent-rgb), 0.1);
+  --theme-nebula-3: rgba(var(--brand-rgb), 0.04);
+  --theme-scrollbar: rgba(var(--brand-rgb), 0.35);
+  --theme-scrollbar-hover: rgba(var(--brand-rgb), 0.6);
 
   --diff-added-bg: #14532d;
   --diff-added-text: #bbf7d0;
@@ -74,21 +124,21 @@
   --theme-text: #1a1a2e;
   --theme-text-muted: #4a4a6a;
   --theme-text-secondary: #7a7a9a;
-  --theme-border: rgba(127, 19, 236, 0.2);
-  --theme-border-navbar: rgba(127, 19, 236, 0.18);
-  --theme-border-sidebar: rgba(127, 19, 236, 0.2);
+  --theme-border: rgba(var(--brand-rgb), 0.2);
+  --theme-border-navbar: rgba(var(--brand-rgb), 0.18);
+  --theme-border-sidebar: rgba(var(--brand-rgb), 0.2);
   --theme-placeholder: #9090a8;
   --theme-input-bg: #ffffff;
   --theme-input-bg-focus: #ffffff;
-  --theme-input-bg-hover: rgba(127, 19, 236, 0.08);
+  --theme-input-bg-hover: rgba(var(--brand-rgb), 0.08);
   --theme-option-bg: #ffffff;
   --theme-kbd-bg: rgba(243, 244, 246, 0.8);
   --theme-kbd-border: rgba(209, 213, 219, 0.8);
-  --theme-nebula-1: rgba(127, 19, 236, 0.07);
-  --theme-nebula-2: rgba(99, 102, 241, 0.06);
-  --theme-nebula-3: rgba(127, 19, 236, 0.03);
-  --theme-scrollbar: rgba(127, 19, 236, 0.25);
-  --theme-scrollbar-hover: rgba(127, 19, 236, 0.45);
+  --theme-nebula-1: rgba(var(--brand-rgb), 0.07);
+  --theme-nebula-2: rgba(var(--accent-rgb), 0.06);
+  --theme-nebula-3: rgba(var(--brand-rgb), 0.03);
+  --theme-scrollbar: rgba(var(--brand-rgb), 0.25);
+  --theme-scrollbar-hover: rgba(var(--brand-rgb), 0.45);
 
   --diff-added-bg: #dcfce7;
   --diff-added-text: #166534;
@@ -146,7 +196,7 @@ body {
    Now provides a visible brand-coloured focus ring on the editable output area. */
 [contenteditable]:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.35);
+  box-shadow: 0 0 0 2px rgba(var(--brand-rgb), 0.35);
   border-radius: 4px;
 }
 
@@ -260,8 +310,8 @@ body {
 .animate-glow {
   /* Static base glow — not animated */
   box-shadow:
-    0 0 30px rgba(127, 19, 236, 0.25),
-    0 0 60px rgba(99, 102, 241, 0.12);
+    0 0 30px rgba(var(--brand-rgb), 0.25),
+    0 0 60px rgba(var(--accent-rgb), 0.12);
   position: relative;
 }
 
@@ -272,8 +322,8 @@ body {
   /* exactly matches parent bounds */
   border-radius: inherit;
   box-shadow:
-    0 0 30px rgba(127, 19, 236, 0.35),
-    0 0 60px rgba(99, 102, 241, 0.18);
+    0 0 30px rgba(var(--brand-rgb), 0.35),
+    0 0 60px rgba(var(--accent-rgb), 0.18);
   animation: glow-pulse 3s ease-in-out infinite;
   will-change: opacity;
   pointer-events: none;
@@ -347,7 +397,7 @@ body {
 .skeleton {
   background: linear-gradient(90deg,
       var(--theme-bg-card) 25%,
-      rgba(127, 19, 236, 0.08) 50%,
+      rgba(var(--brand-rgb), 0.08) 50%,
       var(--theme-bg-card) 75%);
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s ease-in-out infinite;
@@ -372,8 +422,8 @@ body {
   .animate-glow::after {
     animation: none;
     box-shadow:
-      0 0 20px rgba(127, 19, 236, 0.2),
-      0 0 40px rgba(99, 102, 241, 0.08);
+      0 0 20px rgba(var(--brand-rgb), 0.2),
+      0 0 40px rgba(var(--accent-rgb), 0.08);
   }
 
   /* Kill all decorative looping animations */
@@ -421,11 +471,11 @@ body {
 
 /* ── Gradient Helpers ────────────────────────────────────────────────────── */
 .gradient-brand {
-  background: linear-gradient(135deg, #7f13ec 0%, #6366f1 100%);
+  background: linear-gradient(135deg, rgb(var(--brand-rgb)) 0%, rgb(var(--accent-rgb)) 100%);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #818cf8 100%);
+  background: linear-gradient(135deg, rgb(var(--brand-light-rgb)) 0%, rgb(var(--accent-rgb)) 50%, rgb(var(--accent-rgb)) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -445,7 +495,7 @@ body {
   right: 0;
   /* 2px — intentionally thin decorative accent line, not a structural border */
   height: 2px;
-  background: linear-gradient(90deg, #7f13ec, #a855f7, #6366f1, #818cf8, #7f13ec);
+  background: linear-gradient(90deg, rgb(var(--brand-rgb)), rgb(var(--brand-light-rgb)), rgb(var(--accent-rgb)), rgb(var(--accent-rgb)), rgb(var(--brand-rgb)));
   background-size: 300% 100%;
   animation: shimmer-border 3s ease infinite;
 }
@@ -462,9 +512,9 @@ body {
   inset: -1px;
   border-radius: inherit;
   background: linear-gradient(135deg,
-      rgba(127, 19, 236, 0.4),
-      rgba(99, 102, 241, 0.15),
-      rgba(127, 19, 236, 0.05));
+      rgba(var(--brand-rgb), 0.4),
+      rgba(var(--accent-rgb), 0.15),
+      rgba(var(--brand-rgb), 0.05));
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
@@ -497,7 +547,7 @@ body {
 .focus-ring:focus,
 .focus-ring:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.5);
+  box-shadow: 0 0 0 2px rgba(var(--brand-rgb), 0.5);
 }
 
 /* ── Nebula Background (theme-aware) ────────────────────────────────────── */
@@ -582,7 +632,7 @@ textarea {
   font-weight: 600;
   /* FIX #9: was hardcoded #fff */
   color: var(--color-white);
-  background: linear-gradient(135deg, #7f13ec 0%, #6366f1 100%);
+  background: linear-gradient(135deg, rgb(var(--brand-rgb)) 0%, rgb(var(--accent-rgb)) 100%);
   border: none;
   cursor: pointer;
   outline: none;
@@ -592,14 +642,14 @@ textarea {
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #6010b8 0%, #4f52d8 100%);
-  box-shadow: 0 4px 14px rgba(127, 19, 236, 0.4);
+  background: linear-gradient(135deg, rgb(var(--brand-dark-rgb)) 0%, rgb(var(--accent-rgb)) 100%);
+  box-shadow: 0 4px 14px rgba(var(--brand-rgb), 0.4);
 }
 
 /* FIX #4: :focus added alongside :focus-visible for AT/older browser compatibility */
 .btn-primary:focus,
 .btn-primary:focus-visible {
-  box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.55);
+  box-shadow: 0 0 0 2px rgba(var(--brand-rgb), 0.55);
 }
 
 .btn-primary:active:not(:disabled) {
@@ -633,15 +683,15 @@ textarea {
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: rgba(127, 19, 236, 0.08);
-  border-color: rgba(168, 85, 247, 0.5);
+  background: rgba(var(--brand-rgb), 0.08);
+  border-color: rgba(var(--brand-light-rgb), 0.5);
   color: var(--theme-text);
 }
 
 /* FIX #4 */
 .btn-secondary:focus,
 .btn-secondary:focus-visible {
-  box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.45);
+  box-shadow: 0 0 0 2px rgba(var(--brand-rgb), 0.45);
 }
 
 .btn-secondary:active:not(:disabled) {
@@ -673,14 +723,14 @@ textarea {
 }
 
 .btn-ghost:hover:not(:disabled) {
-  background: rgba(127, 19, 236, 0.07);
+  background: rgba(var(--brand-rgb), 0.07);
   color: var(--theme-text-muted);
 }
 
 /* FIX #4 */
 .btn-ghost:focus,
 .btn-ghost:focus-visible {
-  box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.45);
+  box-shadow: 0 0 0 2px rgba(var(--brand-rgb), 0.45);
 }
 
 .btn-ghost:disabled {
@@ -706,14 +756,14 @@ textarea {
 }
 
 .btn-icon:hover {
-  background: rgba(127, 19, 236, 0.08);
+  background: rgba(var(--brand-rgb), 0.08);
   color: var(--theme-text);
 }
 
 /* FIX #4 */
 .btn-icon:focus,
 .btn-icon:focus-visible {
-  box-shadow: 0 0 0 2px rgba(127, 19, 236, 0.5);
+  box-shadow: 0 0 0 2px rgba(var(--brand-rgb), 0.5);
 }
 
 .btn-icon:active {
@@ -722,7 +772,7 @@ textarea {
 
 .btn-icon.active,
 .btn-icon[aria-pressed="true"] {
-  background: rgba(127, 19, 236, 0.15);
+  background: rgba(var(--brand-rgb), 0.15);
   color: var(--color-brand-light);
 }
 

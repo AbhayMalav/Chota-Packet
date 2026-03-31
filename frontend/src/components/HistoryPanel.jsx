@@ -4,8 +4,9 @@ import useMediaQuery from '../hooks/useMediaQuery'
 import {
   SearchIcon, PinIcon, DownloadIcon,
   HistoryIcon, LoadIcon, XIcon,
-  ChevronLeftIcon, GearIcon, SunIcon, MoonIcon,
+  ChevronLeftIcon, GearIcon, SunIcon, MoonIcon, PaletteIcon
 } from './icons'
+import { THEMES } from '../constants'
 import '../styles/components/HistoryPanel.css'
 
 
@@ -141,11 +142,15 @@ export default function HistoryPanel({
   onOpenSettings,
   darkMode,
   onToggleDark,
+  theme,
+  setTheme,
 }) {
   const { pinned, pin, unpin } = usePinned()
   const [search, setSearch] = useState('')
   const [exportOpen, setExportOpen] = useState(false)
+  const [themeOpen, setThemeOpen] = useState(false)
   const dropdownRef = useRef(null)
+  const themeRef = useRef(null)
   const searchRef = useRef(null)
   const isDesktop = useMediaQuery('(min-width: 1024px)')
 
@@ -161,6 +166,18 @@ export default function HistoryPanel({
     document.addEventListener('mousedown', handle)
     return () => document.removeEventListener('mousedown', handle)
   }, [exportOpen])
+
+  // Close theme popover on outside click
+  useEffect(() => {
+    if (!themeOpen) return
+    const handle = (e) => {
+      if (themeRef.current && !themeRef.current.contains(e.target)) {
+        setThemeOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handle)
+    return () => document.removeEventListener('mousedown', handle)
+  }, [themeOpen])
 
 
   // Focus search when panel opens on mobile
@@ -195,9 +212,9 @@ export default function HistoryPanel({
   const isEmpty = allItems.length === 0
 
 
-  // ── Sidebar footer (Settings + Theme, desktop only) ───────────────────────
+  // ── Sidebar footer (Settings + Theme) ───────────────────────────────────────
   const sidebarFooter = (
-    <div className="sidebar__footer">
+    <div className="sidebar__footer relative" ref={themeRef}>
       <button
         onClick={onOpenSettings}
         aria-label="Settings"
@@ -208,21 +225,50 @@ export default function HistoryPanel({
         {!collapsed && <span className="sidebar__label">Settings</span>}
       </button>
       <button
-        onClick={onToggleDark}
-        aria-label={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-        title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-        className="sidebar__footer-btn"
+        onClick={() => { setThemeOpen(o => !o); setExportOpen(false); }}
+        aria-haspopup="menu"
+        aria-expanded={themeOpen}
+        aria-label="Theme settings"
+        title="Theme settings"
+        className={`sidebar__footer-btn ${themeOpen ? 'bg-purple-500/10 text-purple-400' : ''}`}
       >
-        {darkMode
-          ? <SunIcon className="w-4 h-4 flex-shrink-0" />
-          : <MoonIcon className="w-4 h-4 flex-shrink-0" />
-        }
-        {!collapsed && (
-          <span className="sidebar__label">
-            {darkMode ? 'Light Mode' : 'Dark Mode'}
-          </span>
-        )}
+        <PaletteIcon className="w-4 h-4 flex-shrink-0" />
+        {!collapsed && <span className="sidebar__label">Theme</span>}
       </button>
+
+      {/* Theme Popover */}
+      {themeOpen && (
+        <div className={`absolute bottom-full mb-2 ${collapsed ? 'left-full ml-2 w-[208px]' : 'left-4 right-4'} rounded-xl glass-card shadow-xl shadow-black/20 p-3 z-20 animate-fade-in`}>
+          <div className="flex items-center justify-between mb-3 px-1">
+            <span className="text-secondary text-xs font-bold uppercase tracking-widest">Mode</span>
+            <button
+              onClick={onToggleDark}
+              className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-white/5 hover:bg-white/10 transition-colors text-xs font-semibold"
+            >
+              {darkMode ? <MoonIcon className="w-3 h-3" /> : <SunIcon className="w-3 h-3" />}
+              {darkMode ? 'Dark' : 'Light'}
+            </button>
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="text-secondary text-xs font-bold uppercase tracking-widest px-1 mb-1.5">Color</span>
+            <div className="grid grid-cols-4 gap-2.5 px-1">
+              {THEMES.map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => { setTheme(t.id); if(collapsed) setThemeOpen(false); }}
+                  title={t.label}
+                  style={{ background: t.background || t.color }}
+                  className="relative w-full aspect-square rounded-full transition-transform hover:scale-110 active:scale-95 shadow-sm"
+                >
+                  {theme === t.id && (
+                    <div className="absolute inset-0 border-[2px] border-white/90 rounded-full scale-[1.25] shadow-sm pointer-events-none mix-blend-overlay" />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 
@@ -233,9 +279,11 @@ export default function HistoryPanel({
       {/* ── Header ── */}
       <div className="history-panel__header flex items-center justify-between px-3 py-3.5 flex-shrink-0 border-b">
         <div className="flex items-center gap-2 min-w-0">
-          <span className="history-panel__header-icon w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0">
-            <HistoryIcon className="w-3.5 h-3.5" />
-          </span>
+          {!collapsed && (
+            <span className="history-panel__header-icon w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0">
+              <HistoryIcon className="w-3.5 h-3.5" />
+            </span>
+          )}
           {!collapsed && (
             <div className="sidebar__label min-w-0">
               <h2 className="text-theme text-sm font-bold leading-none">
@@ -405,8 +453,8 @@ export default function HistoryPanel({
       {/* Collapsed: flex spacer pushes footer to bottom */}
       {collapsed && <div className="flex-1" />}
 
-      {/* ── Footer: Settings + Theme (desktop sidebar only) ── */}
-      {isDesktop && sidebarFooter}
+      {/* ── Footer: Settings + Theme ── */}
+      {sidebarFooter}
 
     </div>
   )

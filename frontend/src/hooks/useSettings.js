@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { encryptKey, decryptKey } from '../services/crypto'
 import { getModels } from '../services/api'
-import { LS_KEY, LS_MODEL, LS_DARK } from '../constants'
+import { LS_KEY, LS_MODEL, LS_DARK, LS_THEME } from '../constants'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -26,7 +26,9 @@ function writeStorage(key, value) {
 function removeStorage(key) {
   try {
     localStorage.removeItem(key)
-  } catch { }
+  } catch {
+    // Silently fail if localStorage is unavailable
+  }
 }
 
 // ── Hook ──────────────────────────────────────────────────────────────────────
@@ -52,10 +54,19 @@ export default function useSettings() {
   const keyStatusTimerRef = useRef(null)
 
   // ── Theme ──────────────────────────────────────────────────────────────────
+  const [theme, setTheme] = useState(() => readStorage(LS_THEME, 'brand'))
+
   useEffect(() => {
-    document.documentElement.classList.toggle('light', !darkMode)
+    const root = document.documentElement
+    root.classList.toggle('light', !darkMode)
+    
+    // Clear potentially existing theme classes
+    root.classList.remove('theme-brand', 'theme-orange', 'theme-carrot', 'theme-blue', 'theme-teal', 'theme-brown', 'theme-dusk')
+    root.classList.add(`theme-${theme}`)
+
     writeStorage(LS_DARK, darkMode ? '1' : '0')
-  }, [darkMode])
+    writeStorage(LS_THEME, theme)
+  }, [darkMode, theme])
 
   // ── Load encrypted key on mount ────────────────────────────────────────────
   useEffect(() => {
@@ -77,12 +88,12 @@ export default function useSettings() {
   // ── Fetch models - abort on key change or unmount ──────────────────────────
   useEffect(() => {
     const controller = new AbortController()
-    setModelsError(null)
 
     getModels(openRouterKey, controller.signal)
       .then(({ data }) => {
         if (controller.signal.aborted) return
 
+        setModelsError(null)
         const fetched = Array.isArray(data.models) ? data.models : []
         setModels(fetched)
 
@@ -127,6 +138,7 @@ export default function useSettings() {
 
   const saveKey = useCallback(async (plainKey) => {
     setKeyStatus('saving')
+    setModelsError(null)
     clearTimeout(keyStatusTimerRef.current)
 
     if (!plainKey.startsWith('sk-or-v1-')) {
@@ -154,6 +166,7 @@ export default function useSettings() {
     clearTimeout(keyStatusTimerRef.current)
     removeStorage(LS_KEY)
     setOpenRouterKey(null)
+    setModelsError(null)
     setKeyStatus('idle')
   }, [])
 
@@ -169,6 +182,7 @@ export default function useSettings() {
 
   return {
     darkMode, toggleDark,
+    theme, setTheme,
     openRouterKey, saveKey, clearKey, keyStatus,
     selectedModel, saveModel, models, modelsError,
     inferenceMode,
