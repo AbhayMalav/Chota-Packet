@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import useRecorder from '../hooks/useRecorder'
 import { MicIcon, StopIcon, XIcon } from './icons'
 
 
@@ -19,8 +18,12 @@ function Spinner() {
 }
 
 
-export default function MicButton({ onTranscript = () => { }, lang }) {
-  const { recording, error, start, stop } = useRecorder({ onTranscript, lang })
+export default function MicButton({
+  recording = false,
+  error = null,
+  start = () => { },
+  stop = () => { }
+}) {
   const [starting, setStarting] = useState(false)
   const [dismissed, setDismissed] = useState(false)
 

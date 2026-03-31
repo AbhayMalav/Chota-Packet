@@ -3,6 +3,7 @@ import { health } from './services/api'
 import useEnhance from './hooks/useEnhance'
 import useSettings from './hooks/useSettings'
 import useMediaQuery from './hooks/useMediaQuery'
+import useRecorder from './hooks/useRecorder'
 import { LS_ONBOARDED, HISTORY_LIMIT, MAX_INPUT_CHARS } from './constants'
 
 const LS_SIDEBAR_COLLAPSED = 'cp-sidebar-collapsed'
@@ -106,6 +107,13 @@ export default function App() {
   const { run: runEnhance } = useEnhance()
 
 
+  // Voice hook - lifted for global shortcut control
+  const { recording: isMicRecording, error: micError, start: startMic, stop: stopMic } = useRecorder({
+    onTranscript: (text) => dispatch({ type: 'INPUT_CHANGED', value: text }),
+    lang: inputLang
+  })
+
+
   // Responsive layout
   const isDesktop = useMediaQuery('(min-width: 1024px)')
 
@@ -178,7 +186,10 @@ export default function App() {
       const inInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(active.tagName) || active.isContentEditable
 
 
-      // Escape — close all panels (always fires)
+      // ─── Global Shortcuts (Always active) ───────────────────────────────────
+
+
+      // Escape — close all panels
       if (e.key === 'Escape') {
         setSettingsOpen(false)
         setHistoryOpen(false)
@@ -188,52 +199,113 @@ export default function App() {
       }
 
 
-      // Shortcuts allowed through from inside input/textarea
-      if (inInput) {
-        if (e.ctrlKey && e.key === 'Enter') { e.preventDefault(); handleEnhance(); return }
-        if (e.ctrlKey && e.shiftKey && e.key === 'R' && hasOutput) { e.preventDefault(); handleEnhance(true); return }
+      // Shortcuts Modal Reference sheet (Standard ? or Ctrl+/)
+      if ((e.key === '?' && !inInput) || (e.ctrlKey && e.key === '/')) {
+        e.preventDefault()
+        setShortcutsOpen(o => !o)
         return
       }
 
 
-      // ── Shortcuts only active when focus is NOT in a form field ──────────
+      // ─── Action Shortcuts ───────────────────────────────────────────────────
 
 
-      // Enhance / Regenerate
-      if (e.ctrlKey && e.key === 'Enter') { e.preventDefault(); handleEnhance(); return }
-      if (e.ctrlKey && e.shiftKey && e.key === 'R' && hasOutput) { e.preventDefault(); handleEnhance(true); return }
+      // Enhance / Regenerate (Work even in input)
+      if (e.ctrlKey && e.key === 'Enter') {
+        e.preventDefault()
+        if (e.shiftKey) {
+          if (hasOutput) handleEnhance(true) // Ctrl + Shift + Enter -> Regenerate
+        } else {
+          handleEnhance() // Ctrl + Enter -> Enhance
+        }
+        return
+      }
 
 
-      // Output
-      if (e.ctrlKey && e.shiftKey && e.key === 'C') { e.preventDefault(); navigator.clipboard.writeText(outputText).catch(() => { }); return }
-      if (e.ctrlKey && e.shiftKey && e.key === 'X') { e.preventDefault(); dispatch({ type: 'RESET' }); return }
+      // Voice Input (Ctrl + Shift + M)
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'm') {
+        e.preventDefault()
+        if (isMicRecording) stopMic()
+        else startMic().catch(() => { })
+        return
+      }
 
 
-      // Reset
-      if (e.ctrlKey && e.key.toLowerCase() === 'k') { e.preventDefault(); dispatch({ type: 'FULL_RESET' }); return }
+      // ─── Form-blocking Shortcuts (Only allowed if NOT in input, or using modifiers) ───
 
 
-      // Panels
-      if (e.ctrlKey && e.key.toLowerCase() === 'h') { e.preventDefault(); setHistoryOpen(o => !o); return }
-      if (e.ctrlKey && e.key === ',') { e.preventDefault(); setSettingsOpen(true); return }
-      if (e.ctrlKey && e.key.toLowerCase() === 'i') { e.preventDefault(); setShortcutsOpen(s => !s); return }
+      // Copy output (Ctrl + Shift + C) - Standard in terminal style apps
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'c' && hasOutput) {
+        e.preventDefault()
+        navigator.clipboard.writeText(outputText).catch(() => { })
+        return
+      }
 
 
-      // Theme
-      if (e.ctrlKey && e.shiftKey && e.key === 'D') { e.preventDefault(); toggleDark(); return }
+      // Toggle Compare View (Ctrl + Shift + V)
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'v' && hasOutput) {
+        e.preventDefault()
+        setDiffOpen(o => !o)
+        return
+      }
 
 
-      // Alt + 1–5 — enhancement level presets
+      // Clear Output Only (Ctrl + L) - L for clear is standard in many CLI apps
+      if (e.ctrlKey && e.key.toLowerCase() === 'l') {
+        if (inInput && active.tagName !== 'SELECT') return // Let input handle Ctrl+L if it means something
+        e.preventDefault()
+        dispatch({ type: 'RESET' })
+        return
+      }
+
+
+      // Full Reset (Ctrl + Shift + K) - K for "Klear everything"
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        dispatch({ type: 'FULL_RESET' })
+        return
+      }
+
+
+      // ─── Navigation & Panels ────────────────────────────────────────────────
+
+
+      // Sidebar / History (Ctrl + H or Ctrl + B like VS Code)
+      if (e.ctrlKey && (e.key.toLowerCase() === 'h' || e.key.toLowerCase() === 'b')) {
+        e.preventDefault()
+        setHistoryOpen(o => !o)
+        return
+      }
+
+
+      // Settings (Ctrl + ,)
+      if (e.ctrlKey && e.key === ',') {
+        e.preventDefault()
+        setSettingsOpen(true)
+        return
+      }
+
+
+      // Theme (Ctrl + Shift + D)
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'd') {
+        e.preventDefault()
+        toggleDark()
+        return
+      }
+
+
+      // Alt + 1–5 — enhancement level presets (Always active unless blocked)
       if (e.altKey && !e.ctrlKey && !e.shiftKey && LEVEL_MAP[e.key]) {
         e.preventDefault()
         setLevel(LEVEL_MAP[e.key])
+        return
       }
     }
 
 
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [handleEnhance, outputText, hasOutput, toggleDark])
+  }, [handleEnhance, outputText, hasOutput, toggleDark, isMicRecording, startMic, stopMic])
 
 
   return (
@@ -302,7 +374,10 @@ export default function App() {
               />
               <MicButton
                 lang={inputLang}
-                onTranscript={(text) => dispatch({ type: 'INPUT_CHANGED', value: text })}
+                recording={isMicRecording}
+                error={micError}
+                start={startMic}
+                stop={stopMic}
               />
             </div>
 

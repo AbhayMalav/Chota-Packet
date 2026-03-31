@@ -8,32 +8,35 @@ import '../styles/components/ShortcutsModal.css'
 
 const SHORTCUT_GROUPS = [
   {
-    group: 'Enhance',
+    group: 'Generation',
     items: [
       { keys: ['Ctrl', 'Enter'], desc: 'Enhance prompt' },
-      { keys: ['Ctrl', 'Shift', 'R'], desc: 'Regenerate (variant)' },
+      { keys: ['Ctrl', 'Shift', 'Enter'], desc: 'Regenerate (variant)' },
+      { keys: ['Ctrl', 'Shift', 'M'], desc: 'Toggle voice input' },
     ],
   },
   {
     group: 'Output',
     items: [
       { keys: ['Ctrl', 'Shift', 'C'], desc: 'Copy output to clipboard' },
-      { keys: ['Ctrl', 'Shift', 'X'], desc: 'Clear output only' },
-      { keys: ['Ctrl', 'K'], desc: 'Clear everything' },
+      { keys: ['Ctrl', 'Shift', 'V'], desc: 'Toggle compare view' },
+      { keys: ['Ctrl', 'L'], desc: 'Clear output only' },
+      { keys: ['Ctrl', 'Shift', 'K'], desc: 'Clear everything' },
     ],
   },
   {
-    group: 'Panels',
+    group: 'Navigation',
     items: [
-      { keys: ['Ctrl', 'H'], desc: 'Toggle history panel' },
+      { keys: ['Ctrl', 'B'], desc: 'Toggle history / sidebar' },
       { keys: ['Ctrl', ','], desc: 'Open settings' },
-      { keys: ['Ctrl', 'I'], desc: 'Toggle shortcuts panel' },
-      { keys: ['Ctrl', 'Shift', 'D'], desc: 'Toggle dark / light mode' },
+      { keys: ['?'], desc: 'Toggle shortcuts' },
+      { keys: ['Ctrl', '/'], desc: 'Toggle shortcuts' },
+      { keys: ['Ctrl', 'Shift', 'D'], desc: 'Toggle dark mode' },
       { keys: ['Escape'], desc: 'Close any open panel' },
     ],
   },
   {
-    group: 'Level presets',
+    group: 'Enhancement levels',
     items: [
       { keys: ['Alt', '1'], desc: 'Level → Basic' },
       { keys: ['Alt', '2'], desc: 'Level → Detailed' },

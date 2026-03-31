@@ -325,17 +325,46 @@ export default function SettingsModal({ onClose = () => { }, settings, onShowSho
               icon={<KeyboardIcon className="w-3.5 h-3.5" />}
               label="Keyboard Shortcuts"
             />
-            <button
-              onClick={onShowShortcuts}
-              className="settings__shortcuts-btn bg-input w-full flex items-center justify-between px-3.5 py-3 rounded-xl
-                         border transition-all duration-200 group
-                         hover:border-purple-500/30"
-            >
-              <span className="text-theme text-sm font-medium">View all shortcuts</span>
-              <ArrowRightIcon
-                className="text-secondary w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5"
-              />
-            </button>
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={onShowShortcuts}
+                className="settings__shortcuts-btn bg-input w-full flex items-center justify-between px-3.5 py-3 rounded-xl
+                           border transition-all duration-200 group
+                           hover:border-purple-500/30"
+              >
+                <div className="flex flex-col items-start">
+                  <span className="text-theme text-sm font-medium">Full Reference Sheet</span>
+                  <span className="text-secondary text-[10px]">View all available commands</span>
+                </div>
+                <ArrowRightIcon
+                  className="text-secondary w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5"
+                />
+              </button>
+
+              {/* Quick reference grid */}
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { label: 'Enhance', keys: ['Ctrl', 'Enter'] },
+                  { label: 'Shortcuts', keys: ['?'] },
+                  { label: 'Voice', keys: ['Ctrl', 'Shift', 'M'] },
+                  { label: 'Settings', keys: ['Ctrl', ','] },
+                ].map((s) => (
+                  <div key={s.label} className="flex flex-col gap-1 p-2.5 rounded-xl border border-purple-500/5 bg-purple-500/5">
+                    <span className="text-muted text-[10px] font-bold uppercase tracking-wider">{s.label}</span>
+                    <div className="flex items-center gap-1">
+                      {s.keys.map((k, i) => (
+                        <React.Fragment key={k}>
+                          <kbd className="px-1.5 py-0.5 rounded bg-theme-base border border-theme text-[10px] font-mono shadow-sm">
+                            {k}
+                          </kbd>
+                          {i < s.keys.length - 1 && <span className="text-[10px] text-muted">+</span>}
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </section>
         </div>
 
