@@ -17,7 +17,7 @@ import HistoryPanel from './components/HistoryPanel'
 import SettingsModal from './components/SettingsModal'
 import MicButton from './components/MicButton'
 import OnboardingOverlay from './components/OnboardingOverlay'
-import { NavBtn } from './components/NavBar'
+import { NavBtn, ModeIndicator } from './components/NavBar'
 import ErrorBoundary from './components/ErrorBoundary'
 import ShortcutsModal from './components/ShortcutsModal'
 import { ClockIcon, SunIcon, MoonIcon } from './components/icons'
@@ -325,7 +325,9 @@ export default function App() {
           <div className="flex items-center gap-2">
             <span className="font-extrabold text-sm gradient-text tracking-tight">Chota Packet</span>
           </div>
-          <nav className="flex items-center gap-1" aria-label="App controls">
+          <nav className="flex items-center gap-2" aria-label="App controls">
+            <ModeIndicator mode={inferenceMode} />
+            <div className="h-4 w-px bg-white/10 mx-1" aria-hidden="true" />
             <div className="lg:hidden flex items-center">
               <NavBtn onClick={() => setHistoryOpen(o => !o)} label="Session History" icon={ClockIcon} active={historyOpen} />
             </div>

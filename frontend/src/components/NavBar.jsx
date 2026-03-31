@@ -1,4 +1,5 @@
 import React from 'react'
+import { PlugIcon, GlobeIcon } from './icons'
 
 
 // ── NavBtn ────────────────────────────────────────────────────────────────────
@@ -49,6 +50,34 @@ export function KbdHint({ keys, action }) {
         ))}
       </span>
       <span>{action}</span>
+    </div>
+  )
+}
+
+// ── ModeIndicator ─────────────────────────────────────────────────────────────
+export function ModeIndicator({ mode = 'cloud' }) {
+  const isCloud = mode === 'cloud'
+
+  const label = isCloud ? 'Cloud' : 'Local'
+  const Icon = isCloud ? GlobeIcon : PlugIcon
+
+  const title = isCloud
+    ? 'Enhancements are being routed through cloud AI'
+    : 'Enhancements are being processed locally on your device'
+
+  // Amber for Local, Blue/Teal for Cloud
+  const colorClasses = isCloud
+    ? 'bg-blue-500/10 text-blue-400 border-blue-500/20 shadow-[0_0_12px_-3px_rgba(59,130,246,0.3)]'
+    : 'bg-amber-500/10 text-amber-400 border-amber-500/20 shadow-[0_0_12px_-3px_rgba(245,158,11,0.3)]'
+
+  return (
+    <div
+      className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[11px] font-bold tracking-wide animate-fade-in transition-all duration-300 ${colorClasses}`}
+      title={title}
+      aria-label={`Enhancement mode: ${label}`}
+    >
+      <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+      <span className="hidden sm:inline uppercase">{label}</span>
     </div>
   )
 }
