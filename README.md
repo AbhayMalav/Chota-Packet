@@ -45,8 +45,11 @@ Chota-Packet/
 
 ### Frontend Components
 
+- `src/pages/`: Main application views powered by React Router.
+- `src/components/`: Modular UI components organized by domain (`core/`, `layout/`, `modals/`, `ui/`), featuring co-located `.css` files.
+- `src/config/`: Consolidated global constants and application configuration.
+- `src/context/`: React context providers for shared state like `SessionContext`.
 - `src/hooks/`: Custom hooks like `useEnhance` for seamless API interaction.
-- `src/components/`: Modular UI components for a premium user experience.
 
 ---
 
@@ -62,7 +65,7 @@ Chota-Packet/
 
 ### Frontend
 
-- **Framework**: React 19 (Vite)
+- **Framework**: React 19 (Vite) + React Router
 - **Styling**: Tailwind CSS v4.0 (for cutting-edge design flexibility)
 - **Communication**: Axios with custom error-handling middleware
 

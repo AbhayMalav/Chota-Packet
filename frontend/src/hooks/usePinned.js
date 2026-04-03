@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
-import { LS_PINNED, MAX_PINNED } from '../constants'
+import { LS_PINNED, MAX_PINNED } from '../config/constants'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 

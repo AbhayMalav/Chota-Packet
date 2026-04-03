@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { LS_ANALYTICS, estimateTokens } from '../constants';
+import { LS_ANALYTICS, estimateTokens } from '../config/constants';
 
 const COST_PER_1K = 0.003;
 const MAX_ENTRIES = 500;

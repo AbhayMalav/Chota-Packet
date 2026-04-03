@@ -10,4 +10,12 @@ export default defineConfig({
       '/api': { target: 'http://localhost:8000', rewrite: (path) => path.replace(/^\/api/, '') },
     },
   },
+  test: {
+    environment: 'happy-dom',
+    globals: false,
+    setupFiles: ['./src/test-setup.js'],
+    css: false,
+    pool: 'vmThreads',
+  },
 })
+

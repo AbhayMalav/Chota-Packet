@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { getModels } from '../services/api'
-import { LS_DARK, LS_KEY, LS_MODEL } from '../constants'
+import { LS_DARK, LS_KEY, LS_MODEL } from '../config/constants'
 
 // ── crypto helpers (Web Crypto AES-GCM, key derived from fixed app salt) ─────
 

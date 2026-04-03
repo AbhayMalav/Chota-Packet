@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { encryptKey, decryptKey } from '../services/crypto'
 import { getModels } from '../services/api'
-import { LS_KEY, LS_MODEL, LS_DARK, LS_THEME } from '../constants'
+import { LS_KEY, LS_MODEL } from '../config/constants'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -40,11 +40,6 @@ function removeStorage(key) {
  * @returns {object} settings and setters
  */
 export default function useSettings() {
-  const [darkMode, setDarkMode] = useState(() => {
-    if (typeof window === 'undefined') return true   // SSR safe - default dark
-    return readStorage(LS_DARK, '1') === '1'
-  })
-
   const [openRouterKey, setOpenRouterKey] = useState(null) // plaintext, memory-only
   const [selectedModel, setSelectedModel] = useState(() => readStorage(LS_MODEL, ''))
   const [models, setModels] = useState([])
@@ -52,21 +47,6 @@ export default function useSettings() {
   const [keyStatus, setKeyStatus] = useState('idle') // idle|saving|valid|invalid
 
   const keyStatusTimerRef = useRef(null)
-
-  // ── Theme ──────────────────────────────────────────────────────────────────
-  const [theme, setTheme] = useState(() => readStorage(LS_THEME, 'brand'))
-
-  useEffect(() => {
-    const root = document.documentElement
-    root.classList.toggle('light', !darkMode)
-    
-    // Clear potentially existing theme classes
-    root.classList.remove('theme-brand', 'theme-orange', 'theme-carrot', 'theme-blue', 'theme-teal', 'theme-brown', 'theme-dusk')
-    root.classList.add(`theme-${theme}`)
-
-    writeStorage(LS_DARK, darkMode ? '1' : '0')
-    writeStorage(LS_THEME, theme)
-  }, [darkMode, theme])
 
   // ── Load encrypted key on mount ────────────────────────────────────────────
   useEffect(() => {
@@ -175,14 +155,10 @@ export default function useSettings() {
     writeStorage(LS_MODEL, model)
   }, [])
 
-  const toggleDark = useCallback(() => setDarkMode((d) => !d), [])
-
   // Cleanup timer on unmount
   useEffect(() => () => clearTimeout(keyStatusTimerRef.current), [])
 
   return {
-    darkMode, toggleDark,
-    theme, setTheme,
     openRouterKey, saveKey, clearKey, keyStatus,
     selectedModel, saveModel, models, modelsError,
     inferenceMode,

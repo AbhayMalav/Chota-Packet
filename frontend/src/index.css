@@ -1,7 +1,5 @@
 @import "tailwindcss";
-/* FIX #1 + #2: Removed duplicate import. Corrected path (was './styles/utils.css' — file does
-   not exist at that location; actual path is './styles/components/utils.css'). */
-@import './styles/components/utils.css';
+@import './styles/utils.css';
 
 /* ── Design System Tokens ────────────────────────────────────────────────── */
 @theme {
@@ -113,7 +111,7 @@
 }
 
 /* ── Theme CSS Variables - Light override ────────────────────────────────── */
-.light {
+[data-theme="light"] {
   color-scheme: light;
 
   --theme-bg: #f4f4f8;
@@ -863,14 +861,29 @@ textarea {
 
 /* ─── App Shell ────────────────────────────────────────────────────────────── */
 
-/* Full-viewport shell — wraps everything including the navbar */
-.app-root {
-  position: relative;
-  min-height: 100vh;
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* Prevent the entire page from scrolling */
 }
 
-/* Content area below the sticky navbar.
-   Uses --navbar-height so resizing the nav never requires touching this rule. */
+.app-root {
+  position: relative;
+  height: 100%; /* Use 100% instead of 100vh to prevent mobile browser chrome issues */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Ensure the header doesn't shrink when the app-layout tries to expand */
+.app-root > header {
+  flex-shrink: 0;
+}
+
 .app-layout {
-  min-height: calc(100vh - var(--navbar-height));
+  flex: 1; /* Takes exactly the remaining space below the header */
+  min-height: 0; /* CRITICAL: Prevents flex child from overflowing out the bottom of app-root */
+  display: flex;
+  overflow: hidden; /* Keep the layout locked */
 }

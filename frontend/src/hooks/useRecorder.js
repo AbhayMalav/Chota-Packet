@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { stt as apiStt } from '../services/api'
-import { STT_TIMEOUT_MS } from '../constants'
+import { STT_TIMEOUT_MS } from '../config/constants'
 
 // ── MIME type resolution ──────────────────────────────────────────────────────
 

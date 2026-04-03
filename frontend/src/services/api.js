@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { API_BASE, ENHANCE_TIMEOUT_MS, STT_TIMEOUT_MS } from '../constants'
+import { API_BASE, ENHANCE_TIMEOUT_MS, STT_TIMEOUT_MS } from '../config/constants'
 
 // Local timeouts not worth a constants.js entry yet — revisit if more endpoints are added
 const HEALTH_TIMEOUT_MS = 5_000
