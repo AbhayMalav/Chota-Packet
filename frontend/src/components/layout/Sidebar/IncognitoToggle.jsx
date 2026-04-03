@@ -5,7 +5,7 @@ import './IncognitoToggle.css'
 
 export default function IncognitoToggle() {
   const { isIncognito, toggleIncognito } = useIncognito()
-  const { isCollapsed } = useSidebar()
+  const isCollapsed  = useSidebar()
 
   return (
     <div className={`incognito-wrapper ${isCollapsed ? 'collapsed' : 'expanded'}`}>

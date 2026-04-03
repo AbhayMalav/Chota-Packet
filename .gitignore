@@ -10,3 +10,5 @@ backend/test_output.txt
 /Datasets
 /training
 *.pyc
+.opencode
+Datasets/*

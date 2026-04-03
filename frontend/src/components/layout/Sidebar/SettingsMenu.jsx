@@ -1,50 +1,46 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react'
+import React, { useRef, useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { GearIcon } from '../../ui/icons'
 import SettingsPanel from '../../modals/SettingsModal'
-import { useSidebar } from './Sidebar'
+import { useSidebar, useSettingsMenu } from './Sidebar'
+import usePopoverPosition from '../../../hooks/usePopoverPosition'
 import ErrorBoundary from '../../ui/ErrorBoundary'
 import './SettingsMenu.css'
 
 export default function SettingsMenu({ settings, onShowShortcuts }) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [pos, setPos] = useState({ top: 0, left: 0, bottom: 'auto' })
   const triggerRef = useRef(null)
   const popoverRef = useRef(null)
-  const { isCollapsed } = useSidebar()
+  const isCollapsed = useSidebar()
+  const { settingsOpen, toggleSettings, closeSettings } = useSettingsMenu()
+  const { position } = usePopoverPosition(triggerRef, popoverRef, { estimatedWidth: 360 })
 
-  const toggleMenu = useCallback(() => {
-    if (!isOpen && triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect()
-      const vh = window.innerHeight
-      
-      let left = rect.right + 12
-      let bottom = vh - rect.bottom
-      let top = 'auto'
+  const handleToggle = useCallback(() => {
+    toggleSettings()
+  }, [toggleSettings])
 
-      setPos({ top, left, bottom })
-    }
-    setIsOpen(prev => !prev)
-  }, [isOpen])
+  const handleClose = useCallback(() => {
+    closeSettings()
+    triggerRef.current?.focus()
+  }, [closeSettings])
 
   // Close on outside click
   useEffect(() => {
-    if (!isOpen) return
+    if (!settingsOpen) return
     const handleOutside = (e) => {
       if (
         popoverRef.current && !popoverRef.current.contains(e.target) &&
         triggerRef.current && !triggerRef.current.contains(e.target)
       ) {
-        setIsOpen(false)
+        handleClose()
       }
     }
     document.addEventListener('mousedown', handleOutside)
     return () => document.removeEventListener('mousedown', handleOutside)
-  }, [isOpen])
+  }, [settingsOpen, handleClose])
 
   // Trap Focus and Escape
   useEffect(() => {
-    if (!isOpen) return
+    if (!settingsOpen) return
     const popover = popoverRef.current
     if (!popover) return
 
@@ -55,8 +51,7 @@ export default function SettingsMenu({ settings, onShowShortcuts }) {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         e.preventDefault()
-        setIsOpen(false)
-        triggerRef.current?.focus()
+        handleClose()
         return
       }
       if (e.key === 'Tab') {
@@ -79,32 +74,31 @@ export default function SettingsMenu({ settings, onShowShortcuts }) {
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
-      triggerRef.current?.focus()
     }
-  }, [isOpen])
+  }, [settingsOpen, handleClose])
 
-  // Global shortcut to toggle Settings Menu (MOVED OUTSIDE)
+  // Global shortcut to toggle Settings Menu
   useEffect(() => {
     const handleShortcut = (e) => {
       if (e.ctrlKey && e.key === ',') {
         e.preventDefault()
-        toggleMenu()
+        handleToggle()
       }
     }
     window.addEventListener('keydown', handleShortcut)
     return () => window.removeEventListener('keydown', handleShortcut)
-  }, [toggleMenu])
+  }, [handleToggle])
 
   return (
     <div className="settings-menu-wrapper">
       <button
         ref={triggerRef}
-        onClick={toggleMenu}
+        onClick={handleToggle}
         aria-haspopup="dialog"
-        aria-expanded={isOpen}
+        aria-expanded={settingsOpen}
         aria-label="Settings"
         title={isCollapsed ? "Settings" : undefined}
-        className={`settings-trigger-btn ${isOpen ? 'active' : ''} ${isCollapsed ? 'collapsed' : ''}`}
+        className={`settings-trigger-btn ${settingsOpen ? 'active' : ''} ${isCollapsed ? 'collapsed' : ''}`}
       >
         <span className="settings-trigger-icon">
           <GearIcon className="w-5 h-5" />
@@ -112,7 +106,7 @@ export default function SettingsMenu({ settings, onShowShortcuts }) {
         {!isCollapsed && <span className="settings-trigger-label">Settings</span>}
       </button>
 
-      {isOpen && createPortal(
+      {settingsOpen && createPortal(
         <div
           ref={popoverRef}
           role="dialog"
@@ -120,21 +114,21 @@ export default function SettingsMenu({ settings, onShowShortcuts }) {
           aria-label="Settings Context Menu"
           className="settings-popover glass-card gradient-border animate-fade-in"
           style={{
-            top: pos.top !== 'auto' ? `${pos.top}px` : 'auto',
-            bottom: pos.bottom !== 'auto' ? `${pos.bottom}px` : 'auto',
-            left: `${pos.left}px`
+            position: 'fixed',
+            top: position.top,
+            bottom: position.bottom,
+            left: position.left,
+            right: position.right,
+            zIndex: 100,
           }}
         >
           <ErrorBoundary fallback={<div className="p-5 text-red-400 font-semibold bg-red-500/10">Settings unavailable</div>}>
             <SettingsPanel
               settings={settings}
-              onClose={() => {
-                setIsOpen(false)
-                triggerRef.current?.focus()
-              }}
-              onShowShortcuts={() => { 
-                setIsOpen(false)
-                onShowShortcuts?.() 
+              onClose={handleClose}
+              onShowShortcuts={() => {
+                handleClose()
+                onShowShortcuts?.()
               }}
             />
           </ErrorBoundary>

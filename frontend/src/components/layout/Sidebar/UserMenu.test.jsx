@@ -2,20 +2,38 @@ import React from 'react'
 import { render, screen, fireEvent, cleanup } from '@testing-library/react'
 import UserButton from './UserButton'
 import { useUser } from '../../../context/UserContext'
-import { useSidebar } from './Sidebar'
+import { useSidebar, useSettingsMenu } from './Sidebar'
 import { useTheme } from '../../../context/ThemeContext'
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 
 // ── Mocks ────────────────────────────────────────────────────────────────────
 
 vi.mock('../../../context/UserContext')
-vi.mock('./Sidebar')
+vi.mock('./Sidebar', () => ({
+  useSidebar: vi.fn(() => false),
+  useSettingsMenu: vi.fn(() => ({
+    settingsOpen: false,
+    toggleSettings: vi.fn(),
+    closeSettings: vi.fn(),
+    shortcutsOpen: false,
+    openShortcuts: vi.fn(),
+    closeShortcuts: vi.fn(),
+  })),
+}))
 vi.mock('../../../context/ThemeContext', () => ({
   useTheme: vi.fn(() => ({
     mode: 'dark',
     setMode: vi.fn(),
     themeColor: 'brand',
     setThemeColor: vi.fn(),
+  })),
+}))
+
+vi.mock('../../../hooks/usePopoverPosition', () => ({
+  __esModule: true,
+  default: vi.fn(() => ({
+    position: { top: 'auto', bottom: 100, left: 50, right: 'auto' },
+    recalculate: vi.fn(),
   })),
 }))
 
@@ -28,6 +46,14 @@ describe('UserMenu', () => {
       { name: 'Test User', email: 'test@example.com', avatar: null },
       mockSetUser
     ])
+    vi.mocked(useSettingsMenu).mockReturnValue({
+      settingsOpen: false,
+      toggleSettings: vi.fn(),
+      closeSettings: vi.fn(),
+      shortcutsOpen: false,
+      openShortcuts: vi.fn(),
+      closeShortcuts: vi.fn(),
+    })
     vi.useFakeTimers()
   })
 
@@ -72,9 +98,9 @@ describe('UserMenu', () => {
     expect(avatarContainer).toHaveTextContent('TU')
   })
 
-  it('Clicking each stub item triggers a toast (except Appearance)', async () => {
+  it('Clicking each stub item triggers a toast (except Appearance, Shortcuts, and All Settings)', async () => {
     openMenu()
-    const stubs = ['Account', 'Preferences', 'Shortcuts', 'Usage & Credits', 'All Settings', 'Language', 'Help']
+    const stubs = ['Account', 'Preferences', 'Usage & Credits', 'Language', 'Help']
     for (const label of stubs) {
       const item = screen.getByText(label)
       fireEvent.click(item)
@@ -154,5 +180,53 @@ describe('UserMenu', () => {
     fireEvent.keyDown(document, { key: 'Escape', code: 'Escape' })
     expect(screen.queryByRole('menu')).not.toBeInTheDocument()
     expect(btn).toHaveFocus()
+  })
+
+  it('"All Settings" item is no longer a stub — it calls toggleSettings', () => {
+    const mockToggleSettings = vi.fn()
+    vi.mocked(useSettingsMenu).mockReturnValue({
+      settingsOpen: false,
+      toggleSettings: mockToggleSettings,
+      closeSettings: vi.fn(),
+      shortcutsOpen: false,
+      openShortcuts: vi.fn(),
+      closeShortcuts: vi.fn(),
+    })
+    openMenu()
+    const allSettingsBtn = screen.getByText('All Settings')
+    fireEvent.click(allSettingsBtn)
+    expect(mockToggleSettings).toHaveBeenCalled()
+  })
+
+  it('"All Settings" click closes the user menu', () => {
+    openMenu()
+    expect(screen.getByRole('menu')).toBeInTheDocument()
+    const allSettingsBtn = screen.getByText('All Settings')
+    fireEvent.click(allSettingsBtn)
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument()
+  })
+
+  it('Still positions correctly after refactor to usePopoverPosition', () => {
+    openMenu()
+    const menu = screen.getByRole('menu')
+    expect(menu).toBeInTheDocument()
+    expect(menu.style.position).toBe('fixed')
+  })
+
+  it('"Shortcuts" item opens ShortcutsPanel (no longer a stub toast)', () => {
+    openMenu()
+    const shortcutsBtn = screen.getByText('Shortcuts')
+    fireEvent.click(shortcutsBtn)
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+    expect(screen.getByRole('dialog', { name: /keyboard shortcuts/i })).toBeInTheDocument()
+  })
+
+  it('ShortcutsPanel back button returns to user menu list', () => {
+    openMenu()
+    fireEvent.click(screen.getByText('Shortcuts'))
+    expect(screen.getByRole('dialog', { name: /keyboard shortcuts/i })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: /back to menu/i }))
+    expect(screen.getByRole('menu')).toBeInTheDocument()
+    expect(screen.queryByRole('dialog', { name: /keyboard shortcuts/i })).not.toBeInTheDocument()
   })
 })

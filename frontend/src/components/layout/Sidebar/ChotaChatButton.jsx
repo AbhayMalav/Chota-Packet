@@ -3,16 +3,10 @@ import { useSidebar } from './Sidebar';
 import './ChotaChatButton.css';
 import * as Config from '../../../config/config';
 
-// Safe resolution of FEATURES
 const FEATURES = Config?.FEATURES || { SHOW_CHOTA_CHAT: false };
 
-/**
- * Chota Chat Button
- * Conditionally rendered based on SHOW_CHOTA_CHAT config.
- * Note: Flag change requires a dev server restart.
- */
 export default function ChotaChatButton() {
-  const { isCollapsed } = useSidebar();
+  const isCollapsed = useSidebar();
   const [isHovered, setIsHovered] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const timerRef = useRef(null);
@@ -29,7 +23,6 @@ export default function ChotaChatButton() {
 
   const handleClick = () => {
     if (showToast) return;
-    
     setShowToast(true);
     timerRef.current = setTimeout(() => {
       setShowToast(false);
@@ -40,7 +33,7 @@ export default function ChotaChatButton() {
   return (
     <div className="chota-chat-container">
       <button
-        className="chota-chat-btn"
+        className={`chota-chat-btn ${isCollapsed ? 'collapsed' : ''}`}
         onClick={handleClick}
         aria-label="Chota Chat"
         onMouseEnter={() => setIsHovered(true)}
@@ -57,7 +50,7 @@ export default function ChotaChatButton() {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
         </svg>
         {!isCollapsed && (
           <>
@@ -66,14 +59,13 @@ export default function ChotaChatButton() {
           </>
         )}
       </button>
+
       {isCollapsed && isHovered && (
         <div className="chota-chat-tooltip">Chota Chat (Coming Soon)</div>
       )}
-      
+
       {showToast && (
-        <div className="chota-chat-toast">
-          Chota Chat is coming soon!
-        </div>
+        <div className="chota-chat-toast">Chota Chat is coming soon!</div>
       )}
     </div>
   );

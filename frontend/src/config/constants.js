@@ -115,3 +115,48 @@ export const THEMES = [
 // Coerces input to string so numbers/objects don't silently produce wrong counts.
 export const estimateTokens = (text) =>
   Math.ceil(String(text ?? '').length / 4)
+
+
+// ── Keyboard shortcuts ────────────────────────────────────────────────────────
+
+
+export const SHORTCUT_GROUPS = [
+  {
+    group: 'Generation',
+    items: [
+      { keys: ['Ctrl', 'Enter'], desc: 'Enhance prompt' },
+      { keys: ['Ctrl', 'Shift', 'Enter'], desc: 'Regenerate (variant)' },
+      { keys: ['Ctrl', 'Shift', 'M'], desc: 'Toggle voice input' },
+    ],
+  },
+  {
+    group: 'Output',
+    items: [
+      { keys: ['Ctrl', 'Shift', 'C'], desc: 'Copy output to clipboard' },
+      { keys: ['Ctrl', 'Shift', 'V'], desc: 'Toggle compare view' },
+      { keys: ['Ctrl', 'L'], desc: 'Clear output only' },
+      { keys: ['Ctrl', 'Shift', 'K'], desc: 'Clear everything' },
+    ],
+  },
+  {
+    group: 'Navigation',
+    items: [
+      { keys: ['Ctrl', 'B'], desc: 'Toggle history / sidebar' },
+      { keys: ['Ctrl', ','], desc: 'Open settings' },
+      { keys: ['?'], desc: 'Toggle shortcuts' },
+      { keys: ['Ctrl', '/'], desc: 'Toggle shortcuts' },
+      { keys: ['Ctrl', 'Shift', 'D'], desc: 'Toggle dark mode' },
+      { keys: ['Escape'], desc: 'Close any open panel' },
+    ],
+  },
+  {
+    group: 'Enhancement levels',
+    items: [
+      { keys: ['Alt', '1'], desc: 'Level → Basic' },
+      { keys: ['Alt', '2'], desc: 'Level → Detailed' },
+      { keys: ['Alt', '3'], desc: 'Level → Advanced' },
+      { keys: ['Alt', '4'], desc: 'Level → Chain of Thought' },
+      { keys: ['Alt', '5'], desc: 'Level → Meta' },
+    ],
+  },
+]

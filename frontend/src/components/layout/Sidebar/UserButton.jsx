@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useUser } from '../../../context/UserContext';
-import { useSidebar } from './Sidebar';
+import { useSidebar, useSettingsMenu } from './Sidebar';
 import UserMenu from './UserMenu';
 import './UserButton.css';
 
@@ -15,9 +15,9 @@ function getInitials(name) {
 export default function UserButton() {
   const [user] = useUser();
   const isCollapsed = useSidebar();
+  const { shortcutsOpen } = useSettingsMenu();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
-  const [menuPos, setMenuPos] = useState({ top: 'auto', left: 0, bottom: 0 });
   const buttonRef = useRef(null);
   const toastTimerRef = useRef(null);
 
@@ -25,16 +25,13 @@ export default function UserButton() {
   const displayEmail = user?.email;
   const initials = getInitials(displayName);
 
-  const toggleMenu = () => {
-    if (!isMenuOpen && buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      const vh = window.innerHeight;
-      setMenuPos({
-        bottom: vh - rect.top + 8,
-        left: rect.left,
-        top: 'auto',
-      });
+  useEffect(() => {
+    if (shortcutsOpen && !isMenuOpen) {
+      setIsMenuOpen(true);
     }
+  }, [shortcutsOpen, isMenuOpen]);
+
+  const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
 
@@ -54,7 +51,7 @@ export default function UserButton() {
   }, []);
 
   return (
-    <div className="user-btn-wrapper relative">
+    <div className="user-btn-wrapper">
       <button
         ref={buttonRef}
         type="button"
@@ -73,26 +70,28 @@ export default function UserButton() {
           )}
         </div>
         {!isCollapsed && (
-          <div className="user-info">
-            <span className="user-name">{displayName}</span>
-            {displayEmail && <span className="user-email">{displayEmail}</span>}
-          </div>
+          <>
+            <div className="user-info">
+              <span className="user-name">{displayName}</span>
+              {displayEmail && <span className="user-email">{displayEmail}</span>}
+            </div>
+            <svg
+              className="user-chevron"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{
+                transform: isMenuOpen ? 'rotate(180deg)' : 'none',
+                transition: 'transform 0.2s ease',
+              }}
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </>
         )}
-        <svg
-          className="user-chevron"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          style={{
-            transform: isMenuOpen ? 'rotate(180deg)' : 'none',
-            transition: 'transform 0.2s ease',
-          }}
-        >
-          <polyline points="9 18 15 12 9 6" />
-        </svg>
       </button>
 
       <UserMenu
@@ -100,7 +99,6 @@ export default function UserButton() {
         onClose={() => setIsMenuOpen(false)}
         triggerBtnRef={buttonRef}
         onShowToast={handleShowToast}
-        menuPos={menuPos}
       />
 
       {toastMessage && (

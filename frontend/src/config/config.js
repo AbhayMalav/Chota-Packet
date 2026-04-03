@@ -3,7 +3,7 @@
 // Toggle UI features here without touching component code.
 
 const FEATURES = Object.freeze({
-  SHOW_CHOTA_CHAT: false, // Set true to show Chota Chat button in sidebar
+  SHOW_CHOTA_CHAT: true, // Set true to show Chota Chat button in sidebar
   SHOWBACKENDSTATUSBAR: false, // Show/hide the "Backend connected / offline" status bar below the navbar
 });
 

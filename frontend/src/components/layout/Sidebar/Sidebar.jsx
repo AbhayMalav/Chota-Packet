@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext, useEffect } from 'react';
+import React, { useState, createContext, useContext, useEffect, useCallback } from 'react';
 import './Sidebar.css';
 import NewThreadButton from './NewThreadButton';
 import ChotaChatButton from './ChotaChatButton';
@@ -9,6 +9,7 @@ import useSettings from '../../../hooks/useSettings';
 import UserButton from './UserButton';
 
 const SidebarContext = createContext(undefined);
+const SettingsContext = createContext(undefined);
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const useSidebar = () => {
@@ -19,8 +20,19 @@ export const useSidebar = () => {
   return context;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
+export const useSettingsMenu = () => {
+  const context = useContext(SettingsContext);
+  if (context === undefined) {
+    throw new Error('useSettingsMenu must be used inside <Sidebar>');
+  }
+  return context;
+};
+
 export default function Sidebar({ children, history, onHistorySelect, onShowShortcuts, mobileOpen, onMobileClose }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const settings = useSettings();
 
   useEffect(() => {
@@ -46,6 +58,42 @@ export default function Sidebar({ children, history, onHistorySelect, onShowShor
     return () => document.removeEventListener('keydown', handleEsc);
   }, [mobileOpen, onMobileClose]);
 
+  useEffect(() => {
+    const handleOpenShortcuts = () => {
+      setShortcutsOpen(true);
+    };
+    window.addEventListener('chota-open-shortcuts', handleOpenShortcuts);
+    return () => window.removeEventListener('chota-open-shortcuts', handleOpenShortcuts);
+  }, []);
+
+  useEffect(() => {
+    const handleOpenShortcuts = () => {
+      setShortcutsOpen(true);
+    };
+    window.addEventListener('chota-open-shortcuts', handleOpenShortcuts);
+    return () => window.removeEventListener('chota-open-shortcuts', handleOpenShortcuts);
+  }, []);
+
+  const toggleSettings = useCallback(() => {
+    if (settingsOpen) {
+      console.warn('[SettingsMenu] Already open, ignoring duplicate trigger');
+      return;
+    }
+    setSettingsOpen(true);
+  }, [settingsOpen]);
+
+  const closeSettings = useCallback(() => {
+    setSettingsOpen(false);
+  }, []);
+
+  const openShortcuts = useCallback(() => {
+    setShortcutsOpen(true);
+  }, []);
+
+  const closeShortcuts = useCallback(() => {
+    setShortcutsOpen(false);
+  }, []);
+
   const toggleSidebar = () => {
     setIsCollapsed(prev => !prev);
   };
@@ -64,53 +112,55 @@ export default function Sidebar({ children, history, onHistorySelect, onShowShor
 
   return (
     <SidebarContext.Provider value={isCollapsed}>
-      {mobileOpen && (
-        <div className="sidebar-overlay" onClick={onMobileClose} aria-hidden="true" />
-      )}
-      <aside className={`sidebar ${isCollapsed ? 'collapsed' : 'expanded'} ${mobileOpen ? 'mobile-open' : ''}`}>
-        <div className="sidebar-header">
-          <button
-            className="sidebar-toggle"
-            onClick={toggleSidebar}
-            onKeyDown={handleKeyDown}
-            aria-expanded={!isCollapsed}
-            aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+      <SettingsContext.Provider value={{ settingsOpen, toggleSettings, closeSettings, shortcutsOpen, openShortcuts, closeShortcuts }}>
+        {mobileOpen && (
+          <div className="sidebar-overlay" onClick={onMobileClose} aria-hidden="true" />
+        )}
+        <aside className={`sidebar ${isCollapsed ? 'collapsed' : 'expanded'} ${mobileOpen ? 'mobile-open' : ''}`}>
+          <div className="sidebar-header">
+            <button
+              className="sidebar-toggle"
+              onClick={toggleSidebar}
+              onKeyDown={handleKeyDown}
+              aria-expanded={!isCollapsed}
+              aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             >
-              {isCollapsed ? (
-                <>
-                  <line x1="3" y1="12" x2="21" y2="12" />
-                  <line x1="3" y1="6" x2="21" y2="6" />
-                  <line x1="3" y1="18" x2="21" y2="18" />
-                </>
-              ) : (
-                <polyline points="15 18 9 12 15 6" />
-              )}
-            </svg>
-          </button>
-        </div>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                {isCollapsed ? (
+                  <>
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <line x1="3" y1="18" x2="21" y2="18" />
+                  </>
+                ) : (
+                  <polyline points="15 18 9 12 15 6" />
+                )}
+              </svg>
+            </button>
+          </div>
 
-        <div className="sidebar-content">
-          <NewThreadButton onNavigate={onMobileClose} />
-          <ChotaChatButton />
-          <HistorySection history={history} onSelect={handleHistorySelect} />
-          {children}
-        </div>
-        <div className="sidebar-footer">
-          <IncognitoToggle />
-          <SettingsMenu settings={settings} onShowShortcuts={onShowShortcuts} />
-          <UserButton />
-        </div>
-      </aside>
+          <div className="sidebar-content">
+            <NewThreadButton onNavigate={onMobileClose} />
+            <ChotaChatButton />
+            <HistorySection history={history} onSelect={handleHistorySelect} />
+            {children}
+          </div>
+          <div className="sidebar-footer">
+            <IncognitoToggle />
+            <SettingsMenu settings={settings} onShowShortcuts={onShowShortcuts} />
+            <UserButton />
+          </div>
+        </aside>
+      </SettingsContext.Provider>
     </SidebarContext.Provider>
   );
 }

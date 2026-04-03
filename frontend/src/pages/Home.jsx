@@ -12,12 +12,10 @@ import ControlBar from '../components/core/ControlBar'
 import OutputCard from '../components/core/OutputCard'
 import DiffView from '../components/core/DiffView'
 import Sidebar from '../components/layout/Sidebar'
-import SettingsModal from '../components/modals/SettingsModal'
 import MicButton from '../components/ui/MicButton'
 import OnboardingOverlay from '../components/modals/OnboardingOverlay'
 import { NavBtn, ModeIndicator } from '../components/layout/NavBar'
 import ErrorBoundary from '../components/ui/ErrorBoundary'
-import ShortcutsModal from '../components/modals/ShortcutsModal'
 import { ClockIcon } from '../components/ui/icons'
 import { SessionProvider } from '../context/Session'
 import { useIncognito } from '../context/IncognitoContext'
@@ -73,7 +71,6 @@ export default function Home() {
 
   // UI panels
   const [diffOpen, setDiffOpen] = useState(false)
-  const [shortcutsOpen, setShortcutsOpen] = useState(false)
   const [showOnboard, setShowOnboard] = useState(!localStorage.getItem(LS_ONBOARDED))
 
   // Backend health
@@ -179,10 +176,10 @@ export default function Home() {
         return
       }
 
-      // Shortcuts Modal Reference sheet (Standard ? or Ctrl+/)
+      // Shortcuts panel (Standard ? or Ctrl+/)
       if ((e.key === '?' && !inInput) || (e.ctrlKey && e.key === '/')) {
         e.preventDefault()
-        setShortcutsOpen(o => !o)
+        window.dispatchEvent(new CustomEvent('chota-open-shortcuts'))
         return
       }
 
@@ -274,24 +271,6 @@ export default function Home() {
         {/* Navbar */}
         <header className="glass-navbar sticky top-0 z-30 px-4 py-2 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <button
-              className="sm:hidden btn-icon mr-1"
-              onClick={() => setMobileSidebarOpen(o => !o)}
-              aria-label="Toggle sidebar"
-              aria-expanded={mobileSidebarOpen}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                {mobileSidebarOpen ? (
-                  <polyline points="15 18 9 12 15 6" />
-                ) : (
-                  <>
-                    <line x1="3" y1="12" x2="21" y2="12" />
-                    <line x1="3" y1="6" x2="21" y2="6" />
-                    <line x1="3" y1="18" x2="21" y2="18" />
-                  </>
-                )}
-              </svg>
-            </button>
             <span className="font-extrabold text-sm gradient-text tracking-tight">Chota Packet</span>
           </div>
           <nav className="flex items-center gap-2" aria-label="App controls">
@@ -382,7 +361,6 @@ export default function Home() {
 
         {/* Modals */}
         {diffOpen && <DiffView original={originalText} enhanced={outputText} onClose={() => setDiffOpen(false)} />}
-        {shortcutsOpen && <ShortcutsModal onClose={() => setShortcutsOpen(false)} />}
         {showOnboard && <OnboardingOverlay onDone={() => setShowOnboard(false)} />}
 
       </div>

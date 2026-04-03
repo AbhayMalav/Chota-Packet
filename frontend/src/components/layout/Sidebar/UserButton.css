@@ -64,7 +64,7 @@
 /* Text Container */
 .user-info {
   flex: 1;
-  min-width: 0; /* Critical for text truncation in flexbox */
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -100,4 +100,22 @@
 
 .user-btn:hover .user-chevron {
   color: var(--theme-text);
+}
+
+/* Toast */
+.user-button-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--theme-bg-card);
+  color: var(--theme-text);
+  border: 1px solid var(--theme-border);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
 }

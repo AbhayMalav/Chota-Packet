@@ -4,7 +4,7 @@ import { useSessionStore } from '../../../context/Session';
 import './NewThreadButton.css';
 
 export default function NewThreadButton({ onNavigate }) {
-  const { isCollapsed } = useSidebar();
+  const isCollapsed = useSidebar();
   const { resetSession } = useSessionStore();
   const [isHovered, setIsHovered] = useState(false);
   const isPendingRef = useRef(false);
