@@ -49,15 +49,17 @@ After refactoring imports or moving files, run `node import-checker.js` in `fron
 - Follow existing patterns; mimic code style in neighboring files
 
 ### Frontend (JavaScript/JSX)
-- **Files**: `.jsx` for components, `.js` for utilities/hooks
-- **Imports**: Grouped — React first, then libraries, then local (`../`)
-- **Components**: PascalCase (`InputArea`, `ControlBar`). Default exports for components
+- **Files**: `.jsx` for components, `.js` for utilities/hooks/services
+- **Imports**: Grouped — React first, then libraries, then local (`../`). No blank line between React imports
+- **Components**: PascalCase (`InputArea`, `ControlBar`). Default exports: `export default function Name() {}`
 - **Hooks**: camelCase with `use` prefix (`useEnhance`, `useSettings`). Default exports
 - **Constants**: UPPER_SNAKE_CASE in `src/config/constants.js`
-- **No TypeScript** — plain JavaScript with JSDoc only where helpful
-- **Error handling**: Try/catch at hook level; return null on cancel, throw on real errors
-- **State**: `useReducer` in `Home.jsx` for central state; `useState` for local component state
-- **CSS**: Tailwind utility classes preferred. Component-specific CSS lives adjacent to component (e.g., `ControlBar.jsx` + `ControlBar.css`). Never in `src/styles/`
+- **Formatting**: Single quotes for strings, no semicolons
+- **No TypeScript** — plain JavaScript with JSDoc only where helpful (`@param`, `@returns`)
+- **Error handling**: Try/catch at hook level; return null on cancel, throw on real errors, `console.warn` for non-critical
+- **State**: `useReducer` in `Home.jsx` for central state machine; `useState` for local component state
+- **CSS**: Tailwind utility classes preferred. Component-specific CSS lives adjacent (e.g., `ControlBar.jsx` + `ControlBar.css`). Never in `src/styles/` except `utils.css`
+- **ESLint**: v9 flat config via `@eslint/js` + `eslint-plugin-react-hooks`, `eslint-plugin-react-refresh`. No Prettier
 
 ### Backend (Python)
 - **Imports**: `from __future__ import annotations` at top. Standard library → third-party → local
@@ -69,6 +71,9 @@ After refactoring imports or moving files, run `node import-checker.js` in `fron
 - **Error handling**: Raise `HTTPException` with status code and detail message
 - **Logging**: `logger = logging.getLogger(__name__)` per module
 - **Pydantic**: Use `BaseModel` with `Field()` and `field_validator` for request validation
+- **Docstrings**: Module-level docstrings. Function docstrings with Args/Returns/Raises sections
+- **Section separators**: `# ── Section Name ──────────────────────────────────────` pattern
+- **Double quotes** for strings
 
 ### UI / UX Design Principles
 - **Glassmorphism**: Glass panels, gradients, dynamic animations (`glass-navbar`, `glass-card`)
@@ -98,15 +103,35 @@ After refactoring imports or moving files, run `node import-checker.js` in `fron
 - `openrouter_models.py` — OpenRouter model definitions
 - `tests/` — Pytest test suite
 
-## 6. Adding Dependencies
+## 6. Testing Conventions
+
+### Frontend Tests
+- **Framework**: Vitest with happy-dom environment
+- **Library**: `@testing-library/react` + `@testing-library/jest-dom`
+- **File naming**: Co-located `.test.jsx` / `.test.js` next to source
+- **Setup**: `src/test/setup.js` imports jest-dom matchers
+- **Custom matchers**: `toBeInTheDocument`, `toBeDisabled`, `toHaveClass`, `toHaveTextContent`, `toHaveFocus`, `toHaveAttribute`
+- **Pattern**: Render → query by role/text → assert interactions
+
+### Backend Tests
+- **Framework**: pytest with `asyncio_mode = auto`
+- **Coverage**: Enforced ≥80% on `models`, `routes`, `enhancement_prompts`
+- **Fixtures**: `conftest.py` provides `mock_model_state`, `client`, `client_no_ffmpeg`
+- **Pattern**: Class-based tests (`TestHealthEndpoint`, `TestBuildPrefix`, etc.)
+- **Run single test**: `pytest -k "test_name"` or `pytest tests/test_file.py::TestClass::test_method`
+
+## 7. Adding Dependencies
 - Frontend: `npm install <package>` — ask before adding heavy UI libraries
 - Backend: Add to `requirements.txt` or `requirements-dev.txt`
 - Prefer Tailwind + custom components over monolithic UI bundles
 
-## 7. Architecture Notes
+## 8. Architecture Notes
 - **Single-page app**: Entire app on `/` via `Home.jsx`. No dynamic routes
-- **API**: Axios with `baseURL: API_BASE`, timeout 20s, optional `X-OpenRouter-Key` header
+- **State machine**: `useReducer` actions — `INPUT_CHANGED`, `LOADING`, `SUCCESS`, `ERROR`, `OUTPUT_EDIT`, `CLEAR_INPUT`, `RESET`, `FULL_RESET`
+- **API proxy**: Vite dev server proxies `/api` → `http://localhost:8000` with path rewrite
+- **API client**: Axios with `baseURL: API_BASE`, timeout 20s, optional `X-OpenRouter-Key` header
 - **Encryption**: AES-256-GCM via Web Crypto API (PBKDF2, 100K iterations)
 - **localStorage**: API key (encrypted), model, theme, pinned history (max 10), feedback (max 100)
-- **Backend dual-mode**: Real mT5+Whisper if weights present; mock stub otherwise (dev/CI friendly)
+- **Backend dual-mode**: Real mT5+Whisper if weights in `backend/models/mt5_lora_merged/`; mock stub otherwise
 - **transformers pinned**: Keep below v5.0 — breaking API changes in v5
+- **No `.cursorrules`**, **no `.cursor/rules/`**, **no `.github/copilot-instructions.md`** — this file is the sole agent instruction source

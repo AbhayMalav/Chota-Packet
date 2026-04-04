@@ -7,7 +7,7 @@ import { LS_ONBOARDED, HISTORY_LIMIT, MAX_INPUT_CHARS } from '../config/constant
 
 import { FEATURES } from '../config/config'
 import StatusBanner from '../components/ui/StatusBanner'
-import InputArea from '../components/core/InputArea'
+import PromptInput from '../components/PromptInput/PromptInput'
 import ControlBar from '../components/core/ControlBar'
 import OutputCard from '../components/core/OutputCard'
 import DiffView from '../components/core/DiffView'
@@ -300,19 +300,22 @@ export default function Home() {
 
             {/* Input area */}
             <div className="w-full glass-card gradient-border rounded-2xl p-4 animate-glow">
-              <InputArea
+              <PromptInput
                 value={input}
                 onChange={(val) => dispatch({ type: 'INPUT_CHANGED', value: val })}
                 onClear={() => dispatch({ type: 'CLEAR_INPUT' })}
+                onSubmit={() => handleEnhance()}
                 inputLimit={inputLimit}
-              />
-              <MicButton
-                lang={inputLang}
-                recording={isMicRecording}
-                error={micError}
-                start={startMic}
-                stop={stopMic}
-              />
+                isLoading={isLoading}
+              >
+                <MicButton
+                  lang={inputLang}
+                  recording={isMicRecording}
+                  error={micError}
+                  start={startMic}
+                  stop={stopMic}
+                />
+              </PromptInput>
             </div>
 
             {/* Controls */}

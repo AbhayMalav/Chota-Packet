@@ -1,21 +1,24 @@
 import React, { useRef, useEffect } from 'react'
 import { ExclamationTriangleIcon } from '../ui/icons'
-import './InputArea.css'
+import SendButton from './SendButton'
+import './PromptInput.css'
 
 
-export default function InputArea({
+export default function PromptInput({
   value = '',
   onChange = () => { },
   onClear = () => { },
+  onSubmit = () => { },
   inputLimit,
+  isLoading = false,
   children,
 }) {
   const textareaRef = useRef(null)
   const charCount = value.length
   const isOverLimit = inputLimit != null && charCount > inputLimit
+  const canSend = value.trim() !== ''
 
 
-  // Auto-resize textarea up to 280px
   useEffect(() => {
     const el = textareaRef.current
     if (!el) return
@@ -26,7 +29,6 @@ export default function InputArea({
 
   return (
     <div className="flex flex-col gap-2">
-      {/* Label row */}
       <div className="flex items-center justify-between px-0.5">
         <label
           htmlFor="prompt-input"
@@ -36,7 +38,6 @@ export default function InputArea({
         </label>
       </div>
 
-      {/* Textarea */}
       <div className="relative">
         <textarea
           ref={textareaRef}
@@ -51,7 +52,7 @@ export default function InputArea({
           }}
           placeholder="Type or paste your prompt here…"
           rows={4}
-          className="input-area__textarea bg-input text-theme w-full resize-none rounded-xl border border-purple-500/15
+          className="prompt-input__textarea bg-input text-theme w-full resize-none rounded-xl border border-purple-500/15
                      px-4 py-3.5 text-sm leading-relaxed min-h-[44px]
                      focus:outline-none focus:border-purple-500/40
                      focus:ring-1 focus:ring-purple-500/30
@@ -61,13 +62,11 @@ export default function InputArea({
         />
       </div>
 
-      {/* Footer: counter + mic + clear */}
-      <div className="flex items-center justify-between px-3 pb-3 pt-1 gap-2">
+      <div className="controls-row">
         <span
           id="char-count"
           aria-live="polite"
-          className={`flex items-center gap-1 text-xs transition-colors ${isOverLimit ? 'text-red-400 font-medium' : 'text-secondary'
-            }`}
+          className={`char-count ${isOverLimit ? 'char-count--danger' : ''}`}
         >
           {isOverLimit && <ExclamationTriangleIcon className="w-3 h-3 flex-shrink-0" />}
           {isOverLimit
@@ -77,10 +76,8 @@ export default function InputArea({
               : `${charCount}`}
         </span>
 
-        {/* Mic + Clear - fixed height container prevents mic-pulse layout shift */}
-        <div className="flex items-center gap-1.5 min-h-[40px]">
-          {children}
-          {value.trim() && (
+        <div className="button-group">
+          {canSend && (
             <button
               onClick={onClear}
               className="btn-ghost"
@@ -90,6 +87,12 @@ export default function InputArea({
               Clear
             </button>
           )}
+          {children}
+          <SendButton
+            onSubmit={onSubmit}
+            disabled={!canSend}
+            isLoading={isLoading}
+          />
         </div>
       </div>
     </div>
