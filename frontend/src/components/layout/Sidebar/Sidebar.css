@@ -102,6 +102,14 @@
   .sidebar.collapsed .sidebar-toggle svg {
     transform: rotate(180deg);
   }
+
+  .sidebar-toggle-collapse-icon {
+    display: none;
+  }
+
+  .sidebar-toggle-close-icon {
+    display: flex;
+  }
 }
 
 .sidebar-header {
@@ -130,6 +138,14 @@
   border-radius: 6px;
   padding: 6px;
   transition: background-color 200ms ease;
+}
+
+.sidebar-toggle-collapse-icon {
+  display: flex;
+}
+
+.sidebar-toggle-close-icon {
+  display: none;
 }
 
 .sidebar-toggle:hover,

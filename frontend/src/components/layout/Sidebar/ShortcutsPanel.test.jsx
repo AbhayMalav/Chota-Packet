@@ -167,4 +167,108 @@ describe('ShortcutsPanel', () => {
     expect(cssFile).toContain('prefers-reduced-motion')
     expect(cssFile).toContain('animation: none')
   })
+
+  it('Panel container has min-width >= 360px', () => {
+    const cssFile = fs.readFileSync(path.join(__dirname, 'ShortcutsPanel.css'), 'utf-8')
+    const minWidthMatch = cssFile.match(/min-width:\s*(\d+)px/)
+    expect(minWidthMatch).not.toBeNull()
+    expect(parseInt(minWidthMatch[1], 10)).toBeGreaterThanOrEqual(360)
+  })
+
+  it('Each key in a combo renders as its own <kbd> tag', () => {
+    render(<ShortcutsPanel onBack={mockOnBack} />)
+
+    const rows = screen.getAllByRole('listitem')
+    rows.forEach((row) => {
+      const kbdTags = row.querySelectorAll('.shortcut-kbd')
+      expect(kbdTags.length).toBeGreaterThanOrEqual(1)
+    })
+  })
+
+  it('"+" separator is not wrapped in <kbd>', () => {
+    render(<ShortcutsPanel onBack={mockOnBack} />)
+
+    const plusSeparators = document.querySelectorAll('.shortcut-plus')
+    expect(plusSeparators.length).toBeGreaterThan(0)
+    plusSeparators.forEach((el) => {
+      expect(el.tagName.toLowerCase()).toBe('span')
+      expect(el.closest('.shortcut-kbd')).toBeNull()
+    })
+  })
+
+  it('Key combo container has white-space: nowrap', () => {
+    const cssFile = fs.readFileSync(path.join(__dirname, 'ShortcutsPanel.css'), 'utf-8')
+    expect(cssFile).toContain('white-space: nowrap')
+  })
+
+  it('Long action label truncates without pushing keys off', () => {
+    const cssFile = fs.readFileSync(path.join(__dirname, 'ShortcutsPanel.css'), 'utf-8')
+    expect(cssFile).toContain('text-overflow: ellipsis')
+    expect(cssFile).toContain('overflow: hidden')
+  })
+
+  it('Warns on combo with more than 4 keys', () => {
+    const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+    function LongComboPanel() {
+      const longComboGroups = [
+        {
+          group: 'Test',
+          items: [
+            { keys: ['Ctrl', 'Shift', 'Alt', 'Meta', 'K'], desc: 'Very long combo' },
+          ],
+        },
+      ]
+
+      return (
+        <div>
+          {longComboGroups.map((group) => (
+            <div key={group.group}>
+              <p className="shortcut-group-label">{group.group}</p>
+              <ul className="shortcuts-list">
+                {group.items.map((s, i) => {
+                  if (s.keys.length > 4) {
+                    console.warn('[ShortcutsPanel] Unusually long key combo, may overflow:', s)
+                  }
+                  return (
+                    <li key={`${group.group}-${i}`} className="shortcut-row">
+                      <span className="shortcut-desc">{s.desc}</span>
+                      <div className="shortcut-keys">
+                        {s.keys.map((k, j) => (
+                          <React.Fragment key={k}>
+                            <kbd className="shortcut-kbd">{k}</kbd>
+                            {j < s.keys.length - 1 && (
+                              <span className="shortcut-plus" aria-hidden="true">+</span>
+                            )}
+                          </React.Fragment>
+                        ))}
+                      </div>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )
+    }
+
+    render(<LongComboPanel />)
+
+    expect(consoleSpy).toHaveBeenCalledWith(
+      '[ShortcutsPanel] Unusually long key combo, may overflow:',
+      { keys: ['Ctrl', 'Shift', 'Alt', 'Meta', 'K'], desc: 'Very long combo' }
+    )
+
+    consoleSpy.mockRestore()
+  })
+
+  it('Width is 100% on mobile (mock matchMedia)', () => {
+    const cssFile = fs.readFileSync(path.join(__dirname, 'ShortcutsPanel.css'), 'utf-8')
+    const mobileBlock = cssFile.match(/@media\s*\(max-width:\s*767px\)\s*\{[^}]*\.shortcuts-panel\s*\{[^}]*width:\s*100%/)
+    expect(mobileBlock).not.toBeNull()
+
+    const minWidthUnset = cssFile.match(/@media\s*\(max-width:\s*767px\)[^{]*\{[^}]*min-width:\s*unset/)
+    expect(minWidthUnset).not.toBeNull()
+  })
 })

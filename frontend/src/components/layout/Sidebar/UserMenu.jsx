@@ -10,6 +10,7 @@ import AppearancePanel from './AppearancePanel';
 import ShortcutsPanel from './ShortcutsPanel';
 import usePopoverPosition from '../../../hooks/usePopoverPosition';
 import './UserMenu.css';
+import './UserButton.css';
 
 function getInitials(name) {
   if (!name) return 'U';
@@ -177,7 +178,7 @@ export default function UserMenu({ isOpen, onClose, triggerBtnRef, onShowToast }
           {/* Profile card at top */}
           <div className="user-menu-profile">
             <div
-              className="user-menu-profile-avatar"
+              className="user-avatar"
               aria-hidden="true"
               data-testid="profile-avatar"
             >
@@ -186,10 +187,10 @@ export default function UserMenu({ isOpen, onClose, triggerBtnRef, onShowToast }
                 : <span>{initials}</span>
               }
             </div>
-            <div className="user-menu-profile-details">
-              <span className="user-menu-profile-name">{displayName}</span>
+            <div className="user-info">
+              <span className="user-name">{displayName}</span>
               {displayEmail && (
-                <span className="user-menu-profile-email">{displayEmail}</span>
+                <span className="user-email">{displayEmail}</span>
               )}
             </div>
           </div>

@@ -1,4 +1,5 @@
 import React, { useState, createContext, useContext, useEffect, useCallback } from 'react';
+import { useSidebarContext } from '../../../context/SidebarContext';
 import './Sidebar.css';
 import NewThreadButton from './NewThreadButton';
 import ChotaChatButton from './ChotaChatButton';
@@ -11,7 +12,6 @@ import UserButton from './UserButton';
 const SidebarContext = createContext(undefined);
 const SettingsContext = createContext(undefined);
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useSidebar = () => {
   const context = useContext(SidebarContext);
   if (context === undefined) {
@@ -20,7 +20,6 @@ export const useSidebar = () => {
   return context;
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useSettingsMenu = () => {
   const context = useContext(SettingsContext);
   if (context === undefined) {
@@ -29,42 +28,11 @@ export const useSettingsMenu = () => {
   return context;
 };
 
-export default function Sidebar({ children, history, onHistorySelect, onShowShortcuts, mobileOpen, onMobileClose }) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+export default function Sidebar({ children, history, onHistorySelect, onShowShortcuts }) {
+  const { isMobileOpen, closeMobile, isDesktopCollapsed, toggleDesktopCollapsed } = useSidebarContext();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const settings = useSettings();
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setIsCollapsed(true);
-      } else {
-        setIsCollapsed(false);
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    if (!mobileOpen) return;
-    const handleEsc = (e) => {
-      if (e.key === 'Escape') onMobileClose?.();
-    };
-    document.addEventListener('keydown', handleEsc);
-    return () => document.removeEventListener('keydown', handleEsc);
-  }, [mobileOpen, onMobileClose]);
-
-  useEffect(() => {
-    const handleOpenShortcuts = () => {
-      setShortcutsOpen(true);
-    };
-    window.addEventListener('chota-open-shortcuts', handleOpenShortcuts);
-    return () => window.removeEventListener('chota-open-shortcuts', handleOpenShortcuts);
-  }, []);
 
   useEffect(() => {
     const handleOpenShortcuts = () => {
@@ -94,38 +62,49 @@ export default function Sidebar({ children, history, onHistorySelect, onShowShor
     setShortcutsOpen(false);
   }, []);
 
-  const toggleSidebar = () => {
-    setIsCollapsed(prev => !prev);
+  const handleToggleClick = () => {
+    if (window.innerWidth < 768) {
+      closeMobile();
+    } else {
+      toggleDesktopCollapsed();
+    }
   };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      toggleSidebar();
+      handleToggleClick();
     }
   };
 
   const handleHistorySelect = (item) => {
     onHistorySelect?.(item);
-    onMobileClose?.();
+    closeMobile();
+  };
+
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      closeMobile();
+    }
   };
 
   return (
-    <SidebarContext.Provider value={isCollapsed}>
+    <SidebarContext.Provider value={isDesktopCollapsed}>
       <SettingsContext.Provider value={{ settingsOpen, toggleSettings, closeSettings, shortcutsOpen, openShortcuts, closeShortcuts }}>
-        {mobileOpen && (
-          <div className="sidebar-overlay" onClick={onMobileClose} aria-hidden="true" />
+        {isMobileOpen && (
+          <div className="sidebar-overlay" onClick={handleOverlayClick} aria-hidden="true" />
         )}
-        <aside className={`sidebar ${isCollapsed ? 'collapsed' : 'expanded'} ${mobileOpen ? 'mobile-open' : ''}`}>
+        <aside className={`sidebar ${isDesktopCollapsed ? 'collapsed' : 'expanded'} ${isMobileOpen ? 'mobile-open' : ''}`}>
           <div className="sidebar-header">
             <button
               className="sidebar-toggle"
-              onClick={toggleSidebar}
+              onClick={handleToggleClick}
               onKeyDown={handleKeyDown}
-              aria-expanded={!isCollapsed}
-              aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+              aria-expanded={!isDesktopCollapsed}
+              aria-label={isDesktopCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             >
               <svg
+                className="sidebar-toggle-collapse-icon"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -135,7 +114,7 @@ export default function Sidebar({ children, history, onHistorySelect, onShowShor
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
-                {isCollapsed ? (
+                {isDesktopCollapsed ? (
                   <>
                     <line x1="3" y1="12" x2="21" y2="12" />
                     <line x1="3" y1="6" x2="21" y2="6" />
@@ -145,11 +124,25 @@ export default function Sidebar({ children, history, onHistorySelect, onShowShor
                   <polyline points="15 18 9 12 15 6" />
                 )}
               </svg>
+              <svg
+                className="sidebar-toggle-close-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
             </button>
           </div>
 
           <div className="sidebar-content">
-            <NewThreadButton onNavigate={onMobileClose} />
+            <NewThreadButton onNavigate={closeMobile} />
             <ChotaChatButton />
             <HistorySection history={history} onSelect={handleHistorySelect} />
             {children}

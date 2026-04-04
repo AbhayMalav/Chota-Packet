@@ -1,6 +1,7 @@
 .shortcuts-panel {
   display: flex;
   flex-direction: column;
+  min-width: 360px;
   max-height: 480px;
   overflow: hidden;
   border-radius: 12px;
@@ -8,6 +9,13 @@
   border: 1px solid var(--theme-border, rgba(255,255,255,0.1));
   color: var(--theme-text, #e0e0e0);
   animation: slideInRight 0.2s ease-out;
+}
+
+@media (max-width: 767px) {
+  .shortcuts-panel {
+    min-width: unset;
+    width: 100%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -101,6 +109,7 @@
   align-items: center;
   gap: 2px;
   flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .shortcut-kbd {

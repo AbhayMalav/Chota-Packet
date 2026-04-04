@@ -1,7 +1,5 @@
 .incognito-wrapper {
   margin-top: auto;
-  padding: 8px;
-  border-top: 1px solid var(--theme-border-sidebar);
 }
 
 .incognito-btn {

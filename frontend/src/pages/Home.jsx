@@ -18,8 +18,10 @@ import { NavBtn, ModeIndicator } from '../components/layout/NavBar'
 import ErrorBoundary from '../components/ui/ErrorBoundary'
 import { ClockIcon } from '../components/ui/icons'
 import { SessionProvider } from '../context/Session'
+import { SidebarProvider } from '../context/SidebarContext'
 import { useIncognito } from '../context/IncognitoContext'
 import { appendHistoryItem } from '../services/historyService'
+import MobileMenuButton from '../components/layout/Sidebar/MobileMenuButton'
 
 // ─── State machine ────────────────────────────────────────────────────────────
 
@@ -78,9 +80,6 @@ export default function Home() {
 
   // Session history — in-memory, capped
   const [history, setHistory] = useState([])
-
-  // Mobile sidebar
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
 
   // Incognito Mode
   const { isIncognito } = useIncognito()
@@ -261,6 +260,7 @@ export default function Home() {
   return (
     <ErrorBoundary>
       <SessionProvider resetSession={resetSession}>
+        <SidebarProvider>
         <div className="app-root">
 
         {/* Nebula background orbs */}
@@ -271,6 +271,7 @@ export default function Home() {
         {/* Navbar */}
         <header className="glass-navbar sticky top-0 z-30 px-4 py-2 flex items-center justify-between">
           <div className="flex items-center gap-2">
+            <MobileMenuButton />
             <span className="font-extrabold text-sm gradient-text tracking-tight">Chota Packet</span>
           </div>
           <nav className="flex items-center gap-2" aria-label="App controls">
@@ -290,8 +291,6 @@ export default function Home() {
             onHistorySelect={(item) => {
               dispatch({ type: 'INPUT_CHANGED', value: item.input ?? item.prompt ?? '' });
             }}
-            mobileOpen={mobileSidebarOpen}
-            onMobileClose={() => setMobileSidebarOpen(false)}
           >
             {/* Future sidebar components will be injected here */}
           </Sidebar>
@@ -364,6 +363,7 @@ export default function Home() {
         {showOnboard && <OnboardingOverlay onDone={() => setShowOnboard(false)} />}
 
       </div>
+      </SidebarProvider>
       </SessionProvider>
     </ErrorBoundary>
   )

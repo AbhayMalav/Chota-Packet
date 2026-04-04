@@ -9,6 +9,10 @@ function ShortcutRow({ entry }) {
     return null
   }
 
+  if (entry.keys.length > 4) {
+    console.warn('[ShortcutsPanel] Unusually long key combo, may overflow:', entry)
+  }
+
   return (
     <li className="shortcut-row">
       <span className="shortcut-desc">{entry.desc}</span>
