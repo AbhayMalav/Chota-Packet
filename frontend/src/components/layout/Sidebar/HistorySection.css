@@ -119,6 +119,31 @@
   margin: 0;
 }
 
+/* ── Group Labels ───────────────────────────────────────────────────────────── */
+
+.history-section__group-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(var(--brand-rgb), 0.7);
+}
+
+.history-section__group-label svg {
+  flex-shrink: 0;
+}
+
+/* ── Divider between pinned and unpinned ────────────────────────────────────── */
+
+.history-section__divider {
+  border-top: 1px solid var(--theme-border);
+  margin: 4px 14px;
+}
+
 /* ── Footer / View All Toggle ── */
 
 .history-section__footer {

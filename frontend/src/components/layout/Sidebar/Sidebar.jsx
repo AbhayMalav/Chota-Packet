@@ -194,13 +194,13 @@ export default function Sidebar({ children, history, onHistorySelect, onShowShor
           </div>
 
           <div className="sidebar-content">
+            <IncognitoToggle />
             <NewThreadButton onNavigate={closeMobile} />
             <ChotaChatButton />
             <HistorySection history={history} onSelect={handleHistorySelect} />
             {children}
           </div>
           <div className="sidebar-footer">
-            <IncognitoToggle />
             <UserButton />
           </div>
 

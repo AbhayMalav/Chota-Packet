@@ -9,7 +9,7 @@ const FEATURES = Object.freeze({
 
 const APP_CONFIG = Object.freeze({
   APP_NAME: 'Chota Packet',
-  // Add future constants here
+  GITHUB_REPO_URL: 'https://github.com/AbhayMalav/Chota-Packet',
 });
 
 export { FEATURES, APP_CONFIG };

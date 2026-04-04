@@ -1,6 +1,7 @@
 import React from 'react'
 import { useIncognito } from '../../../context/IncognitoContext'
 import { useSidebar } from './Sidebar'
+import { VenetianMask } from 'lucide-react'
 import './IncognitoToggle.css'
 
 export default function IncognitoToggle() {
@@ -17,13 +18,7 @@ export default function IncognitoToggle() {
         title={isCollapsed ? 'Toggle Incognito Mode' : undefined}
       >
         <span className="incognito-icon">
-          {/* Custom Ghost SVG */}
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 2a8 8 0 0 0-8 8c0 5.4 3.6 8 8 8s8-2.6 8-8a8 8 0 0 0-8-8z" />
-            <circle cx="9" cy="10" r="1.5" fill="currentColor" stroke="none" />
-            <circle cx="15" cy="10" r="1.5" fill="currentColor" stroke="none" />
-            <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-          </svg>
+          <VenetianMask size={20} strokeWidth={1.5} />
         </span>
         
         {!isCollapsed && (

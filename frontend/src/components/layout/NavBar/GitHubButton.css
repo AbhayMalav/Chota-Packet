@@ -1,0 +1,30 @@
+/* GitHubButton.css — Styles for the GitHub source button in the navbar. */
+
+.github-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 6px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--theme-text-secondary, #9ca3af);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.github-btn:hover {
+  background: rgba(var(--brand-rgb), 0.12);
+  color: var(--theme-text, #e5e7eb);
+}
+
+.github-btn:active {
+  transform: scale(0.92);
+}
+
+.github-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--brand-rgb), 0.4);
+}

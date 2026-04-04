@@ -15,6 +15,7 @@ import Sidebar from '../components/layout/Sidebar'
 import MicButton from '../components/ui/MicButton'
 import OnboardingOverlay from '../components/modals/OnboardingOverlay'
 import { NavBtn, ModeIndicator } from '../components/layout/NavBar'
+import GitHubButton from '../components/layout/NavBar/GitHubButton'
 import ErrorBoundary from '../components/ui/ErrorBoundary'
 import { ClockIcon } from '../components/ui/icons'
 import { SessionProvider } from '../context/Session'
@@ -276,6 +277,7 @@ export default function Home() {
           </div>
           <nav className="flex items-center gap-2" aria-label="App controls">
             <ModeIndicator mode={inferenceMode} />
+            <GitHubButton />
           </nav>
         </header>
 

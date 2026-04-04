@@ -438,4 +438,13 @@ describe('Sidebar', () => {
     const sidebarFile = fs.readFileSync(path.join(__dirname, 'Sidebar.jsx'), 'utf-8');
     expect(sidebarFile).not.toMatch(/import.*SettingsMenu.*from/);
   });
+
+  it('IncognitoToggle renders before NewThreadButton in the DOM', () => {
+    const { container } = renderWithProviders(<Sidebar />);
+    const incognito = container.querySelector('.incognito-btn');
+    const newThread = container.querySelector('.new-thread-btn');
+    expect(incognito).toBeInTheDocument();
+    expect(newThread).toBeInTheDocument();
+    expect(incognito.compareDocumentPosition(newThread)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+  });
 });
