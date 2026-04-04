@@ -426,4 +426,16 @@ describe('Sidebar', () => {
     fireEvent(window, new Event('resize'));
     expect(screen.getByTestId('collapsed-state')).toHaveTextContent('expanded');
   });
+
+  it('SettingsMenu is not rendered in sidebar', () => {
+    const { container } = renderWithProviders(<Sidebar />);
+    expect(container.querySelector('.settings-trigger-btn')).not.toBeInTheDocument();
+  });
+
+  it('No import of SettingsMenu exists in Sidebar.jsx', () => {
+    const fs = require('fs');
+    const path = require('path');
+    const sidebarFile = fs.readFileSync(path.join(__dirname, 'Sidebar.jsx'), 'utf-8');
+    expect(sidebarFile).not.toMatch(/import.*SettingsMenu.*from/);
+  });
 });

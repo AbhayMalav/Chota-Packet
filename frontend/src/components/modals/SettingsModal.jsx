@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react'
-import { GearIcon, PlugIcon, KeyIcon, CpuIcon, KeyboardIcon, ArrowRightIcon, XIcon, EyeIcon, EyeOffIcon } from '../ui/icons'
+import { Settings, Plug, Key, Cpu, Keyboard, ArrowRight, X, Eye, EyeOff } from 'lucide-react'
 import './SettingsPanel.css'
 
 const STATUS_META = {
@@ -59,7 +59,7 @@ export default function SettingsPanel({ onClose, settings, onShowShortcuts }) {
       <div className="settings__header flex items-center justify-between px-5 py-4 flex-shrink-0 border-b border-white/10">
         <div className="flex items-center gap-3">
           <span className="settings__header-icon w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 bg-white/5">
-            <GearIcon className="w-4 h-4" />
+            <Settings size={16} />
           </span>
           <div>
             <h2 className="text-theme text-sm font-bold">Settings</h2>
@@ -67,7 +67,7 @@ export default function SettingsPanel({ onClose, settings, onShowShortcuts }) {
           </div>
         </div>
         <button onClick={onClose} aria-label="Close settings" className="btn-icon w-8 h-8 rounded-lg">
-          <XIcon className="w-4 h-4" />
+            <X size={16} />
         </button>
       </div>
 
@@ -75,7 +75,7 @@ export default function SettingsPanel({ onClose, settings, onShowShortcuts }) {
       <div className="settings__body overflow-y-auto px-5 py-5">
         
         {/* Inference Mode */}
-        <SectionLabel icon={<PlugIcon className="w-3.5 h-3.5" />} label="Inference Mode" sublabel="Determined by your API key" />
+        <SectionLabel icon={<Plug size={14} />} label="Inference Mode" sublabel="Determined by your API key" />
         <div className={`settings__mode-row ${isCloud ? 'cloud' : 'local'} flex items-center justify-between px-3.5 py-3 rounded-xl border border-white/10`}>
           <div>
             <p className="text-theme text-sm font-semibold">{isCloud ? 'Cloud - OpenRouter' : 'Local - mT5'}</p>
@@ -89,9 +89,9 @@ export default function SettingsPanel({ onClose, settings, onShowShortcuts }) {
 
         {/* API Key */}
         <div className="flex items-start justify-between mb-3">
-          <SectionLabel icon={<KeyIcon className="w-3.5 h-3.5" />} label="OpenRouter API Key" />
+          <SectionLabel icon={<Key size={14} />} label="OpenRouter API Key" />
           <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer" className="text-[11px] font-medium flex items-center gap-1 text-purple-400 hover:text-purple-300">
-            Get free key <ArrowRightIcon className="w-3 h-3" />
+            Get free key <ArrowRight size={12} />
           </a>
         </div>
         
@@ -106,7 +106,7 @@ export default function SettingsPanel({ onClose, settings, onShowShortcuts }) {
               className="bg-input text-theme w-full rounded-xl border border-purple-500/15 text-sm px-3.5 py-2.5 pr-9 focus:outline-none focus:border-purple-500/40"
             />
             <button type="button" onClick={() => setShowKey(s => !s)} className="text-secondary absolute right-2.5 top-1/2 -translate-y-1/2">
-              {showKey ? <EyeOffIcon className="w-4 h-4" /> : <EyeIcon className="w-4 h-4" />}
+              {showKey ? <EyeOff size={16} /> : <Eye size={16} />}
             </button>
           </div>
           <button onClick={handleSave} disabled={!keyInput.trim()} className="px-4 rounded-xl gradient-brand text-white text-xs font-bold disabled:opacity-25">
@@ -134,7 +134,7 @@ export default function SettingsPanel({ onClose, settings, onShowShortcuts }) {
         {openRouterKey && models?.length > 0 && (
           <>
             <Divider />
-            <SectionLabel icon={<CpuIcon className="w-3.5 h-3.5" />} label="Cloud Model" />
+            <SectionLabel icon={<Cpu size={14} />} label="Cloud Model" />
             <select
               value={selectedModel}
               onChange={(e) => saveModel(e.target.value)}
@@ -150,10 +150,10 @@ export default function SettingsPanel({ onClose, settings, onShowShortcuts }) {
 
         <Divider />
 
-        <SectionLabel icon={<KeyboardIcon className="w-3.5 h-3.5" />} label="Keyboard Shortcuts" />
+        <SectionLabel icon={<Keyboard size={14} />} label="Keyboard Shortcuts" />
         <button onClick={onShowShortcuts} className="bg-input w-full flex items-center justify-between px-3.5 py-3 rounded-xl border border-white/10 hover:border-purple-500/30 transition-all text-left">
           <span className="text-theme text-sm font-semibold">View Shortcuts</span>
-          <ArrowRightIcon className="w-4 h-4 text-secondary" />
+          <ArrowRight size={16} className="text-secondary" />
         </button>
       </div>
     </div>

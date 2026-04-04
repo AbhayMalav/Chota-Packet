@@ -89,11 +89,6 @@
     padding: 8px 10px;
   }
 
-  .sidebar.collapsed .settings-trigger-btn {
-    justify-content: flex-start;
-    padding: 10px;
-  }
-
   .sidebar.collapsed .user-btn {
     justify-content: flex-start;
     padding: 8px;
@@ -172,6 +167,11 @@
   border-top: 1px solid var(--theme-border-sidebar);
   background: var(--theme-bg-sidebar);
   z-index: 10;
+}
+
+.settings-popover {
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .sidebar .sidebar-label-text {

@@ -142,8 +142,7 @@ export default function UserMenu({ isOpen, onClose, triggerBtnRef, onShowToast }
     }
     if (item.id === 'all-settings') {
       onClose();
-      const triggerBtn = document.querySelector('.settings-trigger-btn');
-      toggleSettings(triggerBtn);
+      toggleSettings();
       return;
     }
     if (item.id === 'sign-out') {

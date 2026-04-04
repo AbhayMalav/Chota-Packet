@@ -15,11 +15,16 @@ function getInitials(name) {
 export default function UserButton() {
   const [user] = useUser();
   const isCollapsed = useSidebar();
-  const { shortcutsOpen } = useSettingsMenu();
+  const { shortcutsOpen, userButtonRef } = useSettingsMenu();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
-  const buttonRef = useRef(null);
+  const localButtonRef = useRef(null);
   const toastTimerRef = useRef(null);
+
+  const ref = (el) => {
+    localButtonRef.current = el;
+    if (userButtonRef) userButtonRef.current = el;
+  };
 
   const displayName = user?.name || 'User';
   const displayEmail = user?.email;
@@ -53,7 +58,7 @@ export default function UserButton() {
   return (
     <div className="user-btn-wrapper">
       <button
-        ref={buttonRef}
+        ref={ref}
         type="button"
         className={`user-btn ${isCollapsed ? 'collapsed' : 'expanded'} ${isMenuOpen ? 'active' : ''}`}
         aria-label="User menu"
@@ -97,7 +102,7 @@ export default function UserButton() {
       <UserMenu
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
-        triggerBtnRef={buttonRef}
+        triggerBtnRef={localButtonRef}
         onShowToast={handleShowToast}
       />
 

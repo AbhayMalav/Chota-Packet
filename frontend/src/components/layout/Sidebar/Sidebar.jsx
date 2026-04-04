@@ -1,13 +1,16 @@
-import React, { useState, createContext, useContext, useEffect, useCallback } from 'react';
+import React, { useState, createContext, useContext, useEffect, useCallback, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useSidebarContext } from '../../../context/SidebarContext';
 import './Sidebar.css';
 import NewThreadButton from './NewThreadButton';
 import ChotaChatButton from './ChotaChatButton';
 import HistorySection from './HistorySection';
 import IncognitoToggle from './IncognitoToggle';
-import SettingsMenu from './SettingsMenu';
+import SettingsPanel from '../../modals/SettingsModal';
+import ErrorBoundary from '../../ui/ErrorBoundary';
 import useSettings from '../../../hooks/useSettings';
 import UserButton from './UserButton';
+import usePopoverPosition from '../../../hooks/usePopoverPosition';
 
 const SidebarContext = createContext(undefined);
 const SettingsContext = createContext(undefined);
@@ -33,6 +36,16 @@ export default function Sidebar({ children, history, onHistorySelect, onShowShor
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const settings = useSettings();
+  const userButtonRef = useRef(null);
+  const settingsPopoverRef = useRef(null);
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth < 400);
+  const { position } = usePopoverPosition(userButtonRef, settingsPopoverRef, { estimatedWidth: 360 });
+
+  useEffect(() => {
+    const handleResize = () => setIsMobileView(window.innerWidth < 400);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const handleOpenShortcuts = () => {
@@ -62,6 +75,45 @@ export default function Sidebar({ children, history, onHistorySelect, onShowShor
     setShortcutsOpen(false);
   }, []);
 
+  useEffect(() => {
+    if (!settingsOpen) return;
+    const handleOutside = (e) => {
+      if (
+        settingsPopoverRef.current && !settingsPopoverRef.current.contains(e.target) &&
+        userButtonRef.current && !userButtonRef.current.contains(e.target)
+      ) {
+        closeSettings();
+      }
+    };
+    document.addEventListener('mousedown', handleOutside);
+    return () => document.removeEventListener('mousedown', handleOutside);
+  }, [settingsOpen, closeSettings]);
+
+  useEffect(() => {
+    if (!settingsOpen) return;
+    const popover = settingsPopoverRef.current;
+    if (!popover) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeSettings();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [settingsOpen, closeSettings]);
+
+  useEffect(() => {
+    const handleShortcut = (e) => {
+      if (e.ctrlKey && e.key === ',') {
+        e.preventDefault();
+        toggleSettings();
+      }
+    };
+    window.addEventListener('keydown', handleShortcut);
+    return () => window.removeEventListener('keydown', handleShortcut);
+  }, [toggleSettings]);
+
   const handleToggleClick = () => {
     if (window.innerWidth < 768) {
       closeMobile();
@@ -90,7 +142,7 @@ export default function Sidebar({ children, history, onHistorySelect, onShowShor
 
   return (
     <SidebarContext.Provider value={isDesktopCollapsed}>
-      <SettingsContext.Provider value={{ settingsOpen, toggleSettings, closeSettings, shortcutsOpen, openShortcuts, closeShortcuts }}>
+      <SettingsContext.Provider value={{ settingsOpen, toggleSettings, closeSettings, shortcutsOpen, openShortcuts, closeShortcuts, userButtonRef }}>
         {isMobileOpen && (
           <div className="sidebar-overlay" onClick={handleOverlayClick} aria-hidden="true" />
         )}
@@ -149,9 +201,46 @@ export default function Sidebar({ children, history, onHistorySelect, onShowShor
           </div>
           <div className="sidebar-footer">
             <IncognitoToggle />
-            <SettingsMenu settings={settings} onShowShortcuts={onShowShortcuts} />
             <UserButton />
           </div>
+
+          {settingsOpen && createPortal(
+            <div
+              ref={settingsPopoverRef}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Settings Context Menu"
+              className="settings-popover glass-card gradient-border animate-fade-in"
+              style={isMobileView ? {
+                position: 'fixed',
+                top: 16,
+                left: 16,
+                right: 16,
+                bottom: 'auto',
+                maxHeight: 'calc(100vh - 32px)',
+                zIndex: 100,
+              } : {
+                position: 'fixed',
+                top: position.top,
+                bottom: position.bottom,
+                left: position.left,
+                right: position.right,
+                zIndex: 100,
+              }}
+            >
+              <ErrorBoundary fallback={<div className="p-5 text-red-400 font-semibold bg-red-500/10">Settings unavailable</div>}>
+                <SettingsPanel
+                  settings={settings}
+                  onClose={closeSettings}
+                  onShowShortcuts={() => {
+                    closeSettings();
+                    onShowShortcuts?.();
+                  }}
+                />
+              </ErrorBoundary>
+            </div>,
+            document.body
+          )}
         </aside>
       </SettingsContext.Provider>
     </SidebarContext.Provider>
