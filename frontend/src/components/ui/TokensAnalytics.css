@@ -1,29 +1,46 @@
 /* TokensAnalytics.css — Styles for the token efficiency analytics panel.
    Stat cards, grade badge, and efficiency progress bar.
-   All colour values use the established token system.
+   Uses CSS variables for brand colors and semantic tokens for theming.
 */
+
+/* ── Local Brand Tokens (map to brand-rgb) ──────────────────────────────── */
+
+:root {
+  --color-brand-bg: rgba(var(--brand-rgb), 0.06);
+  --color-brand-bg-hover: rgba(var(--brand-rgb), 0.1);
+  --color-brand-bg-light: rgba(var(--brand-rgb), 0.1);
+  --color-brand-border: rgba(var(--brand-rgb), 0.12);
+  --color-brand-border-strong: rgba(var(--brand-rgb), 0.18);
+  --color-warning: #f59e0b;
+  --color-warning-muted: #fb923c;
+  --color-warning-bg: rgba(245, 158, 11, 0.1);
+  --color-warning-bg-hover: rgba(245, 158, 11, 0.15);
+  --color-grade-indigo: #818cf8;
+  --color-grade-indigo-bg: rgba(129, 140, 248, 0.1);
+  --color-success-muted-bg: rgba(110, 231, 183, 0.1);
+  --color-warning-muted-bg: rgba(251, 146, 60, 0.1);
+}
 
 /* ── Panel Header ─────────────────────────────────────────────────────────── */
 
 .tokens__header-icon {
-  background: rgba(127, 19, 236, 0.1);
+  background: var(--color-brand-bg-light);
   color: var(--color-brand-light);
-  border: 1px solid rgba(127, 19, 236, 0.18);
+  border: 1px solid var(--color-brand-border-strong);
 }
 
 /* ── Stat Cards ───────────────────────────────────────────────────────────── */
 
-/* FIX: replaced JSX style={{ background: 'rgba(127,19,236,0.05)' }} inline */
 .tokens__stat-card {
-  background: rgba(127, 19, 236, 0.06);
-  border: 1px solid rgba(127, 19, 236, 0.12);
+  background: var(--color-brand-bg);
+  border: 1px solid var(--color-brand-border);
   border-radius: 12px;
   padding: 12px;
   transition: background 0.15s ease;
 }
 
 .tokens__stat-card:hover {
-  background: rgba(127, 19, 236, 0.1);
+  background: var(--color-brand-bg-hover);
 }
 
 .tokens__stat-value {
@@ -56,33 +73,33 @@
 }
 
 .tokens__grade[data-grade="A+"] {
-  color: #34d399;
-  background: rgba(52, 211, 153, 0.12);
+  color: var(--color-success);
+  background: var(--color-success-bg);
 }
 
 .tokens__grade[data-grade="A"] {
-  color: #6ee7b7;
-  background: rgba(110, 231, 183, 0.1);
+  color: var(--color-success-muted);
+  background: var(--color-success-muted-bg);
 }
 
 .tokens__grade[data-grade="B+"] {
   color: var(--color-brand-light);
-  background: rgba(168, 85, 247, 0.12);
+  background: var(--color-brand-bg-light);
 }
 
 .tokens__grade[data-grade="B"] {
-  color: #818cf8;
-  background: rgba(129, 140, 248, 0.1);
+  color: var(--color-grade-indigo);
+  background: var(--color-grade-indigo-bg);
 }
 
 .tokens__grade[data-grade="C"] {
-  color: #f59e0b;
-  background: rgba(245, 158, 11, 0.1);
+  color: var(--color-warning);
+  background: var(--color-warning-bg);
 }
 
 .tokens__grade[data-grade="D"] {
-  color: #fb923c;
-  background: rgba(251, 146, 60, 0.1);
+  color: var(--color-warning-muted);
+  background: var(--color-warning-muted-bg);
 }
 
 .tokens__grade[data-grade="F"] {

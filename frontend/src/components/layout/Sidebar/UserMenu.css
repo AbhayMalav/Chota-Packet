@@ -8,8 +8,8 @@
 .user-menu-wrapper {
   width: 260px;
   max-width: calc(100vw - 24px);
-  background-color: var(--theme-bg-card, #1e1e1e);
-  border: 1px solid var(--theme-border, #333);
+  background-color: var(--theme-bg-card);
+  border: 1px solid var(--theme-border);
   border-radius: 12px;
   box-shadow:
     0 10px 25px -5px rgba(0, 0, 0, 0.5),
@@ -17,8 +17,16 @@
   padding: 4px 0;
   display: flex;
   flex-direction: column;
-  color: var(--theme-text, #ffffff);
-  backdrop-filter: blur(10px);
+  color: var(--theme-text);
+
+  @supports (backdrop-filter: blur(10px)) {
+    backdrop-filter: blur(10px);
+
+    @media (prefers-reduced-motion: no-preference) {
+      backdrop-filter: blur(10px);
+    }
+  }
+
   transform-origin: bottom left;
   animation: userMenuPop 0.15s ease-out forwards;
 }
@@ -56,7 +64,7 @@
   padding: 10px 16px;
   border: none;
   background: transparent;
-  color: var(--theme-text, #ffffff);
+  color: var(--theme-text);
   font-size: 0.875rem;
   text-align: left;
   cursor: pointer;
@@ -65,7 +73,7 @@
 
 .user-menu-item:hover,
 .user-menu-item:focus-visible {
-  background-color: var(--theme-bg-hover, rgba(255, 255, 255, 0.1));
+  background-color: rgba(var(--brand-rgb), 0.08);
   outline: none;
 }
 
@@ -82,7 +90,6 @@
   opacity: 1;
 }
 
-/* Pushes the chevron to the right edge */
 .user-menu-item-chevron {
   margin-left: auto;
   opacity: 0.45;
@@ -97,7 +104,7 @@
 
 .user-menu-divider {
   height: 1px;
-  background-color: var(--theme-border, #333);
+  background-color: var(--theme-border);
   margin: 6px 0;
 }
 
@@ -114,8 +121,8 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background-color: var(--theme-bg-tertiary, #374151);
-  color: var(--theme-text, #ffffff);
+  background: linear-gradient(135deg, rgb(var(--brand-rgb)), rgb(var(--accent-rgb)));
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -142,12 +149,12 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--theme-text, #ffffff);
+  color: var(--theme-text);
 }
 
 .user-menu-profile-email {
   font-size: 0.75rem;
-  color: var(--theme-text-muted, #9ca3af);
+  color: var(--theme-text-muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

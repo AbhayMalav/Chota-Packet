@@ -15,10 +15,6 @@ function getItemLabel(item) {
   return item.prompt ?? item.input ?? ''
 }
 
-function escapeRegex(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-}
-
 const HistorySection = memo(function HistorySection({ history, onSelect, activeItemId }) {
   const isCollapsed = useSidebar()
   const [isExpanded, setIsExpanded] = useState(false)
@@ -63,8 +59,7 @@ const HistorySection = memo(function HistorySection({ history, onSelect, activeI
   const filteredItems = searchQuery
     ? items.filter(item => {
         const label = getItemLabel(item).toLowerCase()
-        const escaped = escapeRegex(searchQuery)
-        return label.includes(escaped.toLowerCase())
+        return label.includes(searchQuery.toLowerCase())
       })
     : items
 
@@ -147,13 +142,14 @@ const HistorySection = memo(function HistorySection({ history, onSelect, activeI
                   </svg>
                   Pinned
                 </div>
-                {pinnedItems.map(item => {
-                  const key = getItemId(item) ?? item.input?.slice(0, 12)
+                {pinnedItems.map((item, index) => {
+                  const idForActive = getItemId(item)
+                  const key = idForActive ?? `pinned-${index}`
                   return (
                     <HistoryItem
                       key={key}
                       item={item}
-                      isActive={activeItemId === key}
+                      isActive={activeItemId === idForActive}
                       isPinned
                       onSelect={onSelect}
                       onPin={handlePin}
@@ -168,13 +164,14 @@ const HistorySection = memo(function HistorySection({ history, onSelect, activeI
             )}
 
             {hasUnpinned && (
-              unpinnedItems.map(item => {
-                const key = getItemId(item) ?? item.input?.slice(0, 12)
+              unpinnedItems.map((item, index) => {
+                const idForActive = getItemId(item)
+                const key = idForActive ?? `unpinned-${index}`
                 return (
                   <HistoryItem
                     key={key}
                     item={item}
-                    isActive={activeItemId === key}
+                    isActive={activeItemId === idForActive}
                     isPinned={false}
                     onSelect={onSelect}
                     onPin={handlePin}

@@ -163,6 +163,9 @@ describe('usePopoverPosition', () => {
   })
 
   it('Returns { top: 0, left: 0 } when window is undefined', () => {
+    const originalWindow = global.window
+    delete global.window
+
     function WindowlessComponent() {
       const triggerRef = useRef(null)
       const popoverRef = useRef(null)
@@ -184,5 +187,7 @@ describe('usePopoverPosition', () => {
 
     const position = JSON.parse(result.getByTestId('position').textContent)
     expect(position).toEqual({ top: 0, left: 0 })
+
+    global.window = originalWindow
   })
 })

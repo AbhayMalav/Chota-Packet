@@ -3,7 +3,7 @@
    They are the "bridge" between the token system and Tailwind utility usage.
 
    ⚠️  This file is imported by index.css as:
-       @import './styles/components/utils.css';
+       @import './styles/utils.css';
    Do NOT move or rename this file without updating that import path.
 
    Convention:
@@ -49,6 +49,9 @@
    44×44px is the smallest tappable area that passes both guidelines.
    Applied to all interactive elements that are visually smaller than 44px. */
 .touch-target {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-height: 44px;
     min-width: 44px;
 }

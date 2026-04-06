@@ -40,6 +40,9 @@ export default function HistorySearch({
   }
 
   const handleClear = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+    }
     setLocalValue('')
     onClear()
   }

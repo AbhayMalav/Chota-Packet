@@ -35,6 +35,16 @@
   to { opacity: 1; }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .sidebar-overlay,
+  .sidebar-toggle,
+  .sidebar .sidebar-label-text {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
 @media (max-width: 767px) {
   .sidebar {
     position: fixed;

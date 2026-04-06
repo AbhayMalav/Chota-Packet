@@ -33,12 +33,14 @@ describe('HistorySearch', () => {
   it('clear button click resets input and calls onClear', () => {
     const onClear = vi.fn()
     const onChange = vi.fn()
-    render(<HistorySearch value="test" onChange={onChange} onClear={onClear} />)
+    const { rerender } = render(<HistorySearch value="test" onChange={onChange} onClear={onClear} />)
 
     const clearBtn = screen.getByRole('button', { name: 'Clear search' })
     fireEvent.click(clearBtn)
 
     expect(onClear).toHaveBeenCalledTimes(1)
+
+    rerender(<HistorySearch value="" onChange={onChange} onClear={onClear} />)
     expect(screen.queryByRole('button', { name: 'Clear search' })).not.toBeInTheDocument()
   })
 

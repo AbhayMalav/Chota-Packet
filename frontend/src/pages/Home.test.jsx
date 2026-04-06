@@ -47,7 +47,7 @@ vi.mock('../hooks/useRecorder', () => ({
 }));
 
 vi.mock('../config/config', () => ({
-  FEATURES: { SHOWBACKENDSTATUSBAR: false },
+  FEATURES: { SHOW_BACKEND_STATUS_BAR: false },
   APP_CONFIG: { APP_NAME: 'Chota Packet', GITHUB_REPO_URL: 'https://github.com/AbhayMalav/Chota-Packet' },
 }));
 

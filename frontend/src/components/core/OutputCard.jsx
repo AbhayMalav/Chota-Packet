@@ -29,8 +29,10 @@ const AI_SITES = [
 export default function OutputCard({ text = '', onTextChange, onClear }) {
   const cardRef = useRef(null)
   const copyTimerRef = useRef(null)
-  const takeToRef = useRef(null)
+  const takeToWrapperRef = useRef(null)
+  const takeToDropdownRef = useRef(null)
   const takeToButtonRef = useRef(null)
+  const takeToTimeoutRef = useRef(null)
   const isFocusedRef = useRef(false)
 
   const [copied, setCopied] = useState(false)
@@ -51,16 +53,18 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
 
 
   // ── Cleanup copy timer on unmount ─────────────────────────────────────────
-  useEffect(() => () => { clearTimeout(copyTimerRef.current) }, [])
+  useEffect(() => () => clearTimeout(copyTimerRef.current), [])
 
+  // ── Cleanup takeTo timeout on unmount ─────────────────────────────────────
+  useEffect(() => () => clearTimeout(takeToTimeoutRef.current), [])
 
   // ── Close dropdown on outside click ──────────────────────────────────────
   useEffect(() => {
     if (!takeToOpen) return
     const handler = (e) => {
       if (
-        takeToRef.current && !takeToRef.current.contains(e.target) &&
-        takeToButtonRef.current && !takeToButtonRef.current.contains(e.target)
+        !takeToWrapperRef.current?.contains(e.target) &&
+        !takeToDropdownRef.current?.contains(e.target)
       ) setTakeToOpen(false)
     }
     document.addEventListener('mousedown', handler)
@@ -101,7 +105,8 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
     const ok = await copyToClipboard(cardRef.current?.innerText ?? '')
     if (ok) flashCopied()
     setTakenTo(site.id)
-    setTimeout(() => setTakenTo(null), 2500)
+    clearTimeout(takeToTimeoutRef.current)
+    takeToTimeoutRef.current = setTimeout(() => setTakenTo(null), 2500)
     window.open(site.url, '_blank', 'noopener,noreferrer')
   }, [flashCopied])
 
@@ -135,7 +140,7 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
             </button>
 
             {/* Take it to */}
-            <div className="relative" ref={takeToRef}>
+            <div className="relative" ref={takeToWrapperRef}>
               <button
                 ref={takeToButtonRef}
                 onClick={handleTakeToToggle}
@@ -220,7 +225,7 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
       {/* ── Take it to dropdown — portalled to <body> ────────────────────── */}
       {takeToOpen && createPortal(
         <div
-          ref={takeToRef}
+          ref={takeToDropdownRef}
           style={{
             position: 'absolute',
             top: dropdownPos.top,

@@ -215,9 +215,14 @@ describe('HistorySection', () => {
     const viewAllBtn = screen.getByText(/View All/);
     fireEvent.click(viewAllBtn);
 
-    const items = screen.getAllByRole('button', { name: /^Load/ });
-    for (let i = 0; i < items.length && i < 51; i++) {
-      hoverItem(items[i]);
+    for (let i = 0; i < 51; i++) {
+      // Re-query to avoid stale element references after re-renders
+      const currentItems = screen.getAllByRole('button', { name: /^Load/ });
+      if (i >= currentItems.length) break;
+      
+      hoverItem(currentItems[i]);
+      
+      // Re-query the pin button after the hover action
       const pinBtn = screen.queryByRole('button', { name: 'Pin prompt' });
       if (pinBtn) {
         fireEvent.click(pinBtn);

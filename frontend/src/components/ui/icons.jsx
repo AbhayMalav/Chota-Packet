@@ -179,22 +179,10 @@ export function DownloadIcon({ className = 'w-4 h-4' }) {
 }
 
 
-export function HistoryIcon({ className = 'w-4 h-4' }) {
-  return (
-    <svg viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden="true" focusable="false">
-      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clipRule="evenodd" />
-    </svg>
-  )
-}
+export const HistoryIcon = ClockIcon
 
 
-export function LoadIcon({ className = 'w-4 h-4' }) {
-  return (
-    <svg viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden="true" focusable="false">
-      <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
-    </svg>
-  )
-}
+export const LoadIcon = ArrowRightIcon
 
 
 export function XIcon({ className = 'w-4 h-4' }) {
@@ -386,23 +374,17 @@ export function MistralIcon({ className = 'w-4 h-4' }) {
 // Sarvam AI — uses their official CDN-hosted SVG logo mark
 export function SarvamIcon({ className = 'w-4 h-4' }) {
   return (
-    <img
-      src="https://assets.sarvam.ai/assets/svgs/sarvam-logo-white.svg"
-      className={className}
-      alt="Sarvam AI"
-      {...iconA11y}
-    />
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} {...iconA11y}>
+      <text x="12" y="16" textAnchor="middle" fontSize="14" fontWeight="bold" fill="currentColor">S</text>
+    </svg>
   )
 }
 
 // AI Fiesta — uses their official Webflow CDN logo
 export function AIFiestaIcon({ className = 'w-4 h-4' }) {
   return (
-    <img
-      src="https://cdn.prod.website-files.com/689597cc2d57ee623f5a24a2/689598ab78e20dd130d760b1_Logo%20Container.svg"
-      className={className}
-      alt="AI Fiesta"
-      {...iconA11y}
-    />
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} {...iconA11y}>
+      <text x="12" y="16" textAnchor="middle" fontSize="12" fontWeight="bold" fill="currentColor">AI</text>
+    </svg>
   )
 }

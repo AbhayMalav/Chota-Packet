@@ -1,50 +1,61 @@
-/* eslint-env jest */
-/* global describe, it, expect, beforeEach, afterEach, jest */
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import NewThreadButton from './NewThreadButton';
-import { SidebarContext } from '../Sidebar'; // we have to export this or mock useSidebar
-import * as SidebarModule from '../Sidebar';
-import * as SessionStoreModule from '../../../context/Session';
 
-// We need to mock useSidebar and useSessionStore
-jest.mock('./Sidebar', () => ({
-  ...jest.requireActual('./Sidebar'),
-  useSidebar: jest.fn(),
+const { mockUseSidebar, mockUseSessionStore } = vi.hoisted(() => ({
+  mockUseSidebar: vi.fn(),
+  mockUseSessionStore: vi.fn(),
 }));
 
-jest.mock('../../store/sessionStore.jsx', () => ({
-  useSessionStore: jest.fn(),
+vi.mock('./Sidebar', () => ({
+  useSidebar: mockUseSidebar,
+}));
+
+vi.mock('./Sidebar', () => ({
+  useSidebar: mockUseSidebar,
+}));
+
+vi.mock('../../../context/Session', () => ({
+  useSessionStore: mockUseSessionStore,
 }));
 
 describe('NewThreadButton', () => {
   let consoleError;
   let consoleWarn;
+  let mockReset;
 
   beforeEach(() => {
-    consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
-    consoleWarn = jest.spyOn(console, 'warn').mockImplementation(() => {});
-    jest.useFakeTimers();
+    mockReset = vi.fn();
+    mockUseSidebar.mockReturnValue({ isCollapsed: false });
+    mockUseSessionStore.mockReturnValue({ resetSession: mockReset });
+    
+    consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+    consoleWarn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
     consoleError.mockRestore();
     consoleWarn.mockRestore();
-    jest.useRealTimers();
-    jest.clearAllMocks();
+    vi.useRealTimers();
+    vi.clearAllMocks();
   });
 
-  const setup = (isCollapsed = false, resetSession = jest.fn()) => {
-    SidebarModule.useSidebar.mockReturnValue({ isCollapsed });
-    SessionStoreModule.useSessionStore.mockReturnValue({ resetSession });
+  const setup = (isCollapsed = false, resetSession = vi.fn()) => {
+    mockUseSidebar.mockReturnValue({ isCollapsed });
+    mockUseSessionStore.mockReturnValue({ resetSession });
     render(<NewThreadButton />);
     return { resetSession };
   };
 
   it('Renders with icon and label in expanded state', () => {
-    setup(false);
+    const mockReset = vi.fn();
+    mockUseSidebar.mockReturnValue({ isCollapsed: false });
+    mockUseSessionStore.mockReturnValue({ resetSession: mockReset });
+    render(<NewThreadButton />);
     expect(screen.getByLabelText('Start new thread')).toBeInTheDocument();
-    expect(screen.getByText('New Thread')).toBeInTheDocument();
+    expect(screen.queryByText('New Thread')).toBeInTheDocument();
   });
 
   it('Renders with icon only in collapsed state', () => {
@@ -71,7 +82,7 @@ describe('NewThreadButton', () => {
   });
 
   it('Click calls resetSession exactly once', () => {
-    const mockReset = jest.fn();
+    const mockReset = vi.fn();
     setup(false, mockReset);
     
     const button = screen.getByLabelText('Start new thread');
@@ -81,7 +92,7 @@ describe('NewThreadButton', () => {
   });
 
   it('Double-click does not call resetSession twice', () => {
-    const mockReset = jest.fn();
+    const mockReset = vi.fn();
     setup(false, mockReset);
     
     const button = screen.getByLabelText('Start new thread');
@@ -91,7 +102,7 @@ describe('NewThreadButton', () => {
     expect(mockReset).toHaveBeenCalledTimes(1);
     
     // advance timer to clear debounce
-    jest.advanceTimersByTime(300);
+    vi.advanceTimersByTime(300);
     fireEvent.click(button);
     expect(mockReset).toHaveBeenCalledTimes(2);
   });
@@ -106,10 +117,8 @@ describe('NewThreadButton', () => {
     expect(consoleError).toHaveBeenCalledWith('resetSession is not available from context/store');
   });
 
-  it('Ongoing fetch is aborted on click (mock AbortController)', () => {
-    // This tests the simulated abort controller logic throwing in resetSession
-    const mockReset = jest.fn().mockImplementation(() => {
-      // Simulate fetch abort failing or throwing
+  it('Logs warning when resetSession throws an error', () => {
+    const mockReset = vi.fn().mockImplementation(() => {
       throw new Error('fetch abort test');
     });
     

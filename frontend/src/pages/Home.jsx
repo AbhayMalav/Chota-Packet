@@ -113,7 +113,7 @@ export default function Home() {
   // ── Health check on mount ─────────────────────────────────────────────────
   useEffect(() => {
     health()
-      .then(response => setBackendStatus(response.data.status === 'ok' ? 'ok' : 'error'))
+      .then(response => setBackendStatus(response?.data?.status === 'ok' ? 'ok' : 'error'))
       .catch(() => setBackendStatus('error'))
   }, [])
 
@@ -172,7 +172,6 @@ export default function Home() {
       // Escape — close all panels
       if (e.key === 'Escape') {
         setDiffOpen(false)
-        setShortcutsOpen(false)
         return
       }
 
@@ -282,7 +281,7 @@ export default function Home() {
         </header>
 
         {/* Backend status banner */}
-        {(FEATURES?.SHOWBACKENDSTATUSBAR ?? false) && <StatusBanner status={backendStatus} />}
+        {(FEATURES?.SHOW_BACKEND_STATUS_BAR ?? false) && <StatusBanner status={backendStatus} />}
 
         {/* Main layout */}
         <div className="flex app-layout">

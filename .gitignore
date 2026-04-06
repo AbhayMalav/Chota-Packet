@@ -12,3 +12,12 @@ backend/test_output.txt
 *.pyc
 .opencode
 Datasets/*
+
+# Test-related artifacts
+vitest_report_utf8.json
+failures.json
+test-report.html
+coverage/
+.nyc_output/
+test_failures.txt
+test_output.txt

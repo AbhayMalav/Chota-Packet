@@ -149,6 +149,7 @@ describe('UserMenu', () => {
   it('Arrow Down moves focus to next item', () => {
     openMenu()
     const items = screen.getAllByRole('menuitem')
+    items[0].focus()
     expect(items[0]).toHaveFocus()
     
     fireEvent.keyDown(document, { key: 'ArrowDown', code: 'ArrowDown' })
@@ -168,6 +169,7 @@ describe('UserMenu', () => {
   it('Arrow Up wraps from first to last', () => {
     openMenu()
     const items = screen.getAllByRole('menuitem')
+    items[0].focus()
     expect(items[0]).toHaveFocus()
     
     fireEvent.keyDown(document, { key: 'ArrowUp', code: 'ArrowUp' })

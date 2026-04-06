@@ -41,7 +41,7 @@ export default function DiffView({ original, enhanced, onClose }) {
         </h3>
         <button
           className="btn-icon"
-          onClick={onClose}
+          onClick={() => onClose && onClose()}
           aria-label="Close diff view"
         >
           <XIcon className="w-4 h-4" />

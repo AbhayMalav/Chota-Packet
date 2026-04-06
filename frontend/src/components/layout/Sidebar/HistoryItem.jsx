@@ -6,6 +6,7 @@ import './HistoryItem.css'
 function formatRelativeTime(ts) {
   if (!ts) return ''
   const diff = Date.now() - ts
+  if (diff < 0) return 'just now'
   const seconds = Math.floor(diff / 1000)
   if (seconds < 60) return 'just now'
   const minutes = Math.floor(seconds / 60)
@@ -40,12 +41,20 @@ const HistoryItem = memo(function HistoryItem({
   const showPin = isPinned || hovered
 
   return (
-    <button
+    <div
       className={`history-item ${isActive ? 'history-item--active' : ''} ${isPinned ? 'history-item--pinned' : ''}`}
       onClick={() => onSelect(item)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          onSelect(item)
+        }
+      }}
       title={label}
+      role="button"
+      tabIndex="0"
       aria-label={`Load ${label}`}
     >
       <span className="history-item__content">
@@ -55,23 +64,22 @@ const HistoryItem = memo(function HistoryItem({
         )}
       </span>
       {showPin && (
-        <span
+        <button
           className="history-item__pin-btn"
           onClick={handlePinClick}
-          role="button"
-          tabIndex={0}
           aria-label={isPinned ? 'Unpin prompt' : 'Pin prompt'}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault()
               e.stopPropagation()
               handlePinClick(e)
             }
           }}
         >
           <PinIcon className="w-3 h-3" filled={isPinned} />
-        </span>
+        </button>
       )}
-    </button>
+    </div>
   )
 })
 

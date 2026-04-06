@@ -21,6 +21,11 @@
   color: var(--theme-text);
 }
 
+.incognito-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--theme-bg, #000), 0 0 0 4px var(--color-brand-light);
+}
+
 .incognito-btn.incognito--on {
   color: var(--color-brand-light);
   background: rgba(var(--brand-rgb), 0.12);
@@ -84,4 +89,14 @@
 .incognito-wrapper.collapsed .incognito-btn {
   justify-content: center;
   padding: 10px 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .incognito-btn,
+  .incognito-icon,
+  .incognito-switch,
+  .incognito-switch-thumb {
+    transition: none !important;
+    animation: none !important;
+  }
 }

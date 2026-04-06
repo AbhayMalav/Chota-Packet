@@ -36,8 +36,11 @@ function exportItems(items, format = 'json') {
   } catch (err) {
     console.warn('[HistoryPanel] Export click failed:', err)
   } finally {
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
+    // Delay revocation to ensure download starts in all browsers
+    setTimeout(() => {
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+    }, 100)
   }
 }
 
@@ -111,7 +114,7 @@ function HistoryItem({ item, onSelect, onPin, onUnpin }) {
       <div className="flex flex-col items-center gap-1.5 flex-shrink-0 pt-0.5">
         {/* Pin / Unpin */}
         <button
-          onClick={() => (item.pinned ? onUnpin(item.ts) : onPin(item))}
+          onClick={() => (item.pinned ? onUnpin?.(item.ts) : onPin?.(item))}
           aria-label={item.pinned ? 'Unpin prompt' : 'Pin prompt'}
           title={item.pinned ? 'Unpin' : 'Pin'}
           className={`btn-icon w-7 h-7 min-w-0 min-h-0 rounded-lg transition-all duration-150${item.pinned ? ' history-item__pin-btn--active' : ''}`}
@@ -204,10 +207,9 @@ export default function HistoryPanel({
   ].filter((item) => {
     if (!search.trim()) return true
     const q = search.toLowerCase()
-    return (
-      item.input.toLowerCase().includes(q) ||
-      item.enhanced.toLowerCase().includes(q)
-    )
+    const input = (item.input || '').toLowerCase()
+    const enhanced = (item.enhanced || '').toLowerCase()
+    return input.includes(q) || enhanced.includes(q)
   })
 
 
@@ -441,7 +443,7 @@ export default function HistoryPanel({
                   )}
                   {historyItems.map((item) => (
                     <HistoryItem
-                      key={`${item.ts}-${item.input.slice(0, 12)}`}
+                      key={`${item.ts}-${(item.input || '').slice(0, 12)}`}
                       item={item}
                       onSelect={onSelect}
                       onPin={pin}

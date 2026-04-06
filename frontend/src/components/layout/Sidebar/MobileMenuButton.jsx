@@ -18,7 +18,7 @@ export default function MobileMenuButton() {
       className="mobile-menu-btn"
       onClick={handleClick}
       aria-expanded={isMobileOpen}
-      aria-label="Open menu"
+      aria-label={isMobileOpen ? 'Close menu' : 'Open menu'}
     >
       <svg
         width="24"

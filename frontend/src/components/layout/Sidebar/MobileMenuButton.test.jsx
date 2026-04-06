@@ -64,15 +64,15 @@ describe('MobileMenuButton', () => {
       return (
         <>
           <MobileMenuButton />
-          <button data-testid="toggle" onClick={toggleMobileOpen}>Toggle</button>
+          <button data-testid="aux-toggle" onClick={toggleMobileOpen}>Toggle</button>
         </>
       );
     };
 
     renderWithContext(<TestConsumer />);
 
-    const toggle = screen.getByTestId('toggle');
-    fireEvent.click(toggle);
+    const menuBtn = screen.getByRole('button', { name: /open menu/i });
+    fireEvent.click(menuBtn);
     expect(isMobileOpenValue).toBe(true);
   });
 
@@ -82,7 +82,7 @@ describe('MobileMenuButton', () => {
       return (
         <>
           <MobileMenuButton />
-          <button data-testid="toggle" onClick={toggleMobileOpen}>Toggle</button>
+          <button data-testid="aux-toggle" onClick={toggleMobileOpen}>Toggle</button>
         </>
       );
     };
@@ -92,7 +92,7 @@ describe('MobileMenuButton', () => {
     const btn = screen.getByRole('button', { name: /open menu/i });
     expect(btn).toHaveAttribute('aria-expanded', 'false');
 
-    const toggle = screen.getByTestId('toggle');
+    const toggle = screen.getByTestId('aux-toggle');
     fireEvent.click(toggle);
 
     expect(btn).toHaveAttribute('aria-expanded', 'true');

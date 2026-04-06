@@ -5,13 +5,14 @@ import HistoryItem from './HistoryItem'
 
 
 describe('HistoryItem', () => {
-  const mockItem = { input: 'Write a haiku about AI', ts: Date.now() - 60000 }
+  let mockItem
   const mockOnSelect = vi.fn()
   const mockOnPin = vi.fn()
 
   beforeEach(() => {
     vi.useFakeTimers()
     vi.setSystemTime(new Date('2024-01-01T00:00:00Z'))
+    mockItem = { input: 'Write a haiku about AI', ts: Date.now() - 60000 }
     mockOnSelect.mockClear()
     mockOnPin.mockClear()
   })

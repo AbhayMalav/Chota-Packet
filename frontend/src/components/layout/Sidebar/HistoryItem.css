@@ -39,6 +39,11 @@
   padding-left: 12px;
 }
 
+.history-item:focus-visible {
+  outline: 2px solid var(--theme-focus);
+  outline-offset: -2px;
+}
+
 /* ── Content ────────────────────────────────────────────────────────────────── */
 
 .history-item__content {
@@ -62,7 +67,6 @@
 .history-item__time {
   font-size: 11px;
   color: var(--theme-text-muted);
-  opacity: 0.7;
 }
 
 /* ── Pin Button ─────────────────────────────────────────────────────────────── */
@@ -86,6 +90,11 @@
 .history-item__pin-btn:hover {
   color: var(--theme-text);
   background-color: rgba(var(--brand-rgb), 0.15);
+}
+
+.history-item__pin-btn:focus-visible {
+  outline: 2px solid var(--theme-focus);
+  outline-offset: 2px;
 }
 
 .history-item--pinned .history-item__pin-btn {

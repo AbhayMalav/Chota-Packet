@@ -1,10 +1,10 @@
-// src/config.js
+// frontend/src/config/config.js
 // Frontend feature flags and app-level constants for Chota Packet.
 // Toggle UI features here without touching component code.
 
 const FEATURES = Object.freeze({
   SHOW_CHOTA_CHAT: true, // Set true to show Chota Chat button in sidebar
-  SHOWBACKENDSTATUSBAR: false, // Show/hide the "Backend connected / offline" status bar below the navbar
+  SHOW_BACKEND_STATUS_BAR: false, // Show/hide the "Backend connected / offline" status bar below the navbar
 });
 
 const APP_CONFIG = Object.freeze({

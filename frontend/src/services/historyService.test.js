@@ -40,6 +40,7 @@ describe('historyService', () => {
     const nextHistory = appendHistoryItem(fullHistory, newItem, false);
     expect(nextHistory.length).toBe(3); // capped at 3
     expect(nextHistory[0]).toBe(newItem);
+    expect(nextHistory[1]).toStrictEqual(fullHistory[0]);
     expect(nextHistory[2]).toStrictEqual(fullHistory[1]); // the oldest (fullHistory[2]) is dropped
   });
 

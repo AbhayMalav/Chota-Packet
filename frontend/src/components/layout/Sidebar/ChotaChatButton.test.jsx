@@ -2,9 +2,8 @@ import React from 'react';
 import { render, screen, act, fireEvent } from '@testing-library/react';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import ChotaChatButton from './ChotaChatButton';
-import * as SidebarModule from '../Sidebar';
+import * as SidebarModule from './Sidebar';
 
-// We need to mock useSidebar
 vi.mock('./Sidebar', async () => {
   const actual = await vi.importActual('./Sidebar');
   return {

@@ -93,14 +93,55 @@ export default function Sidebar({ children, history, onHistorySelect, onShowShor
     if (!settingsOpen) return;
     const popover = settingsPopoverRef.current;
     if (!popover) return;
+
+    const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    const getFocusableElements = () => popover.querySelectorAll(focusableSelectors);
+    const getFirstFocusable = () => getFocusableElements()[0];
+    const getLastFocusable = () => {
+      const els = getFocusableElements();
+      return els[els.length - 1];
+    };
+
+    const previousActiveElement = document.activeElement;
+    const firstFocusable = getFirstFocusable();
+    if (firstFocusable) {
+      firstFocusable.focus();
+    }
+
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         e.preventDefault();
         closeSettings();
+        return;
+      }
+
+      if (e.key === 'Tab') {
+        const first = getFirstFocusable();
+        const last = getLastFocusable();
+
+        if (!first || !last) return;
+
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
       }
     };
+
     document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      if (previousActiveElement instanceof HTMLElement) {
+        previousActiveElement.focus();
+      }
+    };
   }, [settingsOpen, closeSettings]);
 
   useEffect(() => {

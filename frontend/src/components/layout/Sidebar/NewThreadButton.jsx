@@ -24,8 +24,8 @@ export default function NewThreadButton({ onNavigate }) {
     try {
       resetSession();
       onNavigate?.();
-    } catch {
-      console.warn("Could not abort in-flight request on new thread");
+    } catch (err) {
+      console.warn("Failed to reset session or navigate to new thread:", err);
     } finally {
       setTimeout(() => {
         isPendingRef.current = false;

@@ -44,7 +44,7 @@ describe('SendButton', () => {
     expect(submitFn).toHaveBeenCalledTimes(1)
   })
 
-  it('double click does not submit twice', () => {
+  it('each click submits once when not loading', () => {
     const submitFn = vi.fn()
     render(<SendButton onSubmit={submitFn} />)
     const btn = screen.getByRole('button', { name: 'Send for enhancement' })

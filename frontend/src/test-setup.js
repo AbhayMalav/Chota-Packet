@@ -2,6 +2,9 @@
 import { expect, vi } from 'vitest';
 
 const toHaveAttribute = function (element, attr, value) {
+  if (element == null) {
+     return { pass: false, message: () => `expected element to have attribute "${attr}", but element was ${element}` };
+  }
   const hasAttr = element.hasAttribute(attr);
   const attrValue = element.getAttribute(attr);
   const pass = value !== undefined
@@ -26,6 +29,9 @@ const toBeInTheDocument = function (element) {
 };
 
 const toBeDisabled = function (element) {
+  if (element == null) {
+    return { pass: false, message: () => `expected element to be disabled, but element was ${element}`};
+  }
   const pass = element.disabled === true || element.hasAttribute('disabled');
   return {
     pass,
@@ -36,6 +42,9 @@ const toBeDisabled = function (element) {
 };
 
 const toHaveClass = function (element, ...classNames) {
+  if (element == null) {
+    return { pass: false, message: () => `expected element to have class(es): ${classNames.join(', ')}, but element was ${element}` };
+  }
   const pass = classNames.every(cls => element.classList.contains(cls));
   return {
     pass,
@@ -46,6 +55,9 @@ const toHaveClass = function (element, ...classNames) {
 };
 
 const toHaveTextContent = function (element, text) {
+  if (element == null) {
+    return { pass: false, message: () => `expected element to have text content "${text}", but element was ${element}` };
+  }
   const content = element.textContent || '';
   const match = typeof text === 'string' ? content.includes(text) : text.test(content);
   return {

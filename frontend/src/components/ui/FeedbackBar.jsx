@@ -43,6 +43,9 @@ export default function FeedbackBar() {
         stored[stored.length - 1] = { v, ts: Date.now() }
       } else if (stored.length < FEEDBACK_CAP) {
         stored.push({ v, ts: Date.now() })
+      } else {
+        stored.shift()
+        stored.push({ v, ts: Date.now() })
       }
 
       localStorage.setItem(LS_FEEDBACK, JSON.stringify(stored))

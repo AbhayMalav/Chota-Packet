@@ -37,7 +37,9 @@ const COLOR_MAP = {
 export default function OnboardingOverlay({ onDone = () => { } }) {
   const dialogRef = useRef(null)
   const primaryBtnRef = useRef(null)
+  const finishRef = useRef(onDone)
 
+  finishRef.current = onDone
 
   const finish = (skipped = false) => {
     try {
@@ -48,7 +50,7 @@ export default function OnboardingOverlay({ onDone = () => { } }) {
         console.warn('[OnboardingOverlay] Could not persist onboarded state:', err)
       }
     }
-    onDone(skipped)
+    finishRef.current(skipped)
   }
 
 

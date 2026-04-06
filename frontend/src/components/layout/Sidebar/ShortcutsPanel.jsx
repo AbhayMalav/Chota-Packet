@@ -58,7 +58,7 @@ function ShortcutsContent({ onBack }) {
           <div key={group.group} className="shortcut-group">
             <p className="shortcut-group-label">{group.group}</p>
             <ul className="shortcuts-list">
-              {group.items.map((s, i) => (
+              {(Array.isArray(group.items) ? group.items : []).map((s, i) => (
                 <ShortcutRow key={`${group.group}-${i}`} entry={s} />
               ))}
             </ul>

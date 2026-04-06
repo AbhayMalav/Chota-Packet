@@ -15,6 +15,7 @@ export default function IncognitoToggle() {
         className={`incognito-btn ${isIncognito ? 'incognito--on' : 'incognito--off'}`}
         onClick={toggleIncognito}
         aria-pressed={isIncognito}
+        aria-label={isIncognito ? 'Turn off incognito mode' : 'Turn on incognito mode'}
         title={isCollapsed ? 'Toggle Incognito Mode' : undefined}
       >
         <span className="incognito-icon">

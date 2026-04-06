@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { XIcon } from './icons'
 
 
@@ -33,6 +33,10 @@ const CONFIGS = {
 
 export default function StatusBanner({ status }) {
   const [dismissed, setDismissed] = useState(false)
+
+  useEffect(() => {
+    setDismissed(false)
+  }, [status])
 
 
   // Warn in dev if an unrecognised status is passed

@@ -17,10 +17,12 @@ export default function ThemeProvider({ children }) {
   // Theme color ("brand", "orange", etc.)
   const [themeColor, setThemeColorState] = useState(() => {
     try {
-      return localStorage.getItem(LS_THEME) || 'brand'
+      const stored = localStorage.getItem(LS_THEME)
+      if (stored && THEMES.includes(stored)) return stored
     } catch (e) {
-      return 'brand'
+      console.warn('Failed to read theme color from localStorage', e)
     }
+    return 'brand'
   })
 
   const setMode = useCallback((newMode) => {

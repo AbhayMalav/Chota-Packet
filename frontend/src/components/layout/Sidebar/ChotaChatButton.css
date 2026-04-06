@@ -1,6 +1,5 @@
 .chota-chat-container {
   padding: 12px 14px;
-  border-bottom: 1px solid var(--theme-border);
   position: relative;
   display: flex;
   justify-content: center;
@@ -13,9 +12,9 @@
   width: 100%;
   padding: 10px;
   border-radius: 8px;
-  background-color: transparent;
+  background-color: rgba(var(--brand-rgb), 0.12);
+  border: 1px solid rgba(var(--brand-rgb), 0.25);
   color: var(--theme-text-muted);
-  border: 1px solid transparent;
   cursor: pointer;
   transition: all 200ms ease;
   font-size: 13px;
@@ -26,6 +25,11 @@
 .chota-chat-btn:hover {
   background-color: rgba(var(--brand-rgb), 0.08);
   color: var(--theme-text);
+}
+
+.chota-chat-btn:focus-visible {
+  outline: 2px solid var(--theme-focus);
+  outline-offset: 2px;
 }
 
 .chota-chat-icon {

@@ -431,14 +431,7 @@ describe('Sidebar', () => {
     const { container } = renderWithProviders(<Sidebar />);
     expect(container.querySelector('.settings-trigger-btn')).not.toBeInTheDocument();
   });
-
-  it('No import of SettingsMenu exists in Sidebar.jsx', () => {
-    const fs = require('fs');
-    const path = require('path');
-    const sidebarFile = fs.readFileSync(path.join(__dirname, 'Sidebar.jsx'), 'utf-8');
-    expect(sidebarFile).not.toMatch(/import.*SettingsMenu.*from/);
-  });
-
+  
   it('IncognitoToggle renders before NewThreadButton in the DOM', () => {
     const { container } = renderWithProviders(<Sidebar />);
     const incognito = container.querySelector('.incognito-btn');

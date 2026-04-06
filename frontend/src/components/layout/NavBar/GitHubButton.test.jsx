@@ -64,7 +64,7 @@ describe('GitHubButton', () => {
     expect(link).toHaveAttribute('rel', 'noopener noreferrer')
   })
 
-  it('tooltip renders on hover', async () => {
+  it('renders title attribute for accessibility', async () => {
     vi.doMock('../../../config/config', () => ({
       APP_CONFIG: {
         APP_NAME: 'Chota Packet',

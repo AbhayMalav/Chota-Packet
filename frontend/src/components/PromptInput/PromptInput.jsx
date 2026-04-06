@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useCallback } from 'react'
 import { ExclamationTriangleIcon } from '../ui/icons'
 import SendButton from './SendButton'
 import './PromptInput.css'
@@ -14,6 +14,8 @@ export default function PromptInput({
   children,
 }) {
   const textareaRef = useRef(null)
+  const onClearRef = useRef(onClear)
+  onClearRef.current = onClear
   const charCount = value.length
   const isOverLimit = inputLimit != null && charCount > inputLimit
   const canSend = value.trim() !== ''
@@ -25,6 +27,20 @@ export default function PromptInput({
     el.style.height = 'auto'
     el.style.height = Math.min(el.scrollHeight, 280) + 'px'
   }, [value])
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        const active = document.activeElement
+        if (active && active.tagName === 'TEXTAREA' && active.id === 'prompt-input') {
+          e.preventDefault()
+          onClearRef.current()
+        }
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
 
   return (
@@ -57,12 +73,11 @@ export default function PromptInput({
                      focus:outline-none focus:border-purple-500/40
                      focus:ring-1 focus:ring-purple-500/30
                      transition-all duration-200 focus-ring"
-          aria-label="Prompt input"
           aria-describedby="char-count"
         />
       </div>
 
-      <div className="controls-row">
+      <div className="controls-row" style={{ flexWrap: 'nowrap' }}>
         <span
           id="char-count"
           aria-live="polite"
@@ -76,7 +91,7 @@ export default function PromptInput({
               : `${charCount}`}
         </span>
 
-        <div className="button-group">
+        <div className="button-group" style={{ flexShrink: 0 }}>
           {canSend && (
             <button
               onClick={onClear}

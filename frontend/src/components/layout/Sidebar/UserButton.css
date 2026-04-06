@@ -81,7 +81,7 @@
 }
 
 .user-email {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-weight: 500;
   color: var(--theme-text-muted);
   white-space: nowrap;
@@ -89,7 +89,6 @@
   text-overflow: ellipsis;
   line-height: 1.2;
 }
-
 .user-chevron {
   color: var(--theme-text-muted);
   flex-shrink: 0;

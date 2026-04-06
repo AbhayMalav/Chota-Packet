@@ -14,10 +14,10 @@ import './UserButton.css';
 
 function getInitials(name) {
   if (!name) return 'U';
-  const parts = name.trim().split(' ');
+  const parts = name.trim().split(' ').filter(Boolean);
   if (parts.length === 0) return 'U';
   if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
-  return parts[0].charAt(0) + parts[parts.length - 1].charAt(0).toUpperCase();
+  return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
 }
 
 const MENU_ITEMS = [
@@ -124,9 +124,13 @@ export default function UserMenu({ isOpen, onClose, triggerBtnRef, onShowToast }
 
   // Focus first item on open / when returning to main panel
   useEffect(() => {
+    let timer;
     if (isOpen && panel === 'main') {
-      setTimeout(() => itemsRef.current[0]?.focus(), 0);
+      timer = setTimeout(() => itemsRef.current[0]?.focus(), 0);
     }
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
   }, [isOpen, panel]);
 
   if (!isOpen) return null;
@@ -177,7 +181,7 @@ export default function UserMenu({ isOpen, onClose, triggerBtnRef, onShowToast }
           {/* Profile card at top */}
           <div className="user-menu-profile">
             <div
-              className="user-avatar"
+              className="user-menu-profile-avatar"
               aria-hidden="true"
               data-testid="profile-avatar"
             >
@@ -186,10 +190,10 @@ export default function UserMenu({ isOpen, onClose, triggerBtnRef, onShowToast }
                 : <span>{initials}</span>
               }
             </div>
-            <div className="user-info">
-              <span className="user-name">{displayName}</span>
+            <div className="user-menu-profile-details">
+              <span className="user-menu-profile-name">{displayName}</span>
               {displayEmail && (
-                <span className="user-email">{displayEmail}</span>
+                <span className="user-menu-profile-email">{displayEmail}</span>
               )}
             </div>
           </div>

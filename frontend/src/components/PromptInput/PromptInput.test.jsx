@@ -39,7 +39,7 @@ describe('PromptInput', () => {
       </PromptInput>
     )
 
-    const charCount = screen.getByLabelText(/Prompt input/i)
+    const charCount = screen.getByLabelText(/Input Prompt/i)
     expect(charCount).toBeInTheDocument()
 
     const controlsRow = charCount.closest('.flex.flex-col').querySelector('.controls-row')
@@ -84,6 +84,10 @@ describe('PromptInput', () => {
   })
 
   it('row does not wrap on mobile viewport', () => {
+    // Simulate mobile viewport
+    window.innerWidth = 320
+    window.dispatchEvent(new Event('resize'))
+
     const { container } = render(
       <PromptInput {...defaultProps} value="test">
         <button data-testid="mic-btn">Mic</button>
@@ -93,7 +97,13 @@ describe('PromptInput', () => {
     const controlsRow = container.querySelector('.controls-row')
     expect(controlsRow).toHaveClass('controls-row')
 
+    // Since css: true is enabled in vite.config, we can verify actual styles
+    const computedStyle = window.getComputedStyle(controlsRow)
+    expect(computedStyle.flexWrap).toBe('nowrap')
+
     const buttonGroup = container.querySelector('.button-group')
-    expect(buttonGroup).toHaveClass('button-group')
+    expect(buttonGroup).toBeInTheDocument()
+    // Verification of flex-shrink: 0 ensures buttons aren't squashed on mobile
+    expect(window.getComputedStyle(buttonGroup).flexShrink).toBe('0')
   })
 })
