@@ -235,9 +235,9 @@ export default function Sidebar({ children, history, onHistorySelect, onShowShor
           </div>
 
           <div className="sidebar-content">
+            <ChotaChatButton />
             <IncognitoToggle />
             <NewThreadButton onNavigate={closeMobile} />
-            <ChotaChatButton />
             <HistorySection history={history} onSelect={handleHistorySelect} />
             {children}
           </div>

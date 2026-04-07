@@ -1,7 +1,10 @@
-import React, { memo, useState, useCallback } from 'react'
+import React, { memo, useState, useCallback, useRef, useEffect } from 'react'
 import { useSidebar } from './Sidebar'
 import HistoryItem from './HistoryItem'
 import HistorySearch from './HistorySearch'
+import HistoryExportMenu from './HistoryExportMenu'
+import { usePopoverPosition } from '../../../hooks/usePopoverPosition'
+import { exportBulk } from '../../../services/exportService'
 import './HistorySection.css'
 
 const MAX_HISTORY_ITEMS = 5
@@ -20,6 +23,31 @@ const HistorySection = memo(function HistorySection({ history, onSelect, activeI
   const [isExpanded, setIsExpanded] = useState(false)
   const [pinnedIds, setPinnedIds] = useState(new Set())
   const [searchQuery, setSearchQuery] = useState('')
+  const [showBulkExport, setShowBulkExport] = useState(false)
+  const [toast, setToast] = useState(null)
+  const overflowBtnRef = useRef(null)
+  const bulkExportMenuRef = useRef(null)
+  const toastTimerRef = useRef(null)
+
+  const { position, recalculate } = usePopoverPosition(overflowBtnRef, bulkExportMenuRef, {
+    preferSide: 'right',
+    preferVertical: 'down',
+    gap: 8,
+    estimatedWidth: 240,
+  })
+
+  useEffect(() => {
+    if (showBulkExport && recalculate) {
+      const timer = setTimeout(recalculate, 0)
+      return () => clearTimeout(timer)
+    }
+  }, [showBulkExport, recalculate])
+
+  useEffect(() => {
+    return () => {
+      if (toastTimerRef.current) clearTimeout(toastTimerRef.current)
+    }
+  }, [])
 
   const rawItems = Array.isArray(history) ? history : []
 
@@ -30,6 +58,16 @@ const HistorySection = memo(function HistorySection({ history, onSelect, activeI
     }
     return true
   })
+
+  const filteredItems = searchQuery
+    ? items.filter(item => {
+        const label = getItemLabel(item).toLowerCase()
+        return label.includes(searchQuery.toLowerCase())
+      })
+    : items
+
+  const isSearching = searchQuery.length > 0
+  const displayedItems = isSearching ? filteredItems : (isExpanded ? items : items.slice(0, MAX_HISTORY_ITEMS))
 
   const handlePin = useCallback((itemId) => {
     setPinnedIds(prev => {
@@ -54,17 +92,31 @@ const HistorySection = memo(function HistorySection({ history, onSelect, activeI
     setSearchQuery('')
   }, [])
 
+  const showToast = useCallback((message) => {
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current)
+    setToast(message)
+    toastTimerRef.current = setTimeout(() => {
+      setToast(null)
+      toastTimerRef.current = null
+    }, 2500)
+  }, [])
+
+  const handleBulkExportClose = useCallback(() => {
+    setShowBulkExport(false)
+  }, [])
+
+  const handleBulkExportSelect = useCallback((format) => {
+    if (displayedItems.length === 0) {
+      showToast('Nothing to export')
+      return
+    }
+    exportBulk(displayedItems, format)
+    setShowBulkExport(false)
+  }, [displayedItems, showToast, setShowBulkExport])
+
   if (isCollapsed) return null
 
-  const filteredItems = searchQuery
-    ? items.filter(item => {
-        const label = getItemLabel(item).toLowerCase()
-        return label.includes(searchQuery.toLowerCase())
-      })
-    : items
-
-  const isSearching = searchQuery.length > 0
-  const displayedItems = isSearching ? filteredItems : (isExpanded ? items : items.slice(0, MAX_HISTORY_ITEMS))
+  // displayedItems and filteredItems moved up
 
   const pinnedItems = displayedItems
     .filter(i => pinnedIds.has(getItemId(i)))
@@ -78,6 +130,7 @@ const HistorySection = memo(function HistorySection({ history, onSelect, activeI
   const hasUnpinned = unpinnedItems.length > 0
   const hasMore = !isSearching && items.length > MAX_HISTORY_ITEMS
   const showNoResults = displayedItems.length === 0 && (items.length > 0 || isSearching)
+  const hasHistory = items.length > 0
 
   return (
     <section
@@ -95,7 +148,32 @@ const HistorySection = memo(function HistorySection({ history, onSelect, activeI
           <polyline points="12 6 12 12 16 14" />
         </svg>
         <h2 className="history-section__heading">History</h2>
+        {hasHistory && (
+          <div className="history-section__header-actions">
+            <button
+              ref={overflowBtnRef}
+              className="history-section__overflow-btn"
+              onClick={() => setShowBulkExport(true)}
+              aria-label="Export history options"
+            >
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+              </svg>
+            </button>
+          </div>
+        )}
       </div>
+
+      {showBulkExport && (
+        <HistoryExportMenu
+          ref={bulkExportMenuRef}
+          items={displayedItems}
+          onClose={handleBulkExportClose}
+          onSelect={handleBulkExportSelect}
+          position={position}
+          filteredCount={displayedItems.length}
+        />
+      )}
 
       <HistorySearch
         value={searchQuery}
@@ -206,6 +284,12 @@ const HistorySection = memo(function HistorySection({ history, onSelect, activeI
               </>
             )}
           </button>
+        </div>
+      )}
+
+      {toast && (
+        <div className="history-section__toast" role="alert" aria-live="polite">
+          {toast}
         </div>
       )}
     </section>

@@ -14,7 +14,9 @@
   padding: 10px;
   border-radius: 8px;
   background-color: rgba(var(--brand-rgb), 0.12);
-  color: var(--color-brand-light);
+  /* FIX: was var(--color-brand-light) which is often undefined — now uses the
+     same rgb token as ChotaChatButton for consistent brand-colored icons */
+  color: rgb(var(--brand-rgb));
   border: 1px solid rgba(var(--brand-rgb), 0.25);
   cursor: pointer;
   transition: all 200ms ease;
@@ -26,7 +28,8 @@
 .new-thread-btn:hover:not(:disabled) {
   background-color: rgba(var(--brand-rgb), 0.2);
   border-color: rgba(var(--brand-rgb), 0.4);
-  transform: translateY(-1px);
+  color: var(--theme-text);
+  /* FIX: removed transform: translateY(-1px) — sidebar buttons should not lift */
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -39,7 +42,14 @@
   transform: translateY(0);
 }
 
-.new-thread-btn:disabled, .new-thread-btn.disabled {
+/* FIX: was entirely missing — all other sidebar buttons have focus-visible */
+.new-thread-btn:focus-visible {
+  outline: 2px solid rgb(var(--brand-rgb));
+  outline-offset: 2px;
+}
+
+.new-thread-btn:disabled,
+.new-thread-btn.disabled {
   opacity: 0.5;
   cursor: not-allowed;
   filter: grayscale(1);
@@ -50,17 +60,29 @@
   flex-shrink: 0;
 }
 
-/* Collapsed state styles */
+/* Collapsed state */
 .sidebar.collapsed .new-thread-container {
   padding: 12px 0;
 }
+
+/* FIX: was missing entirely — without this the icon does not center when the
+   sidebar collapses to 52px; it stays left-aligned or visually clipped */
+.sidebar.collapsed .new-thread-btn {
+  width: auto;
+  padding: 10px;
+  justify-content: center;
+}
+
+/* Tooltip */
 .new-thread-tooltip {
   position: absolute;
   left: calc(100% + 10px);
   top: 50%;
   transform: translateY(-50%);
-  background-color: var(--tooltip-bg, #1a1a1e);
-  color: var(--tooltip-text, #fff);
+  /* FIX: was hardcoded #1a1a1e — invisible/wrong in light mode */
+  background-color: var(--theme-bg-card);
+  /* FIX: was hardcoded #fff — wrong in light mode */
+  color: var(--theme-text);
   padding: 6px 10px;
   border-radius: 6px;
   font-size: 12px;
@@ -69,12 +91,14 @@
   pointer-events: none;
   z-index: 50;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border: 1px solid var(--tooltip-border, rgba(255, 255, 255, 0.1));
+  /* FIX: was hardcoded rgba(255,255,255,0.1) — invisible in light mode */
+  border: 1px solid var(--theme-border);
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .new-thread-tooltip {
-    animation: tooltip-fade-in 150ms ease-out forwards;
+    /* FIX: renamed keyframe to avoid collision with ChotaChatButton */
+    animation: new-thread-tooltip-fade-in 150ms ease-out forwards;
   }
 }
 
@@ -98,10 +122,12 @@
   transform: translateY(-50%);
   border-width: 5px;
   border-style: solid;
-  border-color: transparent var(--tooltip-bg) transparent transparent;
+  /* FIX: was var(--tooltip-bg) — now uses theme token to match ChotaChat */
+  border-color: transparent var(--theme-bg-card) transparent transparent;
 }
 
-@keyframes tooltip-fade-in {
+/* FIX: renamed from tooltip-fade-in — was colliding with ChotaChatButton */
+@keyframes new-thread-tooltip-fade-in {
   from { opacity: 0; transform: translate(-4px, -50%); }
-  to { opacity: 1; transform: translate(0, -50%); }
+  to   { opacity: 1; transform: translate(0, -50%); }
 }

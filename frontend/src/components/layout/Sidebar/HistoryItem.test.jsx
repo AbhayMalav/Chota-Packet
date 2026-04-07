@@ -2,6 +2,17 @@ import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import HistoryItem from './HistoryItem'
+import * as exportService from '../../../services/exportService'
+import * as usePopoverPosition from '../../../hooks/usePopoverPosition'
+
+
+vi.mock('../../../services/exportService', () => ({
+  exportSingleItem: vi.fn(),
+}))
+
+vi.mock('../../../hooks/usePopoverPosition', () => ({
+  usePopoverPosition: vi.fn(() => ({ position: { top: 100, left: 200 } })),
+}))
 
 
 describe('HistoryItem', () => {
@@ -125,5 +136,75 @@ describe('HistoryItem', () => {
     expect(mockOnPin).not.toHaveBeenCalled()
 
     console.warn.mockRestore()
+  })
+
+  // ── Export ───────────────────────────────────────────────────────────────────
+
+  it('Export icon visible on hover', () => {
+    render(
+      <HistoryItem
+        item={mockItem}
+        onSelect={mockOnSelect}
+        onPin={mockOnPin}
+      />
+    )
+    const btn = screen.getByRole('button', { name: /Load/ })
+    expect(screen.queryByRole('button', { name: 'Export this prompt' })).not.toBeInTheDocument()
+
+    fireEvent.mouseEnter(btn)
+    expect(screen.getByRole('button', { name: 'Export this prompt' })).toBeInTheDocument()
+
+    fireEvent.mouseLeave(btn)
+    expect(screen.queryByRole('button', { name: 'Export this prompt' })).not.toBeInTheDocument()
+  })
+
+  it('Export icon has correct aria-label', () => {
+    render(
+      <HistoryItem
+        item={mockItem}
+        onSelect={mockOnSelect}
+        onPin={mockOnPin}
+      />
+    )
+    const btn = screen.getByRole('button', { name: /Load/ })
+    fireEvent.mouseEnter(btn)
+    expect(screen.getByRole('button', { name: 'Export this prompt' })).toBeInTheDocument()
+  })
+
+  it('Export icon click opens HistoryExportMenu', () => {
+    const mockExportSingleItem = vi.mocked(exportService.exportSingleItem)
+    mockExportSingleItem.mockImplementation(() => {})
+
+    render(
+      <HistoryItem
+        item={mockItem}
+        onSelect={mockOnSelect}
+        onPin={mockOnPin}
+      />
+    )
+
+    const itemBtn = screen.getByRole('button', { name: /Load/ })
+    fireEvent.mouseEnter(itemBtn)
+
+    const exportBtn = screen.getByRole('button', { name: 'Export this prompt' })
+    fireEvent.click(exportBtn)
+
+    expect(screen.getByText('Markdown')).toBeInTheDocument()
+    expect(screen.getByText('Plain Text')).toBeInTheDocument()
+    expect(screen.getByText('JSON')).toBeInTheDocument()
+  })
+
+  it('usePopoverPosition is used (spy check)', () => {
+    const spyUsePopoverPosition = vi.spyOn(usePopoverPosition, 'usePopoverPosition')
+
+    render(
+      <HistoryItem
+        item={mockItem}
+        onSelect={mockOnSelect}
+        onPin={mockOnPin}
+      />
+    )
+
+    expect(spyUsePopoverPosition).toHaveBeenCalled()
   })
 })

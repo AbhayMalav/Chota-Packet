@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useIncognito } from '../../../context/IncognitoContext'
 import { useSidebar } from './Sidebar'
 import { VenetianMask } from 'lucide-react'
@@ -6,7 +6,8 @@ import './IncognitoToggle.css'
 
 export default function IncognitoToggle() {
   const { isIncognito, toggleIncognito } = useIncognito()
-  const isCollapsed  = useSidebar()
+  const isCollapsed = useSidebar()
+  const [isHovered, setIsHovered] = useState(false)
 
   return (
     <div className={`incognito-wrapper ${isCollapsed ? 'collapsed' : 'expanded'}`}>
@@ -16,12 +17,13 @@ export default function IncognitoToggle() {
         onClick={toggleIncognito}
         aria-pressed={isIncognito}
         aria-label={isIncognito ? 'Turn off incognito mode' : 'Turn on incognito mode'}
-        title={isCollapsed ? 'Toggle Incognito Mode' : undefined}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <span className="incognito-icon">
           <VenetianMask size={20} strokeWidth={1.5} />
         </span>
-        
+
         {!isCollapsed && (
           <>
             <span className="incognito-label">Incognito</span>
@@ -31,6 +33,12 @@ export default function IncognitoToggle() {
           </>
         )}
       </button>
+
+      {isCollapsed && isHovered && (
+        <span className="incognito-tooltip" role="tooltip">
+          {isIncognito ? 'Incognito: On' : 'Incognito: Off'}
+        </span>
+      )}
     </div>
   )
 }

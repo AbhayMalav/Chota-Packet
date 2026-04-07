@@ -100,3 +100,73 @@
 .history-item--pinned .history-item__pin-btn {
   color: rgba(var(--brand-rgb), 0.8);
 }
+
+/* ── Action buttons row ─────────────────────────────────────────────────────── */
+
+.history-item__actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.history-item__action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 4px;
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--theme-text-muted);
+  transition: color 150ms ease, background-color 150ms ease;
+  flex-shrink: 0;
+}
+
+.history-item__action-btn:hover {
+  color: var(--theme-text);
+  background-color: rgba(var(--brand-rgb), 0.15);
+}
+
+.history-item__action-btn:focus-visible {
+  outline: 2px solid var(--theme-focus);
+  outline-offset: 2px;
+}
+
+/* ── Action buttons row ─────────────────────────────────────────────────────── */
+
+.history-item__actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.history-item__action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 4px;
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--theme-text-muted);
+  transition: color 150ms ease, background-color 150ms ease;
+  flex-shrink: 0;
+}
+
+.history-item__action-btn:hover {
+  color: var(--theme-text);
+  background-color: rgba(var(--brand-rgb), 0.15);
+}
+
+.history-item__action-btn:focus-visible {
+  outline: 2px solid var(--theme-focus);
+  outline-offset: 2px;
+}

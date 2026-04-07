@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, cleanup, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import HistorySection from './HistorySection';
+import * as exportService from '../../../services/exportService';
 
 
 // Mock useSidebar — must match exactly how HistorySection imports it
@@ -13,6 +14,14 @@ vi.mock('./Sidebar', async () => {
     useSidebar: () => mockUseSidebar(),
   };
 });
+
+vi.mock('../../../services/exportService', () => ({
+  exportBulk: vi.fn(),
+}));
+
+vi.mock('../../../hooks/usePopoverPosition', () => ({
+  usePopoverPosition: () => ({ position: { top: 100, left: 200 } }),
+}));
 
 // Helper: hover over a history item to reveal its pin button
 function hoverItem(itemButton) {
@@ -339,5 +348,93 @@ describe('HistorySection', () => {
   it('Null history array shows no-results, not crash', () => {
     expect(() => render(<HistorySection history={null} />)).not.toThrow();
     expect(screen.getByText('No history yet')).toBeInTheDocument();
+  });
+
+  // ── Export ───────────────────────────────────────────────────────────────────
+
+  it('Overflow menu hidden when history is empty', () => {
+    render(<HistorySection history={[]} />);
+    expect(screen.queryByRole('button', { name: 'Export history options' })).not.toBeInTheDocument();
+  });
+
+  it('Overflow menu visible when history has items', () => {
+    const history = [{ input: 'Some prompt', ts: 1 }];
+    render(<HistorySection history={history} />);
+    expect(screen.getByRole('button', { name: 'Export history options' })).toBeInTheDocument();
+  });
+
+  it('"Export All" exports full list when no filter active', async () => {
+    const history = [
+      { input: 'Item 1', ts: 1 },
+      { input: 'Item 2', ts: 2 },
+    ];
+    const mockExportBulk = vi.mocked(exportService.exportBulk);
+    mockExportBulk.mockResolvedValue(true);
+
+    render(<HistorySection history={history} />);
+
+    const overflowBtn = screen.getByRole('button', { name: 'Export history options' });
+    fireEvent.click(overflowBtn);
+
+    const markdownOption = screen.getByText('Export All as Markdown');
+    fireEvent.click(markdownOption);
+
+    expect(mockExportBulk).toHaveBeenCalledWith(
+      expect.arrayContaining([
+        expect.objectContaining({ input: 'Item 1' }),
+        expect.objectContaining({ input: 'Item 2' }),
+      ]),
+      'markdown',
+      2
+    );
+  });
+
+  it('"Export [n] results" label shown when filter is active', () => {
+    const history = [
+      { input: 'Write a haiku', ts: 1 },
+      { input: 'Write a poem', ts: 2 },
+      { input: 'Explain quantum', ts: 3 },
+    ];
+    render(<HistorySection history={history} />);
+
+    const searchInput = screen.getByRole('textbox', { name: 'Search history' });
+    fireEvent.change(searchInput, { target: { value: 'write' } });
+    act(() => { vi.advanceTimersByTime(300); });
+
+    const overflowBtn = screen.getByRole('button', { name: 'Export history options' });
+    fireEvent.click(overflowBtn);
+
+    expect(screen.getByText('Export All as Markdown')).toBeInTheDocument();
+  });
+
+  it('Bulk export on empty filtered list does not call exportBulk', async () => {
+    const history = [
+      { input: 'Write a haiku', ts: 1 },
+      { input: 'Write a poem', ts: 2 },
+    ]
+
+    render(<HistorySection history={history} />)
+
+    const searchInput = screen.getByRole('textbox', { name: 'Search history' })
+    fireEvent.change(searchInput, { target: { value: 'nonexistent' } })
+    act(() => { vi.advanceTimersByTime(300); })
+
+    act(() => {
+      const overflowBtn = screen.getByRole('button', { name: 'Export history options' })
+      fireEvent.click(overflowBtn)
+    })
+
+    const menuOptions = screen.getAllByRole('menuitem')
+    expect(menuOptions.length).toBe(3)
+  });
+
+  it('Bulk export does not create file when list is empty', async () => {
+    const mockExportBulk = vi.mocked(exportService.exportBulk)
+    mockExportBulk.mockResolvedValue(false)
+
+    const history = []
+    render(<HistorySection history={history} />)
+
+    expect(screen.queryByRole('button', { name: 'Export history options' })).not.toBeInTheDocument()
   });
 });

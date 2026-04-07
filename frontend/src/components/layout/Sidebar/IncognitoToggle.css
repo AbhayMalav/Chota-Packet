@@ -1,5 +1,10 @@
+/* FIX: added display:flex, justify-content:center, position:relative
+   to match .chota-chat-container and .new-thread-container */
 .incognito-wrapper {
-  padding: 4px 8px 0;
+ padding: 12px 14px;
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .incognito-btn {
@@ -8,11 +13,11 @@
   width: 100%;
   padding: 8px 10px;
   border-radius: 8px;
-  background: transparent;
-  border: none;
+  background-color: rgba(var(--brand-rgb), 0.12);
+  border: 1px solid rgba(var(--brand-rgb), 0.25);
   cursor: pointer;
   color: var(--theme-text-muted);
-  transition: all 0.2s ease;
+  transition: all 200ms ease;
   gap: 12px;
 }
 
@@ -21,13 +26,15 @@
   color: var(--theme-text);
 }
 
+/* FIX: was outline:none + box-shadow with --color-brand-light (undefined) */
 .incognito-btn:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--theme-bg, #000), 0 0 0 4px var(--color-brand-light);
+  outline: 2px solid rgb(var(--brand-rgb));
+  outline-offset: 2px;
 }
 
+/* FIX: was var(--color-brand-light) — undefined token */
 .incognito-btn.incognito--on {
-  color: var(--color-brand-light);
+  color: rgb(var(--brand-rgb));
   background: rgba(var(--brand-rgb), 0.12);
 }
 
@@ -66,9 +73,10 @@
   border: 1px solid var(--theme-border);
 }
 
+/* FIX: was var(--color-brand-light) — undefined, switch showed no colour */
 .incognito-switch.active {
-  background: var(--color-brand-light);
-  border-color: var(--color-brand-light);
+  background: rgb(var(--brand-rgb));
+  border-color: rgb(var(--brand-rgb));
 }
 
 .incognito-switch-thumb {
@@ -79,16 +87,57 @@
   position: absolute;
   top: 2px;
   left: 2px;
-  transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1),
+              background 0.3s ease;
 }
 
 .incognito-switch.active .incognito-switch-thumb {
   transform: translateX(14px);
+  /* FIX: was var(--theme-text) — dark thumb invisible on brand-purple track */
+  background: #fff;
 }
 
-.incognito-wrapper.collapsed .incognito-btn {
-  justify-content: center;
-  padding: 10px 0;
+/* Tooltip — matches .chota-chat-tooltip / .new-thread-tooltip pattern */
+.incognito-tooltip {
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--theme-bg-card);
+  color: var(--theme-text);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 50;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--theme-border);
+  animation: incognito-tooltip-fade-in 150ms ease-out forwards;
+}
+
+@media (max-width: 767px) {
+  .incognito-tooltip {
+    display: none;
+  }
+}
+
+.incognito-tooltip::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  transform: translateY(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent var(--theme-bg-card) transparent transparent;
+}
+
+/* Unique keyframe name — no collision with other tooltip animations */
+@keyframes incognito-tooltip-fade-in {
+  from { opacity: 0; transform: translate(-4px, -50%); }
+  to   { opacity: 1; transform: translate(0, -50%); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -99,4 +148,18 @@
     transition: none !important;
     animation: none !important;
   }
+}
+.incognito-wrapper.collapsed .incognito-btn {
+  justify-content: center;
+  padding: 10px 0;
+}
+.sidebar.collapsed .incognito-wrapper {
+  width: auto;
+  padding: 10px;
+  justify-content: center;
+}
+.sidebar.collapsed .incognito-btn {
+  width: auto;
+  padding: 10px;
+  justify-content: center;
 }

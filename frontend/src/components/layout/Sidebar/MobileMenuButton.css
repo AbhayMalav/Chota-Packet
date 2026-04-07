@@ -11,9 +11,14 @@
   transition: background-color 200ms ease, transform 150ms ease;
 }
 
-.mobile-menu-btn:hover,
-.mobile-menu-btn:focus-visible {
+.mobile-menu-btn:hover {
   background-color: rgba(var(--brand-rgb, 124, 77, 255), 0.08);
+}
+
+/* FIX: added missing focus-visible to match rest of sidebar buttons */
+.mobile-menu-btn:focus-visible {
+  outline: 2px solid rgb(var(--brand-rgb, 124, 77, 255));
+  outline-offset: 2px;
 }
 
 .mobile-menu-btn:active {
