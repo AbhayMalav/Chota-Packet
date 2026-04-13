@@ -15,7 +15,7 @@ Welcome! If you are an AI assistant or Agent reading this, this file provides es
 
 ### Frontend (`frontend/`)
 ```bash
-npm run dev          # Start Vite dev server
+npm run dev          # Start Vite dev server (port 3000)
 npm run build        # Production build
 npm run lint         # ESLint check (fix: `npm run lint -- --fix`)
 npm run preview      # Preview production build
@@ -29,7 +29,7 @@ npm test -- path/to/file.test.jsx  # Run single test file
 ### Backend (`backend/`)
 ```bash
 pip install -r requirements.txt -r requirements-dev.txt
-uvicorn main:app --reload       # Start FastAPI dev server
+uvicorn main:app --reload       # Start FastAPI dev server (port 8000)
 
 pytest                          # Run all tests (coverage enforced ≥80%)
 pytest -v                       # Verbose output
@@ -37,9 +37,6 @@ pytest tests/test_file.py       # Run single test file
 pytest -k "test_name"           # Run single test by name pattern
 pytest --no-cov                 # Skip coverage (faster)
 ```
-
-### Import Checker
-After refactoring imports or moving files, run `node import-checker.js` in `frontend/` to detect broken imports.
 
 ## 4. Code Style Guidelines
 
@@ -59,7 +56,7 @@ After refactoring imports or moving files, run `node import-checker.js` in `fron
 - **Error handling**: Try/catch at hook level; return null on cancel, throw on real errors, `console.warn` for non-critical
 - **State**: `useReducer` in `Home.jsx` for central state machine; `useState` for local component state
 - **CSS**: Tailwind utility classes preferred. Component-specific CSS lives adjacent (e.g., `ControlBar.jsx` + `ControlBar.css`). Never in `src/styles/` except `utils.css`
-- **ESLint**: v9 flat config via `@eslint/js` + `eslint-plugin-react-hooks`, `eslint-plugin-react-refresh`. No Prettier
+- **ESLint**: v9 flat config via `@eslint/js` + `eslint-plugin-react-hooks`, `eslint-plugin-react-refresh`. No Prettier. **Config file not yet created** — run `npm init @eslint/eslintrc` if needed to generate.
 
 ### Backend (Python)
 - **Imports**: `from __future__ import annotations` at top. Standard library → third-party → local
@@ -106,10 +103,10 @@ After refactoring imports or moving files, run `node import-checker.js` in `fron
 ## 6. Testing Conventions
 
 ### Frontend Tests
-- **Framework**: Vitest with happy-dom environment
+- **Framework**: Vitest with happy-dom environment (vitest.config.js)
 - **Library**: `@testing-library/react` + `@testing-library/jest-dom`
 - **File naming**: Co-located `.test.jsx` / `.test.js` next to source
-- **Setup**: `src/test/setup.js` imports jest-dom matchers
+- **Setup**: `src/test/setup.js` imports jest-dom matchers; custom matchers in `src/test-setup.js`
 - **Custom matchers**: `toBeInTheDocument`, `toBeDisabled`, `toHaveClass`, `toHaveTextContent`, `toHaveFocus`, `toHaveAttribute`
 - **Pattern**: Render → query by role/text → assert interactions
 

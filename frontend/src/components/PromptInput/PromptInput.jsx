@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useCallback } from 'react'
 import { ExclamationTriangleIcon } from '../ui/icons'
 import SendButton from './SendButton'
+import useTranslation from '../../hooks/useTranslation'
 import './PromptInput.css'
 
 
@@ -13,6 +14,7 @@ export default function PromptInput({
   isLoading = false,
   children,
 }) {
+  const { t } = useTranslation()
   const textareaRef = useRef(null)
   const onClearRef = useRef(onClear)
   onClearRef.current = onClear
@@ -50,7 +52,7 @@ export default function PromptInput({
           htmlFor="prompt-input"
           className="text-[11px] font-bold uppercase tracking-widest text-purple-400/70"
         >
-          Input Prompt
+          {t.enterPrompt}
         </label>
       </div>
 
@@ -66,7 +68,7 @@ export default function PromptInput({
                 : e.target.value
             onChange(sliced)
           }}
-          placeholder="Type or paste your prompt here…"
+          placeholder={t.enterPrompt}
           rows={4}
           className="prompt-input__textarea bg-input text-theme w-full resize-none rounded-xl border border-purple-500/15
                      px-4 py-3.5 text-sm leading-relaxed min-h-[44px]
@@ -97,9 +99,9 @@ export default function PromptInput({
               onClick={onClear}
               className="btn-ghost"
               aria-label="Clear input"
-              title="Clear input (Ctrl+K)"
+              title={`${t.clear} (Ctrl+K)`}
             >
-              Clear
+              {t.clear}
             </button>
           )}
           {children}

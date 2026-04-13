@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
-import { LS_THEME, THEMES } from '../config/constants'
+import { LS_THEME, LS_LANGUAGE, THEMES } from '../config/constants'
 
 const ThemeContext = createContext()
 
@@ -25,6 +25,17 @@ export default function ThemeProvider({ children }) {
     return 'brand'
   })
 
+  // App language (en or hi)
+  const [language, setLanguageState] = useState(() => {
+    try {
+      const stored = localStorage.getItem(LS_LANGUAGE)
+      if (stored === 'en' || stored === 'hi') return stored
+    } catch (e) {
+      console.warn('Failed to read language from localStorage', e)
+    }
+    return 'en'
+  })
+
   const setMode = useCallback((newMode) => {
     setModeState(newMode)
     try {
@@ -36,6 +47,13 @@ export default function ThemeProvider({ children }) {
     setThemeColorState(newTheme)
     try {
       localStorage.setItem(LS_THEME, newTheme)
+    } catch (e) {}
+  }, [])
+
+  const setLanguage = useCallback((newLanguage) => {
+    setLanguageState(newLanguage)
+    try {
+      localStorage.setItem(LS_LANGUAGE, newLanguage)
     } catch (e) {}
   }, [])
 
@@ -73,7 +91,7 @@ export default function ThemeProvider({ children }) {
   }, [mode, themeColor])
 
   return (
-    <ThemeContext.Provider value={{ mode, setMode, themeColor, setThemeColor }}>
+    <ThemeContext.Provider value={{ mode, setMode, themeColor, setThemeColor, language, setLanguage }}>
       {children}
     </ThemeContext.Provider>
   )
@@ -87,7 +105,9 @@ export function useTheme() {
       mode: 'system',
       setMode: () => {},
       themeColor: 'brand',
-      setThemeColor: () => {}
+      setThemeColor: () => {},
+      language: 'en',
+      setLanguage: () => {},
     }
   }
   return context

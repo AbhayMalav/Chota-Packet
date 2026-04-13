@@ -17,13 +17,6 @@ export default function UserButton() {
   const { shortcutsOpen, userButtonRef } = useSettingsMenu();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
-  const [currentLanguage, setCurrentLanguage] = useState(() => {
-    try {
-      return localStorage.getItem('cp-language') || 'en';
-    } catch {
-      return 'en';
-    }
-  });
   const localButtonRef = useRef(null);
   const toastTimerRef = useRef(null);
 
@@ -110,8 +103,6 @@ export default function UserButton() {
         onClose={() => setIsMenuOpen(false)}
         triggerBtnRef={localButtonRef}
         onShowToast={handleShowToast}
-        currentLanguage={currentLanguage}
-        onLanguageChange={setCurrentLanguage}
       />
 
       {toastMessage && (

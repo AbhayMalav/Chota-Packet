@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useUser } from '../../../context/UserContext';
+import { useTheme } from '../../../context/ThemeContext';
 import { useSettingsMenu } from './Sidebar';
+import { translations } from '../../../config/translations';
 import {
   User, Settings, Keyboard, PieChart,
   SlidersHorizontal, Palette, Globe, HelpCircle, LogOut,
@@ -21,20 +23,23 @@ function getInitials(name) {
   return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
 }
 
-const MENU_ITEMS = [
-  { id: 'account',      label: 'Account',        icon: User },
-  { id: 'preferences',  label: 'Preferences',    icon: Settings },
-  { id: 'shortcuts',    label: 'Shortcuts',       icon: Keyboard },
-  { id: 'usage',        label: 'Usage & Credits', icon: PieChart },
-  { id: 'all-settings', label: 'All Settings',    icon: SlidersHorizontal },
-  { id: 'appearance',   label: 'Appearance',      icon: Palette },
-  { id: 'language',     label: 'Language',        icon: Globe },
-  { id: 'help',         label: 'Help',            icon: HelpCircle },
-  { id: 'sign-out',     label: 'Sign Out',        icon: LogOut, isSignOut: true },
-];
-
-export default function UserMenu({ isOpen, onClose, triggerBtnRef, onShowToast, currentLanguage = 'en', onLanguageChange }) {
+export default function UserMenu({ isOpen, onClose, triggerBtnRef, onShowToast }) {
   const [user] = useUser();
+  const { language, setLanguage } = useTheme();
+  const t = translations[language] || translations.en
+  
+  const MENU_ITEMS = [
+    { id: 'account',      label: t.account,        icon: User },
+    { id: 'preferences',  label: t.preferences,    icon: Settings },
+    { id: 'shortcuts',    label: t.shortcuts,       icon: Keyboard },
+    { id: 'usage',        label: t.usageCredits, icon: PieChart },
+    { id: 'all-settings', label: t.allSettings,    icon: SlidersHorizontal },
+    { id: 'appearance',   label: t.appearance,      icon: Palette },
+    { id: 'language',     label: t.language,        icon: Globe },
+    { id: 'help',         label: t.help,            icon: HelpCircle },
+    { id: 'sign-out',     label: t.signOut,        icon: LogOut, isSignOut: true },
+  ];
+
   const menuRef = useRef(null);
   const itemsRef = useRef([]);
   const { toggleSettings, shortcutsOpen, closeShortcuts } = useSettingsMenu();
@@ -155,9 +160,9 @@ export default function UserMenu({ isOpen, onClose, triggerBtnRef, onShowToast, 
       return;
     }
     if (item.id === 'sign-out') {
-      onShowToast?.('You are not signed in');
+      onShowToast?.(t.notSignedIn);
     } else {
-      onShowToast?.(`${item.label} coming soon`);
+      onShowToast?.(`${item.label} ${t.comingSoon}`);
     }
     onClose();
   };
@@ -184,12 +189,9 @@ export default function UserMenu({ isOpen, onClose, triggerBtnRef, onShowToast, 
       ) : panel === 'language' ? (
         <LanguagePanel
           onBack={() => setPanel('main')}
-          currentLanguage={currentLanguage}
+          currentLanguage={language}
           onLanguageChange={(lang) => {
-            try {
-              localStorage.setItem('cp-language', lang);
-            } catch (e) {}
-            onLanguageChange?.(lang);
+            setLanguage(lang);
             const messages = { en: 'Language changed to English', hi: 'भाषा हिंदी में बदल गई' };
             onShowToast?.(messages[lang] || messages.en);
             setPanel('main');

@@ -1,5 +1,6 @@
 import React from 'react'
 import { SendIcon } from '../ui/icons'
+import useTranslation from '../../hooks/useTranslation'
 import './SendButton.css'
 
 
@@ -23,6 +24,8 @@ export default function SendButton({
   disabled = false,
   isLoading = false,
 }) {
+  const { t } = useTranslation()
+
   const handleClick = () => {
     if (disabled || isLoading) return
     if (typeof onSubmit !== 'function') {
@@ -38,8 +41,8 @@ export default function SendButton({
       onClick={handleClick}
       disabled={disabled || isLoading}
       className="send-btn btn-icon"
-      aria-label="Send for enhancement"
-      title="Send for enhancement (Ctrl+Enter)"
+      aria-label={t.enhance}
+      title={`${t.enhance} (Ctrl+Enter)`}
     >
       {isLoading ? <Spinner /> : <SendIcon className="w-4 h-4" />}
     </button>
