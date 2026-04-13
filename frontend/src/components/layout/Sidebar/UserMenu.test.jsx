@@ -98,9 +98,9 @@ describe('UserMenu', () => {
     expect(avatarContainer).toHaveTextContent('TU')
   })
 
-  it('Clicking each stub item triggers a toast (except Appearance, Shortcuts, and All Settings)', async () => {
+  it('Clicking each stub item triggers a toast (except Appearance, Shortcuts, Language, and All Settings)', async () => {
     openMenu()
-    const stubs = ['Account', 'Preferences', 'Usage & Credits', 'Language', 'Help']
+    const stubs = ['Account', 'Preferences', 'Usage & Credits', 'Help']
     for (const label of stubs) {
       const item = screen.getByText(label)
       fireEvent.click(item)
@@ -113,6 +113,16 @@ describe('UserMenu', () => {
       const btn = screen.getByRole('button', { name: /user menu/i })
       fireEvent.click(btn)
     }
+  })
+
+  it('Language item opens the Language sub-panel', () => {
+    openMenu()
+    const languageBtn = screen.getByText('Language')
+    fireEvent.click(languageBtn)
+    
+    // Check that we see sub-panel elements
+    expect(screen.getByText('Select Language')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /back to menu/i })).toBeInTheDocument()
   })
 
   it('Appearance item opens the Appearance sub-panel', () => {

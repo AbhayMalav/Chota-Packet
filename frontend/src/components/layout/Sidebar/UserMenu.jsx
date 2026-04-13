@@ -7,6 +7,7 @@ import {
   SlidersHorizontal, Palette, Globe, HelpCircle, LogOut,
 } from 'lucide-react';
 import AppearancePanel from './AppearancePanel';
+import LanguagePanel from './LanguagePanel';
 import ShortcutsPanel from './ShortcutsPanel';
 import usePopoverPosition from '../../../hooks/usePopoverPosition';
 import './UserMenu.css';
@@ -32,7 +33,7 @@ const MENU_ITEMS = [
   { id: 'sign-out',     label: 'Sign Out',        icon: LogOut, isSignOut: true },
 ];
 
-export default function UserMenu({ isOpen, onClose, triggerBtnRef, onShowToast }) {
+export default function UserMenu({ isOpen, onClose, triggerBtnRef, onShowToast, currentLanguage = 'en', onLanguageChange }) {
   const [user] = useUser();
   const menuRef = useRef(null);
   const itemsRef = useRef([]);
@@ -96,7 +97,7 @@ export default function UserMenu({ isOpen, onClose, triggerBtnRef, onShowToast }
 
   // Escape from sub-panels → back to main (not close)
   useEffect(() => {
-    if (!isOpen || (panel !== 'appearance' && panel !== 'shortcuts')) return;
+    if (!isOpen || (panel !== 'appearance' && panel !== 'shortcuts' && panel !== 'language')) return;
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         e.preventDefault();
@@ -144,6 +145,10 @@ export default function UserMenu({ isOpen, onClose, triggerBtnRef, onShowToast }
       setPanel('shortcuts');
       return;
     }
+    if (item.id === 'language') {
+      setPanel('language');
+      return;
+    }
     if (item.id === 'all-settings') {
       onClose();
       toggleSettings();
@@ -176,6 +181,21 @@ export default function UserMenu({ isOpen, onClose, triggerBtnRef, onShowToast }
         <ShortcutsPanel onBack={() => setPanel('main')} />
       ) : panel === 'appearance' ? (
         <AppearancePanel onBack={() => setPanel('main')} />
+      ) : panel === 'language' ? (
+        <LanguagePanel
+          onBack={() => setPanel('main')}
+          currentLanguage={currentLanguage}
+          onLanguageChange={(lang) => {
+            try {
+              localStorage.setItem('cp-language', lang);
+            } catch (e) {}
+            onLanguageChange?.(lang);
+            const messages = { en: 'Language changed to English', hi: 'भाषा हिंदी में बदल गई' };
+            onShowToast?.(messages[lang] || messages.en);
+            setPanel('main');
+            onClose();
+          }}
+        />
       ) : (
         <>
           {/* Profile card at top */}
@@ -222,6 +242,20 @@ export default function UserMenu({ isOpen, onClose, triggerBtnRef, onShowToast }
                   />
                   <span>{item.label}</span>
                   {item.id === 'appearance' && (
+                    <svg
+                      className="user-menu-item-chevron"
+                      viewBox="0 0 24 24"
+                      width={14}
+                      height={14}
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      aria-hidden="true"
+                    >
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                  )}
+                  {item.id === 'language' && (
                     <svg
                       className="user-menu-item-chevron"
                       viewBox="0 0 24 24"
