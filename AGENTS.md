@@ -75,7 +75,8 @@ pytest --no-cov                 # Skip coverage (faster)
 ### UI / UX Design Principles
 - **Glassmorphism**: Glass panels, gradients, dynamic animations (`glass-navbar`, `glass-card`)
 - **Dark Mode First**: Use Tailwind dark mode or `.light` wrapper for light theme
-- **Micro-interactions**: Hover, active, focus states critical (`hover:`, `active:`, `focus:`)
+- **Micro-interactions**: Hover, active, focus states critical (`hover:`, `active:`)
+- **See VISUAL_DNA.md**: Complete design tokens, component patterns, and color system documented in `VISUAL_DNA.md` — reference this for all styling decisions
 
 ## 5. Directory Structure
 

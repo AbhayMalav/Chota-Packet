@@ -30,27 +30,103 @@ export const translations = {
     keySaved: 'Key saved!',
     keyInvalid: 'Invalid key format',
     clearKey: 'Clear Key',
+    keyboardShortcuts: 'Keyboard Shortcuts',
+    confirmClear: 'Confirm Clear',
 
     // Input Area
     enterPrompt: 'Enter your prompt...',
     clear: 'Clear',
     enhance: 'Enhance',
     enhancing: 'Enhancing...',
+    clearInput: 'Clear input',
 
     // Output Card
     enhancedPrompt: 'Enhanced Prompt',
     copy: 'Copy',
     copied: 'Copied!',
     edit: 'Edit',
+    takeItTo: 'Take it to',
+    opening: 'Opening!',
+    clearOutput: 'Clear output',
+    charsWords: 'chars · words',
+    helpful: 'Helpful?',
+    copiesPromptOpensNewChat: 'Copies prompt · opens new chat',
+    yourEnhancedPrompt: 'Your enhanced prompt will appear here…',
+
+    // ControlBar (Pill labels and buttons)
+    style: 'Style',
+    tone: 'Tone',
+    level: 'Level',
+    output: 'Output',
+    regen: 'Regen',
+    regenerateWithVariation: 'Regenerate with variation',
+    noModels: 'No models',
+    contextLength: 'ctx',
+    free: 'free',
+
+    // Pill select options
+    auto: 'Auto',
+    general: 'General',
+    creative: 'Creative',
+    code: 'Code',
+    stepbystep: 'Step-by-Step',
+    data: 'Data Analysis',
+    detailed: 'Detailed',
+    academic: 'Academic',
+    marketing: 'Marketing',
+    casual: 'Casual',
+    formal: 'Formal',
+    professional: 'Professional',
+    beginner: 'Beginner',
+    intermediate: 'Intermediate',
+    expert: 'Expert',
+    englishOutput: 'English',
+    hindiOutput: 'Hindi',
+    en: 'EN',
+    hi: 'HI',
+    noTone: 'No Tone',
+    basic: 'Basic',
+    advanced: 'Advanced',
+    chainOfThought: 'Chain of Thought',
+    meta: 'Meta',
+    promptChaining: 'Prompt Chaining',
+    multiPromptFusion: 'Multi-Prompt Fusion',
+    softPrompting: 'Soft Prompting',
+
+    // Chota Chat
+    chotaChat: 'Chota Chat',
+    chotaChatComingSoon: 'Chota Chat is coming soon!',
+
+    // Incognito
+    incognito: 'Incognito',
+    incognitoTurnOn: 'Turn on incognito mode',
+    incognitoTurnOff: 'Turn off incognito mode',
+    on: 'On',
+    off: 'Off',
 
     // History
     history: 'History',
     pinnedHistory: 'Pinned History',
     noHistory: 'No history yet',
+    noMatchesFound: 'No matches found',
     clearHistory: 'Clear History',
+    pinned: 'pinned',
+
+    // Search
+    searchPrompts: 'Search prompts...',
+    searchHistory: 'Search history',
+    clearSearch: 'Clear search',
+
+    // New Thread
+    newThread: 'New Thread',
 
     // Shortcuts
-    keyboardShortcuts: 'Keyboard Shortcuts',
+    keyboardShortcutsTitle: 'Keyboard Shortcuts',
+    noShortcuts: 'No shortcuts configured',
+
+    // View All / Collapse
+    viewAll: 'View All ({count})',
+    close: 'Collapse',
 
     // General
     loading: 'Loading...',
@@ -88,29 +164,105 @@ export const translations = {
     selectModel: 'मॉडल चुनें',
     noKey: 'API कुंजी सेट नहीं है',
     keySaved: 'कुंजी सहेजी गई!',
-    keyInvalid: 'अमान्य कुंजी प्रारूप',
+    keyInvalid: 'अमान्य कुं��ी प्रारूप',
     clearKey: 'कुंजी हटाएं',
+    keyboardShortcuts: 'कीबोर्ड शॉर्टकट',
+    confirmClear: 'हटाने की पुष्टि करें',
 
     // Input Area
     enterPrompt: 'अपना प्रॉम्प्ट दर्ज करें...',
     clear: 'साफ़ करें',
     enhance: 'बेहतर बनाएं',
     enhancing: 'बेहतर बना रहे हैं...',
+    clearInput: 'इनपुट साफ़ करें',
 
     // Output Card
     enhancedPrompt: 'बेहतर प्रॉम्प्ट',
     copy: 'कॉपी',
     copied: 'कॉपी किया!',
     edit: 'संपादित करें',
+    takeItTo: 'भेजें',
+    opening: 'खोल रहे हैं!',
+    clearOutput: 'आउटपुट साफ़ करें',
+    charsWords: 'अक्षर · शब्द',
+    helpful: 'उपयोगी?',
+    copiesPromptOpensNewChat: 'प्रॉम्प्ट कॉपी करें · नई चैट खोलें',
+    yourEnhancedPrompt: 'आपका बेहतर प्रॉम्प्ट यहाँ दिखेगा...',
+
+    // ControlBar (Pill labels and buttons)
+    style: 'स्टाइल',
+    tone: 'स्वर',
+    level: 'स्तर',
+    output: 'आउटपुट',
+    regen: 'फिर से',
+    regenerateWithVariation: 'विभिन्नता के साथ पुनः बनाएं',
+    noModels: 'कोई मॉडल नहीं',
+    contextLength: 'ctx',
+    free: 'मुफ्त',
+
+    // Pill select options
+    auto: 'ऑटो',
+    general: 'सामान्य',
+    creative: 'क्रिएटिव',
+    code: 'कोड',
+    stepbystep: 'चरण दर चरण',
+    data: 'डेटा विश्लेषण',
+    detailed: 'विस्तृत',
+    academic: 'शैक्षणिक',
+    marketing: 'मार्केटिंग',
+    casual: 'आरामदायक',
+    formal: 'औपचारिक',
+    professional: 'पेशेवर',
+    beginner: 'शुरुआती',
+    intermediate: 'मध्यवर्ती',
+    expert: 'विशेषज्ञ',
+    englishOutput: 'अंग्रेज़ी',
+    hindiOutput: 'हिंदी',
+    en: 'अं',
+    hi: 'हि',
+    noTone: 'कोई स्वर नहीं',
+    basic: 'बुनियादी',
+    advanced: 'उन्नत',
+    chainOfThought: 'विचार श्रृंखला',
+    meta: 'मेटा',
+    promptChaining: 'प्रॉम्प्ट चेनिंग',
+    multiPromptFusion: 'मल्टी प्रॉम्प्ट फ्यूज़न',
+    softPrompting: 'सॉफ्ट प्रॉम्प्टिंग',
+
+    // Chota Chat
+    chotaChat: 'छोटा चैट',
+    chotaChatComingSoon: 'छोटा चैट जल्द आ रहा है!',
+
+    // Incognito
+    incognito: 'इनकॉग्निटो',
+    incognitoTurnOn: 'इनकॉग्निटो मोड चालू करें',
+    incognitoTurnOff: 'इनकॉग्निटो मोड बंद करें',
+    on: 'चालू',
+    off: 'बंद',
 
     // History
     history: 'इतिहास',
     pinnedHistory: 'पिन किया हुआ इतिहास',
     noHistory: 'अभी तक कोई इतिहास नहीं',
+    noMatchesFound: 'कोई परिणाम नहीं मिला',
     clearHistory: 'इतिहास साफ़ करें',
+    pinned: 'पिन किया',
+
+    // Search
+    searchPrompts: 'प्रॉम्प्ट खोजें...',
+    searchHistory: 'इतिहास खोजें',
+    clearSearch: 'खोज साफ़ करें',
+
+    // New Thread
+    newThread: 'नया थ्रेड',
 
     // Shortcuts
-    keyboardShortcuts: 'कीबोर्ड शॉर्टकट',
+    keyboardShortcutsTitle: 'कीबोर्ड शॉर्टकट',
+    noShortcuts: 'कोई शॉर्टकट कॉन्फ़िगर नहीं',
+
+    // View All / Collapse
+    viewAll: 'सभी देखें ({count})',
+    close: 'छोटा करें',
 
     // General
     loading: 'लोड हो रहा है...',

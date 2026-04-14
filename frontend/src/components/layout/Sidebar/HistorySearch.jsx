@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { SearchIcon, XIcon } from '../../ui/icons'
+import { translations } from '../../../config/translations'
+import { useTheme } from '../../../context/ThemeContext'
 import './HistorySearch.css'
 
 
@@ -7,8 +9,10 @@ export default function HistorySearch({
   value = '',
   onChange = () => {},
   onClear = () => {},
-  placeholder = 'Search prompts...',
 }) {
+  const { language } = useTheme()
+  const t = translations[language] || translations.en
+  
   const [localValue, setLocalValue] = useState(value)
   const timerRef = useRef(null)
 
@@ -55,15 +59,15 @@ export default function HistorySearch({
         className="history-search__input"
         value={localValue}
         onChange={handleChange}
-        placeholder={placeholder}
-        aria-label="Search history"
+        placeholder={t.searchPrompts}
+        aria-label={t.searchHistory}
       />
       {localValue && (
         <button
           type="button"
           className="history-search__clear-btn"
           onClick={handleClear}
-          aria-label="Clear search"
+          aria-label={t.clearSearch}
         >
           <XIcon className="w-3 h-3" />
         </button>

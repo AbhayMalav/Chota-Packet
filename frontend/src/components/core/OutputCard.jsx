@@ -3,6 +3,8 @@ import { createPortal } from 'react-dom'
 import FeedbackBar from '../ui/FeedbackBar'
 import { copyToClipboard } from '../../services/clipboard'
 import { SparklesIcon, ChevronDownIcon, ClipboardIcon, CheckIcon, SendIcon, TrashIcon, ClaudeIcon, PerplexityIcon, GrokIcon, DeepSeekIcon, MistralIcon, SarvamIcon, AIFiestaIcon } from '../ui/icons'
+import { translations } from '../../config/translations'
+import { useTheme } from '../../context/ThemeContext'
 import './OutputCard.css'
 
 
@@ -27,6 +29,9 @@ const AI_SITES = [
 
 
 export default function OutputCard({ text = '', onTextChange, onClear }) {
+  const { language } = useTheme()
+  const t = translations[language] || translations.en
+
   const cardRef = useRef(null)
   const copyTimerRef = useRef(null)
   const takeToWrapperRef = useRef(null)
@@ -55,7 +60,7 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
   // ── Cleanup copy timer on unmount ─────────────────────────────────────────
   useEffect(() => () => clearTimeout(copyTimerRef.current), [])
 
-  // ── Cleanup takeTo timeout on unmount ─────────────────────────────────────
+  // ── Cleanup takeTo timeout on unmount ──────────────────────��──────────────
   useEffect(() => () => clearTimeout(takeToTimeoutRef.current), [])
 
   // ── Close dropdown on outside click ──────────────────────────────────────
@@ -120,14 +125,14 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-2.5 border-b border-purple-500/10">
           <span className="text-[11px] font-bold uppercase tracking-widest gradient-text flex items-center gap-1.5">
-            <SparklesIcon className="w-3 h-3" /> Enhanced Prompt
+            <SparklesIcon className="w-3 h-3" /> {t.enhancedPrompt}
           </span>
 
           <div className="flex items-center gap-1.5">
             {/* Copy */}
             <button
               onClick={handleCopy}
-              aria-label={copied ? 'Copied!' : 'Copy enhanced prompt'}
+              aria-label={copied ? t.copied : t.copy}
               aria-live="polite"
               className={`flex items-center gap-1.5 text-[11px] px-3 py-1.5 rounded-full
                           font-semibold border transition-all duration-200 ${copied
@@ -136,7 +141,7 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
                 }`}
             >
               {copied ? <CheckIcon className="w-3 h-3" /> : <ClipboardIcon className="w-3 h-3" />}
-              {copied ? 'Copied!' : 'Copy'}
+              {copied ? t.copied : t.copy}
             </button>
 
             {/* Take it to */}
@@ -147,7 +152,7 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
                 disabled={!trimmedText}
                 aria-haspopup="true"
                 aria-expanded={takeToOpen}
-                aria-label="Take prompt to an AI tool"
+                aria-label={t.takeItTo}
                 className={`flex items-center gap-1.5 text-[11px] px-3 py-1.5 rounded-full
                             font-semibold border transition-all duration-200
                             disabled:opacity-30 disabled:cursor-not-allowed ${takenTo
@@ -158,7 +163,7 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
                   }`}
               >
                 {takenTo ? <CheckIcon className="w-3 h-3" /> : <SendIcon className="w-3 h-3" />}
-                {takenTo ? 'Opening!' : 'Take it to'}
+                {takenTo ? t.opening : t.takeItTo}
                 {!takenTo && (
                   <ChevronDownIcon
                     className={`w-2.5 h-2.5 transition-transform duration-200 ${takeToOpen ? 'rotate-180' : ''}`}
@@ -177,8 +182,8 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
           onInput={handleInput}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          data-placeholder="Your enhanced prompt will appear here…"
-          aria-label="Enhanced prompt output (editable)"
+          data-placeholder={t.yourEnhancedPrompt}
+          aria-label={t.enhancedPrompt}
           aria-multiline="true"
           role="textbox"
           className="text-theme min-h-[120px] px-4 py-4 text-sm leading-relaxed
@@ -191,13 +196,13 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
 
           {/* Left — stats */}
           <span className="text-secondary text-[11px] font-medium tabular-nums flex-shrink-0">
-            {text.length} chars · {wordCount} words
+            {text.length} {t.charsWords.replace(' · ', ' ').split(' ')[0]} {wordCount} {t.charsWords.replace(' · ', ' ').split(' ')[2] || ''}
           </span>
 
           {/* Center — feedback */}
           <div className="flex items-center gap-2">
             <span className="text-secondary text-[11px] hidden sm:block">
-              Helpful?
+              {t.helpful}
             </span>
             <FeedbackBar />
           </div>
@@ -207,12 +212,12 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
             {onClear && text.length > 0 ? (
               <button
                 onClick={onClear}
-                aria-label="Clear output"
+                aria-label={t.clearOutput}
                 className="text-secondary flex items-center gap-1 text-[11px] font-medium px-2 py-1
                            rounded-lg hover:bg-red-500/10 hover:text-red-400
                            transition-all duration-200"
               >
-                <TrashIcon className="w-3 h-3" /> Clear
+                <TrashIcon className="w-3 h-3" /> {t.clear}
               </button>
             ) : (
               <div className="w-[52px]" />
@@ -235,7 +240,7 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
           className="w-52 glass-card rounded-2xl shadow-xl animate-fade-in border border-purple-500/15 overflow-hidden"
         >
           <p className="text-secondary px-3 pt-2 pb-1.5 text-[10px] font-semibold uppercase tracking-wider border-b border-purple-500/10">
-            Copies prompt · opens new chat
+            {t.copiesPromptOpensNewChat}
           </p>
           <div className="max-h-64 overflow-y-auto overflow-x-hidden py-1">
             {AI_SITES.map(site => (

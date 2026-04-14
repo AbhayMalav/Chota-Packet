@@ -1,5 +1,5 @@
 import React from 'react'
-import { ChevronLeft } from 'lucide-react'
+import { ChevronLeft, Check } from 'lucide-react'
 import { useTheme } from '../../../context/ThemeContext'
 import { LANGS } from '../../../config/constants'
 import { translations } from '../../../config/translations'
@@ -10,10 +10,6 @@ export default function LanguagePanel({ onBack, onLanguageChange, currentLanguag
   const isDark = mode === 'dark' || (mode === 'system' && window.matchMedia?.('(prefers-color-scheme: dark)').matches)
   
   const t = translations[currentLanguage] || translations.en
-
-  const handleLanguageSelect = (lang) => {
-    onLanguageChange(lang)
-  }
 
   return (
     <div className="language-panel" role="group" aria-label="Language settings">
@@ -41,8 +37,14 @@ export default function LanguagePanel({ onBack, onLanguageChange, currentLanguag
               aria-checked={currentLanguage === value}
               tabIndex={currentLanguage === value ? 0 : -1}
               className={`language-panel__option ${currentLanguage === value ? 'selected' : ''}`}
-              onClick={() => handleLanguageSelect(value)}
+              onClick={() => onLanguageChange(value)}
             >
+              <Check 
+                className="language-panel__check" 
+                width={14} 
+                height={14} 
+                aria-hidden="true" 
+              />
               {value === 'en' ? t.english : t.hindi}
             </button>
           ))}

@@ -2,10 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSidebar } from './Sidebar';
 import './ChotaChatButton.css';
 import * as Config from '../../../config/config';
+import { translations } from '../../../config/translations';
+import { useTheme } from '../../../context/ThemeContext';
 
 const FEATURES = Config?.FEATURES || { SHOW_CHOTA_CHAT: false };
 
 export default function ChotaChatButton() {
+  const { language } = useTheme()
+  const t = translations[language] || translations.en
+  
   const isCollapsed = useSidebar();
   const [isHovered, setIsHovered] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -35,7 +40,7 @@ export default function ChotaChatButton() {
       <button
         className={`chota-chat-btn ${isCollapsed ? 'collapsed' : ''}`}
         onClick={handleClick}
-        aria-label="Chota Chat"
+        aria-label={t.chotaChat}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -54,18 +59,18 @@ export default function ChotaChatButton() {
         </svg>
         {!isCollapsed && (
           <>
-            <span className="sidebar-label-text">Chota Chat</span>
-            <span className="chota-chat-badge">Soon</span>
+            <span className="sidebar-label-text">{t.chotaChat}</span>
+            <span className="chota-chat-badge">{t.comingSoon}</span>
           </>
         )}
       </button>
 
       {isCollapsed && isHovered && (
-        <div className="chota-chat-tooltip">Chota Chat (Coming Soon)</div>
+        <div className="chota-chat-tooltip">{t.chotaChat} ({t.comingSoon})</div>
       )}
 
       {showToast && (
-        <div className="chota-chat-toast">Chota Chat is coming soon!</div>
+        <div className="chota-chat-toast">{t.chotaChatComingSoon}</div>
       )}
     </div>
   );

@@ -1,6 +1,8 @@
 import React from 'react'
 import { SHORTCUT_GROUPS } from '../../../config/constants'
 import ErrorBoundary from '../../ui/ErrorBoundary'
+import { translations } from '../../../config/translations'
+import { useTheme } from '../../../context/ThemeContext'
 import './ShortcutsPanel.css'
 
 function ShortcutRow({ entry }) {
@@ -30,7 +32,7 @@ function ShortcutRow({ entry }) {
   )
 }
 
-function ShortcutsContent({ onBack }) {
+function ShortcutsContent({ onBack, t }) {
   if (!SHORTCUT_GROUPS || SHORTCUT_GROUPS.length === 0) {
     return (
       <div className="shortcuts-empty">
@@ -38,7 +40,7 @@ function ShortcutsContent({ onBack }) {
           <rect x="2" y="4" width="20" height="16" rx="2" />
           <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10" />
         </svg>
-        <p>No shortcuts configured</p>
+        <p>{t.noShortcuts || 'No shortcuts configured'}</p>
       </div>
     )
   }
@@ -50,7 +52,7 @@ function ShortcutsContent({ onBack }) {
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
             <polyline points="15 18 9 12 15 6" />
           </svg>
-          Shortcuts
+          {t.shortcuts}
         </button>
       </div>
       <div className="shortcuts-body">
@@ -70,14 +72,17 @@ function ShortcutsContent({ onBack }) {
 }
 
 export default function ShortcutsPanel({ onBack }) {
+  const { language } = useTheme()
+  const t = translations[language] || translations.en
+
   return (
     <div
       className="shortcuts-panel"
       role="dialog"
-      aria-label="Keyboard shortcuts"
+      aria-label={t.keyboardShortcutsTitle}
     >
-      <ErrorBoundary fallback={<div className="shortcuts-error">Shortcuts unavailable</div>}>
-        <ShortcutsContent onBack={onBack} />
+      <ErrorBoundary fallback={<div className="shortcuts-error">{t.error}</div>}>
+        <ShortcutsContent onBack={onBack} t={t} />
       </ErrorBoundary>
     </div>
   )

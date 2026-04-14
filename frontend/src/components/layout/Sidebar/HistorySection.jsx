@@ -5,6 +5,8 @@ import HistorySearch from './HistorySearch'
 import HistoryExportMenu from './HistoryExportMenu'
 import { usePopoverPosition } from '../../../hooks/usePopoverPosition'
 import { exportBulk } from '../../../services/exportService'
+import { translations } from '../../../config/translations'
+import { useTheme } from '../../../context/ThemeContext'
 import './HistorySection.css'
 
 const MAX_HISTORY_ITEMS = 5
@@ -19,6 +21,9 @@ function getItemLabel(item) {
 }
 
 const HistorySection = memo(function HistorySection({ history, onSelect, activeItemId }) {
+  const { language } = useTheme()
+  const t = translations[language] || translations.en
+
   const isCollapsed = useSidebar()
   const [isExpanded, setIsExpanded] = useState(false)
   const [pinnedIds, setPinnedIds] = useState(new Set())
@@ -116,8 +121,6 @@ const HistorySection = memo(function HistorySection({ history, onSelect, activeI
 
   if (isCollapsed) return null
 
-  // displayedItems and filteredItems moved up
-
   const pinnedItems = displayedItems
     .filter(i => pinnedIds.has(getItemId(i)))
     .sort((a, b) => (b.ts ?? 0) - (a.ts ?? 0))
@@ -135,7 +138,7 @@ const HistorySection = memo(function HistorySection({ history, onSelect, activeI
   return (
     <section
       className={`history-section ${isExpanded ? 'history-section--expanded' : ''}`}
-      aria-label="Session History"
+      aria-label={t.history}
     >
       <div className="history-section__header">
         <svg
@@ -147,7 +150,7 @@ const HistorySection = memo(function HistorySection({ history, onSelect, activeI
           <circle cx="12" cy="12" r="10" />
           <polyline points="12 6 12 12 16 14" />
         </svg>
-        <h2 className="history-section__heading">History</h2>
+        <h2 className="history-section__heading">{t.history}</h2>
         {hasHistory && (
           <div className="history-section__header-actions">
             <button
@@ -195,7 +198,7 @@ const HistorySection = memo(function HistorySection({ history, onSelect, activeI
               <line x1="9" y1="9" x2="9.01" y2="9" />
               <line x1="15" y1="9" x2="15.01" y2="9" />
             </svg>
-            <p className="history-section__empty-text">No prompts match your search</p>
+            <p className="history-section__empty-text">{t.noMatchesFound}</p>
           </div>
         ) : displayedItems.length === 0 ? (
           <div className="history-section__empty">
@@ -208,7 +211,7 @@ const HistorySection = memo(function HistorySection({ history, onSelect, activeI
               <circle cx="12" cy="12" r="10" />
               <polyline points="12 6 12 12 16 14" />
             </svg>
-            <p className="history-section__empty-text">No history yet</p>
+            <p className="history-section__empty-text">{t.noHistory}</p>
           </div>
         ) : (
           <>
@@ -218,7 +221,7 @@ const HistorySection = memo(function HistorySection({ history, onSelect, activeI
                   <svg width="10" height="10" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path d="M9.828 3.009a.75.75 0 01.727.182l5.254 5.254a.75.75 0 01-.499 1.285l-1.56.013-2.835 2.836.013 1.56a.75.75 0 01-1.285.499L4.39 9.385a.75.75 0 01.499-1.285l1.56-.013 2.836-2.835-.013-1.56a.75.75 0 01.556-.683zM3.22 14.97a.75.75 0 011.06 0l1.5 1.5a.75.75 0 11-1.06 1.06l-1.5-1.5a.75.75 0 010-1.06z" />
                   </svg>
-                  Pinned
+                  {t.pinned}
                 </div>
                 {pinnedItems.map((item, index) => {
                   const idForActive = getItemId(item)
@@ -273,14 +276,14 @@ const HistorySection = memo(function HistorySection({ history, onSelect, activeI
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="18 15 12 9 6 15" />
                 </svg>
-                Collapse
+                {t.close}
               </>
             ) : (
               <>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="6 9 12 15 18 9" />
                 </svg>
-                View All ({items.length})
+                {t.viewAll.replace('{count}', `(${items.length})`)}
               </>
             )}
           </button>

@@ -1,0 +1,166 @@
+/* tokens.css — Standalone design tokens for Chota Packet
+   Drop this file into your project and import to get the full design system.
+
+   Usage: @import './tokens.css'; in your main CSS file
+*/
+
+:root {
+  /* ── Brand Colors ─────────────────────────────────────────────────────── */
+  --brand-rgb: 127, 19, 236;
+  --brand-light-rgb: 168, 85, 247;
+  --brand-dark-rgb: 96, 16, 184;
+  --accent-rgb: 99, 102, 241;
+
+  /* ── Typography ─────────────────────────────────────────────────────── */
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+
+  /* ── Layout ─────────────────────────────────────────────────────────── */
+  --navbar-height: 56px;
+  --max-content-width: 1280px;
+
+  /* ── Semantic: Backgrounds ───────────────────────────────────────────── */
+  --theme-bg: #0a0a12;
+  --theme-bg-card: rgba(17, 17, 32, 0.8);
+  --theme-bg-navbar: rgba(10, 10, 18, 0.75);
+  --theme-bg-sidebar: rgba(13, 13, 30, 0.92);
+  --theme-bg-overlay: rgba(0, 0, 0, 0.65);
+  --theme-bg-elevated: #16162a;
+
+  /* ── Semantic: Text ─────────────────────────────────────────────────── */
+  --theme-text: #e2e2f0;
+  --theme-text-muted: #a0a0b8;
+  --theme-text-secondary: #6a6a8a;
+  --theme-placeholder: #4a4a6a;
+
+  /* ── Semantic: Borders ────────────────────────────────────────────────── */
+  --theme-border: rgba(var(--brand-rgb), 0.15);
+  --theme-border-navbar: rgba(var(--brand-rgb), 0.12);
+  --theme-border-sidebar: rgba(var(--brand-rgb), 0.15);
+
+  /* ── Semantic: Inputs ─────────────────────────────────────────────────── */
+  --theme-input-bg: rgba(0, 0, 0, 0.3);
+  --theme-input-bg-focus: rgba(0, 0, 0, 0.4);
+  --theme-input-bg-hover: rgba(var(--brand-rgb), 0.05);
+
+  /* ── Semantic: Status Colors ───────────────────────────────────────────── */
+  --color-white: #ffffff;
+  --color-danger: #f87171;
+  --color-danger-muted: #fca5a5;
+  --color-danger-bg: rgba(239, 68, 68, 0.1);
+  --color-danger-bg-hover: rgba(239, 68, 68, 0.18);
+  --color-danger-border: rgba(239, 68, 68, 0.28);
+  --color-danger-border-hover: rgba(239, 68, 68, 0.5);
+  --color-danger-ring: rgba(239, 68, 68, 0.4);
+  --color-success: #34d399;
+  --color-success-muted: #6ee7b7;
+  --color-success-bg: rgba(52, 211, 153, 0.1);
+  --color-success-bg-hover: rgba(52, 211, 153, 0.15);
+
+  /* ── Semantic: UI Elements ────────────────────────────────────────────── */
+  --theme-option-bg: #111120;
+  --theme-kbd-bg: rgba(31, 41, 55, 0.5);
+  --theme-kbd-border: rgba(55, 65, 81, 0.8);
+  --theme-nebula-1: rgba(var(--brand-rgb), 0.12);
+  --theme-nebula-2: rgba(var(--accent-rgb), 0.1);
+  --theme-nebula-3: rgba(var(--brand-rgb), 0.04);
+
+  /* ── Scrollbar ────────────────────────────────────────────────────────── */
+  --theme-scrollbar: rgba(var(--brand-rgb), 0.35);
+  --theme-scrollbar-hover: rgba(var(--brand-rgb), 0.6);
+
+  /* ── Focus ─────────────────────────────────────────────────────────────── */
+  --theme-focus: rgba(var(--brand-rgb), 0.8);
+
+  /* ── Tooltip ───────────────────────────────────────────────────────────── */
+  --tooltip-bg: #1a1a1e;
+  --tooltip-fg: #ffffff;
+  --tooltip-border: rgba(255, 255, 255, 0.1);
+
+  /* ── Diff ──────────────────────────────────────────────────────────────── */
+  --diff-added-bg: #14532d;
+  --diff-added-text: #bbf7d0;
+  --diff-removed-bg: #7f1d1d;
+  --diff-removed-text: #fecaca;
+}
+
+/* Light theme override */
+[data-theme="light"] {
+  --theme-bg: #f4f4f8;
+  --theme-bg-card: rgba(255, 255, 255, 0.88);
+  --theme-bg-navbar: rgba(248, 248, 255, 0.85);
+  --theme-bg-sidebar: rgba(245, 245, 252, 0.96);
+  --theme-bg-overlay: rgba(100, 100, 140, 0.35);
+  --theme-text: #1a1a2e;
+  --theme-text-muted: #4a4a6a;
+  --theme-text-secondary: #7a7a9a;
+  --theme-border: rgba(var(--brand-rgb), 0.2);
+  --theme-border-navbar: rgba(var(--brand-rgb), 0.18);
+  --theme-border-sidebar: rgba(var(--brand-rgb), 0.2);
+  --theme-placeholder: #9090a8;
+  --theme-input-bg: #ffffff;
+  --theme-input-bg-focus: #ffffff;
+  --theme-input-bg-hover: rgba(var(--brand-rgb), 0.08);
+  --theme-option-bg: #ffffff;
+  --theme-kbd-bg: rgba(243, 244, 246, 0.8);
+  --theme-kbd-border: rgba(209, 213, 219, 0.8);
+  --theme-nebula-1: rgba(var(--brand-rgb), 0.07);
+  --theme-nebula-2: rgba(var(--accent-rgb), 0.06);
+  --theme-nebula-3: rgba(var(--brand-rgb), 0.03);
+  --theme-scrollbar: rgba(var(--brand-rgb), 0.25);
+  --theme-scrollbar-hover: rgba(var(--brand-rgb), 0.45);
+  --theme-focus: rgba(var(--brand-rgb), 0.6);
+  --tooltip-bg: #f0f0f5;
+  --tooltip-fg: #1a1a2e;
+  --tooltip-border: rgba(0, 0, 0, 0.1);
+  --color-success: #059669;
+  --color-success-muted: #34d399;
+  --color-success-bg: rgba(5, 150, 105, 0.1);
+  --color-success-bg-hover: rgba(5, 150, 105, 0.15);
+  --diff-added-bg: #dcfce7;
+  --diff-added-text: #166534;
+  --diff-removed-bg: #fee2e2;
+  --diff-removed-text: #991b1b;
+}
+
+/* ── Theme Variants ─────────────────────────────────────────────────────── */
+.theme-orange {
+  --brand-rgb: 249, 115, 22;
+  --brand-light-rgb: 251, 146, 60;
+  --brand-dark-rgb: 234, 88, 12;
+  --accent-rgb: 245, 158, 11;
+}
+
+.theme-carrot {
+  --brand-rgb: 228, 64, 10;
+  --brand-light-rgb: 249, 115, 22;
+  --brand-dark-rgb: 194, 65, 12;
+  --accent-rgb: 239, 68, 68;
+}
+
+.theme-blue {
+  --brand-rgb: 59, 130, 246;
+  --brand-light-rgb: 96, 165, 250;
+  --brand-dark-rgb: 37, 99, 235;
+  --accent-rgb: 14, 165, 233;
+}
+
+.theme-teal {
+  --brand-rgb: 20, 184, 166;
+  --brand-light-rgb: 45, 212, 191;
+  --brand-dark-rgb: 15, 118, 110;
+  --accent-rgb: 16, 185, 129;
+}
+
+.theme-brown {
+  --brand-rgb: 146, 64, 14;
+  --brand-light-rgb: 180, 83, 9;
+  --brand-dark-rgb: 120, 53, 15;
+  --accent-rgb: 217, 119, 6;
+}
+
+.theme-dusk {
+  --brand-rgb: 124, 58, 237;
+  --brand-light-rgb: 167, 139, 250;
+  --brand-dark-rgb: 109, 40, 217;
+  --accent-rgb: 236, 72, 153;
+}

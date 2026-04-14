@@ -1,9 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSidebar } from '../Sidebar';
 import { useSessionStore } from '../../../context/Session';
+import { translations } from '../../../config/translations';
+import { useTheme } from '../../../context/ThemeContext';
 import './NewThreadButton.css';
 
 export default function NewThreadButton({ onNavigate }) {
+  const { language } = useTheme()
+  const t = translations[language] || translations.en
+  
   const isCollapsed = useSidebar();
   const { resetSession } = useSessionStore();
   const [isHovered, setIsHovered] = useState(false);
@@ -39,7 +44,7 @@ export default function NewThreadButton({ onNavigate }) {
         className={`new-thread-btn ${disabled ? 'disabled' : ''}`}
         onClick={handleClick}
         disabled={disabled}
-        aria-label="Start new thread"
+        aria-label={t.newThread}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -57,10 +62,10 @@ export default function NewThreadButton({ onNavigate }) {
           <line x1="12" y1="5" x2="12" y2="19"></line>
           <line x1="5" y1="12" x2="19" y2="12"></line>
         </svg>
-        {!isCollapsed && <span className="sidebar-label-text">New Thread</span>}
+        {!isCollapsed && <span className="sidebar-label-text">{t.newThread}</span>}
       </button>
       {isCollapsed && isHovered && (
-        <div className="new-thread-tooltip">New Thread</div>
+        <div className="new-thread-tooltip">{t.newThread}</div>
       )}
     </div>
   );

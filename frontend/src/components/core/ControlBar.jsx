@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { STYLES, TONES, LEVELS, OUT_LANGS } from '../../config/constants'
 import { SparklesIcon, RegenerateIcon } from '../ui/icons'
+import { translations } from '../../config/translations'
+import { useTheme } from '../../context/ThemeContext'
 import './ControlBar.css'
 
 
@@ -20,14 +22,27 @@ function LoadSpinner() {
 
 
 // ── PillSelect ────────────────────────────────────────────────────────────────
-function PillSelect({ id, label, value, onChange, options, disabled }) {
+function PillSelect({ id, label, value, onChange, options, disabled, t }) {
   const [open, setOpen] = useState(false)
   const [focusedIndex, setFocusedIndex] = useState(0)
   const dropdownRef = useRef(null)
   const optionRefs = useRef([])
 
+  const valueToKey = {
+    '': 'noTone',
+    'chain_of_thought': 'chainOfThought',
+    'prompt_chaining': 'promptChaining',
+    'multi_prompt_fusion': 'multiPromptFusion',
+    'soft_prompting': 'softPrompting',
+  }
+
+  const getTranslatedLabel = (opt) => {
+    const key = valueToKey[opt.value] || opt.value
+    return t[key] || opt.label
+  }
+
   const selectedIndex = options.findIndex((o) => o.value === value)
-  const selectedLabel = options[selectedIndex]?.label || ''
+  const selectedLabel = selectedIndex >= 0 ? getTranslatedLabel(options[selectedIndex]) : ''
 
   const openDropdown = useCallback(() => {
     if (disabled) return
@@ -169,7 +184,7 @@ function PillSelect({ id, label, value, onChange, options, disabled }) {
                     : 'hover:bg-purple-500/10 hover:text-purple-400',
                 ].join(' ')}
               >
-                {o.label}
+                {getTranslatedLabel(o)}
               </button>
             ))}
           </div>
@@ -181,14 +196,14 @@ function PillSelect({ id, label, value, onChange, options, disabled }) {
 
 
 // ── ModelPill ─────────────────────────────────────────────────────────────────
-function ModelPill({ models, selectedModel, onModelChange, loading }) {
+function ModelPill({ models, selectedModel, onModelChange, loading, t }) {
   const [open, setOpen] = useState(false)
   const [focusedIndex, setFocusedIndex] = useState(0)
   const dropdownRef = useRef(null)
   const optionRefs = useRef([])
 
   const isEmpty = !models || models.length === 0
-  const selectedLabel = models?.find((m) => m.id === selectedModel)?.name || 'Model'
+  const selectedLabel = models?.find((m) => m.id === selectedModel)?.name || t.model
   const truncated = selectedLabel.length > 18 ? selectedLabel.slice(0, 16) + '…' : selectedLabel
 
   const openDropdown = useCallback(() => {
@@ -268,7 +283,7 @@ function ModelPill({ models, selectedModel, onModelChange, loading }) {
         onClick={() => (open ? closeDropdown() : openDropdown())}
         onKeyDown={handleTriggerKeyDown}
         disabled={loading || isEmpty}
-        title={isEmpty ? 'No models available - add an API key in Settings' : selectedLabel}
+        title={isEmpty ? t.noModels : selectedLabel}
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls="model-pill-listbox"
@@ -287,7 +302,7 @@ function ModelPill({ models, selectedModel, onModelChange, loading }) {
           <path fillRule="evenodd" d="M7 2a1 1 0 012 0v1h2V2a1 1 0 112 0v1h2a2 2 0 012 2v2h1a1 1 0 110 2h-1v2h1a1 1 0 110 2h-1v2a2 2 0 01-2 2h-2v1a1 1 0 11-2 0v-1H9v1a1 1 0 11-2 0v-1H5a2 2 0 01-2-2v-2H2a1 1 0 110-2h1V9H2a1 1 0 010-2h1V5a2 2 0 012-2h2V2zM5 5h10v10H5V5z" clipRule="evenodd" />
         </svg>
 
-        <span className="truncate model-pill__label">{isEmpty ? 'No models' : truncated}</span>
+        <span className="truncate model-pill__label">{isEmpty ? t.noModels : truncated}</span>
 
         {!isEmpty && !loading && (
           <svg
@@ -305,7 +320,7 @@ function ModelPill({ models, selectedModel, onModelChange, loading }) {
         <div
           id="model-pill-listbox"
           role="listbox"
-          aria-label="Select model"
+          aria-label={t.selectModel}
           className="absolute right-0 top-full mt-1.5 w-64 rounded-2xl glass-card shadow-xl z-50 animate-fade-in overflow-hidden"
         >
           <div className="max-h-56 overflow-y-auto overflow-x-hidden py-1.5">
@@ -331,8 +346,8 @@ function ModelPill({ models, selectedModel, onModelChange, loading }) {
                 </p>
                 {m.context_length && (
                   <p className="text-[10px] text-gray-600 mt-0.5">
-                    {m.context_length.toLocaleString()} ctx
-                    {m.cost_per_1k_tokens === 0 && ' · free'}
+                    {m.context_length.toLocaleString()} {t.contextLength}
+                    {m.cost_per_1k_tokens === 0 && ` ${t.free}`}
                   </p>
                 )}
               </button>
@@ -355,14 +370,17 @@ export default function ControlBar({
   loading, canEnhance, showRegen,
   models, selectedModel, onModelChange,
 }) {
+  const { language } = useTheme()
+  const t = translations[language] || translations.en
+
   return (
     <div className="flex flex-col gap-4">
       {/* Pill dropdowns row */}
       <div className="flex flex-wrap gap-2.5">
-        <PillSelect id="style-select" label="Style" value={style} onChange={onStyleChange} options={STYLES} disabled={loading} />
-        <PillSelect id="tone-select" label="Tone" value={tone} onChange={onToneChange} options={TONES} disabled={loading} />
-        <PillSelect id="level-select" label="Level" value={level} onChange={onLevelChange} options={LEVELS} disabled={loading} />
-        <PillSelect id="outlang-select" label="Output" value={outputLang} onChange={onOutputLangChange} options={OUT_LANGS} disabled={loading} />
+        <PillSelect id="style-select" label={t.style} value={style} onChange={onStyleChange} options={STYLES} disabled={loading} t={t} />
+        <PillSelect id="tone-select" label={t.tone} value={tone} onChange={onToneChange} options={TONES} disabled={loading} t={t} />
+        <PillSelect id="level-select" label={t.level} value={level} onChange={onLevelChange} options={LEVELS} disabled={loading} t={t} />
+        <PillSelect id="outlang-select" label={t.output} value={outputLang} onChange={onOutputLangChange} options={OUT_LANGS} disabled={loading} t={t} />
       </div>
 
       {/* Action row */}
@@ -372,7 +390,7 @@ export default function ControlBar({
           id="enhance-btn"
           onClick={onEnhance}
           disabled={!canEnhance || loading}
-          aria-label="Enhance prompt"
+          aria-label={t.enhance}
           className={[
             'touch-target flex-1 flex items-center justify-center gap-2 py-3 rounded-full',
             'gradient-brand text-white font-semibold text-sm tracking-wide',
@@ -383,19 +401,19 @@ export default function ControlBar({
           ].join(' ')}
         >
           {loading ? <LoadSpinner /> : <SparklesIcon className="w-3.5 h-3.5" />}
-          {loading ? 'Enhancing…' : 'Enhance'}
+          {loading ? t.enhancing : t.enhance}
         </button>
 
         {/* Inline model selector */}
-        <ModelPill models={models} selectedModel={selectedModel} onModelChange={onModelChange} loading={loading} />
+        <ModelPill models={models} selectedModel={selectedModel} onModelChange={onModelChange} loading={loading} t={t} />
 
         {/* Regenerate button */}
         {showRegen && !loading && (
           <button
             id="regen-btn"
             onClick={onRegenerate}
-            title="Regenerate with variation"
-            aria-label="Regenerate"
+            title={t.regenerateWithVariation}
+            aria-label={t.regen}
             className={[
               'touch-target flex items-center gap-1.5 px-4 py-3 rounded-full border border-purple-500/25',
               'text-purple-400 text-sm font-medium',
@@ -403,7 +421,7 @@ export default function ControlBar({
             ].join(' ')}
           >
             <RegenerateIcon className="w-3.5 h-3.5" />
-            <span>Regen</span>
+            <span>{t.regen}</span>
           </button>
         )}
       </div>
