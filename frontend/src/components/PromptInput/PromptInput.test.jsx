@@ -3,6 +3,10 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import PromptInput from './PromptInput'
 
+vi.mock('../../hooks/useTranslation', () => ({
+  __esModule: true,
+  default: vi.fn(() => ({ t: { clear: 'Clear', enhance: 'Enhance', promptPlaceholder: 'Enter your prompt...' } }),
+}))
 
 vi.mock('./SendButton', () => ({
   __esModule: true,
@@ -12,7 +16,7 @@ vi.mock('./SendButton', () => ({
         type="button"
         onClick={onSubmit}
         disabled={disabled || isLoading}
-        aria-label="Send for enhancement"
+        aria-label="Enhance"
         data-testid="send-btn"
       >
         {isLoading ? 'loading' : 'send'}

@@ -1,5 +1,22 @@
 
 import { expect, vi } from 'vitest';
+import '@testing-library/jest-dom';
+
+vi.mock('./hooks/useTranslation', () => ({
+  __esModule: true,
+  default: vi.fn(() => ({ t: { enhance: 'Enhance', clear: 'Clear', newThread: 'New Thread', search: 'Search...', pinned: 'Pinned', history: 'History', settings: 'Settings', shortcuts: 'Shortcuts', appearance: 'Appearance', language: 'Language', incognito: 'Incognito', feedback: 'Feedback', exportHistory: 'Export History', promptPlaceholder: 'Enter your prompt...' } }),
+}));
+
+vi.mock('./context/ThemeContext', () => ({
+  __esModule: true,
+  useTheme: vi.fn(() => ({ theme: 'dark', setTheme: vi.fn() })),
+  ThemeProvider: ({ children }) => children,
+}));
+
+vi.mock('./hooks/usePopoverPosition', () => ({
+  __esModule: true,
+  usePopoverPosition: vi.fn(() => ({ position: { top: 100, left: 100, right: 'auto', bottom: 'auto' }, recalculate: vi.fn() })),
+}));
 
 const toHaveAttribute = function (element, attr, value) {
   if (element == null) {

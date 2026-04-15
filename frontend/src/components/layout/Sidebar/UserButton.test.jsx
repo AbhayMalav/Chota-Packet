@@ -1,3 +1,4 @@
+/* global describe, it, expect, beforeEach, vi */
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
@@ -5,13 +6,12 @@ import UserButton from './UserButton'
 import { useUser } from '../../../context/UserContext'
 import { useSidebar } from './Sidebar'
 
-// Mock the hooks
-jest.mock('../../../context/UserContext', () => ({
-  useUser: jest.fn()
+vi.mock('../../../context/UserContext', () => ({
+  useUser: vi.fn()
 }))
 
-jest.mock('./Sidebar', () => ({
-  useSidebar: jest.fn()
+vi.mock('./Sidebar', () => ({
+  useSidebar: vi.fn()
 }))
 
 describe('UserButton', () => {

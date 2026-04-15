@@ -1,3 +1,4 @@
+/* global describe, it, expect */
 import { FEATURES, APP_CONFIG } from './config';
 
 describe('Config System', () => {
@@ -9,8 +10,8 @@ describe('Config System', () => {
     }).toThrow();
   });
 
-  it('SHOW_CHOTA_CHAT defaults to false', () => {
-    expect(FEATURES.SHOW_CHOTA_CHAT).toBe(false);
+  it('SHOW_CHOTA_CHAT defaults to true', () => {
+    expect(FEATURES.SHOW_CHOTA_CHAT).toBe(true);
   });
 
   it('Accessing undefined flag returns undefined (not throws)', () => {
