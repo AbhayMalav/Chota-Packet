@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from 'react'
+import React, { useRef, useEffect} from 'react'
 import { ExclamationTriangleIcon } from '../ui/icons'
 import SendButton from './SendButton'
 import useTranslation from '../../hooks/useTranslation'
@@ -17,10 +17,13 @@ export default function PromptInput({
   const { t } = useTranslation()
   const textareaRef = useRef(null)
   const onClearRef = useRef(onClear)
-  onClearRef.current = onClear
+  useEffect(() => {
+    onClearRef.current = onClear
+  }, [onClear])
   const charCount = value.length
   const isOverLimit = inputLimit != null && charCount > inputLimit
   const canSend = value.trim() !== ''
+
 
 
   useEffect(() => {
@@ -45,12 +48,13 @@ export default function PromptInput({
   }, [])
 
 
+
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-center justify-between px-0.5">
+    <div className="glass-card p-4 flex flex-col gap-3 rounded-2xl">
+      <div className="flex items-center justify-between">
         <label
           htmlFor="prompt-input"
-          className="text-[11px] font-bold uppercase tracking-widest text-purple-400/70"
+          className="text-xs font-semibold tracking-wider text-theme-secondary uppercase"
         >
           {t.enterPrompt}
         </label>
@@ -70,22 +74,18 @@ export default function PromptInput({
           }}
           placeholder={t.enterPrompt}
           rows={4}
-          className="prompt-input__textarea bg-input text-theme w-full resize-none rounded-xl border border-purple-500/15
-                     px-4 py-3.5 text-sm leading-relaxed min-h-[44px]
-                     focus:outline-none focus:border-purple-500/40
-                     focus:ring-1 focus:ring-purple-500/30
-                     transition-all duration-200 focus-ring"
+          className="prompt-input__textarea"
           aria-describedby="char-count"
         />
       </div>
 
-      <div className="controls-row" style={{ flexWrap: 'nowrap' }}>
+      <div className="controls-row flex items-center gap-3">
         <span
           id="char-count"
           aria-live="polite"
           className={`char-count ${isOverLimit ? 'char-count--danger' : ''}`}
         >
-          {isOverLimit && <ExclamationTriangleIcon className="w-3 h-3 flex-shrink-0" />}
+          {isOverLimit && <ExclamationTriangleIcon className="char-count__icon" />}
           {isOverLimit
             ? `Limit exceeded (${charCount}/${inputLimit} chars)`
             : inputLimit != null
@@ -93,11 +93,11 @@ export default function PromptInput({
               : `${charCount}`}
         </span>
 
-        <div className="button-group" style={{ flexShrink: 0 }}>
+        <div className="button-group flex items-center gap-2">
           {canSend && (
             <button
               onClick={onClear}
-              className="btn-ghost"
+              className="btn-ghost touch-target"
               aria-label="Clear input"
               title={`${t.clear} (Ctrl+K)`}
             >
@@ -109,9 +109,10 @@ export default function PromptInput({
             onSubmit={onSubmit}
             disabled={!canSend}
             isLoading={isLoading}
+            className="touch-target"
           />
         </div>
       </div>
     </div>
-  )
+  );
 }

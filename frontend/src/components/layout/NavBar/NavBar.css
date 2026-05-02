@@ -1,0 +1,57 @@
+/* NavBar.css — Styles for NavBar components (ModeIndicator, etc.) */
+
+.mode-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  border: 1px solid;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  animation: fade-in 0.3s ease, mode-pulse 3s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.mode-indicator--cloud {
+  background: rgba(var(--brand-rgb), 0.1);
+  color: rgb(var(--brand-rgb));
+  border-color: rgba(var(--brand-rgb), 0.2);
+  box-shadow: 0 0 16px -4px rgba(var(--brand-rgb), 0.25);
+}
+
+.mode-indicator--local {
+  background: rgba(var(--accent-rgb), 0.1);
+  color: rgb(var(--accent-rgb));
+  border-color: rgba(var(--accent-rgb), 0.2);
+  box-shadow: 0 0 16px -4px rgba(var(--accent-rgb), 0.25);
+}
+
+.mode-indicator__icon {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
+}
+
+@keyframes mode-pulse {
+  0%, 100% {
+    box-shadow: 0 0 16px -4px rgba(var(--brand-rgb), 0.15);
+  }
+  50% {
+    box-shadow: 0 0 24px -4px rgba(var(--brand-rgb), 0.35);
+  }
+}
+
+.mode-indicator--local {
+  animation-name: fade-in, mode-pulse-local;
+}
+
+@keyframes mode-pulse-local {
+  0%, 100% {
+    box-shadow: 0 0 16px -4px rgba(var(--accent-rgb), 0.15);
+  }
+  50% {
+    box-shadow: 0 0 24px -4px rgba(var(--accent-rgb), 0.35);
+  }
+}

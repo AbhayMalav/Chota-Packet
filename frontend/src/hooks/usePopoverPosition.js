@@ -32,7 +32,6 @@ export function usePopoverPosition(triggerRef, popoverRef, options = {}) {
 
     const trigger = triggerRef.current
     if (!trigger) {
-      console.warn('[usePopoverPosition] Trigger ref not mounted yet')
       setPosition(DEFAULT_POSITION)
       return
     }

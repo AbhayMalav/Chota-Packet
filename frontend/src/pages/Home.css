@@ -1,0 +1,95 @@
+/* Tailwind is imported via index.css which is loaded in the HTML entry */
+@import "../index.css";
+
+/* ─── Home.css ─────────────────────────────────────────────────────────────── */
+
+/* Root shell */
+.app-root {
+  @apply relative min-h-screen w-full overflow-hidden;
+}
+
+/* ─── Nebula Background Orbs ─────────────────────────────────────────────── */
+.nebula-orb-1 {
+  @apply animate-nebula;
+}
+
+.nebula-orb-2 {
+  @apply animate-nebula;
+}
+
+.nebula-orb-3 {}
+
+/* ─── Navbar ─────────────────────────────────────────────────────────────── */
+.glass-navbar {
+  @apply sticky top-0 z-30 px-4 py-2 flex items-center justify-between;
+}
+
+.navbar-brand-wrapper {
+  @apply flex items-center gap-2;
+}
+
+.gradient-text {
+  @apply font-extrabold text-sm tracking-tight;
+}
+
+.navbar-controls {
+  @apply flex items-center gap-2;
+}
+
+/* ─── App Layout ─────────────────────────────────────────────────────────── */
+.app-layout {
+  @apply flex;
+}
+
+/* ─── Main Content Column ────────────────────────────────────────────────── */
+/*
+  Default: full width of remaining space (after sidebar),
+  with internal content capped and centered.
+*/
+.main-content {
+  @apply flex-1 min-h-0 flex flex-col items-center
+         px-4 py-6 gap-5 relative z-10 w-full overflow-y-auto;
+}
+
+/*
+  Inner centering shell — wraps input, controls, error, single output.
+  Keeps them capped at max-w-2xl and centered inside the full-width main.
+*/
+.main-content > *:not(.multi-output-wrapper) {
+  width: 100%;
+  max-width: 42rem; /* ~672px, equivalent to max-w-2xl */
+}
+
+/* ─── Input Area ─────────────────────────────────────────────────────────── */
+.input-card {
+  @apply w-full rounded-2xl p-4;
+}
+
+/* ─── Controls Row ───────────────────────────────────────────────────────── */
+.controls-wrapper {
+  @apply w-full;
+}
+
+/* ─── Error State ────────────────────────────────────────────────────────── */
+.error-state {
+  @apply w-full text-center text-sm text-red-400
+         py-3 px-4 rounded-xl
+         border border-red-500/20 bg-red-500/5
+         animate-fade-in;
+}
+
+/* ─── Single Output Wrapper ──────────────────────────────────────────────── */
+.output-wrapper {
+  @apply w-full animate-fade-in;
+}
+
+/* ─── Multi-Output Wrapper ───────────────────────────────────────────────── */
+/*
+  Breaks OUT of the centered max-w-2xl constraint.
+  Stretches full width of .main-content (sidebar excluded).
+*/
+.multi-output-wrapper {
+  width: 100% !important;
+  max-width: 100% !important;
+  @apply animate-fade-in;
+}

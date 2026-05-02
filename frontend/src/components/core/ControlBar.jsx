@@ -115,58 +115,34 @@ function PillSelect({ id, label, value, onChange, options, disabled, t }) {
   const listboxId = `${id}-listbox`
 
   return (
-    <div className="flex flex-col gap-1 flex-1 pill-select relative" ref={dropdownRef}>
-      <label
-        htmlFor={id}
-        className="text-muted text-[10px] font-bold uppercase tracking-widest"
-      >
-        {label}
-      </label>
+    <div className="pill-select" ref={dropdownRef}>
+      <div className={`pill-select__wrapper ${open ? 'pill-select__wrapper--open' : ''}`}>
+        <label htmlFor={id} className="pill-select__label">
+          {label}
+        </label>
 
-      <button
-        type="button"
-        id={id}
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        aria-controls={listboxId}
-        aria-activedescendant={open ? `${id}-opt-${focusedIndex}` : undefined}
-        onClick={() => (open ? closeDropdown() : openDropdown())}
-        onKeyDown={handleTriggerKeyDown}
-        disabled={disabled}
-        className={[
-          'pill-select__trigger touch-target',
-          'flex items-center justify-between rounded-full border text-xs px-3 py-2',
-          'focus:outline-none focus:border-purple-500/40 focus:ring-1 focus:ring-purple-500/30',
-          'disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-all duration-200',
-          'hover:border-purple-500/30',
-          open
-            ? 'border-purple-500/40 ring-1 ring-purple-500/30'
-            : 'border-purple-500/15',
-        ].join(' ')}
-      >
-        <span className="truncate pr-2">{selectedLabel}</span>
-        <svg
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className={`w-3 h-3 text-gray-400 flex-shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-          aria-hidden="true"
+        <button
+          type="button"
+          id={id}
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          aria-controls={listboxId}
+          aria-activedescendant={open ? `${id}-opt-${focusedIndex}` : undefined}
+          onClick={() => (open ? closeDropdown() : openDropdown())}
+          onKeyDown={handleTriggerKeyDown}
+          disabled={disabled}
+          className="pill-select__trigger"
         >
-          <path
-            fillRule="evenodd"
-            d="M5.22 8.22a.75.75 0 011.06 0L10 11.94l3.72-3.72a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 9.28a.75.75 0 010-1.06z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </button>
+          <span className="pill-select__value">{selectedLabel}</span>
+          <svg viewBox="0 0 20 20" fill="currentColor" className={`pill-select__chevron ${open ? 'pill-select__chevron--open' : ''}`} aria-hidden="true">
+            <path fillRule="evenodd" d="M5.22 8.22a.75.75 0 011.06 0L10 11.94l3.72-3.72a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 9.28a.75.75 0 010-1.06z" clipRule="evenodd" />
+          </svg>
+        </button>
+      </div>
 
       {open && (
-        <div
-          id={listboxId}
-          role="listbox"
-          aria-label={label}
-          className="pill-select__dropdown absolute left-0 top-full mt-1.5 w-full rounded-2xl glass-card shadow-xl z-50 animate-fade-in overflow-hidden"
-        >
-          <div className="max-h-60 overflow-y-auto overflow-x-hidden py-1.5">
+        <div id={listboxId} role="listbox" aria-label={label} className="pill-select__dropdown">
+          <div className="pill-select__options">
             {options.map((o, index) => (
               <button
                 key={o.value}
@@ -177,12 +153,7 @@ function PillSelect({ id, label, value, onChange, options, disabled, t }) {
                 ref={(el) => (optionRefs.current[index] = el)}
                 onClick={() => selectOption(o.value)}
                 onKeyDown={(e) => handleOptionKeyDown(e, index)}
-                className={[
-                  'pill-select__option w-full text-left px-3 py-2 text-xs transition-all duration-150',
-                  o.value === value
-                    ? 'bg-purple-500/15 text-purple-400 font-medium'
-                    : 'hover:bg-purple-500/10 hover:text-purple-400',
-                ].join(' ')}
+                className={`pill-select__option ${o.value === value ? 'pill-select__option--selected' : ''}`}
               >
                 {getTranslatedLabel(o)}
               </button>
@@ -276,7 +247,7 @@ function ModelPill({ models, selectedModel, onModelChange, loading, t }) {
   }
 
   return (
-    <div className="relative flex-shrink-0" ref={dropdownRef}>
+    <div className="model-pill" ref={dropdownRef}>
       <button
         type="button"
         id="model-pill-btn"
@@ -287,43 +258,25 @@ function ModelPill({ models, selectedModel, onModelChange, loading, t }) {
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls="model-pill-listbox"
-        className={[
-          'model-pill__trigger touch-target',
-          'flex items-center gap-1.5 px-3 py-2 rounded-full border text-xs font-medium whitespace-nowrap',
-          'focus:outline-none focus-ring transition-all duration-200',
-          isEmpty || loading
-            ? 'border-purple-500/10 text-gray-600 opacity-40 cursor-not-allowed'
-            : 'border-purple-500/20 text-purple-300 hover:border-purple-500/40 hover:bg-purple-500/8 hover:text-purple-200',
-          open ? 'border-purple-500/40 ring-1 ring-purple-500/25' : '',
-        ].join(' ')}
+        className={`model-pill__trigger ${open ? 'model-pill__trigger--open' : ''} ${isEmpty || loading ? 'model-pill__trigger--disabled' : ''}`}
       >
-        <svg viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3 flex-shrink-0 opacity-70" aria-hidden="true">
+        <svg viewBox="0 0 20 20" fill="currentColor" className="model-pill__icon" aria-hidden="true">
           <path d="M13 7H7v6h6V7z" />
           <path fillRule="evenodd" d="M7 2a1 1 0 012 0v1h2V2a1 1 0 112 0v1h2a2 2 0 012 2v2h1a1 1 0 110 2h-1v2h1a1 1 0 110 2h-1v2a2 2 0 01-2 2h-2v1a1 1 0 11-2 0v-1H9v1a1 1 0 11-2 0v-1H5a2 2 0 01-2-2v-2H2a1 1 0 110-2h1V9H2a1 1 0 010-2h1V5a2 2 0 012-2h2V2zM5 5h10v10H5V5z" clipRule="evenodd" />
         </svg>
 
-        <span className="truncate model-pill__label">{isEmpty ? t.noModels : truncated}</span>
+        <span className="model-pill__label">{isEmpty ? t.noModels : truncated}</span>
 
         {!isEmpty && !loading && (
-          <svg
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className={`w-3 h-3 text-gray-500 flex-shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-            aria-hidden="true"
-          >
+          <svg viewBox="0 0 20 20" fill="currentColor" className={`model-pill__chevron ${open ? 'model-pill__chevron--open' : ''}`} aria-hidden="true">
             <path fillRule="evenodd" d="M5.22 8.22a.75.75 0 011.06 0L10 11.94l3.72-3.72a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 9.28a.75.75 0 010-1.06z" clipRule="evenodd" />
           </svg>
         )}
       </button>
 
       {open && Array.isArray(models) && (
-        <div
-          id="model-pill-listbox"
-          role="listbox"
-          aria-label={t.selectModel}
-          className="absolute right-0 top-full mt-1.5 w-64 rounded-2xl glass-card shadow-xl z-50 animate-fade-in overflow-hidden"
-        >
-          <div className="max-h-56 overflow-y-auto overflow-x-hidden py-1.5">
+        <div id="model-pill-listbox" role="listbox" aria-label={t.selectModel} className="model-pill__dropdown">
+          <div className="model-pill__options">
             {models.map((m, index) => (
               <button
                 key={m.id}
@@ -334,18 +287,13 @@ function ModelPill({ models, selectedModel, onModelChange, loading, t }) {
                 ref={(el) => (optionRefs.current[index] = el)}
                 onClick={() => selectModel(m.id)}
                 onKeyDown={(e) => handleOptionKeyDown(e, index)}
-                className={[
-                  'model-pill__option w-full text-left px-3 py-2.5 transition-all duration-150',
-                  m.id === selectedModel
-                    ? 'bg-purple-500/15 text-purple-400'
-                    : 'hover:bg-purple-500/10 hover:text-purple-400',
-                ].join(' ')}
+                className={`model-pill__option ${m.id === selectedModel ? 'model-pill__option--selected' : ''}`}
               >
-                <p className={`text-xs font-medium truncate ${m.id === selectedModel ? 'text-purple-400' : ''}`}>
+                <p className={`model-pill__option-name ${m.id === selectedModel ? 'model-pill__option-name--selected' : ''}`}>
                   {m.name}
                 </p>
                 {m.context_length && (
-                  <p className="text-[10px] text-gray-600 mt-0.5">
+                  <p className="model-pill__option-meta">
                     {m.context_length.toLocaleString()} {t.contextLength}
                     {m.cost_per_1k_tokens === 0 && ` ${t.free}`}
                   </p>
@@ -369,14 +317,15 @@ export default function ControlBar({
   onEnhance, onRegenerate,
   loading, canEnhance, showRegen,
   models, selectedModel, onModelChange,
+  multiOutputEnabled, onMultiOutputToggle,
 }) {
   const { language } = useTheme()
   const t = translations[language] || translations.en
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="control-bar">
       {/* Pill dropdowns row */}
-      <div className="flex flex-wrap gap-2.5">
+      <div className="pill-selects-row">
         <PillSelect id="style-select" label={t.style} value={style} onChange={onStyleChange} options={STYLES} disabled={loading} t={t} />
         <PillSelect id="tone-select" label={t.tone} value={tone} onChange={onToneChange} options={TONES} disabled={loading} t={t} />
         <PillSelect id="level-select" label={t.level} value={level} onChange={onLevelChange} options={LEVELS} disabled={loading} t={t} />
@@ -384,46 +333,52 @@ export default function ControlBar({
       </div>
 
       {/* Action row */}
-      <div className="flex items-center gap-2 flex-wrap">
-        {/* Enhance button */}
-        <button
-          id="enhance-btn"
-          onClick={onEnhance}
-          disabled={!canEnhance || loading}
-          aria-label={t.enhance}
-          className={[
-            'touch-target flex-1 flex items-center justify-center gap-2 py-3 rounded-full',
-            'gradient-brand text-white font-semibold text-sm tracking-wide',
-            'shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40 hover:brightness-110',
-            'active:brightness-90 active:scale-[0.98]',
-            'disabled:opacity-25 disabled:cursor-not-allowed disabled:shadow-none',
-            'transition-all duration-200',
-          ].join(' ')}
-        >
-          {loading ? <LoadSpinner /> : <SparklesIcon className="w-3.5 h-3.5" />}
-          {loading ? t.enhancing : t.enhance}
-        </button>
+      <div className="action-row">
+         {/* Multi-output toggle */}
+         {onMultiOutputToggle && (
+           <button
+             id="multi-output-toggle"
+             onClick={onMultiOutputToggle}
+             aria-pressed={multiOutputEnabled}
+             aria-label={multiOutputEnabled ? (t.disableMultiOutput || 'Disable multi-output') : (t.enableMultiOutput || 'Enable multi-output')}
+             className="multi-output-btn touch-target"
+             title={t.multiOutputTooltip || 'Generate multiple output variants'}
+           >
+             <span className="multi-output-icon">{multiOutputEnabled ? '×' : '+'}</span>
+             <span className="multi-output-label">
+               {t.multi || 'Multi'}
+             </span>
+           </button>
+         )}
+
+         {/* Enhance button */}
+         <button
+           id="enhance-btn"
+           onClick={onEnhance}
+           disabled={!canEnhance || loading}
+           aria-label={t.enhance}
+           className="enhance-btn touch-target"
+         >
+           {loading ? <LoadSpinner /> : <SparklesIcon className="enhance-icon" />}
+           {loading ? t.enhancing : t.enhance}
+         </button>
 
         {/* Inline model selector */}
         <ModelPill models={models} selectedModel={selectedModel} onModelChange={onModelChange} loading={loading} t={t} />
 
-        {/* Regenerate button */}
-        {showRegen && !loading && (
-          <button
-            id="regen-btn"
-            onClick={onRegenerate}
-            title={t.regenerateWithVariation}
-            aria-label={t.regen}
-            className={[
-              'touch-target flex items-center gap-1.5 px-4 py-3 rounded-full border border-purple-500/25',
-              'text-purple-400 text-sm font-medium',
-              'hover:bg-purple-500/10 hover:border-purple-500/40 transition-all duration-200 whitespace-nowrap',
-            ].join(' ')}
-          >
-            <RegenerateIcon className="w-3.5 h-3.5" />
-            <span>{t.regen}</span>
-          </button>
-        )}
+         {/* Regenerate button */}
+         {showRegen && !loading && (
+           <button
+             id="regen-btn"
+             onClick={onRegenerate}
+             title={t.regenerateWithVariation}
+             aria-label={t.regen}
+             className="regen-btn touch-target"
+           >
+             <RegenerateIcon className="regen-icon" />
+             <span>{t.regen}</span>
+           </button>
+         )}
       </div>
     </div>
   )

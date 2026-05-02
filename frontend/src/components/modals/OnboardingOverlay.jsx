@@ -38,8 +38,9 @@ export default function OnboardingOverlay({ onDone = () => { } }) {
   const dialogRef = useRef(null)
   const primaryBtnRef = useRef(null)
   const finishRef = useRef(onDone)
-
-  finishRef.current = onDone
+  useEffect(() => {
+    finishRef.current = onDone
+  }, [onDone])
 
   const finish = (skipped = false) => {
     try {

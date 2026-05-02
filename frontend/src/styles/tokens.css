@@ -2,9 +2,10 @@
    Drop this file into your project and import to get the full design system.
 
    Usage: @import './tokens.css'; in your main CSS file
-*/
+ */
 
-:root {
+:root,
+.theme-brand {
   /* ── Brand Colors ─────────────────────────────────────────────────────── */
   --brand-rgb: 127, 19, 236;
   --brand-light-rgb: 168, 85, 247;

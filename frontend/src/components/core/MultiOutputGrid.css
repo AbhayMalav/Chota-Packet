@@ -1,0 +1,127 @@
+.multi-output-grid {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding-bottom: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(167, 139, 250, 0.3) transparent;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.multi-output-grid::-webkit-scrollbar {
+  height: 6px;
+}
+
+.multi-output-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.multi-output-grid::-webkit-scrollbar-thumb {
+  background: rgba(167, 139, 250, 0.3);
+  border-radius: 3px;
+}
+
+.multi-output-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(167, 139, 250, 0.5);
+}
+
+.multi-output-container {
+  display: flex;
+  gap: 16px;
+  padding: 4px;
+  min-width: min-content;
+}
+
+.multi-output-card-wrapper {
+  flex-shrink: 0;
+  width: 620px;
+  max-width: 620px;
+  position: relative;
+  animation: fadeIn 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+.multi-output-card-wrapper:nth-child(1) { animation-delay: 0ms; }
+.multi-output-card-wrapper:nth-child(2) { animation-delay: 100ms; }
+.multi-output-card-wrapper:nth-child(3) { animation-delay: 200ms; }
+.multi-output-card-wrapper:nth-child(4) { animation-delay: 300ms; }
+
+/* Skeleton card */
+.multi-output-card-wrapper .skeleton {
+  min-height: 200px;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  background: linear-gradient(90deg, rgba(167,139,250,0.05) 25%, rgba(167,139,250,0.15) 50%, rgba(167,139,250,0.05) 75%);
+  background-size: 200% 100%;
+}
+
+.multi-output-card-wrapper .glass-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.multi-output-card-wrapper:hover .glass-card {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(167, 139, 250, 0.15);
+}
+
+/* Controls hover effects */
+.multi-output-card-wrapper select {
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.multi-output-card-wrapper select:hover {
+  background-color: rgba(167, 139, 250, 0.1);
+}
+
+.multi-output-card-wrapper select:focus {
+  border-color: rgba(167, 139, 250, 0.5);
+  box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.1);
+}
+
+/* Empty state */
+.multi-output-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: 32px;
+  text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .multi-output-card-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .multi-output-container {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .multi-output-card-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+}

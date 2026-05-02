@@ -5,7 +5,7 @@ import SendButton from './SendButton'
 
 vi.mock('../../hooks/useTranslation', () => ({
   __esModule: true,
-  default: vi.fn(() => ({ t: { enhance: 'Enhance' } }),
+  default: vi.fn(() => ({ t: { enhance: 'Enhance' } }))
 }))
 
 describe('SendButton', () => {
@@ -13,6 +13,8 @@ describe('SendButton', () => {
     render(<SendButton onSubmit={() => {}} />)
     const btn = screen.getByRole('button', { name: 'Enhance' })
     expect(btn).toBeInTheDocument()
+    // Check that it has the touch-target class
+    expect(btn).toHaveClass('touch-target')
   })
 
   it('is disabled when input is empty', () => {

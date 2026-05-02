@@ -1,6 +1,5 @@
 .new-thread-container {
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--theme-border-sidebar);
+  padding: 4px 14px;
   position: relative;
   display: flex;
   justify-content: center;
@@ -62,14 +61,14 @@
 
 /* Collapsed state */
 .sidebar.collapsed .new-thread-container {
-  padding: 12px 0;
+  padding: 4px 0;
 }
 
 /* FIX: was missing entirely — without this the icon does not center when the
    sidebar collapses to 52px; it stays left-aligned or visually clipped */
 .sidebar.collapsed .new-thread-btn {
   width: auto;
-  padding: 10px;
+  padding: 4px 10px;
   justify-content: center;
 }
 

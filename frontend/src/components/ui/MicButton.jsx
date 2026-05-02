@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { MicIcon, StopIcon, XIcon } from './icons'
 
 
@@ -29,11 +29,9 @@ export default function MicButton({
 
 
   // Reset dismissed state whenever a new error arrives
-  const prevError = React.useRef(null)
-  if (error !== prevError.current) {
-    prevError.current = error
+  useEffect(() => {
     if (error) setDismissed(false)
-  }
+  }, [error])
 
 
   const handleClick = async () => {

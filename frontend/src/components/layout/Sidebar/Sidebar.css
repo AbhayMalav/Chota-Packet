@@ -124,7 +124,6 @@
   justify-content: flex-end;
   padding: 0 14px;
   flex-shrink: 0;
-  border-bottom: 1px solid var(--theme-border-sidebar);
 }
 
 .sidebar.collapsed .sidebar-header {

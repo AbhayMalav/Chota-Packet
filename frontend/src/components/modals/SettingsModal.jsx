@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from 'react'
-import { Settings, Plug, Key, Cpu, Keyboard, ArrowRight, X, Eye, EyeOff } from 'lucide-react'
-import { translations } from '../../config/translations'
+import React, { useState, useCallback, useEffect } from 'react'
+import { Settings, Plug, Key, Cpu, Keyboard, ArrowRight, X, Eye, EyeOff, Layers, Plus, Minus } from 'lucide-react'
+import useTranslation from '../../hooks/useTranslation'
 import { useTheme } from '../../context/ThemeContext'
+import { STYLES, TONES, LEVELS, OUT_LANGS, LS_MULTI_OUTPUT, LS_MULTI_CONFIGS } from '../../config/constants'
 import './SettingsPanel.css'
 
 const STATUS_META = {
@@ -30,11 +31,71 @@ function Divider() {
 
 export default function SettingsPanel({ onClose, settings, onShowShortcuts }) {
   const { language } = useTheme()
-  const t = translations[language] || translations.en
+  const { t } = useTranslation()
 
   const [keyInput, setKeyInput] = useState('')
   const [showKey, setShowKey] = useState(false)
   const [confirmClear, setConfirmClear] = useState(false)
+
+  // Multi-output state
+  const [multiOutputEnabled, setMultiOutputEnabled] = useState(() => {
+    return localStorage.getItem(LS_MULTI_OUTPUT) === 'true'
+  })
+  const defaultConfigs = [
+    { tone: '', level: 'basic', style: 'general', outputLang: 'auto' },
+    { tone: '', level: 'detailed', style: 'creative', outputLang: 'auto' },
+  ]
+  const safeParseConfigs = (saved) => {
+    try {
+      const parsed = JSON.parse(saved)
+      if (Array.isArray(parsed)) return parsed
+      localStorage.removeItem(LS_MULTI_CONFIGS)
+      return defaultConfigs
+    } catch (e) {
+      localStorage.removeItem(LS_MULTI_CONFIGS)
+      return defaultConfigs
+    }
+  }
+  const [multiOutputCount, setMultiOutputCount] = useState(() => {
+    const saved = localStorage.getItem(LS_MULTI_CONFIGS)
+    return saved ? safeParseConfigs(saved).length : 2
+  })
+  const [multiConfigs, setMultiConfigs] = useState(() => {
+    const saved = localStorage.getItem(LS_MULTI_CONFIGS)
+    return saved ? safeParseConfigs(saved) : defaultConfigs
+  })
+
+  // Persist multi-output settings
+  useEffect(() => {
+    localStorage.setItem(LS_MULTI_OUTPUT, String(multiOutputEnabled))
+  }, [multiOutputEnabled])
+
+  useEffect(() => {
+    localStorage.setItem(LS_MULTI_CONFIGS, JSON.stringify(multiConfigs))
+  }, [multiConfigs])
+
+  const handleConfigChange = useCallback((index, field, value) => {
+    setMultiConfigs(prev => prev.map((cfg, i) => 
+      i === index ? { ...cfg, [field]: value } : cfg
+    ))
+  }, [])
+
+  const handleCountChange = useCallback((delta) => {
+    setMultiOutputCount(prev => {
+      const newCount = Math.min(4, Math.max(2, prev + delta))
+      setMultiConfigs(prev => {
+        const newConfigs = [...prev]
+        while (newConfigs.length < newCount) {
+          newConfigs.push({ tone: '', level: 'basic', style: 'general', outputLang: 'auto' })
+        }
+        while (newConfigs.length > newCount) {
+          newConfigs.pop()
+        }
+        return newConfigs
+      })
+      return newCount
+    })
+  }, [])
 
   const handleSave = useCallback(async () => {
     if (!keyInput.trim()) return
@@ -160,6 +221,106 @@ export default function SettingsPanel({ onClose, settings, onShowShortcuts }) {
               ))}
             </select>
           </>
+        )}
+
+        <Divider />
+
+        {/* Multi-Output Mode */}
+        <SectionLabel icon={<Layers size={14} />} label={t.multiOutputMode || 'Multi-Output Mode'} sublabel={t.multiOutputModeSublabel || 'Generate multiple enhanced prompts at once'} />
+        
+        <div className="flex items-center justify-between px-3.5 py-3 rounded-xl border border-white/10 mb-3">
+          <div>
+            <p className="text-theme text-sm font-semibold">{t.enableMultiOutput || 'Enable Multi-Output'}</p>
+            <p className="text-secondary text-[11px] mt-0.5">
+              {(t.generatePrompts || 'Generate {count} prompts with different settings').replace('{count}', multiOutputCount)}
+            </p>
+          </div>
+          <button
+            onClick={() => setMultiOutputEnabled(v => !v)}
+            role="switch"
+            aria-checked={multiOutputEnabled}
+            aria-label={multiOutputEnabled ? (t.disableMultiOutput || 'Disable multi-output') : (t.enableMultiOutput || 'Enable multi-output')}
+            className="w-11 h-6 rounded-full transition-all duration-200 relative"
+            style={{
+              backgroundColor: multiOutputEnabled ? 'var(--theme-toggle-on-bg)' : 'var(--theme-toggle-off-bg)',
+            }}
+          >
+            <span className="absolute top-1 w-4 h-4 rounded-full transition-all duration-200" style={{ left: multiOutputEnabled ? '22px' : '4px', backgroundColor: 'var(--theme-toggle-on-knob)' }} />
+          </button>
+        </div>
+
+        {multiOutputEnabled && (
+          <div className="space-y-3">
+            {/* Count selector */}
+            <div className="flex items-center justify-between px-3.5 py-2 rounded-xl border border-white/10">
+              <span className="text-theme text-sm font-medium">{t.numberOfOutputs || 'Number of outputs'}</span>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => handleCountChange(-1)}
+                  disabled={multiOutputCount <= 2}
+                  className="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center disabled:opacity-30 transition-all"
+                >
+                  <Minus size={14} />
+                </button>
+                <span className="text-theme font-semibold w-6 text-center">{multiOutputCount}</span>
+                <button
+                  onClick={() => handleCountChange(1)}
+                  disabled={multiOutputCount >= 4}
+                  className="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center disabled:opacity-30 transition-all"
+                >
+                  <Plus size={14} />
+                </button>
+              </div>
+            </div>
+
+            {/* Per-card configurations */}
+            <div className="space-y-2">
+              <p className="text-secondary text-[11px] font-medium uppercase tracking-wider">{t.cardConfigurations || 'Card Configurations'}</p>
+              {multiConfigs.map((cfg, idx) => (
+                <div key={idx} className="p-3 rounded-xl border border-white/10 bg-white/5">
+                  <p className="text-theme text-xs font-semibold mb-2">{(t.cardNumber || 'Card #{n}').replace('{n}', idx + 1)}</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    <select
+                      value={cfg.style}
+                      onChange={(e) => handleConfigChange(idx, 'style', e.target.value)}
+                      className="bg-input text-theme text-[11px] rounded-lg border border-purple-500/20 px-2 py-1.5 outline-none"
+                    >
+                      {STYLES.map(s => (
+                        <option key={s.value} value={s.value}>{s.label}</option>
+                      ))}
+                    </select>
+                    <select
+                      value={cfg.tone}
+                      onChange={(e) => handleConfigChange(idx, 'tone', e.target.value)}
+                      className="bg-input text-theme text-[11px] rounded-lg border border-purple-500/20 px-2 py-1.5 outline-none"
+                    >
+                      {TONES.map(t => (
+                        <option key={t.value} value={t.value}>{t.label}</option>
+                      ))}
+                    </select>
+                    <select
+                      value={cfg.level}
+                      onChange={(e) => handleConfigChange(idx, 'level', e.target.value)}
+                      className="bg-input text-theme text-[11px] rounded-lg border border-purple-500/20 px-2 py-1.5 outline-none"
+                    >
+                      {LEVELS.filter(l => !['chain_of_thought', 'meta', 'prompt_chaining', 'multi_prompt_fusion', 'soft_prompting'].includes(l.value)).map(l => (
+                        <option key={l.value} value={l.value}>{l.label}</option>
+                      ))}
+                    </select>
+                    <select
+                      value={cfg.outputLang}
+                      onChange={(e) => handleConfigChange(idx, 'outputLang', e.target.value)}
+                      className="bg-input text-theme text-[11px] rounded-lg border border-purple-500/20 px-2 py-1.5 outline-none"
+                    >
+                      {OUT_LANGS.map(l => (
+                        <option key={l.value} value={l.value}>{l.label}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         )}
 
         <Divider />

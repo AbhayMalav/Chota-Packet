@@ -1,5 +1,30 @@
 import React from 'react'
-import { XIcon } from './icons'
+import { XIcon, ArrowRightIcon } from './icons'
+
+
+export function ComponentErrorBoundary({ children, fallback: FallbackComponent, onError, label = 'Component' }) {
+  return (
+    <ErrorBoundary
+      fallback={FallbackComponent || (
+        <div className="glass-card rounded-xl p-4 m-2 text-center space-y-2">
+          <div className="text-2xl"><XIcon className="w-6 h-6 text-amber-400 mx-auto" /></div>
+          <p className="text-theme text-sm font-medium">{label} unavailable</p>
+          <p className="text-muted text-xs">Something went wrong loading this component</p>
+          <button
+            className="btn-secondary text-xs py-1.5 px-3 mt-1"
+            onClick={() => window.location.reload()}
+          >
+            <ArrowRightIcon className="w-3 h-3 inline mr-1" />
+            Retry
+          </button>
+        </div>
+      )}
+      onError={onError}
+    >
+      {children}
+    </ErrorBoundary>
+  )
+}
 
 
 export default class ErrorBoundary extends React.Component {

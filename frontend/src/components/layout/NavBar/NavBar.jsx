@@ -1,5 +1,6 @@
 import React from 'react'
 import { PlugIcon, GlobeIcon } from '../../ui/icons'
+import './NavBar.css'
 
 
 // ── NavBtn ────────────────────────────────────────────────────────────────────
@@ -65,18 +66,15 @@ export function ModeIndicator({ mode = 'cloud' }) {
     ? 'Enhancements are being routed through cloud AI'
     : 'Enhancements are being processed locally on your device'
 
-  // Amber for Local, Blue/Teal for Cloud
-  const colorClasses = isCloud
-    ? 'bg-blue-500/10 text-blue-400 border-blue-500/20 shadow-[0_0_12px_-3px_rgba(59,130,246,0.3)]'
-    : 'bg-amber-500/10 text-amber-400 border-amber-500/20 shadow-[0_0_12px_-3px_rgba(245,158,11,0.3)]'
+  const variantClass = isCloud ? 'mode-indicator--cloud' : 'mode-indicator--local'
 
   return (
     <div
-      className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[11px] font-bold tracking-wide animate-fade-in transition-all duration-300 ${colorClasses}`}
+      className={`mode-indicator ${variantClass}`}
       title={title}
       aria-label={`Enhancement mode: ${label}`}
     >
-      <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+      <Icon className="mode-indicator__icon" />
       <span className="hidden sm:inline uppercase">{label}</span>
     </div>
   )

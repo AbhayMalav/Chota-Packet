@@ -2,9 +2,10 @@ import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import FeedbackBar from '../ui/FeedbackBar'
 import { copyToClipboard } from '../../services/clipboard'
-import { SparklesIcon, ChevronDownIcon, ClipboardIcon, CheckIcon, SendIcon, TrashIcon, ClaudeIcon, PerplexityIcon, GrokIcon, DeepSeekIcon, MistralIcon, SarvamIcon, AIFiestaIcon } from '../ui/icons'
+import { SparklesIcon, ChevronDownIcon, ClipboardIcon, CheckIcon, SendIcon, TrashIcon, ClaudeIcon, PerplexityIcon, GrokIcon, DeepSeekIcon, MistralIcon, SarvamIcon, AIFiestaIcon, XIcon, RegenerateIcon } from '../ui/icons'
 import { translations } from '../../config/translations'
 import { useTheme } from '../../context/ThemeContext'
+import { STYLES, TONES, LEVELS, OUT_LANGS } from '../../config/constants'
 import './OutputCard.css'
 
 
@@ -28,7 +29,22 @@ const AI_SITES = [
 // ─── Component ────────────────────────────────────────────────────────────────
 
 
-export default function OutputCard({ text = '', onTextChange, onClear }) {
+export default function OutputCard({ 
+  text = '', 
+  onTextChange, 
+  onClear,
+  config = {},
+  onConfigChange,
+  models = [],
+  selectedModel,
+  onModelChange,
+  showControls = false,
+  index = 0,
+  onRemove,
+  onRegenerate,
+  isLoading = false,
+  isError = false
+}) {
   const { language } = useTheme()
   const t = translations[language] || translations.en
 
@@ -44,6 +60,8 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
   const [takeToOpen, setTakeToOpen] = useState(false)
   const [takenTo, setTakenTo] = useState(null)
   const [dropdownPos, setDropdownPos] = useState({ top: 0, right: 0 })
+
+  const { tone = '', level = 'basic', style = 'general', outputLang = 'auto' } = config
 
   const trimmedText = text.trim()
   const wordCount = trimmedText ? trimmedText.split(/\s+/).length : 0
@@ -117,16 +135,35 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
 
 
   return (
-    <div className="flex flex-col gap-3 animate-fade-in">
+    <div className="flex flex-col gap-3 animate-fade-in relative">
+      {/* Loading overlay */}
+      {isLoading && (
+        <div className="output-card__loading-overlay">
+          <div className="flex flex-col items-center gap-2">
+            <svg className="animate-spin h-6 w-6 output-card__loading-spinner" viewBox="0 0 24 24" fill="none">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3V4a10 10 0 100 20v-2a8 8 0 01-8-8z" />
+            </svg>
+            <span className="text-xs font-medium output-card__loading-text">{t.enhancing || 'Enhancing...'}</span>
+          </div>
+        </div>
+      )}
 
       {/* ── Card ─────────────────────────────────────────────────────────── */}
-      <div className="glass-card rounded-xl shimmer-border-top">
+      <div className={`glass-card rounded-xl shimmer-border-top ${isLoading ? 'output-card--loading' : ''}`}>
 
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-2.5 border-b border-purple-500/10">
-          <span className="text-[11px] font-bold uppercase tracking-widest gradient-text flex items-center gap-1.5">
-            <SparklesIcon className="w-3 h-3" /> {t.enhancedPrompt}
-          </span>
+        <div className="flex items-center justify-between px-4 py-2.5 output-card__header">
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-bold uppercase tracking-widest gradient-text flex items-center gap-1.5">
+              <SparklesIcon className="w-3 h-3" /> {t.enhancedPrompt}
+            </span>
+            {showControls && (
+              <span className="text-[10px] px-2 py-0.5 rounded-lg output-card__header-badge">
+                #{index + 1}
+              </span>
+            )}
+          </div>
 
           <div className="flex items-center gap-1.5">
             {/* Copy */}
@@ -134,10 +171,9 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
               onClick={handleCopy}
               aria-label={copied ? t.copied : t.copy}
               aria-live="polite"
-              className={`flex items-center gap-1.5 text-[11px] px-3 py-1.5 rounded-full
-                          font-semibold border transition-all duration-200 ${copied
-                  ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/35'
-                  : 'bg-purple-500/12 text-purple-300 border-purple-500/30 hover:bg-purple-500/20 hover:text-white hover:border-purple-400/50'
+              className={`output-card__btn ${copied
+                  ? 'output-card__btn--copied'
+                  : 'output-card__btn--default'
                 }`}
             >
               {copied ? <CheckIcon className="w-3 h-3" /> : <ClipboardIcon className="w-3 h-3" />}
@@ -153,14 +189,12 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
                 aria-haspopup="true"
                 aria-expanded={takeToOpen}
                 aria-label={t.takeItTo}
-                className={`flex items-center gap-1.5 text-[11px] px-3 py-1.5 rounded-full
-                            font-semibold border transition-all duration-200
-                            disabled:opacity-30 disabled:cursor-not-allowed ${takenTo
-                    ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/35'
+                className={`output-card__btn ${takenTo
+                    ? 'output-card__btn--copied'
                     : takeToOpen
-                      ? 'bg-purple-500/20 text-white border-purple-400/50'
-                      : 'bg-purple-500/12 text-purple-300 border-purple-500/30 hover:bg-purple-500/20 hover:text-white hover:border-purple-400/50'
-                  }`}
+                      ? 'output-card__btn--active'
+                      : 'output-card__btn--default'
+                  } ${!trimmedText ? 'output-card__btn--disabled' : ''}`}
               >
                 {takenTo ? <CheckIcon className="w-3 h-3" /> : <SendIcon className="w-3 h-3" />}
                 {takenTo ? t.opening : t.takeItTo}
@@ -171,10 +205,40 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
                 )}
               </button>
             </div>
+
+            {/* Regenerate - only in multi-output mode */}
+            {showControls && onRegenerate && (
+              <button
+                onClick={onRegenerate}
+                disabled={isLoading}
+                aria-label={t.regenerateWithVariation || 'Regenerate'}
+                className={`output-card__btn output-card__btn--default ${isLoading ? 'output-card__btn--disabled' : ''}`}
+              >
+                <RegenerateIcon className="w-3 h-3" />
+                {t.regen || 'Regen'}
+              </button>
+            )}
           </div>
         </div>
 
+        {/* Error state */}
+        {isError && (
+          <div className="px-4 py-8 text-center">
+            <XIcon className="w-8 h-8 mx-auto mb-2" style={{ color: 'var(--color-danger)' }} />
+            <p className="text-sm" style={{ color: 'var(--color-danger-muted)' }}>{t.error || 'Error'}</p>
+            <p className="text-muted text-xs mt-1">Failed to generate this output</p>
+            <button
+              onClick={onRegenerate}
+              className="mt-3 btn-secondary text-xs py-1.5 px-3"
+            >
+              <RegenerateIcon className="w-3 h-3 inline mr-1" />
+              Retry
+            </button>
+          </div>
+        )}
+
         {/* Editable output area */}
+        {!isError && (
         <div
           ref={cardRef}
           contentEditable
@@ -186,13 +250,95 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
           aria-label={t.enhancedPrompt}
           aria-multiline="true"
           role="textbox"
-          className="text-theme min-h-[120px] px-4 py-4 text-sm leading-relaxed
-                     whitespace-pre-wrap break-words focus:outline-none
-                     transition-all duration-200"
+className="text-theme min-h-[120px] px-4 py-4 text-sm leading-relaxed
+                      whitespace-pre-wrap break-words focus:outline-none
+                      transition-all duration-200"
         />
+        )}
+
+        {/* Per-card controls - shown when showControls is true */}
+        {showControls && (
+          <div className="px-4 py-3 output-card__controls">
+            <div className="flex flex-wrap items-center gap-2">
+              {/* Model selector */}
+              {models.length > 0 && (
+                <select
+                  value={selectedModel || ''}
+                  onChange={(e) => onModelChange?.(e.target.value)}
+                  aria-label="Model selector"
+                  className="output-card__select"
+                >
+                  <option value="">Auto</option>
+                  {models.map(m => (
+                    <option key={m.id} value={m.id}>{m.name}</option>
+                  ))}
+                </select>
+              )}
+
+              {/* Style */}
+              <select
+                value={style}
+                onChange={(e) => onConfigChange?.({ ...config, style: e.target.value })}
+                aria-label="Style"
+                className="output-card__select"
+              >
+                {STYLES.map(s => (
+                  <option key={s.value} value={s.value}>{s.label}</option>
+                ))}
+              </select>
+
+              {/* Tone */}
+              <select
+                value={tone}
+                onChange={(e) => onConfigChange?.({ ...config, tone: e.target.value })}
+                aria-label="Tone"
+                className="output-card__select"
+              >
+                {TONES.map(toneOpt => (
+                  <option key={toneOpt.value} value={toneOpt.value}>{toneOpt.label}</option>
+                ))}
+              </select>
+
+              {/* Level */}
+              <select
+                value={level}
+                onChange={(e) => onConfigChange?.({ ...config, level: e.target.value })}
+                aria-label="Level"
+                className="output-card__select"
+              >
+                {LEVELS.filter(l => !['chain_of_thought', 'meta', 'prompt_chaining', 'multi_prompt_fusion', 'soft_prompting'].includes(l.value)).map(l => (
+                  <option key={l.value} value={l.value}>{l.label}</option>
+                ))}
+              </select>
+
+              {/* Output Language */}
+              <select
+                value={outputLang}
+                onChange={(e) => onConfigChange?.({ ...config, outputLang: e.target.value })}
+                aria-label="Output language"
+                className="output-card__select"
+              >
+                {OUT_LANGS.map(l => (
+                  <option key={l.value} value={l.value}>{l.label}</option>
+                ))}
+              </select>
+
+              {/* Remove button */}
+              {onRemove && (
+                <button
+                  onClick={onRemove}
+                  aria-label="Remove variant"
+                  className="ml-auto text-secondary output-card__btn--danger p-1.5 rounded-lg transition-all"
+                >
+                  <XIcon className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* ── Footer ───────────────────────────────────────────────────────── */}
-        <div className="output-card__footer flex items-center justify-between px-4 py-2 border-t border-purple-500/10">
+        <div className="output-card__footer flex items-center justify-between px-4 py-2">
 
           {/* Left — stats */}
           <span className="text-secondary text-[11px] font-medium tabular-nums flex-shrink-0">
@@ -214,7 +360,7 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
                 onClick={onClear}
                 aria-label={t.clearOutput}
                 className="text-secondary flex items-center gap-1 text-[11px] font-medium px-2 py-1
-                           rounded-lg hover:bg-red-500/10 hover:text-red-400
+                           rounded-lg output-card__btn--danger
                            transition-all duration-200"
               >
                 <TrashIcon className="w-3 h-3" /> {t.clear}
@@ -237,9 +383,9 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
             right: dropdownPos.right,
             zIndex: 9999,
           }}
-          className="w-52 glass-card rounded-2xl shadow-xl animate-fade-in border border-purple-500/15 overflow-hidden"
+          className="w-52 glass-card rounded-2xl shadow-xl animate-fade-in output-card__dropdown overflow-hidden"
         >
-          <p className="text-secondary px-3 pt-2 pb-1.5 text-[10px] font-semibold uppercase tracking-wider border-b border-purple-500/10">
+          <p className="text-secondary px-3 pt-2 pb-1.5 text-[10px] font-semibold uppercase tracking-wider output-card__dropdown-header">
             {t.copiesPromptOpensNewChat}
           </p>
           <div className="max-h-64 overflow-y-auto overflow-x-hidden py-1">
@@ -247,8 +393,7 @@ export default function OutputCard({ text = '', onTextChange, onClear }) {
               <button
                 key={site.id}
                 onClick={() => handleTakeTo(site)}
-                className="text-theme w-full flex items-center gap-2.5 px-3 py-2 text-xs font-medium
-                           hover:bg-purple-500/10 transition-colors duration-150"
+                className="text-theme w-full flex items-center gap-2.5 px-3 py-2 text-xs font-medium output-card__dropdown-item transition-colors duration-150"
               >
                 <span className="relative w-4 h-4 flex-shrink-0 flex items-center justify-center">
                   {site.icon ? (

@@ -15,7 +15,8 @@
 
 /* ── Theme CSS Variables - Dark (default) ────────────────────────────────── */
 
-:root {
+:root,
+.theme-brand {
   --brand-rgb: 127, 19, 236;
   --brand-light-rgb: 168, 85, 247;
   --brand-dark-rgb: 96, 16, 184;
@@ -118,6 +119,12 @@
   --diff-added-text: #bbf7d0;
   --diff-removed-bg: #7f1d1d;
   --diff-removed-text: #fecaca;
+
+  /* Toggle switch (theme-aware) */
+  --theme-toggle-off-bg: rgba(255, 255, 255, 0.15);
+  --theme-toggle-off-knob: rgba(255, 255, 255, 0.5);
+  --theme-toggle-on-bg: rgb(var(--brand-rgb));
+  --theme-toggle-on-knob: #ffffff;
 }
 
 /* ── Theme CSS Variables - Light override ────────────────────────────────── */
@@ -162,6 +169,12 @@
   --diff-added-text: #166534;
   --diff-removed-bg: #fee2e2;
   --diff-removed-text: #991b1b;
+
+  /* Toggle switch (theme-aware) */
+  --theme-toggle-off-bg: rgba(0, 0, 0, 0.15);
+  --theme-toggle-off-knob: rgba(0, 0, 0, 0.3);
+  --theme-toggle-on-bg: rgb(var(--brand-rgb));
+  --theme-toggle-on-knob: #ffffff;
 }
 
 /* ── Base: Theme-aware ───────────────────────────────────────────────────── */
@@ -237,7 +250,7 @@ body {
   }
 }
 
-.animate-fade-in {
+@utility animate-fade-in {
   animation: fadeIn 0.35s ease-out forwards;
 }
 
@@ -325,27 +338,27 @@ body {
   }
 }
 
-.animate-glow {
+@utility animate-glow {
   /* Static base glow — not animated */
   box-shadow:
     0 0 30px rgba(var(--brand-rgb), 0.25),
     0 0 60px rgba(var(--accent-rgb), 0.12);
   position: relative;
-}
 
-.animate-glow::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  /* exactly matches parent bounds */
-  border-radius: inherit;
-  box-shadow:
-    0 0 30px rgba(var(--brand-rgb), 0.35),
-    0 0 60px rgba(var(--accent-rgb), 0.18);
-  animation: glow-pulse 3s ease-in-out infinite;
-  will-change: opacity;
-  pointer-events: none;
-  z-index: -1;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* exactly matches parent bounds */
+    border-radius: inherit;
+    box-shadow:
+      0 0 30px rgba(var(--brand-rgb), 0.35),
+      0 0 60px rgba(var(--accent-rgb), 0.18);
+    animation: glow-pulse 3s ease-in-out infinite;
+    will-change: opacity;
+    pointer-events: none;
+    z-index: -1;
+  }
 }
 
 @keyframes nebula-drift {
@@ -364,7 +377,7 @@ body {
   }
 }
 
-.animate-nebula {
+@utility animate-nebula {
   animation: nebula-drift 20s ease-in-out infinite;
 }
 

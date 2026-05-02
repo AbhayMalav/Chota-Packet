@@ -96,6 +96,9 @@ export const LS_FEEDBACK = 'chota_feedback'
 export const LS_ANALYTICS = 'cp-token-analytics'  // ← ADDED
 export const LS_THEME = 'cp-theme'
 export const LS_LANGUAGE = 'cp-language'
+export const LS_MULTI_OUTPUT = 'cp-multi-output'
+export const LS_MULTI_CONFIGS = 'cp-multi-configs'
+export const LS_SAVED_OUTPUTS = 'cp-saved-outputs'
 
 
 export const THEMES = [

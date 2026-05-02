@@ -23,6 +23,7 @@ export default function SendButton({
   onSubmit,
   disabled = false,
   isLoading = false,
+  className = '',
 }) {
   const { t } = useTranslation()
 
@@ -40,7 +41,7 @@ export default function SendButton({
       type="button"
       onClick={handleClick}
       disabled={disabled || isLoading}
-      className="send-btn btn-icon"
+      className={`send-btn btn-icon touch-target ${className}`}
       aria-label={t.enhance}
       title={`${t.enhance} (Ctrl+Enter)`}
     >

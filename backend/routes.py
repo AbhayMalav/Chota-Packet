@@ -457,8 +457,8 @@ async def transcribe_audio(
             detail="Models not loaded. Check server logs.",
         )
 
-    # Guard: ffmpeg available (FR-38)
-    if not request.app.state.ffmpeg_available and not models.mock_mode:
+    # Guard: ffmpeg available (FR-38) — allow in mock mode without ffmpeg, require in real mode
+    if not models.mock_mode and not request.app.state.ffmpeg_available:
         raise HTTPException(
             status_code=503,
             detail="Audio processing unavailable. Server is missing ffmpeg dependency.",
@@ -827,7 +827,7 @@ async def validate_openrouter_key(req: ValidateKeyRequest) -> JSONResponse:
 
     # Parse once — guard against malformed JSON body
     try:
-        body = resp.json()
+        body = await resp.json()
     except json.JSONDecodeError as exc:
         logger.error(
             "[POST /validate-key] Could not decode OpenRouter auth response: %s (raw=%.200s)",
@@ -885,7 +885,7 @@ async def get_openrouter_models(
 
         if resp.status_code == 200:
             try:
-                raw_models = resp.json().get("data", [])
+                raw_models = (await resp.json()).get("data", [])
             except json.JSONDecodeError as exc:
                 logger.warning(
                     "[GET /models] Could not decode live model list response: %s", exc
