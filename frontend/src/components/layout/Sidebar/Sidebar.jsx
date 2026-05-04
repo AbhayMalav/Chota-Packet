@@ -31,7 +31,7 @@ export const useSettingsMenu = () => {
   return context;
 };
 
-export default function Sidebar({ children, history, onHistorySelect, onShowShortcuts }) {
+export default function Sidebar({ children, history, onHistorySelect, onShowShortcuts, multiOutputEnabled, setMultiOutputEnabled }) {
   const { isMobileOpen, closeMobile, isDesktopCollapsed, toggleDesktopCollapsed } = useSidebarContext();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
@@ -277,6 +277,8 @@ export default function Sidebar({ children, history, onHistorySelect, onShowShor
                     closeSettings();
                     onShowShortcuts?.();
                   }}
+                  multiOutputEnabled={multiOutputEnabled}
+                  setMultiOutputEnabled={setMultiOutputEnabled}
                 />
               </ErrorBoundary>
             </div>,

@@ -134,6 +134,10 @@ export default function Home() {
   const [multiLoading, setMultiLoading] = useState([])
   const [multiSkeletons, setMultiSkeletons] = useState(0)
 
+  useEffect(() => {
+    localStorage.setItem(LS_MULTI_OUTPUT, String(multiOutputEnabled))
+  }, [multiOutputEnabled])
+
   const [style, setStyle] = useState('general')
   const [tone, setTone] = useState('')
   const [level, setLevel] = useState('basic')
@@ -145,7 +149,7 @@ export default function Home() {
   const [backendStatus, setBackendStatus] = useState('loading')
   const [history, setHistory] = useState([])
   const { isIncognito } = useIncognito()
-  const { run: runEnhance, abort: abortEnhance } = useEnhance()
+  const { run: runEnhance, abort: abortEnhance, elapsedSeconds } = useEnhance()
 
   const resetSession = useCallback(() => {
     try {
@@ -156,8 +160,19 @@ export default function Home() {
     dispatch({ type: 'FULL_RESET' })
   }, [abortEnhance])
 
+  
+  // STT � append transcribed text to current input value
+  const handleSttTranscript = useCallback(
+    (text) => {
+      const current = input
+      const updated = current.trim() ? `${current.trim()} ${text}` : text
+      dispatch({ type: 'INPUT_CHANGED', value: updated })
+    },
+    [input],
+  )
+
   const { recording: isMicRecording, error: micError, start: startMic, stop: stopMic } = useRecorder({
-    onTranscript: (text) => dispatch({ type: 'INPUT_CHANGED', value: text }),
+    onTranscript: handleSttTranscript,
     lang: inputLang
   })
 
@@ -395,6 +410,8 @@ export default function Home() {
                 onHistorySelect={(item) => {
                   dispatch({ type: 'INPUT_CHANGED', value: item.input ?? item.prompt ?? '' })
                 }}
+                multiOutputEnabled={multiOutputEnabled}
+                setMultiOutputEnabled={setMultiOutputEnabled}
               />
 
               {/* Main content */}
@@ -433,6 +450,7 @@ export default function Home() {
                       onEnhance={() => handleEnhance(false)}
                       onRegenerate={() => handleEnhance(true)}
                       loading={isLoading}
+                      elapsedSeconds={elapsedSeconds}
                       canEnhance={!!input.trim() && !isLoading}
                       showRegen={hasOutput}
                       models={models}

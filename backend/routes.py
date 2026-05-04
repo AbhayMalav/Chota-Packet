@@ -903,8 +903,7 @@ async def get_openrouter_models(
     for m in raw_models
     if m.get("id")
     and not m.get("expiration_date")          # skip deprecated models
-    and "text" in (m.get("architecture", {})  # skip non-text models (image-gen, etc.)
-                    .get("output_modalities", ["text"]))
+    and _is_text_model(m)                      # skip non-text models (image-gen, etc.)
 ]
 
             live_models.sort(key=_sort_key)
@@ -971,3 +970,19 @@ def _extract_cost(model_data: dict) -> float:
         return round((prompt_cost + completion_cost) / 2 * 1000, 6)
     except (TypeError, ValueError):
         return 0.0
+
+
+def _is_text_model(model_data: dict) -> bool:
+    """
+    Check if model is a text-to-text (LLM) model by examining its architecture.
+
+    Returns True only if the model explicitly has "text" in its output_modalities.
+    Models without this field are excluded to avoid showing image/audio models.
+    """
+    architecture = model_data.get("architecture", {})
+    output_modalities = architecture.get("output_modalities", [])
+
+    if not output_modalities:
+        return False
+
+    return "text" in output_modalities

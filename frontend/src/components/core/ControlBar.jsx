@@ -315,7 +315,7 @@ export default function ControlBar({
   level, onLevelChange,
   outputLang, onOutputLangChange,
   onEnhance, onRegenerate,
-  loading, canEnhance, showRegen,
+  loading, canEnhance, showRegen, elapsedSeconds = 0,
   models, selectedModel, onModelChange,
   multiOutputEnabled, onMultiOutputToggle,
 }) {
@@ -334,22 +334,30 @@ export default function ControlBar({
 
       {/* Action row */}
       <div className="action-row">
-         {/* Multi-output toggle */}
-         {onMultiOutputToggle && (
-           <button
-             id="multi-output-toggle"
-             onClick={onMultiOutputToggle}
-             aria-pressed={multiOutputEnabled}
-             aria-label={multiOutputEnabled ? (t.disableMultiOutput || 'Disable multi-output') : (t.enableMultiOutput || 'Enable multi-output')}
-             className="multi-output-btn touch-target"
-             title={t.multiOutputTooltip || 'Generate multiple output variants'}
-           >
-             <span className="multi-output-icon">{multiOutputEnabled ? '×' : '+'}</span>
-             <span className="multi-output-label">
-               {t.multi || 'Multi'}
-             </span>
-           </button>
-         )}
+{/* Multi-output toggle */}
+          {onMultiOutputToggle && (
+            <button
+              onClick={onMultiOutputToggle}
+              role="switch"
+              aria-checked={multiOutputEnabled}
+              aria-label={multiOutputEnabled ? (t.disableMultiOutput || 'Disable multi-output') : (t.enableMultiOutput || 'Enable multi-output')}
+              className="multi-output-toggle touch-target"
+              title={t.multiOutputTooltip || 'Generate multiple output variants'}
+            >
+              <span className="multi-output-toggle-label">{t.multi || 'Multi'}</span>
+              <span
+                className="multi-output-toggle-switch"
+                style={{
+                  backgroundColor: multiOutputEnabled ? 'var(--theme-toggle-on-bg)' : 'var(--theme-toggle-off-bg)',
+                }}
+              >
+                <span
+                  className="multi-output-toggle-knob"
+                  style={{ left: multiOutputEnabled ? '22px' : '4px', backgroundColor: 'var(--theme-toggle-on-knob)' }}
+                />
+              </span>
+            </button>
+          )}
 
          {/* Enhance button */}
          <button
@@ -360,7 +368,7 @@ export default function ControlBar({
            className="enhance-btn touch-target"
          >
            {loading ? <LoadSpinner /> : <SparklesIcon className="enhance-icon" />}
-           {loading ? t.enhancing : t.enhance}
+           {loading ? (elapsedSeconds > 3 ? `${t.enhancing} ${elapsedSeconds}s` : t.enhancing) : t.enhance}
          </button>
 
         {/* Inline model selector */}

@@ -29,7 +29,7 @@ function Divider() {
   return <div className="settings__divider my-4 border-t border-white/5" />
 }
 
-export default function SettingsPanel({ onClose, settings, onShowShortcuts }) {
+export default function SettingsPanel({ onClose, settings, onShowShortcuts, multiOutputEnabled: controlledMultiOutputEnabled, setMultiOutputEnabled: controlledSetMultiOutputEnabled }) {
   const { language } = useTheme()
   const { t } = useTranslation()
 
@@ -37,10 +37,14 @@ export default function SettingsPanel({ onClose, settings, onShowShortcuts }) {
   const [showKey, setShowKey] = useState(false)
   const [confirmClear, setConfirmClear] = useState(false)
 
-  // Multi-output state
-  const [multiOutputEnabled, setMultiOutputEnabled] = useState(() => {
+  const isControlled = controlledMultiOutputEnabled !== undefined && controlledSetMultiOutputEnabled !== undefined
+
+  const [internalMultiOutputEnabled, setInternalMultiOutputEnabled] = useState(() => {
     return localStorage.getItem(LS_MULTI_OUTPUT) === 'true'
   })
+
+  const multiOutputEnabled = isControlled ? controlledMultiOutputEnabled : internalMultiOutputEnabled
+  const setMultiOutputEnabled = isControlled ? controlledSetMultiOutputEnabled : setInternalMultiOutputEnabled
   const defaultConfigs = [
     { tone: '', level: 'basic', style: 'general', outputLang: 'auto' },
     { tone: '', level: 'detailed', style: 'creative', outputLang: 'auto' },
@@ -65,10 +69,12 @@ export default function SettingsPanel({ onClose, settings, onShowShortcuts }) {
     return saved ? safeParseConfigs(saved) : defaultConfigs
   })
 
-  // Persist multi-output settings
+  // Persist multi-output settings (only when using internal state)
   useEffect(() => {
-    localStorage.setItem(LS_MULTI_OUTPUT, String(multiOutputEnabled))
-  }, [multiOutputEnabled])
+    if (!isControlled) {
+      localStorage.setItem(LS_MULTI_OUTPUT, String(multiOutputEnabled))
+    }
+  }, [multiOutputEnabled, isControlled])
 
   useEffect(() => {
     localStorage.setItem(LS_MULTI_CONFIGS, JSON.stringify(multiConfigs))

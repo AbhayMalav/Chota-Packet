@@ -54,13 +54,13 @@ describe('ControlBar - Multi-Output Toggle', () => {
     const { container } = render(
       <ControlBar {...defaultProps} onMultiOutputToggle={vi.fn()} />
     );
-    const toggleBtn = container.querySelector('#multi-output-toggle');
+    const toggleBtn = container.querySelector('.multi-output-toggle');
     expect(toggleBtn).toBeInTheDocument();
   });
 
   it('does not render multi-output toggle when onMultiOutputToggle prop is not provided', () => {
     const { container } = render(<ControlBar {...defaultProps} />);
-    const toggleBtn = container.querySelector('#multi-output-toggle');
+    const toggleBtn = container.querySelector('.multi-output-toggle');
     expect(toggleBtn).not.toBeInTheDocument();
   });
 
@@ -68,9 +68,9 @@ describe('ControlBar - Multi-Output Toggle', () => {
     const { container } = render(
       <ControlBar {...defaultProps} onMultiOutputToggle={vi.fn()} multiOutputEnabled={true} />
     );
-    const toggleBtn = container.querySelector('#multi-output-toggle');
-    expect(toggleBtn).toHaveAttribute('aria-pressed', 'true');
-    expect(toggleBtn).toHaveTextContent('×');
+    const toggleBtn = container.querySelector('.multi-output-toggle');
+    expect(toggleBtn).toHaveAttribute('aria-checked', 'true');
+    expect(toggleBtn).toHaveAttribute('role', 'switch');
     expect(toggleBtn).toHaveTextContent('Multi');
   });
 
@@ -78,9 +78,8 @@ describe('ControlBar - Multi-Output Toggle', () => {
     const { container } = render(
       <ControlBar {...defaultProps} onMultiOutputToggle={vi.fn()} multiOutputEnabled={false} />
     );
-    const toggleBtn = container.querySelector('#multi-output-toggle');
-    expect(toggleBtn).toHaveAttribute('aria-pressed', 'false');
-    expect(toggleBtn).toHaveTextContent('+');
+    const toggleBtn = container.querySelector('.multi-output-toggle');
+    expect(toggleBtn).toHaveAttribute('aria-checked', 'false');
     expect(toggleBtn).toHaveTextContent('Multi');
   });
 
@@ -89,7 +88,7 @@ describe('ControlBar - Multi-Output Toggle', () => {
     const { container } = render(
       <ControlBar {...defaultProps} onMultiOutputToggle={onToggle} multiOutputEnabled={false} />
     );
-    const toggleBtn = container.querySelector('#multi-output-toggle');
+    const toggleBtn = container.querySelector('.multi-output-toggle');
     fireEvent.click(toggleBtn);
     expect(onToggle).toHaveBeenCalledTimes(1);
   });
@@ -98,16 +97,17 @@ describe('ControlBar - Multi-Output Toggle', () => {
     const { container } = render(
       <ControlBar {...defaultProps} onMultiOutputToggle={vi.fn()} multiOutputEnabled={true} />
     );
-    const toggleBtn = container.querySelector('#multi-output-toggle');
+    const toggleBtn = container.querySelector('.multi-output-toggle');
     expect(toggleBtn).toHaveAttribute('aria-label', 'Disable multi-output');
-    expect(toggleBtn).toHaveAttribute('aria-pressed', 'true');
+    expect(toggleBtn).toHaveAttribute('aria-checked', 'true');
+    expect(toggleBtn).toHaveAttribute('role', 'switch');
   });
 
   it('has tooltip attribute with translation', () => {
     const { container } = render(
       <ControlBar {...defaultProps} onMultiOutputToggle={vi.fn()} />
     );
-    const toggleBtn = container.querySelector('#multi-output-toggle');
+    const toggleBtn = container.querySelector('.multi-output-toggle');
     expect(toggleBtn).toHaveAttribute('title', 'Generate multiple output variants');
   });
 });
