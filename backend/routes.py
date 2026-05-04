@@ -666,7 +666,7 @@ async def _cloud_enhance(
     """
     messages = [
         {"role": "system", "content": system_prompt},
-        {"role": "user", "content": f"{prefix}{text}"},
+        {"role": "user", "content": f"IMPROVE THIS PROMPT:\n\n{prefix}{text}"},
     ]
 
     payload = {

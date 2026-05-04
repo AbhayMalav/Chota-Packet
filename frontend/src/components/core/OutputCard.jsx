@@ -9,6 +9,26 @@ import { STYLES, TONES, LEVELS, OUT_LANGS } from '../../config/constants'
 import './OutputCard.css'
 
 
+function stripMarkdown(text) {
+  if (!text) return ''
+  return text
+    .replace(/#{1,6}\s+/g, '')
+    .replace(/\*\*(.+?)\*\*/g, '$1')
+    .replace(/\*(.+?)\*/g, '$1')
+    .replace(/__(.+?)__/g, '$1')
+    .replace(/_(.+?)_/g, '$1')
+    .replace(/`{3}[\s\S]*?`{3}/g, '')
+    .replace(/`(.+?)`/g, '$1')
+    .replace(/^\s*[-*+]\s+/gm, '')
+    .replace(/^\s*\d+\.\s+/gm, '')
+    .replace(/^-{3,}$/gm, '')
+    .replace(/\[(.+?)\]\(.+?\)/g, '$1')
+    .replace(/>\s+/g, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()
+}
+
+
 // ─── AI destinations ──────────────────────────────────────────────────────────
 
 
@@ -237,7 +257,7 @@ export default function OutputCard({
           </div>
         )}
 
-        {/* Editable output area */}
+{/* Editable output area */}
         {!isError && (
         <div
           ref={cardRef}
@@ -253,7 +273,9 @@ export default function OutputCard({
 className="text-theme min-h-[120px] px-4 py-4 text-sm leading-relaxed
                       whitespace-pre-wrap break-words focus:outline-none
                       transition-all duration-200"
-        />
+        >
+          {stripMarkdown(text)}
+        </div>
         )}
 
         {/* Per-card controls - shown when showControls is true */}
