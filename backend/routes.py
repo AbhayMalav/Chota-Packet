@@ -827,7 +827,7 @@ async def validate_openrouter_key(req: ValidateKeyRequest) -> JSONResponse:
 
     # Parse once — guard against malformed JSON body
     try:
-        body = await resp.json()
+        body = resp.json()
     except json.JSONDecodeError as exc:
         logger.error(
             "[POST /validate-key] Could not decode OpenRouter auth response: %s (raw=%.200s)",
@@ -885,7 +885,7 @@ async def get_openrouter_models(
 
         if resp.status_code == 200:
             try:
-                raw_models = (await resp.json()).get("data", [])
+                raw_models = resp.json().get("data", [])
             except json.JSONDecodeError as exc:
                 logger.warning(
                     "[GET /models] Could not decode live model list response: %s", exc
